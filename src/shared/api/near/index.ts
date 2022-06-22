@@ -1,20 +1,7 @@
-import {connect, ConnectedWalletAccount, keyStores, WalletConnection} from 'near-api-js';
+import {connect, ConnectedWalletAccount, keyStores, Near, WalletConnection} from 'near-api-js';
 import {AccountBalance} from 'near-api-js/lib/account';
 
 import {env} from '~/shared/config/env';
-
-export async function createNearInstance() {
-  const keyStore = new keyStores.BrowserLocalStorageKeyStore();
-  const near = await connect({
-    nodeUrl: env.NEAR_NODE_URL,
-    walletUrl: env.WALLET_URL,
-    networkId: env.NEAR_NETWORK_ID,
-    keyStore,
-    headers: {},
-  });
-
-  return near;
-}
 
 export type NearAuth = {
   balance?: AccountBalance;
@@ -55,4 +42,24 @@ export async function getNearAuth(walletConnection: WalletConnection): Promise<N
     login,
     logout,
   };
+}
+
+export type NearInstance = {
+  near: Near;
+  auth: NearAuth;
+};
+
+export async function createNearInstance() {
+  const keyStore = new keyStores.BrowserLocalStorageKeyStore();
+  const near = await connect({
+    nodeUrl: env.NEAR_NODE_URL,
+    walletUrl: env.WALLET_URL,
+    networkId: env.NEAR_NETWORK_ID,
+    keyStore,
+    headers: {},
+  });
+
+  const auth = await getNearAuth(new WalletConnection(near, null));
+
+  return {near, auth};
 }
