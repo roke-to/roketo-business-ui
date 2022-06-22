@@ -1,6 +1,6 @@
 import {createEffect, createEvent, createStore, sample} from 'effector';
 
-import {createNearInstance, NearInstance} from '~/shared/api/near';
+import {createNearInstance, NearInstance} from '~/shared/api/near/wallet-selector';
 
 export const initWallets = createEvent();
 
