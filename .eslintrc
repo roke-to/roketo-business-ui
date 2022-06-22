@@ -1,0 +1,58 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "plugins": ["prettier"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["airbnb", "airbnb/hooks", "airbnb-typescript", "prettier"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "settings": {
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true,
+            // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+            "project": "./tsconfig.json"
+          }
+        }
+      },
+      "rules": {
+        "class-methods-use-this": "warn",
+        "consistent-return": "warn",
+        "import/no-default-export": "warn",
+        "import/no-extraneous-dependencies": "warn",
+        "import/prefer-default-export": "off",
+        "jsx-a11y/label-has-associated-control": "warn",
+        "no-nested-ternary": "warn",
+        "no-underscore-dangle": "warn",
+        "react/function-component-definition": "off",
+        "react/jsx-props-no-spreading": "warn",
+        "react/no-unescaped-entities": "warn",
+        "react/prop-types": "warn",
+        "react/react-in-jsx-scope": "off",
+        "react/require-default-props": "off",
+        "@typescript-eslint/no-use-before-define": ["error", {"functions": false}]
+      }
+    },
+    {
+      "files": "*.js",
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2021
+      }
+    },
+    {
+      "files": ["vite.config.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
