@@ -1,7 +1,7 @@
 # Roketo Business Architecture
 
 Basic file structure inherited from [Feature-Sliced Design](https://feature-sliced.design).
-It's a SPA builded by vite for better developer expirience.
+It's a SPA builded by vite for better developer experience.
 
 
 ## Env
@@ -18,19 +18,19 @@ Project uses react-router. All routes definitions placed at `src/shared/config/r
 
 ## Styling
 
-Use css-modules and tildwind (?).
+Use css-modules and [tailwind](https://tailwindcss.com/) (?).
 
 
-## Store
+## Dataflow
 
-effector
+[effector](https://effector.dev)
 
 
 ## Lint
 
-prettier + eslint
+[prettier](https://prettier.io) + [eslint](https://github.com/eslint-kit/eslint-kit)
 
 
 ## Network
 
-`near-api-js`
+[`near-api-js`](https://docs.near.org/docs/api/javascript-library)
