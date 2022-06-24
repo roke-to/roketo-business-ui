@@ -2,7 +2,7 @@ import {createEffect, createEvent, createStore, sample} from 'effector';
 
 import {getAccountDaos as getAccountDaosApi} from '~/shared/api/astro-api';
 import {createNearInstance, NearInstance} from '~/shared/api/near';
-import {initSputnikFactory} from '~/shared/api/sputnik-factory-dao';
+import {initSputnikFactoryDao} from '~/shared/api/sputnik-factory-dao';
 
 export const initWallets = createEvent();
 
@@ -26,7 +26,7 @@ export const $sputnik = createStore<null>(null);
 export const createDao = createEvent();
 
 const createSputnikFx = createEffect((nearInstance: NearInstance | null) =>
-  nearInstance ? initSputnikFactory({account: nearInstance.auth.account}) : null,
+  nearInstance ? initSputnikFactoryDao({account: nearInstance.auth.account}) : null,
 );
 
 sample({

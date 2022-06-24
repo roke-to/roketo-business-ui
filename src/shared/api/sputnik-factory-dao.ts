@@ -5,7 +5,7 @@ import {Account} from 'near-api-js';
 
 // import {env} from '~/shared/config/env';
 
-export async function initSputnikFactory({account}: {account: Account}): Promise<null> {
+export async function initSputnikFactoryDao({account}: {account: Account}): Promise<null> {
   // TODO: use env
   const contract = new nearAPI.Contract(account, 'sputnikv2.testnet', {
     viewMethods: [
