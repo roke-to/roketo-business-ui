@@ -26,6 +26,7 @@
     "@near-wallet-selector/sender": "^4.1.0",
     "@near-wallet-selector/wallet-utils": "^4.1.0",
     "@roketo/api-client": "roke-to/roketo-api-client#v0.0.31",
+    "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "classnames": "^2.3.1",
     "clipboard-copy": "^4.0.1",

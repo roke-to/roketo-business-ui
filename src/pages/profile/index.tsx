@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {AuthorizeButton} from '~/features/authorization';
-import {CreateDaoButton} from '~/features/dao';
+import {CreateDaoButton, ListDaoButton} from '~/features/dao';
 import {ProfileName} from '~/features/profile';
 
 export function ProfilePage() {
@@ -17,6 +17,7 @@ export function ProfilePage() {
         <div className='mt-6 flex items-center justify-center gap-4'>
           <AuthorizeButton className='flex items-center justify-center gap-2 rounded-full bg-violet-500 px-5 py-3 text-lg font-medium text-white' />
           <CreateDaoButton className='flex items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-3 text-lg font-medium text-white' />
+          <ListDaoButton className='flex items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-3 text-lg font-medium text-white' />
         </div>
       </div>
     </div>
