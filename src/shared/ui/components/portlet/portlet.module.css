@@ -1,0 +1,14 @@
+.portlet {
+  background-color: theme('colors.white');
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: theme('dropShadow.DEFAULT');
+  padding: theme('spacing.8');
+  border-radius: theme('borderRadius.3xl');
+  max-width: theme('maxWidth.lg');
+}

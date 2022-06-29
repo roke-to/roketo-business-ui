@@ -1,0 +1,71 @@
+/* TODO: тут пока оставил стилизацию на tailwind для примера
+ * в остальных компонентах лучше писать обычный css
+ * а тут можно еще поэксперементировать с темизацией и используемыми
+ * фичами tailwind
+ */
+.button {
+  @apply inline-flex 
+    flex-shrink-0 
+    cursor-pointer 
+    select-none 
+    flex-wrap 
+    items-center 
+    justify-center 
+    border-transparent 
+    text-center 
+    transition 
+    duration-200 
+    ease-in-out
+    h-6
+    font-semibold;
+
+  &[disabled] {
+    pointer-events: none;
+    color: #a6c8ff;
+  }
+
+  transition: color 0.2s ease-in-out, border 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+/* sizes */
+.sm {
+  @apply h-8 px-3 rounded-2xl text-sm;
+}
+.md {
+  @apply h-12 px-4 rounded-3xl;
+}
+.lg {
+  @apply h-16 px-6 rounded-4xl text-lg;
+}
+
+/* variants */
+.soft {
+  @apply bg-[#F0F6FF]
+  hover:bg-[#D6E6FF]
+  active:bg-[#A6C8FF]
+  text-[#3E65F2];
+}
+
+.outlined {
+  @apply bg-white border border-[#A0C2F8] text-[#3E65F2];
+
+  &:hover {
+    @apply border-4 border-[#D6E6FF];
+  }
+
+  &:active {
+    @apply border-4 border-[#A6C8FF];
+  }
+}
+
+.plain {
+  @apply text-[#3E65F2];
+
+  &:hover {
+    @apply bg-[#D6E6FF];
+  }
+
+  &:active {
+    @apply bg-[#A6C8FF];
+  }
+}

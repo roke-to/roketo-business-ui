@@ -1,0 +1,14 @@
+.col {
+  @apply flex flex-col;
+}
+
+/* aling */
+.left {
+  @apply items-start;
+}
+.right {
+  @apply items-end;
+}
+.center {
+  @apply items-center;
+}

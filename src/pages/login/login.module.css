@@ -1,0 +1,8 @@
+.login {
+  @apply bg-gradient-to-r from-[#f8c9a0] to-[#a0c2f8]
+    min-h-screen
+    flex 
+    flex-col
+    justify-center
+    overflow-hidden;
+}
