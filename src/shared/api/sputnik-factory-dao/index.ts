@@ -3,9 +3,15 @@ import * as nearAPI from 'near-api-js';
 import BN from 'bn.js';
 import {Account} from 'near-api-js';
 
+import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/sputnik-factory-dao-api';
+
 // import {env} from '~/shared/config/env';
 
-export async function initSputnikFactoryDao({account}: {account: Account}): Promise<null> {
+export async function initSputnikFactoryDao({
+  account,
+}: {
+  account: Account;
+}): Promise<{api: SputnikFactoryDaoApi}> {
   // TODO: use env
   const contract = new nearAPI.Contract(account, 'sputnikv2.testnet', {
     viewMethods: [
@@ -51,6 +57,8 @@ export async function initSputnikFactoryDao({account}: {account: Account}): Prom
 
   console.log({contract});
 
+  const api = new SputnikFactoryDaoApi({contract, account});
+
   try {
     // @ts-expect-error
     const res = await contract.create(
@@ -67,5 +75,7 @@ export async function initSputnikFactoryDao({account}: {account: Account}): Prom
     console.log('Err', err);
   }
 
-  return null;
+  return {
+    api,
+  };
 }
