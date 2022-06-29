@@ -1,47 +1,55 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
+
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: ['./src/**/*.ts', './src/**/*.tsx', './index.html'],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {
-      colors: {
-        dark: '#1F1D37',
-        dark60: '#1f1d3773', // opacity20
-        gray: '#9794B6',
-        gray40: '#9794B650',
-        blue: '#8DA6FF',
-        white: '#FFFFFF',
-        input: '#272543',
-        border: '#45426D',
-        border2: '#413E61', // delimiteres
-        hover: '#0D0B26',
-        progressBar: '#090818',
-        card2: '#353354',
-        special: {
-          active: '#2EDDD9',
-          inactive: '#F56173',
-          hold: '#FFAB6A',
-        },
-        streams: {
-          streamed: '#B54EFF',
-          withdrawn: '#FFB66A',
-        },
-      },
-    },
+  content: ['./src/**/*.{ts,tsx}', './index.html'],
+  corePlugins: {
+    // https://github.com/tailwindlabs/tailwindcss/issues/6602
+    preflight: false,
   },
-  variants: {
-    extend: {
-      backgroundColor: ['active'],
-      borderRadius: ['first', 'last'],
+  // https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+  theme: {
+    dropShadow: {
+      // TODO: use color from theme
+      DEFAULT: ['0px 5px 20px rgba(87, 140, 219, 0.25)'], // #578cdb
+    },
+    fontFamily: {
+      // TODO: нужны ли тут остальные дефолтные шрифты
+      sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+      heading: ['"Inter"', ...defaultTheme.fontFamily.sans],
+      serif: defaultTheme.fontFamily.serif,
+      mono: defaultTheme.fontFamily.mono,
+    },
+    colors: {
+      inherit: 'inherit',
+      current: 'currentColor',
+      transparent: 'transparent',
+      black: colors.black,
+      white: colors.white,
+      gray: colors.gray,
+      blue: {
+        light: '#F0F6FF',
+        DEFAULT: '#3E65F2',
+      },
+      orange: {
+        light: '#FFF7F0',
+        DEFAULT: '#FF8C19',
+      },
+      red: {
+        light: '#FEF0F1',
+        DEFAULT: '#D80A1F',
+      },
+      green: {
+        light: '#F2FCF5',
+        DEFAULT: '#1EBA52',
+      },
     },
   },
   plugins: [
-    require('tailwind-css-variables')(
-      {
-        // modules
-      },
-      {
-        // options
-      },
-    ),
+    // TODO: это дает возможность использовать любое значение
+    // из конфига как css переменную, например var(--color-blue), var(--font-sans)
+    // нужена ли нам такая возможность
+    require('tailwind-css-variables')(),
   ],
 };
