@@ -9,9 +9,7 @@ const {generateApi} = swaggerTypescriptApi;
 const appDirectory = fs.realpathSync(process.cwd());
 
 async function main() {
-  const {resolveApp} = {
-    resolveApp: (relativePath) => path.resolve(appDirectory, relativePath),
-  };
+  const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
 
   const {
     'api-path': apiPathRaw,
