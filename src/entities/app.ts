@@ -1,19 +1,13 @@
 import {createEvent, createStore, sample} from 'effector';
 
-import {$nearWallet, createNearWalletFx, initWallets} from './near-wallet';
+import {initWallet} from './wallet';
 
-export const $isSignedIn = $nearWallet.map((wallet) => wallet?.auth.signedIn ?? false);
-
-export const $appLoading = createStore(true);
+// TODO: remove
+export const $appLoading = createStore(false);
 
 export const initApp = createEvent();
 
 sample({
-  clock: createNearWalletFx.finally,
-  fn: () => false,
-  target: $appLoading,
-});
-sample({
   clock: initApp,
-  target: initWallets,
+  target: initWallet,
 });

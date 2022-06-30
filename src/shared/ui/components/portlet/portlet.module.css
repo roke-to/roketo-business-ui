@@ -5,7 +5,6 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
   overflow: hidden;
   box-shadow: theme('dropShadow.DEFAULT');
   padding: theme('spacing.8');

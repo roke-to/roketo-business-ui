@@ -6,7 +6,7 @@ import styles from './col.module.css';
 type ColAlign = 'left' | 'right' | 'center';
 type ColGap = 'sm' | 'md' | 'lg' | 'xl';
 
-export interface ColProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
+export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: ColAlign;
   gap?: ColGap | number;
 }

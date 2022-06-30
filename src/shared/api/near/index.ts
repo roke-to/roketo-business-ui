@@ -9,8 +9,12 @@ import {
 import type {Action as NearAction} from 'near-api-js/lib/transaction';
 
 import {env} from '~/shared/config/env';
+import {ReactComponent as MyNearWalletLogo} from '~/shared/ui/icons/my-near-wallet.svg';
+import {ReactComponent as NearWalletLogo} from '~/shared/ui/icons/near-wallet.svg';
 
 import {NetworkId, Action as SelectorAction, setupWalletSelector} from '@near-wallet-selector/core';
+import {setupMyNearWallet} from '@near-wallet-selector/my-near-wallet';
+import {setupNearWallet} from '@near-wallet-selector/near-wallet';
 import {setupSender} from '@near-wallet-selector/sender';
 
 import type {NearAuth, TransactionMediator} from '../types';
@@ -161,3 +165,33 @@ export async function createNearInstance(
     }
   }
 }
+
+export const initWalletSelector = async () => {
+  const selector = await setupWalletSelector({
+    network: env.NEAR_NETWORK_ID,
+    debug: true,
+    modules: [
+      setupNearWallet({
+        iconUrl: 'NearWalletLogo',
+      }),
+      setupMyNearWallet({
+        iconUrl: 'MyNearWalletLogo',
+      }),
+      // TODO: setupSender after https://github.com/near/wallet-selector/pull/339
+      // setupSender(),
+    ],
+  });
+  // TODO: remove
+  // @ts-expect-error for debug
+  window.selector = selector;
+
+  return selector;
+};
+
+const walletIcons = {
+  MyNearWalletLogo,
+  NearWalletLogo,
+};
+
+export const resolveWalletIcon = (iconUrl: string) =>
+  walletIcons[iconUrl as keyof typeof walletIcons];

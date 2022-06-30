@@ -11,6 +11,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   as?: any;
   className?: string;
   children?: React.ReactNode;
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
 }
@@ -26,6 +28,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant = 'solid',
       size = 'md',
+      startIcon,
+      endIcon,
       ...props
     },
     ref,
@@ -34,9 +38,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       {...props}
       ref={ref}
       type={type}
-      className={clsx(styles.button, styles[size], styles[variant], className)}
+      className={clsx(
+        styles.button,
+        styles[size],
+        styles[variant],
+        {[styles.hasIcon]: startIcon || endIcon},
+        className,
+      )}
     >
+      {startIcon}
       {children}
+      {endIcon}
     </Tag>
   ),
 );

@@ -1,8 +1,7 @@
 import {useStore} from 'effector-react';
 import {Link} from 'react-router-dom';
 
-import {$isSignedIn} from '~/entities/app';
-import {$accountId} from '~/entities/near-wallet';
+import {$accountId, $isSignedIn} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 
 export const ProfileLink: React.FC<{className?: string}> = ({className}) => {
