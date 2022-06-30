@@ -19,7 +19,7 @@
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
-    "generate:astro-api": "npx swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --templates .scripts/generated-swagger-api-client/templates --axios --responses"
+    "generate:astro-api": "npx swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses"
   },
   "dependencies": {
     "@effector/reflect": "^7.1.1",
@@ -28,7 +28,6 @@
     "@near-wallet-selector/sender": "^4.1.0",
     "@near-wallet-selector/wallet-utils": "^4.1.0",
     "@roketo/api-client": "roke-to/roketo-api-client#v0.0.31",
-    "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "classnames": "^2.3.1",
     "clipboard-copy": "^4.0.1",

@@ -2,7 +2,7 @@ import {env} from '~/shared/config/env';
 
 import {AccountDaoResponse, Api as AstroApi} from './generated/astro-api';
 
-const {api} = new AstroApi({baseURL: env.ASTRO_API});
+const {api} = new AstroApi({baseUrl: env.ASTRO_API});
 
 export async function getAccountDaos(accountId: string): Promise<AccountDaoResponse[]> {
   try {
