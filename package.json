@@ -19,7 +19,7 @@
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
-    "generate:astro-api": "zx .scripts/generated-swagger-api-client/generator.mjs generate --api-path='https://api.app.astrodao.com/docs-json' --output-dir='src/shared/api/astro/generated' --output-file='astro-api.ts'"
+    "generate:astro-api": "npx swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --templates .scripts/generated-swagger-api-client/templates --axios --responses"
   },
   "dependencies": {
     "@effector/reflect": "^7.1.1",
@@ -99,13 +99,11 @@
     "react-styleguidist": "^11.2.0",
     "rollup": "^2.75.5",
     "sass": "^1.49.9",
-    "swagger-typescript-api": "^9.3.1",
     "tailwind-css-variables": "^3.0.1",
     "tailwindcss": "^3.1.4",
     "typescript": "^4.6.2",
     "vite": "^2.9.9",
     "vite-plugin-svgr": "^2.1.0",
-    "webpack": "^5.73.0",
-    "zx": "^7.0.4"
+    "webpack": "^5.73.0"
   }
 }

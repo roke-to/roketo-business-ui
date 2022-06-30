@@ -1,4 +1,11 @@
-import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType} from 'axios';
+import axios, {
+  AxiosDefaults,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  HeadersDefaults,
+  ResponseType,
+} from 'axios';
 
 /* eslint-disable */
 /* tslint:disable */
@@ -961,7 +968,7 @@ export class HttpClient<SecurityDataType = unknown> {
   private mergeRequestParams(
     params1: AxiosRequestConfig,
     params2?: AxiosRequestConfig,
-  ): AxiosRequestConfig {
+  ): AxiosDefaults {
     return {
       ...this.instance.defaults,
       ...params1,
@@ -1006,7 +1013,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = (format && this.format) || void 0;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === 'object') {
+    if (type === ContentType.FormData && typeof body === 'object') {
       requestParams.headers.common = {Accept: '*/*'};
       requestParams.headers.post = {};
       requestParams.headers.put = {};
@@ -1014,11 +1021,42 @@ export class HttpClient<SecurityDataType = unknown> {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
+    const method = (
+      requestParams.method ||
+      this.instance.defaults.method ||
+      'get'
+    ).toLowerCase() as keyof HeadersDefaults;
+
+    const flattenHeaders = {
+      ...requestParams.headers,
+      ...requestParams.headers.common,
+      ...(requestParams.headers[method] && requestParams.headers[method]),
+    };
+
+    const methods: (keyof HeadersDefaults)[] = [
+      'common',
+      'delete',
+      'get',
+      'head',
+      'post',
+      'put',
+      'patch',
+      'options',
+      'purge',
+      'link',
+      'unlink',
+    ];
+
+    flattenHeaders &&
+      methods.forEach(function cleanHeaderConfig(method) {
+        delete flattenHeaders[method];
+      });
+
     return this.instance.request({
       ...requestParams,
       headers: {
         ...(type && type !== ContentType.FormData ? {'Content-Type': type} : {}),
-        ...(requestParams.headers || {}),
+        ...((flattenHeaders as unknown as AxiosRequestConfig['headers']) || {}),
       },
       params: query,
       responseType: responseFormat,
