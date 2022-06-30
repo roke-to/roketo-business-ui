@@ -11,6 +11,7 @@ type EnvType = {
   WEB_API_URL: string;
   COMMIT_HASH: string;
   BUILD_TIME: string;
+  ASTRO_API: string;
 };
 
 export const env: EnvType = {
@@ -26,4 +27,5 @@ export const env: EnvType = {
   WEB_API_URL: import.meta.env.VITE_WEB_API_URL,
   COMMIT_HASH: import.meta.env.VITE_COMMIT_HASH,
   BUILD_TIME: import.meta.env.VITE_BUILD_TIME,
+  ASTRO_API: import.meta.env.VITE_ASTRO_API,
 };

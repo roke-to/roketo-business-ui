@@ -18,7 +18,8 @@
     "prepare": "is-ci || husky install",
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
-    "format:check": "yarn pretty --check"
+    "format:check": "yarn pretty --check",
+    "generate:astro-api": "swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses"
   },
   "dependencies": {
     "@effector/reflect": "^7.1.1",
@@ -27,7 +28,6 @@
     "@near-wallet-selector/sender": "^4.1.0",
     "@near-wallet-selector/wallet-utils": "^4.1.0",
     "@roketo/api-client": "roke-to/roketo-api-client#v0.0.31",
-    "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
     "clipboard-copy": "^4.0.1",
     "clsx": "^1.1.1",
@@ -98,6 +98,7 @@
     "react-styleguidist": "^11.2.0",
     "rollup": "^2.75.5",
     "sass": "^1.49.9",
+    "swagger-typescript-api": "^9.3.1",
     "tailwind-css-variables": "^3.0.1",
     "tailwindcss": "^3.1.4",
     "typescript": "^4.6.2",

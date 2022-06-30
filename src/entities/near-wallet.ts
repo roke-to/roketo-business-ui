@@ -1,6 +1,6 @@
 import {createEffect, createEvent, createStore, sample} from 'effector';
 
-import {getAccountDaos as getAccountDaosApi} from '~/shared/api/astro-api';
+import {getAccountDaos as getAccountDaosApi} from '~/shared/api/astro';
 import {createNearInstance, NearInstance} from '~/shared/api/near';
 import {initSputnikFactoryDao} from '~/shared/api/sputnik-factory-dao';
 
