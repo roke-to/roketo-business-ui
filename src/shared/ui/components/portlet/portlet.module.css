@@ -9,5 +9,5 @@
   box-shadow: theme('dropShadow.DEFAULT');
   padding: theme('spacing.8');
   border-radius: theme('borderRadius.3xl');
-  max-width: theme('maxWidth.lg');
+  max-width: theme('maxWidth.sm');
 }

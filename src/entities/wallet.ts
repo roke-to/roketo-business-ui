@@ -1,4 +1,4 @@
-import {createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import {initWalletSelector} from '~/shared/api/near';
 import {env} from '~/shared/config/env';
@@ -40,11 +40,11 @@ sample({
 });
 
 // Mapped stores shotcuts
-export const $accountId = $walletSelector.map(
-  (walletSelector) => walletSelector?.store.getState().accounts?.[0].accountId ?? null,
+export const $accountId = $walletSelectorState.map(
+  (walletSelector) => walletSelector?.accounts?.[0]?.accountId ?? null,
 );
-export const $isSignedIn = $walletSelector.map(
-  (walletSelector) => walletSelector?.isSignedIn() || false,
+export const $isSignedIn = $walletSelectorState.map((walletSelector) =>
+  Boolean(walletSelector?.accounts.length),
 );
 
 // Login logic
@@ -90,38 +90,36 @@ export const logoutFromWalletFx = attach({
   source: $walletSelector,
   async effect(walletSelector) {
     try {
+      if (!walletSelector) {
+        return;
+      }
 
-    if (!walletSelector) {
-      return;
+      const {modules, selectedWalletId} = walletSelector.store.getState();
+
+      const module = modules.find((m) => m.id === selectedWalletId);
+
+      if (!module) {
+        throw new Error(`Wallet ${selectedWalletId} not found`);
+      }
+
+      const wallet = await module.wallet();
+
+      // dont support hardware wallet
+      if (wallet.type === 'hardware') {
+        return;
+      }
+
+      await wallet.signOut();
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Something went wrong';
+
+      const error = new Error(`Failed to sign out: ${message}`) as Error & {originalError: unknown};
+
+      error.originalError = err;
+
+      throw err;
     }
-
-    const {modules, selectedWalletId} = walletSelector.store.getState();
-
-    const module = modules.find((m) => m.id === selectedWalletId);
-
-    if (!module) {
-      throw new Error(`Wallet ${selectedWalletId} not found`);
-    }
-
-    const wallet = await module.wallet();
-
-    // dont support hardware wallet
-    if (wallet.type === 'hardware') {
-      return;
-    }
-
-    await wallet.signOut();
-
-    window.location.reload();
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Something went wrong';
-
-    const error = new Error(`Failed to sign out: ${message}`) as Error & {originalError: unknown};
-
-    error.originalError = err;
-
-    throw err;
-  }
+  },
 });
 
 sample({

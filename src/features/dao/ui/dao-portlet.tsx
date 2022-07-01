@@ -9,7 +9,7 @@ export const DaoPortlet = () => {
 
   return (
     <Portlet gap='xl'>
-      <Col gap='sm'>
+      <Col>
         <Heading>You don’t have any DAO</Heading>
         <Text>Check if the wallet address is correct or create a new DAO:</Text>
         <Text>{accountId}</Text>
