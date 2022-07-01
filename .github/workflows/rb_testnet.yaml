@@ -25,7 +25,7 @@ jobs:
       - name: Set up SSH client 🔒
         uses: webfactory/ssh-agent@v0.5.4
         with:
-          ssh-private-key: ${{ secrets.DEPLOY_KEY_TEST }}
+          ssh-private-key: ${{ secrets.DEPLOY_KEY_RB_TEST }}
 
       - uses: benjlevesque/short-sha@v1.2
         id: short-sha
