@@ -93,15 +93,9 @@ sample({
 export const logoutClicked = createEvent();
 
 export const logoutFromWalletFx = attach({
-  source: $walletSelector,
-  async effect(walletSelector) {
+  source: $walletSelectorState,
+  async effect({modules, selectedWalletId}) {
     try {
-      if (!walletSelector) {
-        return;
-      }
-
-      const {modules, selectedWalletId} = walletSelector.store.getState();
-
       const module = modules.find((m) => m.id === selectedWalletId);
 
       if (!module) {
