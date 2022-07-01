@@ -45,4 +45,4 @@ jobs:
           branch: master
           folder: dist
           repository-name: roke-to/roketo-business-ui-test-public
-          ssh-key: ${{ secrets.DEPLOY_KEY_TEST }}
+          ssh-key: ${{ secrets.DEPLOY_KEY_RB_TEST }}
