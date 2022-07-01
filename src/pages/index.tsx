@@ -1,21 +1,36 @@
 import {useStore} from 'effector-react';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Router, Switch} from 'react-router-dom';
 
-import {$isSignedIn} from '~/entities/app';
-import {LoginPage} from '~/pages/login/login';
+import {$isSignedIn} from '~/entities/wallet';
+import {DaoPage} from '~/pages/dao';
+import {LoginPage} from '~/pages/login';
 import {NotFoundPage} from '~/pages/not-found';
 import {ROUTES} from '~/shared/config/routes';
-import {PrivateRoute} from '~/shared/lib/router';
+import {history, PrivateRoute} from '~/shared/lib/router';
 
 export function Routing() {
   const signedIn = useStore($isSignedIn);
 
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <Switch>
-        <Route exact path={ROUTES.root.path}>
+        <PrivateRoute
+          exact
+          allowed={!signedIn}
+          path={ROUTES.root.path}
+          redirect={<Redirect to={ROUTES.dao.path} />}
+        >
           <LoginPage />
-        </Route>
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn}
+          path={ROUTES.dao.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <DaoPage />
+        </PrivateRoute>
 
         <PrivateRoute
           exact
@@ -26,17 +41,8 @@ export function Routing() {
           profile page
         </PrivateRoute>
 
-        <PrivateRoute
-          exact
-          allowed={signedIn}
-          path={ROUTES.dao.path}
-          redirect={<Redirect to={ROUTES.root.path} />}
-        >
-          dao page
-        </PrivateRoute>
-
         <Route render={NotFoundPage} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }

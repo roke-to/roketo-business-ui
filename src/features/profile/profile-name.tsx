@@ -1,7 +1,6 @@
 import {useStore} from 'effector-react';
 
-import {$isSignedIn} from '~/entities/app';
-import {$accountId} from '~/entities/near-wallet';
+import {$accountId, $isSignedIn} from '~/entities/wallet';
 
 export const ProfileName = () => {
   const accountId = useStore($accountId);

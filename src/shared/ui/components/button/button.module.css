@@ -69,3 +69,7 @@
     @apply bg-[#A6C8FF];
   }
 }
+
+.hasIcon {
+  @apply gap-sm;
+}

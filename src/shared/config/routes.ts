@@ -19,4 +19,8 @@ export const ROUTES = {
     path: '/dao',
     title: 'DAO',
   },
+  daoNew: {
+    path: '/dao/new',
+    title: 'DAO',
+  },
 };

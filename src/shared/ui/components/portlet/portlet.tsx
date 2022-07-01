@@ -5,7 +5,7 @@ import styles from './portlet.module.css';
 
 type PortletGap = 'sm' | 'md' | 'lg' | 'xl';
 
-export interface PortletProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
+export interface PortletProps extends React.HTMLAttributes<HTMLDivElement> {
   gap?: PortletGap | number;
 }
 

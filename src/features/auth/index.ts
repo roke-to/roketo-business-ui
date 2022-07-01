@@ -1,1 +1,1 @@
-export * from './ui/login-portlet/login-portlet';
+export * from './ui/login-portlet';

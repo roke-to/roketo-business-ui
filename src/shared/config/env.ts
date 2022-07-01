@@ -1,7 +1,7 @@
 type EnvType = {
   APP_TITLE: string;
   ACCOUNT_SUFFIX: string;
-  NEAR_NETWORK_ID: string;
+  NEAR_NETWORK_ID: 'testnet' | 'mainnet';
   NEAR_NODE_URL: string;
   ROKETO_CONTRACT_NAME: string;
   WALLET_URL: string;
@@ -12,6 +12,7 @@ type EnvType = {
   COMMIT_HASH: string;
   BUILD_TIME: string;
   ASTRO_API: string;
+  SPUTNIK_FACTORY_DAO_CONTRACT_NAME: string;
 };
 
 export const env: EnvType = {
@@ -28,4 +29,5 @@ export const env: EnvType = {
   COMMIT_HASH: import.meta.env.VITE_COMMIT_HASH,
   BUILD_TIME: import.meta.env.VITE_BUILD_TIME,
   ASTRO_API: import.meta.env.VITE_ASTRO_API,
+  SPUTNIK_FACTORY_DAO_CONTRACT_NAME: import.meta.env.VITE_VITE_SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
 };
