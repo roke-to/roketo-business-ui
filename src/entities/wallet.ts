@@ -5,8 +5,14 @@ import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
 
-export const $walletSelector = createStore<WalletSelector | null>(null);
-export const $walletSelectorState = createStore<WalletSelectorState | null>(null);
+// initWalletSelector is async and it could be null until intialized
+const $walletSelector = createStore<WalletSelector | null>(null);
+export const $walletSelectorState = createStore<WalletSelectorState>({
+  contract: null,
+  modules: [],
+  accounts: [],
+  selectedWalletId: null,
+});
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();
