@@ -51,12 +51,8 @@ sample({
 });
 
 // Mapped stores shotcuts
-export const $accountId = $walletSelectorState.map(
-  (walletSelector) => walletSelector?.accounts?.[0]?.accountId ?? null,
-);
-export const $isSignedIn = $walletSelectorState.map((walletSelector) =>
-  Boolean(walletSelector?.accounts.length),
-);
+export const $accountId = $walletSelectorState.map(({accounts}) => accounts[0]?.accountId ?? null);
+export const $isSignedIn = $walletSelectorState.map(({accounts}) => Boolean(accounts.length));
 
 // Login logic
 export const walletClicked = createEvent<ModuleState>();
