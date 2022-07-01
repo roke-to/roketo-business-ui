@@ -1,4 +1,5 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {Get} from 'type-fest';
 
 import {initWalletSelector} from '~/shared/api/near';
 import {env} from '~/shared/config/env';
@@ -19,12 +20,16 @@ export const initWallet = createEvent();
 
 const setWalletSelectorState = createEvent<WalletSelectorState>();
 
+let walletSelectorStoreSubscription: ReturnType<Get<WalletSelector, 'store.observable.subscribe'>>;
+
 const initWalletSelectorFx = createEffect(async () => {
   const walletSelector = await initWalletSelector();
 
-  walletSelector.store.observable.subscribe((state) => {
-    setWalletSelectorState(state);
-  });
+  if (!walletSelectorStoreSubscription) {
+    walletSelectorStoreSubscription = walletSelector.store.observable.subscribe((state) => {
+      setWalletSelectorState(state);
+    });
+  }
 
   return walletSelector;
 });
