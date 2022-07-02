@@ -1,9 +1,11 @@
 import {Account, Contract} from 'near-api-js';
 
+import type {SputnikDAO} from '~/shared/api/sputnik-dao/types';
+
 // import {env} from '~/shared/config/env';
 
 // ts-unused-exports:disable-next-line
-export async function initSputnikDao({account}: {account: Account}): Promise<Contract> {
+export async function initSputnikDao({account}: {account: Account}): Promise<SputnikDAO> {
   // TODO: pass as arg
   const daoId = 'extg2.sputnikv2.testnet';
   return new Contract(account, daoId, {
@@ -42,5 +44,5 @@ export async function initSputnikDao({account}: {account: Account}): Promise<Con
       'delegate',
       'undelegate',
     ],
-  });
+  }) as SputnikDAO;
 }
