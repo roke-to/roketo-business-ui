@@ -6,7 +6,7 @@ import {Account, Contract} from 'near-api-js';
 export async function initSputnikDao({account}: {account: Account}): Promise<Contract> {
   // TODO: pass as arg
   const daoId = 'extg2.sputnikv2.testnet';
-  const contract = new Contract(account, daoId, {
+  return new Contract(account, daoId, {
     viewMethods: [
       'version',
       'get_config',
@@ -43,6 +43,4 @@ export async function initSputnikDao({account}: {account: Account}): Promise<Con
       'undelegate',
     ],
   });
-
-  return contract;
 }
