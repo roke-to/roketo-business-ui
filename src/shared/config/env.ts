@@ -13,6 +13,7 @@ type EnvType = {
   BUILD_TIME: string;
   ASTRO_API: string;
   SPUTNIK_FACTORY_DAO_CONTRACT_NAME: string;
+  BASE_PUBLIC_PATH: string;
 };
 
 export const env: EnvType = {
@@ -29,5 +30,6 @@ export const env: EnvType = {
   COMMIT_HASH: import.meta.env.VITE_COMMIT_HASH,
   BUILD_TIME: import.meta.env.VITE_BUILD_TIME,
   ASTRO_API: import.meta.env.VITE_ASTRO_API,
-  SPUTNIK_FACTORY_DAO_CONTRACT_NAME: import.meta.env.VITE_VITE_SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
+  SPUTNIK_FACTORY_DAO_CONTRACT_NAME: import.meta.env.VITE_SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
+  BASE_PUBLIC_PATH: import.meta.env.VITE_BASE_PUBLIC_PATH,
 };
