@@ -2,7 +2,11 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {$accountId, logoutClicked} from '~/entities/wallet';
-import {Button, Col, Heading, Portlet, Text} from '~/shared/ui/components';
+import {Button} from '~/shared/ui/components/button';
+import {Col} from '~/shared/ui/components/col';
+import {Heading} from '~/shared/ui/components/heading';
+import {Portlet} from '~/shared/ui/components/portlet';
+import {Text} from '~/shared/ui/components/text';
 
 export const DaoPortlet = () => {
   const accountId = useStore($accountId);

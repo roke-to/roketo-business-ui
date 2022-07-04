@@ -24,3 +24,7 @@ jobs:
       - name: Run ESLint 🌸
         working-directory: .
         run: yarn lint
+
+      - name: Run check unused-exports 👽
+        working-directory: .
+        run: yarn check:unused:exports
