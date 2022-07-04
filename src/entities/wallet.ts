@@ -93,7 +93,7 @@ sample({
 // Logout logic
 export const logoutClicked = createEvent();
 
-export const logoutFromWalletFx = attach({
+const logoutFromWalletFx = attach({
   source: $walletSelectorState,
   async effect({modules, selectedWalletId}) {
     try {

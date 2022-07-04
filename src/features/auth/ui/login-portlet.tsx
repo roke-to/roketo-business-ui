@@ -3,7 +3,12 @@ import React from 'react';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {resolveWalletIcon} from '~/shared/api/near';
-import {Button, Col, Heading, Icon, Portlet, Text} from '~/shared/ui/components';
+import {Button} from '~/shared/ui/components/button';
+import {Col} from '~/shared/ui/components/col';
+import {Heading} from '~/shared/ui/components/heading';
+import {Icon} from '~/shared/ui/components/icon';
+import {Portlet} from '~/shared/ui/components/portlet';
+import {Text} from '~/shared/ui/components/text';
 
 import type {ModuleState} from '@near-wallet-selector/core';
 

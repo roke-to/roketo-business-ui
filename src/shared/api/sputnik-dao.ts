@@ -2,6 +2,7 @@ import {Account, Contract} from 'near-api-js';
 
 // import {env} from '~/shared/config/env';
 
+// ts-unused-exports:disable-next-line
 export async function initSputnikDao({account}: {account: Account}): Promise<Contract> {
   // TODO: pass as arg
   const daoId = 'extg2.sputnikv2.testnet';
