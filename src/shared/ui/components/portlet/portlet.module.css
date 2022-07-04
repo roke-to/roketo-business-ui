@@ -10,4 +10,5 @@
   padding: theme('spacing.8');
   border-radius: theme('borderRadius.3xl');
   max-width: theme('maxWidth.sm');
+  min-width: theme('maxWidth.sm');
 }

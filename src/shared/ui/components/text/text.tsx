@@ -5,7 +5,6 @@ import styles from './text.module.css';
 
 export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   as?: any;
-  children?: React.ReactNode;
   color?: string;
 }
 

@@ -1,0 +1,33 @@
+.label {
+  display: flex;
+  flex-direction: column;
+
+  /* .content + * + * = error */
+  .content + * + * {
+    margin-top: theme('gap.1');
+  }
+
+  .error {
+    color: #d80a1f;
+  }
+}
+
+.required {
+  .content::after {
+    content: '*';
+    color: #d80a1f;
+  }
+}
+
+/* sizes */
+
+.md {
+  .content,
+  .error {
+    font-size: theme('fontSize.xs');
+  }
+  /* .content + * = input */
+  .content + * {
+    margin-top: theme('gap.1');
+  }
+}
