@@ -1,5 +1,6 @@
 import {useStore} from 'effector-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {resolveWalletIcon} from '~/shared/api/near';
@@ -13,6 +14,7 @@ import {Text} from '~/shared/ui/components/text';
 import type {ModuleState} from '@near-wallet-selector/core';
 
 export const LoginPortlet = () => {
+  const {t} = useTranslation('auth');
   const {modules, selectedWalletId} = useStore($walletSelectorState);
 
   const handleWalletClick = (module: ModuleState) => () => walletClicked(module);
@@ -20,8 +22,8 @@ export const LoginPortlet = () => {
   return (
     <Portlet gap='xl'>
       <Col gap='sm'>
-        <Heading>Join Roketo Business today</Heading>
-        <Text>Sign in via NEAR Network to login or create account</Text>
+        <Heading>{t('title')}</Heading>
+        <Text>{t('subTitle')}</Text>
       </Col>
       <Col>
         {modules.map((module: ModuleState) => {
@@ -42,7 +44,7 @@ export const LoginPortlet = () => {
             </Button>
           );
         })}
-        <Text color='muted'>After signing up, you'll get access to all features</Text>
+        <Text color='muted'>{t('footer')}</Text>
       </Col>
     </Portlet>
   );
