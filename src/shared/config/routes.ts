@@ -2,10 +2,10 @@ import {env} from '~/shared/config/env';
 
 export type Route = {
   path: string;
-  title: String;
+  title?: string;
 };
 
-const APP_ROUTES = {
+const APP_ROUTES: Record<string, Route> = {
   root: {
     path: '/',
   },
