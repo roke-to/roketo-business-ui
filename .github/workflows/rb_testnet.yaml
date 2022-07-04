@@ -38,6 +38,7 @@ jobs:
         env:
           VITE_BUILD_TIME: '${{ steps.time.outputs.time }}'
           VITE_COMMIT_HASH: '${{ steps.short-sha.outputs.sha }}'
+          VITE_BASE_PUBLIC_PATH: 'roketo-business-ui-test-public'
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
