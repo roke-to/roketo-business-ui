@@ -1,9 +1,9 @@
 export type Route = {
   path: string;
-  title: String;
+  title?: string;
 };
 
-export const ROUTES = {
+export const ROUTES: Record<string, Route> = {
   root: {
     path: '/',
   },
