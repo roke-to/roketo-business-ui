@@ -5,6 +5,7 @@ import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/sputnik-fac
 import {SputnikFactoryDAO} from '~/shared/api/sputnik-factory-dao/types';
 import {env} from '~/shared/config/env';
 
+// ts-unused-exports:disable-next-line
 export async function initSputnikFactoryDao({
   account,
 }: {

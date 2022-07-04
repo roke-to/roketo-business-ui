@@ -4,6 +4,7 @@ import {AccountDaoResponse, Api as AstroApi} from './generated/astro-api';
 
 const {api} = new AstroApi({baseUrl: env.ASTRO_API});
 
+// ts-unused-exports:disable-next-line
 export async function getAccountDaos(accountId: string): Promise<AccountDaoResponse[]> {
   try {
     console.log('accountId', accountId);
