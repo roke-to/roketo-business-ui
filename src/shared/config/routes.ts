@@ -1,11 +1,9 @@
-import {env} from '~/shared/config/env';
-
 export type Route = {
   path: string;
   title?: string;
 };
 
-const APP_ROUTES: Record<string, Route> = {
+export const ROUTES: Record<string, Route> = {
   root: {
     path: '/',
   },
@@ -26,10 +24,3 @@ const APP_ROUTES: Record<string, Route> = {
     title: 'DAO',
   },
 };
-
-export const ROUTES = Object.fromEntries(
-  Object.entries(APP_ROUTES).map(([key, value]) => [
-    key,
-    {...value, path: `${env.BASE_PUBLIC_PATH}${value.path}`},
-  ]),
-);
