@@ -10,7 +10,6 @@ export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   as?: any;
   className?: string;
-  children?: React.ReactNode;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   variant?: ButtonVariant;

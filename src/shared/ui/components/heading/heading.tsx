@@ -5,7 +5,6 @@ import styles from './heading.module.css';
 
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: any;
-  children?: React.ReactNode;
   color?: string;
 }
 
