@@ -1,8 +1,8 @@
-import {DaoPortlet} from '~/features/dao';
+import {DaoInit} from '~/features/dao/ui/dao-init';
 import {Scene} from '~/shared/ui/components/scene';
 
 export const DaoPage = () => (
   <Scene>
-    <DaoPortlet />
+    <DaoInit />
   </Scene>
 );

@@ -36,6 +36,7 @@
     "clsx": "^1.1.1",
     "date-fns": "^2.27.0",
     "effector": "^22.3.0",
+    "effector-forms": "^0.0.24",
     "effector-logger": "^0.13.4",
     "effector-react": "^22.0.6",
     "error-polyfill": "^0.1.3",
