@@ -18,7 +18,6 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
 
 const DEFAULT_TAG = 'label';
 
-// ts-unused-exports:disable-next-line
 export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
   (
     {as: Tag = DEFAULT_TAG, className, children, content, error, size = 'md', required, ...props},

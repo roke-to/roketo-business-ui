@@ -20,7 +20,6 @@ type InputProps = Merge<
   }
 >;
 
-// ts-unused-exports:disable-next-line
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {

@@ -1,4 +1,4 @@
-import {Account} from 'near-api-js';
+import {Account, Contract} from 'near-api-js';
 
 import {
   AccountId,
@@ -9,16 +9,38 @@ import {
   SputnikBaseParams,
   SputnikFactoryDAO,
 } from '~/shared/api/sputnik-factory-dao/types';
+import {env} from '~/shared/config/env';
 
 export class SputnikFactoryDaoApi {
   contract: SputnikFactoryDAO;
 
   account: Account;
 
-  constructor({contract, account}: {contract: SputnikFactoryDAO; account: Account}) {
-    this.contract = contract;
-
+  constructor(account: Account) {
     this.account = account;
+    this.contract = new Contract(account, env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME, {
+      viewMethods: [
+        'get_dao_list',
+        'get_number_daos',
+        'get_daos',
+        'get_owner',
+        'get_default_code_hash',
+        'get_default_version',
+        'get_code',
+        'get_contracts_metadata',
+      ],
+      changeMethods: [
+        'new',
+        'create',
+        'set_owner',
+        'set_default_code_hash',
+        'delete_contract',
+        'update',
+        'store_contract_metadata',
+        'delete_contract_metadata',
+        'store',
+      ],
+    }) as SputnikFactoryDAO;
   }
 
   async getDaoList() {

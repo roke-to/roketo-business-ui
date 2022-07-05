@@ -1,14 +1,16 @@
 import {useStore} from 'effector-react';
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import {$accountId, logoutClicked} from '~/entities/wallet';
+import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Heading} from '~/shared/ui/components/heading';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Text} from '~/shared/ui/components/text';
 
-export const DaoPortlet = () => {
+export const DaoInit = () => {
   const accountId = useStore($accountId);
 
   return (
@@ -22,7 +24,10 @@ export const DaoPortlet = () => {
         <Button variant='soft' onClick={() => logoutClicked()}>
           Logout
         </Button>
-        <Button variant='outlined'>Create DAO</Button>
+        {/* @ts-expect-error */}
+        <Button as={Link} to={ROUTES.daoNew.path} variant='outlined'>
+          Create DAO
+        </Button>
       </Col>
     </Portlet>
   );
