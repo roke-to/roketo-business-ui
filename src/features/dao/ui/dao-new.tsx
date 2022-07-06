@@ -11,6 +11,8 @@ import {Label} from '~/shared/ui/components/label';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Text} from '~/shared/ui/components/text';
 
+// TODO: обрабатывать квери параметры ошибки ?errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
+// когда возвращаемся из NEAR
 export const DaoNew = () => {
   const {fields, submit, eachValid} = useForm(createDaoForm);
   const pending = useStore(createDaoFx.pending);

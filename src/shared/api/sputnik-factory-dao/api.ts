@@ -3,6 +3,7 @@ import {Account, Contract} from 'near-api-js';
 import {
   AccountId,
   Base58CryptoHash,
+  ChangeMethodOptions,
   CreateSputnikContractParams,
   DaosParams,
   MetaDataSputnikContractParams,
@@ -10,8 +11,6 @@ import {
   SputnikFactoryDAO,
 } from '~/shared/api/sputnik-factory-dao/types';
 import {env} from '~/shared/config/env';
-
-import {templateCreateArgs} from './template-create-args';
 
 export class SputnikFactoryDaoApi {
   contract: SputnikFactoryDAO;
@@ -78,44 +77,46 @@ export class SputnikFactoryDaoApi {
   }
 
   async newContract() {
+    // TODO: как прокидывать вывзов без аргументов, в near-api-js они вроде обязательны
+    // @ts-expect-error
     return this.contract.new();
   }
 
-  async create({name}: CreateSputnikContractParams, ...args: any[]) {
-    return this.contract.create(
-      {
-        name,
-        args: templateCreateArgs({name, accountId: this.account.accountId}),
-      },
-      ...args,
-    );
+  async create(options: ChangeMethodOptions<CreateSputnikContractParams>) {
+    return this.contract.create(options);
   }
 
-  async setOwner(ownerId: AccountId) {
-    return this.contract.set_owner({owner_id: ownerId});
+  async setOwner(options: ChangeMethodOptions<{owner_id: AccountId}>) {
+    return this.contract.set_owner(options);
   }
 
-  async setDefaultCodeHash(codeHash: Base58CryptoHash) {
-    return this.contract.set_default_code_hash({code_hash: codeHash});
+  async setDefaultCodeHash(options: ChangeMethodOptions<{code_hash: Base58CryptoHash}>) {
+    return this.contract.set_default_code_hash(options);
   }
 
-  async deleteContract(params: SputnikBaseParams) {
-    return this.contract.set_default_code_hash(params);
+  async deleteContract(options: ChangeMethodOptions<SputnikBaseParams>) {
+    return this.contract.set_default_code_hash(options);
   }
 
-  async update(codeHash: Base58CryptoHash) {
-    return this.contract.update({account_id: this.account.accountId, code_hash: codeHash});
+  async update(options: ChangeMethodOptions<{account_id: string; code_hash: string}>) {
+    return this.contract.update(options);
   }
 
-  async storeContractMetadata(params: Omit<MetaDataSputnikContractParams, 'set_default'>) {
-    return this.contract.store_contract_metadata({...params, set_default: false});
+  async storeContractMetadata(
+    options: ChangeMethodOptions<Omit<MetaDataSputnikContractParams, 'set_default'>>,
+  ) {
+    return this.contract.store_contract_metadata({
+      ...options,
+      args: {...options.args, set_default: false},
+    });
   }
 
-  async deleteContractMetadata(codeHash: Base58CryptoHash) {
-    return this.contract.delete_contract_metadata({code_hash: codeHash});
+  async deleteContractMetadata(options: ChangeMethodOptions<{code_hash: Base58CryptoHash}>) {
+    return this.contract.delete_contract_metadata(options);
   }
 
   async store() {
+    // @ts-expect-error
     return this.contract.store();
   }
 }

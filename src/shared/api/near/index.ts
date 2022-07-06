@@ -22,6 +22,8 @@ export interface NearInstance {
   accountId: string;
 }
 
+// TODO: It should be removed after wallet-selector allow acess to wallet.account
+// Near is used to get access to account object. Because wallet-selector doesn't expose it
 export const createNearInstance = async (walletId?: WalletId | null): Promise<NearInstance> => {
   let near: Near;
 

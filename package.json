@@ -37,6 +37,7 @@
     "clipboard-copy": "^4.0.1",
     "clsx": "^1.1.1",
     "date-fns": "^2.27.0",
+    "decamelize": "^6.0.0",
     "effector": "^22.3.0",
     "effector-forms": "^0.0.24",
     "effector-logger": "^0.13.4",
