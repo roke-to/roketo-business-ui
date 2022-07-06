@@ -8,7 +8,6 @@ import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Portlet} from '~/shared/ui/components/portlet';
-import {Text} from '~/shared/ui/components/text';
 import {Typography} from '~/shared/ui/components/typography';
 
 export const DaoInit = () => {
@@ -19,8 +18,8 @@ export const DaoInit = () => {
     <Portlet gap='xl'>
       <Col>
         <Typography>{t('title')}</Typography>
-        <Text>{t('subTitle')}</Text>
-        <Text>{accountId}</Text>
+        <Typography as='span'>{t('subTitle')}</Typography>
+        <Typography as='span'>{accountId}</Typography>
       </Col>
       <Col>
         <Button variant='soft' onClick={() => logoutClicked()}>

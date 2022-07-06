@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {Text} from '../text';
+import {Typography} from '../typography';
 import styles from './label.module.css';
 
 export type LabelVariant = 'outlined';
@@ -28,9 +28,13 @@ export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
       ref={ref}
       className={clsx(styles.label, styles[size], {[styles.required]: required}, className)}
     >
-      <Text className={styles.content}>{content}</Text>
+      <Typography as='span' className={styles.content}>
+        {content}
+      </Typography>
       {children}
-      <Text className={styles.error}>{error}</Text>
+      <Typography as='span' className={styles.error}>
+        {error}
+      </Typography>
     </Tag>
   ),
 );

@@ -8,7 +8,6 @@ import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Icon} from '~/shared/ui/components/icon';
 import {Portlet} from '~/shared/ui/components/portlet';
-import {Text} from '~/shared/ui/components/text';
 import {Typography} from '~/shared/ui/components/typography';
 
 import type {ModuleState} from '@near-wallet-selector/core';
@@ -23,7 +22,7 @@ export const LoginPortlet = () => {
     <Portlet gap='xl'>
       <Col gap='sm'>
         <Typography>{t('title')}</Typography>
-        <Text>{t('subTitle')}</Text>
+        <Typography as='span'>{t('subTitle')}</Typography>
       </Col>
       <Col>
         {modules.map((module: ModuleState) => {
@@ -62,7 +61,9 @@ export const LoginPortlet = () => {
             </Button>
           );
         })}
-        <Text color='muted'>{t('footer')}</Text>
+        <Typography as='span' color='muted'>
+          {t('footer')}
+        </Typography>
       </Col>
     </Portlet>
   );

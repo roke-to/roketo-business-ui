@@ -8,7 +8,6 @@ import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Portlet} from '~/shared/ui/components/portlet';
-import {Text} from '~/shared/ui/components/text';
 import {Typography} from '~/shared/ui/components/typography';
 
 // TODO: обрабатывать квери параметры ошибки ?errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
@@ -27,7 +26,7 @@ export const DaoNew = () => {
     <Portlet gap='xl'>
       <Col>
         <Typography>New DAO setup</Typography>
-        <Text>Enter DAO name and address</Text>
+        <Typography as='span'>Enter DAO name and address</Typography>
       </Col>
       <form onSubmit={handleSubmit}>
         <Col gap='xl'>
