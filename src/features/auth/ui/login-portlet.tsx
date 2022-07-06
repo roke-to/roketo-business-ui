@@ -27,9 +27,27 @@ export const LoginPortlet = () => {
       </Col>
       <Col>
         {modules.map((module: ModuleState) => {
-          const {name, description, iconUrl} = module.metadata;
+          // @ts-expect-error
+          const {name, description, iconUrl, available, downloadUrl} = module.metadata;
           const selected = module.id === selectedWalletId;
           const WalletIcon = resolveWalletIcon(iconUrl);
+
+          if (!available) {
+            return (
+              <Button
+                as='a'
+                // @ts-expect-error
+                href={downloadUrl}
+                target='_blank'
+                key={module.id}
+                variant='soft'
+                startIcon={<Icon as={WalletIcon} />}
+                title={description || ''}
+              >
+                {name}
+              </Button>
+            );
+          }
 
           return (
             <Button

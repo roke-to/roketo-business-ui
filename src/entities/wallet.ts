@@ -1,7 +1,7 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 import {Get} from 'type-fest';
 
-import {initWalletSelector} from '~/shared/api/near';
+import {createNearInstance, initWalletSelector, NearInstance, WalletId} from '~/shared/api/near';
 import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
@@ -14,6 +14,7 @@ export const $walletSelectorState = createStore<WalletSelectorState>({
   accounts: [],
   selectedWalletId: null,
 });
+const $near = createStore<NearInstance | null>(null);
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();
@@ -84,10 +85,28 @@ const loginViaWalletFx = createEffect(async (module: ModuleState) => {
   }
 });
 
+export const initNearInstanceFx = attach({
+  source: $walletSelectorState,
+  async effect({selectedWalletId}) {
+    return createNearInstance(selectedWalletId as WalletId);
+  },
+});
+
 // Choose some wallet and click it
 sample({
   clock: walletClicked,
   target: loginViaWalletFx,
+});
+
+// TODO: remove createNearInstance logic, when walletSelector expose account
+// now this logic is necessary to get an account for the "Сontract"
+sample({
+  clock: initWalletSelectorFx.doneData,
+  target: initNearInstanceFx,
+});
+sample({
+  clock: initNearInstanceFx.doneData,
+  target: $near,
 });
 
 // Logout logic
