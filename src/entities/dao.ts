@@ -79,7 +79,7 @@ export const createDaoFx = attach({
       console.log('data', data);
       console.log('args', JSON.parse(atob(args)));
 
-      // {"index":0,"kind":{"ExecutionError":"Smart contract panicked: panicked at 'Failed to deserialize input from JSON.: Error(\"the account ID is invalid\", line: 1, column: 27)', sputnikdao-factory2/src/lib.rs:49:1"}}
+      // TODO: now here is error: {"index":0,"kind":{"ExecutionError":"Smart contract panicked: panicked at 'Failed to deserialize input from JSON.: Error(\"the account ID is invalid\", line: 1, column: 27)', sputnikdao-factory2/src/lib.rs:49:1"}}
       // this is redirected to near
       await sputnikFactoryDaoApi?.create({
         args: {

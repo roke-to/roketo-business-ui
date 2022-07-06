@@ -1,13 +1,18 @@
 import {createEvent, createStore, sample} from 'effector';
 
-import {initWallet} from './wallet';
+import {initWallet, initWalletSelectorFx} from './wallet';
 
 // TODO: remove
-export const $appLoading = createStore(false);
+export const $appLoading = createStore(true);
 
 export const initApp = createEvent();
 
 sample({
   clock: initApp,
   target: initWallet,
+});
+sample({
+  clock: initWalletSelectorFx.doneData,
+  fn: () => false,
+  target: $appLoading,
 });
