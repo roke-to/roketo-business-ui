@@ -3,6 +3,7 @@ import React from 'react';
 
 import {$appLoading} from '~/entities/app';
 import {Routing} from '~/pages';
+import '~/shared/config/initI18n';
 import '~/shared/ui/styles';
 
 export function Root() {
