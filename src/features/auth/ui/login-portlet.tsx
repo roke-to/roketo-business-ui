@@ -6,10 +6,10 @@ import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {resolveWalletIcon} from '~/shared/api/near';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
-import {Heading} from '~/shared/ui/components/heading';
 import {Icon} from '~/shared/ui/components/icon';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Text} from '~/shared/ui/components/text';
+import {Typography} from '~/shared/ui/components/typography';
 
 import type {ModuleState} from '@near-wallet-selector/core';
 
@@ -22,7 +22,7 @@ export const LoginPortlet = () => {
   return (
     <Portlet gap='xl'>
       <Col gap='sm'>
-        <Heading>{t('title')}</Heading>
+        <Typography>{t('title')}</Typography>
         <Text>{t('subTitle')}</Text>
       </Col>
       <Col>

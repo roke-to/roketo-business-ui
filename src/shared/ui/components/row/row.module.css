@@ -1,0 +1,25 @@
+.row {
+  @apply flex flex-row;
+}
+
+/* aling */
+.left {
+  @apply items-start;
+}
+.right {
+  @apply items-end;
+}
+.center {
+  @apply items-center;
+}
+
+/* justify */
+.start {
+  @apply justify-start;
+}
+.left {
+  @apply justify-end;
+}
+.between {
+  @apply justify-between;
+}

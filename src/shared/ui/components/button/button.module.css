@@ -4,17 +4,17 @@
  * фичами tailwind
  */
 .button {
-  @apply inline-flex 
-    flex-shrink-0 
-    cursor-pointer 
-    select-none 
-    flex-wrap 
-    items-center 
-    justify-center 
-    border-transparent 
-    text-center 
-    transition 
-    duration-200 
+  @apply inline-flex
+    flex-shrink-0
+    cursor-pointer
+    select-none
+    flex-wrap
+    items-center
+    justify-center
+    border-transparent
+    text-center
+    transition
+    duration-200
     ease-in-out
     h-6
     font-semibold;
@@ -28,6 +28,9 @@
 }
 
 /* sizes */
+.xs {
+  @apply h-8 px-2 rounded-2xl text-sm;
+}
 .sm {
   @apply h-8 px-3 rounded-2xl text-sm;
 }
@@ -72,4 +75,12 @@
 
 .hasIcon {
   @apply gap-sm;
+}
+
+.positive {
+  @apply bg-[#F2FCF5];
+}
+
+.negative {
+  @apply bg-[#FEF0F1];
 }

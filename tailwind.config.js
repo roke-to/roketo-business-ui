@@ -33,6 +33,14 @@ module.exports = {
       black: colors.black,
       white: colors.white,
       gray: colors.gray,
+      green: {
+        default: '#1EBA52',
+        light: '#D6F5DF',
+      },
+      red: {
+        default: '#D80A1F',
+        light: '#FCCFD2',
+      },
     },
     borderRadius: {
       none: '0px',
@@ -53,7 +61,17 @@ module.exports = {
       DEFAULT: '1rem', // 16px
       lg: '1.5rem',
       xl: '2rem',
+      '2xl': '4rem',
+      '3xl': '5rem',
+      '4xl': '6rem',
+      '5xl': '7rem',
     }),
+    screens: {
+      mobile: '640px',
+      tablet: '768px',
+      laptop: '1024px',
+      desktop: '1280px',
+    },
   },
   plugins: [
     // TODO: это дает возможность использовать любое значение

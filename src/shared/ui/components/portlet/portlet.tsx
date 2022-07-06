@@ -4,15 +4,24 @@ import React from 'react';
 import styles from './portlet.module.css';
 
 type PortletGap = 'sm' | 'md' | 'lg' | 'xl';
+type PortletJustify = 'start' | 'end' | 'between';
+type PortletWidth = 'full';
 
 export interface PortletProps extends React.HTMLAttributes<HTMLDivElement> {
   gap?: PortletGap | number;
+  type?: 'row' | 'column';
+  width?: PortletWidth;
+  justify?: PortletJustify;
 }
 
 export const Portlet = React.forwardRef<HTMLDivElement, PortletProps>(
-  ({children, className, gap = 'md', ...props}, ref) => (
+  ({gap = 'md', type = '', width = '', className, children, ...props}, ref) => (
     // TODO: using `gap-${gap}` working only if it included in tailwind.config safelist
-    <div className={clsx(styles.portlet, className, `gap-${gap}`)} ref={ref} {...props}>
+    <div
+      className={clsx(styles.portlet, styles[type], styles[width], `gap-${gap}`, className)}
+      ref={ref}
+      {...props}
+    >
       {children}
     </div>
   ),

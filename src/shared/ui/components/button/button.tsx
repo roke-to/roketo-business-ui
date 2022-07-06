@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './button.module.css';
 
-export type ButtonVariant = 'soft' | 'outlined' | 'plain';
+export type ButtonVariant = 'soft' | 'outlined' | 'plain' | 'positive' | 'negative';
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
@@ -25,7 +25,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       type = Tag === DEFAULT_TAG ? 'button' : undefined,
       children,
       className,
-      variant = 'solid',
+      variant = 'soft',
       size = 'md',
       startIcon,
       endIcon,

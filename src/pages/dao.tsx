@@ -1,8 +1,8 @@
 import {DaoInit} from '~/features/dao/ui/dao-init';
-import {Scene} from '~/shared/ui/components/scene';
+import {Layout} from '~/shared/ui/components/layout';
 
 export const DaoPage = () => (
-  <Scene>
+  <Layout>
     <DaoInit />
-  </Scene>
+  </Layout>
 );
