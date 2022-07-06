@@ -1,7 +1,7 @@
 import {Contract} from 'near-api-js';
 
 type ContractViewFunction<P, T> = (args?: P) => Promise<T>;
-type ContractChangeFunction<P, T> = (args?: P) => Promise<T>;
+type ContractChangeFunction<P, T> = (args?: P, ...a: any[]) => Promise<T>;
 
 export type AccountId = string;
 
@@ -33,7 +33,7 @@ export interface DaosParams {
 
 export interface CreateSputnikContractParams {
   name: AccountId;
-  args: Base64VecU8;
+  args?: Base64VecU8;
 }
 
 type Base64VecU8 = string;

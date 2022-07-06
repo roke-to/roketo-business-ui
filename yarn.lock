@@ -1573,71 +1573,53 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.10.0.tgz#c012c1ecc1a0e53d50e6af381618dca5268461c1"
   integrity sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==
 
-"@near-wallet-selector/core@4.1.0", "@near-wallet-selector/core@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/core/-/core-4.1.0.tgz#a5556323808e7d8562db5c3623a971f4eb0d822c"
-  integrity sha512-wQhRmkBU0amqVruVIK46tHRbxcL/Gym/BNnAEktHlREq99QHGRmq3Ip6rPkGf9PhUyTerISoKLxbhEg1/gAtIw==
+"@near-wallet-selector/core@5.0.0", "@near-wallet-selector/core@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/core/-/core-5.0.0.tgz#76dd0c683b6daa01f3f20db3c4b5b707fb924937"
+  integrity sha512-xklVLDcV1/8FHrmZ9RtwHbTWgZFIoy68a/5mhXDnzFdN1ypTRkThRRdhJ/PvQbqsvl6h+fFV6sa0EQzSLJ297Q==
   dependencies:
     near-api-js "0.44.2"
     rxjs "~7.4.0"
 
-"@near-wallet-selector/core@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/core/-/core-4.1.1.tgz#a455b991b9e185185ad33cbc781fcce61aa7a28a"
-  integrity sha512-qtAAEUtj2z9bh/0vZ1dRUXhpvhYEaf/p805E6eXuya8FZ7aNcKEhFMpLHl72hLg63pXEvjvLKlZP6KjPPOBYBg==
+"@near-wallet-selector/my-near-wallet@5.0.0", "@near-wallet-selector/my-near-wallet@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/my-near-wallet/-/my-near-wallet-5.0.0.tgz#e6d6038ec7c86026335ae2e4a3c14be6d0cc2792"
+  integrity sha512-0sM7NVfLnuk4n5cB/IcLYB+St4GzWsR+hk4oXkqucsyV4ozjbCUE37SGBadLFv0bFKLOVfANsAuzJajjREH0yA==
   dependencies:
-    near-api-js "0.44.2"
-    rxjs "~7.4.0"
-
-"@near-wallet-selector/my-near-wallet@4.1.1", "@near-wallet-selector/my-near-wallet@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/my-near-wallet/-/my-near-wallet-4.1.1.tgz#f122511eda59a285da20d58a11dfd94bf39f0d02"
-  integrity sha512-WmZIvny1leNt2QRDOPJlgNBPwKHqOiR6PIGWd29ZxGXp41SEgnQlwRZ0FcmKfYQk1gJj+IVF/BbrB42Fd1hBqA==
-  dependencies:
-    "@near-wallet-selector/core" "4.1.1"
-    "@near-wallet-selector/wallet-utils" "4.1.1"
+    "@near-wallet-selector/core" "5.0.0"
+    "@near-wallet-selector/wallet-utils" "5.0.0"
     bn.js "^5.2.0"
     near-api-js "0.44.2"
     rxjs "~7.4.0"
 
-"@near-wallet-selector/near-wallet@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/near-wallet/-/near-wallet-4.1.1.tgz#022151bafbfe1bef0f8b13a99cede62fd3e1b439"
-  integrity sha512-xNywFgY7goxHjG7dcXJD+nyAA1NjSA5KY8F1lKCvZS3WtOl+UY0AcGdqsVL2IFeip2jo4nNL3CAKgquIDigTmQ==
+"@near-wallet-selector/near-wallet@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/near-wallet/-/near-wallet-5.0.0.tgz#9e2d8863e2ca302185d8f0f600ce902fe6ccbafa"
+  integrity sha512-0m3fhCuVS8crPHkvIoWLQU/pAmGJisi9t7X9WBAJO+vzSj4LO0d5i9+ijPoKBftu46G5YPf6QVl7XA1MQGoddg==
   dependencies:
-    "@near-wallet-selector/core" "4.1.1"
-    "@near-wallet-selector/my-near-wallet" "4.1.1"
-    "@near-wallet-selector/wallet-utils" "4.1.1"
+    "@near-wallet-selector/core" "5.0.0"
+    "@near-wallet-selector/my-near-wallet" "5.0.0"
+    "@near-wallet-selector/wallet-utils" "5.0.0"
     bn.js "^5.2.0"
     near-api-js "0.44.2"
     rxjs "~7.4.0"
 
-"@near-wallet-selector/sender@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/sender/-/sender-4.1.0.tgz#835680168f06c0eb48f6d650d812ab32efb69243"
-  integrity sha512-/Xt7oz8P+1a/35Gm9L80+CWqBn4OaKRTi92I4gzpwDAwLhP0akBpf/uRQNJMruUVaLE0nC6IpeqYZTI1buOQ0A==
+"@near-wallet-selector/sender@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/sender/-/sender-5.0.0.tgz#9b38a40db4a482c2c774a918682eee8cf9edbb50"
+  integrity sha512-OXoW9oiJx64gVIgc34/qVzjQ/XAG4HGI6HayB90SeKt5YlmgwdOT0ubJtxRzk75jdvWgOipyjeHBbZCXYceF/g==
   dependencies:
-    "@near-wallet-selector/core" "4.1.0"
+    "@near-wallet-selector/core" "5.0.0"
     is-mobile "^3.0.0"
     near-api-js "0.44.2"
     rxjs "~7.4.0"
 
-"@near-wallet-selector/wallet-utils@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/wallet-utils/-/wallet-utils-4.1.1.tgz#cc02ee240e1b2156e1eae2144d961b0bebc677d5"
-  integrity sha512-8eNxpxCzrz7tSYNr90qm3yWVGFA5Bq4rV1A9R9nIPMaCH68PG5ogRrikj84PttStH1BhkVC3apDsObyIK2942w==
+"@near-wallet-selector/wallet-utils@5.0.0", "@near-wallet-selector/wallet-utils@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@near-wallet-selector/wallet-utils/-/wallet-utils-5.0.0.tgz#7d38c0c0f7d435eefd6ff74b4e8baf77a498a335"
+  integrity sha512-ZiXPFTEhog0N8Pdhbg6HB75QvLBFtKdk6Wvql/ZZAiebOmUcYFNKFywxQLK0DTRJc46RSxdsk+fXqB2trKZLBA==
   dependencies:
-    "@near-wallet-selector/core" "4.1.1"
-    bn.js "^5.2.0"
-    near-api-js "0.44.2"
-    rxjs "~7.4.0"
-
-"@near-wallet-selector/wallet-utils@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@near-wallet-selector/wallet-utils/-/wallet-utils-4.1.0.tgz#945f0e3d6f7968718fb177d48676e6b7e0e7f091"
-  integrity sha512-siaAaoh/hw3jTHFf+7gNdMyA8v1BoRein3yFFCZF+AZk3vbR4279dTrBVKLPuH3mvRjQtPgjY1/OpJEDskNOyQ==
-  dependencies:
-    "@near-wallet-selector/core" "4.1.0"
+    "@near-wallet-selector/core" "5.0.0"
     bn.js "^5.2.0"
     near-api-js "0.44.2"
     rxjs "~7.4.0"
@@ -1850,6 +1832,13 @@
     "@babel/types" "7.13.0"
     javascript-natural-sort "0.7.1"
     lodash "4.17.21"
+
+"@types/bn.js@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/bn.js/-/bn.js-5.1.0.tgz#32c5d271503a12653c62cf4d2b45e6eab8cebc68"
+  integrity sha512-QSSVYj7pYFN49kW77o2s9xTCwZ8F2xLbjLLSEVh8D2F4JUhZtPAGOFLTD+ffqksBx/u4cE/KImFjyhqCjn/LIA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/eslint-scope@^3.7.3":
   version "3.7.3"
@@ -2972,6 +2961,11 @@ bn.js@5.2.0, bn.js@^5.1.1, bn.js@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
   integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
+
+bn.js@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.1.tgz#0bc527a6a0d18d0aa8d5b0538ce4a77dccfa7b70"
+  integrity sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==
 
 body-parser@1.19.2:
   version "1.19.2"

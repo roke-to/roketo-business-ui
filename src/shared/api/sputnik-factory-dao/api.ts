@@ -11,6 +11,8 @@ import {
 } from '~/shared/api/sputnik-factory-dao/types';
 import {env} from '~/shared/config/env';
 
+import {templateCreateArgs} from './template-create-args';
+
 export class SputnikFactoryDaoApi {
   contract: SputnikFactoryDAO;
 
@@ -79,8 +81,14 @@ export class SputnikFactoryDaoApi {
     return this.contract.new();
   }
 
-  async create(params: CreateSputnikContractParams) {
-    return this.contract.create(params);
+  async create({name}: CreateSputnikContractParams, ...args: any[]) {
+    return this.contract.create(
+      {
+        name,
+        args: templateCreateArgs({name, accountId: this.account.accountId}),
+      },
+      ...args,
+    );
   }
 
   async setOwner(ownerId: AccountId) {

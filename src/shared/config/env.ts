@@ -1,14 +1,7 @@
 type EnvType = {
   APP_TITLE: string;
-  ACCOUNT_SUFFIX: string;
   NEAR_NETWORK_ID: 'testnet' | 'mainnet';
-  NEAR_NODE_URL: string;
-  ROKETO_CONTRACT_NAME: string;
   WALLET_URL: string;
-  PRICE_ORACLE_CONTRACT_NAME: string;
-  PRICE_ORACLE_SOURCE_ID: string;
-  WNEAR_ID: string;
-  WEB_API_URL: string;
   COMMIT_HASH: string;
   BUILD_TIME: string;
   ASTRO_API: string;
@@ -18,15 +11,8 @@ type EnvType = {
 
 export const env: EnvType = {
   APP_TITLE: import.meta.env.VITE_APP_TITLE,
-  ACCOUNT_SUFFIX: import.meta.env.VITE_NEAR_ACCOUNT_SUFFIX,
   NEAR_NETWORK_ID: import.meta.env.VITE_NEAR_NETWORK_ID,
-  NEAR_NODE_URL: import.meta.env.VITE_NEAR_NODE_URL,
-  ROKETO_CONTRACT_NAME: import.meta.env.VITE_ROKETO_CONTRACT_NAME,
   WALLET_URL: import.meta.env.VITE_WALLET_URL,
-  PRICE_ORACLE_CONTRACT_NAME: import.meta.env.VITE_PRICE_ORACLE_CONTRACT_NAME,
-  PRICE_ORACLE_SOURCE_ID: import.meta.env.VITE_PRICE_ORACLE_SOURCE_ID,
-  WNEAR_ID: import.meta.env.VITE_WNEAR_ID,
-  WEB_API_URL: import.meta.env.VITE_WEB_API_URL,
   COMMIT_HASH: import.meta.env.VITE_COMMIT_HASH,
   BUILD_TIME: import.meta.env.VITE_BUILD_TIME,
   ASTRO_API: import.meta.env.VITE_ASTRO_API,
