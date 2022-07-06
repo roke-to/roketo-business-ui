@@ -2,6 +2,13 @@ import {Contract} from 'near-api-js';
 
 import {Action} from '~/shared/api/sputnik-dao/consts';
 
+type ProposalInput = {
+  // Description of this proposal.
+  description: string;
+  // Kind of proposal with relevant information.
+  kind: any;
+};
+
 // Sputnik DAO :: v3 see https://github.com/near-daos/sputnik-dao-contract/blob/main/sputnikdao2/ABI.md#sputnik-dao--v3
 export type SputnikDAO = Contract & {
   // viewMethods
@@ -26,13 +33,19 @@ export type SputnikDAO = Contract & {
   version: any;
 
   // changeMethods
-  /** Act on given proposal by id, if permissions allow.
+
+  /**
+   * Act on given proposal by id, if permissions allow.
    *
    * Memo is logged but not stored in the state.
    * Can be used to leave notes or explain the action.
    */
   act_proposal: (id: number, action: Action, memo?: string) => void;
-  add_proposal: any;
+
+  /**
+   * Add proposal to this DAO.
+   */
+  add_proposal: (proposal: ProposalInput) => number;
   bounty_claim: any;
   bounty_done: any;
   bounty_giveup: any;
