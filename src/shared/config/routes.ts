@@ -23,4 +23,8 @@ export const ROUTES: Record<string, Route> = {
     path: '/dao/new',
     title: 'DAO',
   },
+  treasury: {
+    path: '/treasury',
+    title: 'Treasury',
+  },
 };

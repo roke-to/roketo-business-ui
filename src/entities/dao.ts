@@ -100,3 +100,6 @@ forward({
   from: createDaoForm.formValidated,
   to: createDaoFx,
 });
+
+// TODO: use current dao id from localStorage
+export const $daoId = createStore('animatronic.testnet');
