@@ -6,6 +6,7 @@ import {DaoPage} from '~/pages/dao';
 import {DaoNewPage} from '~/pages/dao-new';
 import {LoginPage} from '~/pages/login';
 import {NotFoundPage} from '~/pages/not-found';
+import {TreasuryPage} from '~/pages/treasury';
 import {ROUTES} from '~/shared/config/routes';
 import {history, PrivateRoute} from '~/shared/lib/router';
 
@@ -49,6 +50,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           profile page
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn}
+          path={ROUTES.treasury.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <TreasuryPage />
         </PrivateRoute>
 
         <Route render={NotFoundPage} />

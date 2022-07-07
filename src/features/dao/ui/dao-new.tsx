@@ -13,6 +13,7 @@ import {Text} from '~/shared/ui/components/text';
 
 // TODO: обрабатывать квери параметры ошибки ?errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
 // когда возвращаемся из NEAR
+// TODO: обрабатывать успешный кейс создания DAO ?transactionHashes=E2ARyRfXqNCwUhhjBLWfbhMoGhtxiKRekMEEXJXjvwLj
 export const DaoNew = () => {
   const {fields, submit, eachValid} = useForm(createDaoForm);
   const pending = useStore(createDaoFx.pending);
