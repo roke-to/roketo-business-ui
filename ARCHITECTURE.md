@@ -17,7 +17,19 @@ Use `~/` to import from root. This makes it easier to distinguish imports inside
 
 Project uses react-router. All routes definitions placed at `src/shared/config/routes.ts` and `src/pages/index.tsx`
 
-TBD: переделать на что-то близкое router-config, не нравится как это сейчас. В коде хочется использовать
+### RFC
+
+Предлагаю пересесть на [react-router v6](https://reactrouter.com/docs/en/v6/getting-started/concepts#review)
+
+- DX соответствует запросу на использование строки роута в качестве ключа
+- Является актуальной мажорной версией
+- ИМХО — более декларативно описывает роутинг в приложении
+
+P.S. Неплохой [разбор](https://habr.com/ru/company/kts/blog/598835/) на русском
+
+### TBD
+
+Хочется переделать на что-то близкое router-config, не нравится как это сейчас. В коде хочется использовать
 в качестве ключа просто строку роута, например, `/posts/:id`, без лишних импортов. Пример с линкой:
 `<Link path='/posts/:id' params={{id}}>Awesome post about DAO</Link>`. Либо попробовать atomic-router, пока
 не понятно насколько он реально нужен, т.к. создает дополнительную связь со стором, роутинг должен быть
