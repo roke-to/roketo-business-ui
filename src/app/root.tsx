@@ -9,5 +9,6 @@ import '~/shared/ui/styles';
 export function Root() {
   const isLoading = useStore($appLoading);
 
+  // todo: TBD кажется тут нужен спиннер ибо при ините есть белый экран заметный глазом
   return isLoading ? null : <Routing />;
 }
