@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './button.module.css';
 
-export type ButtonVariant = 'soft' | 'outlined' | 'plain' | 'positive' | 'negative';
+export type ButtonVariant = 'soft' | 'outlined' | 'plain' | 'positive' | 'negative' | 'clean';
 
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 

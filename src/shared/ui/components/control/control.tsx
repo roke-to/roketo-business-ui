@@ -20,7 +20,7 @@ export const Control = ({
 
   return (
     <Row align='center' gap={1}>
-      <Typography as='span' textClassName='muted'>
+      <Typography as='span' color='muted'>
         {text}
       </Typography>
       <Button

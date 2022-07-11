@@ -1,0 +1,15 @@
+.contentItem {
+  display: inline-flex;
+  max-width: 100%;
+
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.disableListType {
+  list-style-type: none;
+}
+
+.active {
+  color: theme('colors.blue.textDefault');
+}
