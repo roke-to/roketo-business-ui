@@ -4,7 +4,7 @@ import {astroApi, Proposal} from '~/shared/api/astro';
 
 import {$daoId} from './dao';
 
-export const $treasuryProposals = createStore<Proposal[] | null>(null);
+export const $treasuryProposals = createStore<Proposal[]>([]);
 
 export const loadTreasuryProposals = createEvent();
 

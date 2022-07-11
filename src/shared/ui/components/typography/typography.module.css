@@ -1,0 +1,15 @@
+.heading {
+  @apply font-heading text-2xl font-bold leading-tight;
+}
+
+.muted {
+  color: #8a96a8;
+}
+
+.normal {
+  @apply font-normal;
+}
+
+.bold {
+  @apply font-bold;
+}

@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

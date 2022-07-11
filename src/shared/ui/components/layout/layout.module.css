@@ -1,0 +1,26 @@
+.scene {
+  @apply bg-gradient-to-r from-[#f8c9a0] to-[#a0c2f8]
+    min-h-screen
+    flex
+    flex-col
+    justify-center
+    overflow-hidden;
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+}
+
+.column {
+  @apply flex-col;
+}
+
+.row {
+  @apply flex-row;
+}
+
+.content {
+  padding-right: 5rem;
+  padding-left: 5rem;
+}

@@ -27,4 +27,12 @@ export const ROUTES: Record<string, Route> = {
     path: '/treasury',
     title: 'Treasury',
   },
+  dashboard: {
+    path: '/dashboard',
+    title: 'Dashboard',
+  },
+  employees: {
+    path: '/employees',
+    title: 'Employees',
+  },
 };

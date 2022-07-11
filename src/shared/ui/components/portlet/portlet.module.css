@@ -12,3 +12,16 @@
   max-width: theme('maxWidth.sm');
   min-width: theme('maxWidth.sm');
 }
+
+.row {
+  flex-direction: row;
+}
+
+.full {
+  min-width: 100%;
+}
+
+/** justify **/
+.between {
+  justify-content: space-between;
+}

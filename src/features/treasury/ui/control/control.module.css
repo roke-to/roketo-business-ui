@@ -1,0 +1,12 @@
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.positive {
+  color: theme('colors.green.default');
+}
+
+.negative {
+  color: theme('colors.red.default');
+}

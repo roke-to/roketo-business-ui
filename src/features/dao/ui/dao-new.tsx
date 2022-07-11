@@ -5,11 +5,11 @@ import React, {FormEventHandler} from 'react';
 import {createDaoForm, createDaoFx} from '~/entities/dao';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
-import {Heading} from '~/shared/ui/components/heading';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Text} from '~/shared/ui/components/text';
+import {Typography} from '~/shared/ui/components/typography';
 
 // TODO: обрабатывать квери параметры ошибки ?errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
 // когда возвращаемся из NEAR
@@ -26,7 +26,7 @@ export const DaoNew = () => {
   return (
     <Portlet gap='xl'>
       <Col>
-        <Heading>New DAO setup</Heading>
+        <Typography>New DAO setup</Typography>
         <Text>Enter DAO name and address</Text>
       </Col>
       <form onSubmit={handleSubmit}>
