@@ -41,6 +41,11 @@ module.exports = {
         default: '#D80A1F',
         light: '#FCCFD2',
       },
+      blue: {
+        default: '#A0C2F8',
+        light: '#F0F6FF',
+        dark: '#A6C8FF',
+      },
     },
     borderRadius: {
       none: '0px',
