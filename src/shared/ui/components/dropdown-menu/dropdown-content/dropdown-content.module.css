@@ -1,0 +1,96 @@
+.contentBlock {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1rem;
+
+  background-color: theme('colors.white');
+  box-shadow: theme('dropShadow.DEFAULT');
+  border-radius: theme('borderRadius.3xl');
+}
+
+/* Depends of size button component */
+.xs {
+  @apply top-8;
+}
+
+.sm {
+  @apply top-8;
+}
+
+.md {
+  @apply top-12;
+}
+
+.lg {
+  @apply top-16;
+}
+/* /Depends of size button component */
+
+/* Direction */
+.start {
+  @apply left-0;
+}
+
+.end {
+  @apply right-0;
+}
+/* /Direction */
+
+/* Offset */
+.s {
+  &.xs {
+    top: 2.25rem;
+  }
+
+  &.sm {
+    top: 2.25rem;
+  }
+
+  &.md {
+    top: 3.25rem;
+  }
+
+  &.lg {
+    top: 4.25rem;
+  }
+}
+
+.m {
+  &.xs {
+    top: 2.5rem;
+  }
+
+  &.sm {
+    top: 2.5rem;
+  }
+
+  &.md {
+    top: 3.5rem;
+  }
+
+  &.lg {
+    top: 4.5rem;
+  }
+}
+
+.l {
+  &.xs {
+    top: 2.75rem;
+  }
+
+  &.sm {
+    top: 2.75rem;
+  }
+
+  &.md {
+    top: 3.75rem;
+  }
+
+  &.lg {
+    top: 4.75rem;
+  }
+}
+/* /Offset */

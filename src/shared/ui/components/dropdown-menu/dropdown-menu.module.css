@@ -1,13 +1,17 @@
 .root {
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.menuLabel {
+  display: flex;
   align-items: center;
+  gap: 0.25rem;
+  color: theme('colors.black');
 }
 
-.list {
-  display: none;
-}
-
-.visible {
-  display: block;
+.plain {
+  background-color: theme('colors.blue.light');
+  border-radius: theme('borderRadius.3xl');
 }
