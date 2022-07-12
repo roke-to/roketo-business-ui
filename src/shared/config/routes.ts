@@ -3,7 +3,9 @@ export type Route = {
   title?: string;
 };
 
-export const ROUTES: Record<string, Route> = {
+const typedRoutes = <T extends Record<string, Route>>(routes: T): {[K in keyof T]: Route} => routes;
+
+export const ROUTES = typedRoutes({
   root: {
     path: '/',
   },
@@ -27,6 +29,10 @@ export const ROUTES: Record<string, Route> = {
     path: '/treasury',
     title: 'Treasury',
   },
+  governance: {
+    path: '/governance',
+    title: 'Governance',
+  },
   dashboard: {
     path: '/dashboard',
     title: 'Dashboard',
@@ -35,4 +41,6 @@ export const ROUTES: Record<string, Route> = {
     path: '/employees',
     title: 'Employees',
   },
-};
+});
+
+export type RouteKey = keyof typeof ROUTES;

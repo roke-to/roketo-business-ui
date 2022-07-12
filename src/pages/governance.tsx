@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {Treasury} from '~/features/treasury/ui/treasury';
+import {ProposalsList} from '~/features/governance/ui/proposals-list';
 import {PageLayout} from '~/widgets/page-layout';
 
-export const TreasuryPage = () => (
+export const GovernancePage = () => (
   <PageLayout>
-    <Treasury />
+    <ProposalsList />
   </PageLayout>
 );

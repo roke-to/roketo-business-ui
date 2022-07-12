@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import {ROUTES} from '~/shared/config/routes';
+import {RouteKey, ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 
-const LINKS: (keyof typeof ROUTES)[] = ['dashboard', 'treasury', 'dao', 'employees'];
+const LINKS: RouteKey[] = ['dashboard', 'treasury', 'governance', 'employees'];
 
 export const Navigate = () => (
   <Col className='px-4' gap={3}>
