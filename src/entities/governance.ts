@@ -5,35 +5,36 @@ import {astroApi, Proposal} from '~/shared/api/astro';
 import {$daoId} from './dao';
 import {$accountId} from './wallet';
 
-export const $treasuryProposals = createStore<Proposal[]>([]);
+export const $governanceProposals = createStore<Proposal[]>([]);
 
-export const loadTreasuryProposals = createEvent();
+export const loadGovernanceProposals = createEvent();
 
-const loadTreasuryProposalsFx = attach({
+const loadGovernanceProposalsFx = attach({
   source: {
     daoId: $daoId,
     accountId: $accountId,
   },
   async effect({daoId, accountId}) {
     const query = {
-      s: JSON.stringify({$and: [{kind: {$cont: 'Transfer'}}]}),
+      s: JSON.stringify({
+        $and: [{$or: [{kind: {$cont: 'ChangeConfig'}}, {kind: {$cont: 'ChangePolicy'}}]}],
+      }),
       limit: 20,
       offset: 0,
       sort: ['createdAt,DESC'],
       accountId,
     };
-
     return astroApi.proposalControllerProposalByAccount(daoId, query);
   },
 });
 
 sample({
-  source: loadTreasuryProposals,
-  target: loadTreasuryProposalsFx,
+  source: loadGovernanceProposals,
+  target: loadGovernanceProposalsFx,
 });
 
 sample({
-  source: loadTreasuryProposalsFx.doneData,
+  source: loadGovernanceProposalsFx.doneData,
   fn: (response) => response.data.data,
-  target: $treasuryProposals,
+  target: $governanceProposals,
 });

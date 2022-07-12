@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Control} from '~/features/treasury/ui/control';
 import {Proposal as ProposalType} from '~/shared/api/astro';
 import {Col} from '~/shared/ui/components/col';
+import {Control} from '~/shared/ui/components/control';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
