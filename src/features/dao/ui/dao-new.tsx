@@ -33,13 +33,7 @@ export const DaoNew = () => {
       <form onSubmit={handleSubmit}>
         <Col gap='xl'>
           <Col gap='md'>
-            <Label
-              required
-              content={t('newDao.nameLabel')}
-              error={fields.name.errorText({
-                required: 'Name is required',
-              })}
-            >
+            <Label required content={t('newDao.nameLabel')} error={fields.name.errorText()}>
               <Input
                 name='daoName'
                 value={fields.name.value}
@@ -48,13 +42,7 @@ export const DaoNew = () => {
                 onChange={(e) => fields.name.onChange(e.target.value)}
               />
             </Label>
-            <Label
-              required
-              content={t('newDao.addressLabel')}
-              error={fields.address.errorText({
-                required: 'Address is required',
-              })}
-            >
+            <Label required content={t('newDao.addressLabel')} error={fields.address.errorText()}>
               <Input
                 name='daoAddress'
                 size='md'
