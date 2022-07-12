@@ -1,19 +1,19 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
-import {$treasuryProposals, loadTreasuryProposals} from '~/entities/treasury';
+import {$governanceProposals, loadGovernanceProposals} from '~/entities/governance';
 import {Proposal} from '~/shared/ui/components/proposal';
 
 export const ProposalsList = () => {
-  const treasuryProposals = useStore($treasuryProposals);
+  const governanceProposals = useStore($governanceProposals);
 
   React.useEffect(() => {
-    loadTreasuryProposals();
+    loadGovernanceProposals();
   }, []);
 
   return (
     <>
-      {treasuryProposals.map((proposal) => (
+      {governanceProposals.map((proposal) => (
         <Proposal key={proposal.id} proposal={proposal} />
       ))}
     </>
