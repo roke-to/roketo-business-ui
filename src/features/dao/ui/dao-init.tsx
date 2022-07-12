@@ -17,17 +17,17 @@ export const DaoInit = () => {
   return (
     <Portlet gap='xl'>
       <Col>
-        <Typography>{t('title')}</Typography>
-        <Typography as='span'>{t('subTitle')}</Typography>
+        <Typography>{t('daoInit.title')}</Typography>
+        <Typography as='span'>{t('daoInit.subTitle')}</Typography>
         <Typography as='span'>{accountId}</Typography>
       </Col>
       <Col>
         <Button variant='soft' onClick={() => logoutClicked()}>
-          {t('logout')}
+          {t('daoInit.logout')}
         </Button>
         {/* @ts-expect-error */}
         <Button as={Link} to={ROUTES.daoNew.path} variant='outlined'>
-          {t('createDAO')}
+          {t('daoInit.createDaoLink')}
         </Button>
       </Col>
     </Portlet>
