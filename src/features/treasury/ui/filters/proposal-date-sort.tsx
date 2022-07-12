@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
+import {DropDownMenu} from '~/shared/ui/components/dropdown-menu';
+import {DropDownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropDownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {Typography} from '~/shared/ui/components/typography';
 
@@ -25,8 +25,8 @@ export const ProposalDateSort = () => {
       <Typography as='span' color='muted'>
         Sort:
       </Typography>
-      <DropdownMenu label={ProposalSort[selected].value} contentRef={contentRef} variant='soft'>
-        <DropdownContent
+      <DropDownMenu label={ProposalSort[selected].value} contentRef={contentRef} variant='soft'>
+        <DropDownContent
           ref={contentRef}
           selected={selected}
           handleChange={handleChange}
@@ -36,8 +36,8 @@ export const ProposalDateSort = () => {
           {ProposalSort.map(({label}) => (
             <DropDownItem key={label}>{label}</DropDownItem>
           ))}
-        </DropdownContent>
-      </DropdownMenu>
+        </DropDownContent>
+      </DropDownMenu>
     </>
   );
 };

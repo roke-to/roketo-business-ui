@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {DropdownMenuRootElementSize} from '~/shared/ui/components/dropdown-menu';
+import {DropDownMenuRootElementSize} from '~/shared/ui/components/dropdown-menu';
 import {DropDownItem, IDropDownItemProps} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 
 import styles from './dropdown-content.module.css';
@@ -13,20 +13,20 @@ const isDropDownItemOrSubMenu = (
   return type === DropDownItem;
 };
 
-export type DropdownContentDirection = 'start' | 'end';
+export type DropDownContentDirection = 'start' | 'end';
 export type DropDownContentGap = 'sm' | 'md' | 'lg' | 'xl';
 export type DropDownContentOffset = 's' | 'm' | 'l';
 
 export interface IDropDownContentProps extends React.HTMLAttributes<HTMLUListElement> {
   selected: number;
   handleChange: (n: number) => void;
-  size?: DropdownMenuRootElementSize;
-  direction?: DropdownContentDirection;
+  size?: DropDownMenuRootElementSize;
+  direction?: DropDownContentDirection;
   gap?: DropDownContentGap | number;
   offset?: DropDownContentOffset;
 }
 
-export const DropdownContent = React.forwardRef<HTMLUListElement, IDropDownContentProps>(
+export const DropDownContent = React.forwardRef<HTMLUListElement, IDropDownContentProps>(
   (
     {selected, handleChange, size = 'md', direction = 'start', gap = 0, offset = '', children},
     ref,

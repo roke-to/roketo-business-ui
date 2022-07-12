@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
+import {DropDownMenu} from '~/shared/ui/components/dropdown-menu';
+import {DropDownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropDownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 
 const DaoList = [
@@ -24,12 +24,12 @@ export const DaoSwitcher = () => {
   };
 
   return (
-    <DropdownMenu label='Mydaoname' contentRef={contentRef} size='sm' variant='clean'>
-      <DropdownContent ref={contentRef} selected={selected} handleChange={handleChange} size='sm'>
+    <DropDownMenu label='Mydaoname' contentRef={contentRef} size='sm' variant='clean'>
+      <DropDownContent ref={contentRef} selected={selected} handleChange={handleChange} size='sm'>
         {DaoList.map((dao) => (
           <DropDownItem key={dao}>{dao}</DropDownItem>
         ))}
-      </DropdownContent>
-    </DropdownMenu>
+      </DropDownContent>
+    </DropDownMenu>
   );
 };

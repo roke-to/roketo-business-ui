@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 import {ProposalKindSwaggerDto} from '~/shared/api/astro';
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
+import {DropDownMenu} from '~/shared/ui/components/dropdown-menu';
+import {DropDownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropDownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {Typography} from '~/shared/ui/components/typography';
 
@@ -36,8 +36,8 @@ export const ProposalKindFilter = () => {
       <Typography as='span' color='muted'>
         Type:
       </Typography>
-      <DropdownMenu label='Any' contentRef={contentRef} variant='soft'>
-        <DropdownContent
+      <DropDownMenu label='Any' contentRef={contentRef} variant='soft'>
+        <DropDownContent
           ref={contentRef}
           selected={selected}
           handleChange={handleChange}
@@ -46,8 +46,8 @@ export const ProposalKindFilter = () => {
           {ProposalKind.map((kind) => (
             <DropDownItem key={kind}>{kind}</DropDownItem>
           ))}
-        </DropdownContent>
-      </DropdownMenu>
+        </DropDownContent>
+      </DropDownMenu>
     </>
   );
 };
