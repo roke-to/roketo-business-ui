@@ -1,0 +1,22 @@
+.root {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.left {
+  padding-right: 8px;
+}
+
+.right {
+  padding-left: 8px;
+}
+
+.disabled {
+  opacity: 0.5;
+}

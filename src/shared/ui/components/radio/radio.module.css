@@ -1,0 +1,75 @@
+.visual {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid theme('colors.gray.200');
+  box-sizing: border-box;
+  border-radius: 100%;
+  outline: none;
+  background-color: theme('colors.white');
+  color: theme('colors.white');
+
+  transition: all 0.15s ease;
+  transition-property: background-color, border;
+
+  & .icon {
+    /* Выравниваем иконку по центру контейнера. */
+    margin: 0.25rem;
+
+    height: 0.5rem;
+    width: 0.5rem;
+
+    background-color: theme('colors.white');
+    border-radius: 100%;
+
+    transition: background-color 0.15s ease;
+  }
+}
+
+.input {
+  &:checked + .visual {
+    border: 2px solid theme('colors.blue.default');
+    background-color: theme('colors.blue.default');
+  }
+
+  &:hover + .visual {
+    background-color: theme('colors.gray.300');
+    color: theme('colors.gray.300');
+  }
+
+  &:hover + .visual .icon {
+    color: theme('colors.gray.300');
+  }
+
+  &:active + .visual {
+    background-color: theme('colors.gray.300');
+    border-color: theme('colors.blue.default');
+    color: theme('colors.gray.300');
+  }
+
+  &:disabled + .visual {
+    background-color: theme('colors.gray.400');
+  }
+
+  &:checked + .visual,
+  &:checked:active + .visual,
+  &:checked:focus + .visual {
+    border: 2px solid theme('colors.blue.default');
+    background-color: theme('colors.blue.default');
+  }
+
+  &:checked:hover + .visual {
+    border: 2px solid theme('colors.blue.dark');
+    background-color: theme('colors.blue.dark');
+    color: theme('colors.white');
+  }
+
+  &:checked + .visual {
+    opacity: 1;
+    background-color: theme('colors.blue.default');
+    color: theme('colors.white');
+  }
+
+  &:checked:hover + .visual {
+    background-color: theme('colors.blue.dark');
+  }
+}
