@@ -1,6 +1,7 @@
 import {useForm} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {createDaoForm, createDaoFx} from '~/entities/dao';
 import {Button} from '~/shared/ui/components/button';
@@ -14,6 +15,7 @@ import {Typography} from '~/shared/ui/components/typography';
 // когда возвращаемся из NEAR
 // TODO: обрабатывать успешный кейс создания DAO ?transactionHashes=E2ARyRfXqNCwUhhjBLWfbhMoGhtxiKRekMEEXJXjvwLj
 export const DaoNew = () => {
+  const {t} = useTranslation('dao');
   const {fields, submit, eachValid} = useForm(createDaoForm);
   const pending = useStore(createDaoFx.pending);
 
@@ -25,46 +27,34 @@ export const DaoNew = () => {
   return (
     <Portlet gap='xl'>
       <Col>
-        <Typography>New DAO setup</Typography>
-        <Typography as='span'>Enter DAO name and address</Typography>
+        <Typography>{t('newDao.title')}</Typography>
+        <Typography as='span'>{t('newDao.subTitle')}</Typography>
       </Col>
       <form onSubmit={handleSubmit}>
         <Col gap='xl'>
           <Col gap='md'>
-            <Label
-              required
-              content='Name'
-              error={fields.name.errorText({
-                required: 'Name is required',
-              })}
-            >
+            <Label required content={t('newDao.nameLabel')} error={fields.name.errorText()}>
               <Input
                 name='daoName'
                 value={fields.name.value}
                 disabled={pending}
-                placeholder='New DAO Name'
+                placeholder={t('newDao.namePlaceholder')}
                 onChange={(e) => fields.name.onChange(e.target.value)}
               />
             </Label>
-            <Label
-              required
-              content='Address'
-              error={fields.address.errorText({
-                required: 'Address is required',
-              })}
-            >
+            <Label required content={t('newDao.addressLabel')} error={fields.address.errorText()}>
               <Input
                 name='daoAddress'
                 size='md'
                 value={fields.address.value}
                 disabled={pending}
-                placeholder='newdaoname.sputnikv2.testnet'
+                placeholder={t('newDao.addressPlaceholder')}
                 onChange={(e) => fields.address.onChange(e.target.value)}
               />
             </Label>
           </Col>
           <Button disabled={!eachValid || pending} type='submit' variant='outlined'>
-            Create DAO
+            {t('newDao.submit')}
           </Button>
         </Col>
       </form>

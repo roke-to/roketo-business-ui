@@ -3,6 +3,7 @@ import {initReactI18next} from 'react-i18next';
 
 import authEn from '../../features/auth/i18n/authEn.json';
 import daoEn from '../../features/dao/i18n/daoEn.json';
+import validatorsEn from '../lib/i18n/validatorsEn.json';
 
 export type Locale = 'en';
 
@@ -10,6 +11,7 @@ const resources: Record<Locale, ResourceLanguage> = {
   en: {
     auth: authEn,
     dao: daoEn,
+    validators: validatorsEn,
   },
 };
 
@@ -19,6 +21,7 @@ declare module 'react-i18next' {
     resources: {
       auth: typeof authEn;
       dao: typeof daoEn;
+      validators: typeof validatorsEn;
     };
   }
 }

@@ -1,6 +1,17 @@
 {
-  "title": "You don’t have any DAO",
-  "subTitle": "Check if the wallet address is correct or create a new DAO:",
-  "logout": "Logout",
-  "createDAO": "Create DAO"
+  "daoInit": {
+    "title": "You don’t have any DAO",
+    "subTitle": "Check if the wallet address is correct or create a new DAO:",
+    "logout": "Logout",
+    "createDaoLink": "Create DAO"
+  },
+  "newDao": {
+    "title": "New DAO setup",
+    "subTitle": "Enter DAO name and address",
+    "submit": "Create DAO",
+    "addressLabel": "Address",
+    "addressPlaceholder": "'newdaoname.sputnikv2.testnet'",
+    "nameLabel": "Name",
+    "namePlaceholder": "New DAO Name"
+  }
 }
