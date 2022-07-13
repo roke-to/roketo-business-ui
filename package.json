@@ -20,7 +20,7 @@
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
-    "generate:astro-api": "swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses"
+    "generate:astro-api": "swagger-typescript-api --path https://api.testnet.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses"
   },
   "dependencies": {
     "@effector/reflect": "^7.1.1",
@@ -38,6 +38,7 @@
     "clsx": "^1.1.1",
     "date-fns": "^2.27.0",
     "decamelize": "^6.0.0",
+    "decimal.js": "^10.3.1",
     "effector": "^22.3.0",
     "effector-forms": "^0.0.24",
     "effector-logger": "^0.13.4",

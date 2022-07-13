@@ -407,6 +407,14 @@ export interface DaoMemberVote {
   voteCount: number;
 }
 
+export interface DelegationDto {
+  id: string;
+  daoId: string;
+  balance: string;
+  accountId: string;
+  delegators: object;
+}
+
 export type DaoSettingsDto = object;
 
 export interface PatchSettingsBodyDto {
@@ -890,9 +898,9 @@ export interface AccountEmailDto {
 
 export interface VerificationStatus {
   isVerified: boolean;
-  isSend: boolean;
-  createdAt: number;
-  ttl: number;
+  isSend?: boolean;
+  createdAt?: number;
+  ttl?: number;
 }
 
 export interface AccountVerificationDto {
@@ -1309,6 +1317,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     daoControllerDaoMembers: (id: string, params: RequestParams = {}) =>
       this.request<DaoMemberVote[], void>({
         path: `/api/v1/daos/${id}/members`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags DAO
+     * @name DaoControllerDelegations
+     * @request GET:/api/v1/daos/{id}/delegations
+     * @response `200` `(DelegationDto)[]` DAO Delegations
+     */
+    daoControllerDelegations: (id: string, params: RequestParams = {}) =>
+      this.request<DelegationDto[], any>({
+        path: `/api/v1/daos/${id}/delegations`,
         method: 'GET',
         format: 'json',
         ...params,

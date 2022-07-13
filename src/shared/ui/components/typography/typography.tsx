@@ -6,22 +6,14 @@ import styles from './typography.module.css';
 export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: 'h1' | 'h2' | 'span';
   color?: string;
-  textClassName?: string;
+  font?: string;
   weight?: 'normal' | 'bold';
 }
 
 // TODO сменить тип HTMLHeadingElement
 export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
   (
-    {
-      as: Tag = 'h1',
-      color = '',
-      textClassName = 'base',
-      weight = '',
-      className,
-      children,
-      ...props
-    },
+    {as: Tag = 'h1', color = '', font = 'base', weight = '', className, children, ...props},
     ref,
   ) => {
     const isHeading = ['h1', 'h2', 'h3'].includes(Tag);
@@ -31,7 +23,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
         {...props}
         ref={ref}
         className={clsx(
-          `text-${textClassName}`,
+          `text-${font}`,
           styles[color],
           styles[weight],
           {
