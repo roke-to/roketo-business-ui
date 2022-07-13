@@ -1,0 +1,3 @@
+.selected {
+  background-color: theme('colors.blue.light');
+}

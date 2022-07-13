@@ -1,0 +1,4 @@
+.root {
+  display: inline-flex;
+  gap: theme('gap.1');
+}
