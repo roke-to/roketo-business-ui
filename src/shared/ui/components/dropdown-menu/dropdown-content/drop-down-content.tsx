@@ -15,7 +15,7 @@ const isDropDownItemOrSubMenu = (
 
 export type DropDownContentDirection = 'start' | 'end';
 export type DropDownContentGap = 'sm' | 'md' | 'lg' | 'xl';
-export type DropDownContentOffset = 's' | 'm' | 'l';
+export type DropDownContentOffset = 'xs' | 's' | 'm' | 'l';
 
 export interface IDropDownContentProps extends React.HTMLAttributes<HTMLUListElement> {
   selected: number;
@@ -37,7 +37,7 @@ export const DropDownContent = React.forwardRef<HTMLUListElement, IDropDownConte
         styles.contentBlock,
         styles[size],
         styles[direction],
-        styles[offset],
+        styles[`offset_${offset}`],
         `gap-${gap}`,
       )}
     >

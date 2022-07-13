@@ -11,7 +11,7 @@ export type DropDownMenuRootElementSize = ButtonSize;
 
 export interface DropDownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string;
-  contentRef: React.RefObject<HTMLUListElement>;
+  contentRef: React.RefObject<HTMLElement>;
   withOverlay?: boolean;
   size?: DropDownMenuRootElementSize;
   variant?: ButtonVariant;
