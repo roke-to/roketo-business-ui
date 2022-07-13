@@ -6,6 +6,8 @@ import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {Typography} from '~/shared/ui/components/typography';
 
+import {ProposalStatusFilter} from './filters/proposal-status-filter';
+
 export const Treasury = () => (
   <>
     <div className='flex gap-2'>
@@ -35,9 +37,12 @@ export const Treasury = () => (
       </Chip>
     </div>
 
-    <div className='flex gap-2 items-center'>
-      <ProposalKindFilter />
-      <ProposalDateSort />
+    <div className='flex space-between'>
+      <ProposalStatusFilter />
+      <div className='flex gap-2 items-center'>
+        <ProposalKindFilter />
+        <ProposalDateSort />
+      </div>
     </div>
     <ProposalsList />
   </>
