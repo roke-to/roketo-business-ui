@@ -1,0 +1,63 @@
+.root {
+  min-width: 15rem;
+  border-left: 1px solid theme('colors.blue.sat_1');
+  padding-left: 2.5rem;
+  gap: 0;
+}
+
+.scaleContainer {
+  position: relative;
+  display: flex;
+  height: 1rem;
+  margin-top: 0.75rem;
+}
+
+.quorumLine {
+  position: absolute;
+  top: -0.25rem;
+  right: 50%;
+  left: 50%;
+  width: 0;
+  height: 1.5rem;
+  border: 1px solid black;
+}
+
+.positive {
+  background-color: theme('colors.green.light');
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.negative {
+  background-color: theme('colors.red.light');
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.scaleFull {
+  border-radius: 0.5rem;
+}
+
+.mobileShortText {
+  display: none;
+}
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .root {
+    display: flex;
+    width: 100%;
+    border-left: none;
+    padding-left: 0;
+    gap: 1rem;
+  }
+
+  .controls {
+    margin-top: 0.5rem;
+  }
+
+  .votePeriodEnd {
+    display: none;
+  }
+
+  .mobileShortText {
+    display: flex;
+  }
+}

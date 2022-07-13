@@ -15,10 +15,17 @@ export interface PortletProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Portlet = React.forwardRef<HTMLDivElement, PortletProps>(
-  ({gap = 'md', type = '', width = '', className, children, ...props}, ref) => (
+  ({gap = 'md', type = '', width = '', className, justify = 'start', children, ...props}, ref) => (
     // TODO: using `gap-${gap}` working only if it included in tailwind.config safelist
     <div
-      className={clsx(styles.portlet, styles[type], styles[width], `gap-${gap}`, className)}
+      className={clsx(
+        styles.portlet,
+        styles[type],
+        styles[width],
+        styles[justify],
+        `gap-${gap}`,
+        className,
+      )}
       ref={ref}
       {...props}
     >

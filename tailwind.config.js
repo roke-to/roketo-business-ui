@@ -46,6 +46,7 @@ module.exports = {
         light: '#F0F6FF',
         dark: '#A6C8FF',
         textDefault: '#3E65F2',
+        sat_1: '#D6E6FF',
       },
     },
     borderRadius: {

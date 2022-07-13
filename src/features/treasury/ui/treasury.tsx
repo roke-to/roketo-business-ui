@@ -52,7 +52,7 @@ export const Treasury = () => {
                 ? `${formatCurrency(parseFloat(balance) * Number(token.price))} USD`
                 : null;
               return (
-                <Chip>
+                <Chip key={token.id}>
                   <Typography as='span' weight='bold' font='xs'>
                     {balance} {token.symbol}
                   </Typography>

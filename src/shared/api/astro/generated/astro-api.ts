@@ -2515,3 +2515,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
   };
 }
+
+export interface ProposalKindSwaggerDto {
+  amount?: string;
+}

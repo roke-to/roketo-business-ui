@@ -11,24 +11,42 @@ export const Control = ({
   text,
   icon: Icon,
   variant,
+  active,
+  onClick,
 }: {
-  text: number;
+  text: number | string;
   icon: React.ReactNode;
   variant: 'positive' | 'negative';
+  active: boolean;
+  onClick?(): void;
 }) => {
+  const isViewMode = typeof onClick === 'undefined';
+
   const iconClassName = clsx(styles.icon, styles[variant]);
 
   return (
-    <Row align='center' gap={1}>
-      <Typography as='span' color='muted'>
-        {text}
-      </Typography>
+    <Row
+      align='center'
+      gap={1}
+      className={clsx(styles.root, {
+        [styles.activeMode]: !isViewMode,
+        [styles.viewMode]: isViewMode,
+      })}
+    >
       <Button
+        as={isViewMode ? 'div' : 'button'}
         size='xs'
-        variant={variant}
+        variant={active ? 'plain' : variant}
         /* @ts-expect-error */
         startIcon={<Icon className={iconClassName} />}
-      />
+        gap={1}
+        className={styles.mobileButton}
+        onClick={onClick}
+      >
+        <Typography as='span' color={variant} className={styles.text}>
+          {text}
+        </Typography>
+      </Button>
     </Row>
   );
 };

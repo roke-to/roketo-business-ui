@@ -6,10 +6,30 @@
   color: #8a96a8;
 }
 
+.positive {
+  color: theme('colors.green.default');
+}
+
+.negative {
+  color: theme('colors.red.default');
+}
+
 .normal {
-  @apply font-normal;
+  @apply font-normal; /* font-weight: 400; */
+}
+
+.medium {
+  @apply font-medium; /* font-weight: 500; */
+}
+
+.semibold {
+  @apply font-medium; /* font-weight: 600; */
 }
 
 .bold {
-  @apply font-bold;
+  @apply font-bold; /* font-weight: 700; */
+}
+
+.capitalizeFirstLetter:first-letter {
+  text-transform: uppercase;
 }
