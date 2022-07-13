@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Tab, TabsList} from '~/shared/ui/components/tabs';
+import {Tab, Tabs} from '~/shared/ui/components/tabs';
 
 export const ProposalStatusFilter = () => {
   const [selected, setSelected] = useState('all');
@@ -11,11 +11,11 @@ export const ProposalStatusFilter = () => {
   };
 
   return (
-    <TabsList value={selected} onChange={handleChange}>
+    <Tabs value={selected} onChange={handleChange}>
       <Tab value='all'>All proposals</Tab>
       <Tab value='active'>Active</Tab>
       <Tab value='approved'>Approved</Tab>
       <Tab value='failed'>Failed</Tab>
-    </TabsList>
+    </Tabs>
   );
 };

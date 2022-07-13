@@ -37,7 +37,7 @@ export const Treasury = () => (
       </Chip>
     </div>
 
-    <div className='flex space-between'>
+    <div className='flex justify-between'>
       <ProposalStatusFilter />
       <div className='flex gap-2 items-center'>
         <ProposalKindFilter />
