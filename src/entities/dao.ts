@@ -1,8 +1,9 @@
 import BN from 'bn.js';
 import decamelize from 'decamelize';
-import {attach, createEffect, createStore, forward, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
+import {AccountDaoResponse, astroApi} from '~/shared/api/astro';
 import {NearInstance} from '~/shared/api/near';
 import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/api';
 import {templateCreateArgs} from '~/shared/api/sputnik-factory-dao/template-create-args';
@@ -103,3 +104,28 @@ forward({
 
 // TODO: use current dao id from localStorage
 export const $daoId = createStore('animatronic.testnet');
+
+// user DAOs loading
+const $userDAOs = createStore<AccountDaoResponse[]>([]);
+export const $userDAOids = $userDAOs.map((arr) => arr.map(({id}) => id));
+
+export const loadDAOsList = createEvent();
+
+const loadDAOsListFx = attach({
+  source: {
+    accountId: $accountId,
+  },
+  async effect({accountId}) {
+    return astroApi.daoControllerDaosByAccountId(accountId);
+  },
+});
+
+sample({
+  source: loadDAOsList,
+  target: loadDAOsListFx,
+});
+sample({
+  source: loadDAOsListFx.doneData,
+  fn: (response) => response.data,
+  target: $userDAOs,
+});
