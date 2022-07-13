@@ -1,0 +1,154 @@
+[
+  {
+    "createdAt": "2022-07-11T16:17:45.844Z",
+    "transactionHash": "AyJFTYu7GzTULEG5W37x8MKkPEdi4zrm3vpsx3YvkGBb",
+    "id": "extg66.sputnikv2.testnet",
+    "config": {
+      "name": "extg66",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnNjYiLCJsZWdhbCI6eyJsZWdhbFN0YXR1cyI6IiIsImxlZ2FsTGluayI6IiJ9fQ=="
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-07-06T14:27:02.335Z",
+    "transactionHash": "E2ARyRfXqNCwUhhjBLWfbhMoGhtxiKRekMEEXJXjvwLj",
+    "id": "extg77.sputnikv2.testnet",
+    "config": {
+      "name": "extg77",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnNzciLCJsZWdhbCI6eyJsZWdhbFN0YXR1cyI6IiIsImxlZ2FsTGluayI6IiJ9fQ=="
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-07-06T11:45:04.166Z",
+    "transactionHash": "DHcHB1Xns8rNT2D4B6SjfekkgvyFTLt2fqVjQ4XUxeik",
+    "id": "extg55.sputnikv2.testnet",
+    "config": {
+      "name": "extg55",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnNTUiLCJsZWdhbCI6eyJsZWdhbFN0YXR1cyI6IiIsImxlZ2FsTGluayI6IiJ9fQ=="
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-06-25T17:29:04.808Z",
+    "transactionHash": "5TrUu5VhCsTrokdoJHvswNMdumTEP21R8ayRS21FDwtd",
+    "id": "ext-test-for-misha.sputnikv2.testnet",
+    "config": {
+      "name": "ext-test-for-misha",
+      "purpose": "Show the flow",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHQtdGVzdC1mb3ItbWlzaGEiLCJsZWdhbCI6eyJsZWdhbFN0YXR1cyI6IiIsImxlZ2FsTGluayI6IiJ9fQ=="
+    },
+    "numberOfMembers": 2,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet", "extg2.testnet"],
+    "accountIds": ["extg.testnet", "extg2.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-06-22T23:02:47.964Z",
+    "transactionHash": "FM4NBVFGa9c1jqVdy2CLQZXV3UehGGPFLTtSyFXqzupS",
+    "id": "extg4.sputnikv2.testnet",
+    "config": {
+      "name": "extg4",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnMyIsImxlZ2FsIjp7ImxlZ2FsU3RhdHVzIjoiIiwibGVnYWxMaW5rIjoiIn19"
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 1,
+    "totalDaoFunds": 52.96,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-06-22T22:47:52.935Z",
+    "transactionHash": "FCfVAVcU1GhXYExtiitTehKEkDjQGUMxRZWQHHdNPCcE",
+    "id": "extg3.sputnikv2.testnet",
+    "config": {
+      "name": "extg3",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnMyIsImxlZ2FsIjp7ImxlZ2FsU3RhdHVzIjoiIiwibGVnYWxMaW5rIjoiIn19"
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-06-22T19:59:58.601Z",
+    "transactionHash": "BUZRQwCVWux59Pb7qoeBm2Mw7ymDQqXXRVXKXALu2X4q",
+    "id": "extg2.sputnikv2.testnet",
+    "config": {
+      "name": "extg2",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnMiIsImxlZ2FsIjp7ImxlZ2FsU3RhdHVzIjoiIiwibGVnYWxMaW5rIjoiIn19"
+    },
+    "numberOfMembers": 2,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet", "extg2.testnet"],
+    "accountIds": ["extg.testnet", "extg2.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 4,
+    "totalDaoFunds": 185.36,
+    "isCouncil": true
+  },
+  {
+    "createdAt": "2022-06-21T16:34:56.006Z",
+    "transactionHash": "HMHrvMbTnMcNQ4dXYQHCwpaTuPngxgKbRqDvVPkz92wZ",
+    "id": "extg.sputnikv2.testnet",
+    "config": {
+      "name": "extg",
+      "purpose": "",
+      "metadata": "eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJleHRnIiwibGVnYWwiOnsibGVnYWxTdGF0dXMiOiIiLCJsZWdhbExpbmsiOiIifX0="
+    },
+    "numberOfMembers": 1,
+    "numberOfGroups": 1,
+    "council": ["extg.testnet"],
+    "accountIds": ["extg.testnet"],
+    "status": "Inactive",
+    "activeProposalCount": 0,
+    "totalProposalCount": 0,
+    "totalDaoFunds": 19.86,
+    "isCouncil": true
+  }
+]

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {ProposalDateSort} from '~/features/treasury/ui/filters/proposal-date-sort';
 import {ProposalKindFilter} from '~/features/treasury/ui/filters/proposal-kind-filter';
+import {MockDaoList} from '~/features/treasury/ui/mock-dao-list';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {Typography} from '~/shared/ui/components/typography';
@@ -43,6 +44,10 @@ export const Treasury = () => (
         <ProposalKindFilter />
         <ProposalDateSort />
       </div>
+    </div>
+
+    <div className='flex gap-2 items-center'>
+      <MockDaoList />
     </div>
     <ProposalsList />
   </>
