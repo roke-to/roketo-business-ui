@@ -5,39 +5,32 @@ import styles from './checkable-label.module.css';
 
 type IContent = string | React.ReactElement;
 
+export type CheckableLabelPosition = 'left' | 'right';
+
 export interface ICheckableLabelProps {
-  left?: IContent;
-  right?: IContent;
+  label?: IContent;
+  labelPosition?: CheckableLabelPosition;
   disabled?: boolean;
   className?: string;
 }
 
-const renderText = (textClassName: string, content: IContent, disabled?: boolean) => {
-  const textClasses = clsx(
-    styles.text,
-    {
-      [styles.disabled]: disabled,
-    },
-    textClassName,
-  );
-
-  return (
-    <span className={textClasses} key='text'>
-      {content}
-    </span>
-  );
-};
-
 export const CheckableLabel: React.FC<ICheckableLabelProps> = ({
   children,
-  left,
-  right,
+  label,
+  labelPosition = 'left',
   className,
   disabled,
-}) => (
-  <label className={clsx(styles.root, className)}>
-    {left && renderText(styles.left, left, disabled)}
-    {children}
-    {right && renderText(styles.right, right, disabled)}
-  </label>
-);
+}) => {
+  const textClasses = clsx({
+    [styles.disabled]: disabled,
+  });
+
+  return (
+    <label className={clsx(styles.root, styles[labelPosition], className)}>
+      {children}
+      <span className={textClasses} key='text'>
+        {label}
+      </span>
+    </label>
+  );
+};

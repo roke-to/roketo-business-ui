@@ -46,7 +46,7 @@ export const CheckableRoot = React.forwardRef<HTMLInputElement, ICheckableRootPr
         checked={checked}
         disabled={disabled}
         defaultChecked={defaultChecked}
-        onChange={onChange}
+        onChange={disabled ? undefined : onChange}
         className={clsx(styles.input, inputClassName)}
         {...props}
       />

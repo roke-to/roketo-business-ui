@@ -1,20 +1,17 @@
 .root {
-  cursor: pointer;
   display: flex;
   align-items: center;
-}
-
-.text {
-  font-size: 14px;
-  line-height: 16px;
+  gap: 0.5rem;
+  line-height: 1.25rem;
+  cursor: pointer;
 }
 
 .left {
-  padding-right: 8px;
+  flex-direction: row;
 }
 
 .right {
-  padding-left: 8px;
+  flex-direction: row-reverse;
 }
 
 .disabled {
