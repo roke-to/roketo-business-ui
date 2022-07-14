@@ -31,7 +31,11 @@ export const UserHasDao = ({userDAOs}: Props) => {
       </Col>
 
       <Col>
-        <Button onClick={() => saveCurrentDaoInLs(selectedDaoID)} variant='outlined'>
+        <Button
+          onClick={() => saveCurrentDaoInLs(selectedDaoID)}
+          disabled={!selectedDaoID}
+          variant='outlined'
+        >
           {t('daoInit.selectDAO')}
         </Button>
       </Col>
