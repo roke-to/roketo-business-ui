@@ -5,7 +5,7 @@ import styles from './button.module.css';
 
 export type ButtonVariant = 'soft' | 'outlined' | 'plain' | 'positive' | 'negative' | 'clean';
 
-export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xxs' | 'xs' | 'sm' | 'md' | 'lg';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   as?: any;

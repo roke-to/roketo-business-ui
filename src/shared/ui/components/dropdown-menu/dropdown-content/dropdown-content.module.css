@@ -1,5 +1,6 @@
 .contentBlock {
   position: absolute;
+  z-index: 1;
 
   display: flex;
   flex-direction: column;
@@ -12,6 +13,10 @@
 }
 
 /* Depends of size button component */
+.xxs {
+  @apply top-6;
+}
+
 .xs {
   @apply top-8;
 }
@@ -40,7 +45,33 @@
 /* /Direction */
 
 /* Offset */
-.s {
+.offset_xs {
+  &.xxs {
+    top: 1.625rem;
+  }
+
+  &.xs {
+    top: 2.125rem;
+  }
+
+  &.sm {
+    top: 2.125rem;
+  }
+
+  &.md {
+    top: 3.125rem;
+  }
+
+  &.lg {
+    top: 4.125rem;
+  }
+}
+
+.offset_s {
+  &.xxs {
+    top: 1.75rem;
+  }
+
   &.xs {
     top: 2.25rem;
   }
@@ -58,7 +89,11 @@
   }
 }
 
-.m {
+.offset_m {
+  &.xxs {
+    top: 2rem;
+  }
+
   &.xs {
     top: 2.5rem;
   }
@@ -76,7 +111,11 @@
   }
 }
 
-.l {
+.offset_l {
+  &.xxs {
+    top: 2.25rem;
+  }
+
   &.xs {
     top: 2.75rem;
   }
