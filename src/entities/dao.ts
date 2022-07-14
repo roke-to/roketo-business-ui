@@ -104,6 +104,22 @@ forward({
 
 // TODO: use current dao id from localStorage
 export const $daoId = createStore('animatronic.testnet');
+export const saveCurrentDaoInLs = createEvent<string>();
+export const saveCurrentDaoInLsFx = createEffect((selectedDaoID: string) => {
+  // todo: put ls key to the shared consts
+  localStorage.setItem('currentDaoId', selectedDaoID);
+  return selectedDaoID;
+});
+
+sample({
+  source: saveCurrentDaoInLs,
+  target: saveCurrentDaoInLsFx,
+});
+
+sample({
+  source: saveCurrentDaoInLsFx.doneData,
+  target: $daoId,
+});
 
 // user DAOs loading
 const $userDAOs = createStore<AccountDaoResponse[]>([]);

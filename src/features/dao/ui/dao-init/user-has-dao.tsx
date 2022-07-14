@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {saveCurrentDaoInLs} from '~/entities/dao';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
@@ -30,7 +31,7 @@ export const UserHasDao = ({userDAOs}: Props) => {
       </Col>
 
       <Col>
-        <Button onClick={() => alert('select DAO feature')} variant='outlined'>
+        <Button onClick={() => saveCurrentDaoInLs(selectedDaoID)} variant='outlined'>
           {t('daoInit.selectDAO')}
         </Button>
       </Col>
