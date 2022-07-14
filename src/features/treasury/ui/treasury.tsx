@@ -8,6 +8,7 @@ import {MockDaoList} from '~/features/treasury/ui/mock-dao-list';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
+import {Modal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
 
 import {ProposalStatusFilter} from './filters/proposal-status-filter';
@@ -59,6 +60,8 @@ export const Treasury = () => {
           );
         })}
       </div>
+
+      <Modal isOpen>asdasd</Modal>
 
       <div className='flex justify-between'>
         <ProposalStatusFilter />
