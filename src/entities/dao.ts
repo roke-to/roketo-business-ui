@@ -1,11 +1,14 @@
 import BN from 'bn.js';
 import decamelize from 'decamelize';
-import {attach, createEffect, createStore, forward, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
+import {AccountDaoResponse, astroApi} from '~/shared/api/astro';
 import {NearInstance} from '~/shared/api/near';
 import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/api';
 import {templateCreateArgs} from '~/shared/api/sputnik-factory-dao/template-create-args';
+import {ROUTES} from '~/shared/config/routes';
+import {history} from '~/shared/lib/router';
 import {validators} from '~/shared/lib/validators';
 
 import {$accountId, initNearInstanceFx} from './wallet';
@@ -101,5 +104,47 @@ forward({
   to: createDaoFx,
 });
 
-// TODO: use current dao id from localStorage
-export const $daoId = createStore('animatronic.testnet');
+export const $daoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
+
+export const saveCurrentDaoInLs = createEvent<string>();
+const saveCurrentDaoInLsFx = createEffect((selectedDaoID: string) => {
+  // todo: put ls key to the shared consts
+  localStorage.setItem('currentDaoId', selectedDaoID);
+  history.replace(ROUTES.treasury.path);
+  return selectedDaoID;
+});
+
+sample({
+  source: saveCurrentDaoInLs,
+  target: saveCurrentDaoInLsFx,
+});
+
+sample({
+  source: saveCurrentDaoInLsFx.doneData,
+  target: $daoId,
+});
+
+// user DAOs loading
+const $userDAOs = createStore<AccountDaoResponse[]>([]);
+export const $userDAOids = $userDAOs.map((arr) => arr.map(({id}) => id));
+
+export const loadDAOsList = createEvent();
+
+const loadDAOsListFx = attach({
+  source: {
+    accountId: $accountId,
+  },
+  async effect({accountId}) {
+    return astroApi.daoControllerDaosByAccountId(accountId);
+  },
+});
+
+sample({
+  source: loadDAOsList,
+  target: loadDAOsListFx,
+});
+sample({
+  source: loadDAOsListFx.doneData,
+  fn: (response) => response.data,
+  target: $userDAOs,
+});
