@@ -106,16 +106,16 @@ forward({
 
 export const $daoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
 
-export const saveCurrentDaoInLs = createEvent<string>();
-const saveCurrentDaoInLsFx = createEffect((selectedDaoID: string) => {
+export const setDaoId = createEvent<string>();
+const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
   // todo: put ls key to the shared consts
-  localStorage.setItem('currentDaoId', selectedDaoID);
+  localStorage.setItem('currentDaoId', selectedDaoId);
   history.replace(ROUTES.treasury.path);
-  return selectedDaoID;
+  return selectedDaoId;
 });
 
 sample({
-  source: saveCurrentDaoInLs,
+  source: setDaoId,
   target: saveCurrentDaoInLsFx,
 });
 
@@ -124,13 +124,19 @@ sample({
   target: $daoId,
 });
 
+const SOME_DAOS_WITH_SOME_DATA_FOR_DEV = [
+  'animatronic.testnet', // a lot of proposals
+];
+
 // user DAOs loading
-const $userDAOs = createStore<AccountDaoResponse[]>([]);
-export const $userDAOids = $userDAOs.map((arr) => arr.map(({id}) => id));
+const $daos = createStore<AccountDaoResponse[]>([]);
+export const $daoIds = $daos.map((arr) =>
+  arr.map(({id}) => id).concat(SOME_DAOS_WITH_SOME_DATA_FOR_DEV),
+);
 
-export const loadDAOsList = createEvent();
+export const loadDaos = createEvent();
 
-const loadDAOsListFx = attach({
+const loadDaosFx = attach({
   source: {
     accountId: $accountId,
   },
@@ -140,11 +146,17 @@ const loadDAOsListFx = attach({
 });
 
 sample({
-  source: loadDAOsList,
-  target: loadDAOsListFx,
+  clock: initNearInstanceFx.doneData,
+  filter: (near) => Boolean(near.accountId),
+  target: loadDaosFx,
+});
+
+sample({
+  source: loadDaos,
+  target: loadDaosFx,
 });
 sample({
-  source: loadDAOsListFx.doneData,
+  source: loadDaosFx.doneData,
   fn: (response) => response.data,
-  target: $userDAOs,
+  target: $daos,
 });

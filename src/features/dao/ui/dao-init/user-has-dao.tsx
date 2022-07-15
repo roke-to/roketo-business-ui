@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {saveCurrentDaoInLs} from '~/entities/dao';
+import {setDaoId} from '~/entities/dao';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
@@ -13,7 +13,7 @@ type Props = {
 
 export const UserHasDao = ({userDAOs}: Props) => {
   const {t} = useTranslation('dao');
-  const [selectedDaoID, setSelectedDaoID] = useState('');
+  const [selectedDaoId, setSelectedDaoId] = useState('');
 
   return (
     <>
@@ -23,7 +23,7 @@ export const UserHasDao = ({userDAOs}: Props) => {
       </Col>
 
       <Col>
-        <RadioGroup name='daoID' value={selectedDaoID} onChange={setSelectedDaoID}>
+        <RadioGroup name='daoID' value={selectedDaoId} onChange={setSelectedDaoId}>
           {userDAOs.map((daoID) => (
             <RadioGroupItem key={daoID} value={daoID} label={daoID} />
           ))}
@@ -32,8 +32,8 @@ export const UserHasDao = ({userDAOs}: Props) => {
 
       <Col>
         <Button
-          onClick={() => saveCurrentDaoInLs(selectedDaoID)}
-          disabled={!selectedDaoID}
+          onClick={() => setDaoId(selectedDaoId)}
+          disabled={!selectedDaoId}
           variant='outlined'
         >
           {t('daoInit.selectDAO')}

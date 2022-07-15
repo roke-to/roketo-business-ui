@@ -1,1 +1,1 @@
-export * from './drop-down-menu';
+export * from './dropdown-menu';

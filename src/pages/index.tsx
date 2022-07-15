@@ -1,9 +1,13 @@
 import {useStore} from 'effector-react';
+import React from 'react';
 import {Redirect, Route, Router, Switch} from 'react-router-dom';
 
+import {$daoId} from '~/entities/dao';
 import {$isSignedIn} from '~/entities/wallet';
 import {DaoPage} from '~/pages/dao';
 import {DaoNewPage} from '~/pages/dao-new';
+import {DashboardPage} from '~/pages/dashboard';
+import {EmployeesPage} from '~/pages/employees';
 import {GovernancePage} from '~/pages/governance';
 import {LoginPage} from '~/pages/login';
 import {NotFoundPage} from '~/pages/not-found';
@@ -13,6 +17,7 @@ import {history, PrivateRoute} from '~/shared/lib/router';
 
 export function Routing() {
   const signedIn = useStore($isSignedIn);
+  const daoId = useStore($daoId);
 
   return (
     <Router history={history}>
@@ -32,7 +37,7 @@ export function Routing() {
           path={ROUTES.dao.path}
           redirect={<Redirect to={ROUTES.root.path} />}
         >
-          <DaoPage />
+          {!daoId ? <DaoPage /> : <Redirect to={ROUTES.dashboard.path} />}
         </PrivateRoute>
 
         <PrivateRoute
@@ -46,16 +51,16 @@ export function Routing() {
 
         <PrivateRoute
           exact
-          allowed={signedIn}
-          path={ROUTES.profile.path}
+          allowed={signedIn && !!daoId}
+          path={ROUTES.dashboard.path}
           redirect={<Redirect to={ROUTES.root.path} />}
         >
-          profile page
+          <DashboardPage />
         </PrivateRoute>
 
         <PrivateRoute
           exact
-          allowed={signedIn}
+          allowed={signedIn && !!daoId}
           path={ROUTES.governance.path}
           redirect={<Redirect to={ROUTES.root.path} />}
         >
@@ -64,11 +69,20 @@ export function Routing() {
 
         <PrivateRoute
           exact
-          allowed={signedIn}
+          allowed={signedIn && !!daoId}
           path={ROUTES.treasury.path}
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <TreasuryPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.employees.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <EmployeesPage />
         </PrivateRoute>
 
         <Route render={NotFoundPage} />
