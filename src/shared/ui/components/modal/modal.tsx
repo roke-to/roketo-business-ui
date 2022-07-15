@@ -14,6 +14,8 @@ type Props = {
   className?: string;
 };
 
+const TRANSITION_DURATION_MS = 200;
+
 const Close = ({className, ...props}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button {...props} className={clsx(styles.close, className)} type='button' aria-label='Close'>
     <CloseIcon />
@@ -33,8 +35,13 @@ export const Modal = ({title, children, isOpen = true, onCloseModal, className}:
     onRequestClose={onCloseModal}
     overlayElement={renderOverlay}
     className={clsx(styles.content, className)}
-    overlayClassName={styles.overlay}
+    closeTimeoutMS={TRANSITION_DURATION_MS}
     bodyOpenClassName={styles.bodyWithModal}
+    overlayClassName={{
+      base: styles.overlay,
+      afterOpen: styles.overlayAfterOpen,
+      beforeClose: styles.overlayBeforeClose,
+    }}
   >
     <header className={styles.header}>
       {title && (
