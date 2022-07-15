@@ -1,9 +1,9 @@
 import {useStore} from 'effector-react';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
-import {$daoIds, loadDaos} from '~/entities/dao';
+import {$daoIds} from '~/entities/dao';
 import {logoutClicked} from '~/entities/wallet';
 import {UserHasDao} from '~/features/dao/ui/dao-init/user-has-dao';
 import {UserHasNotDao} from '~/features/dao/ui/dao-init/user-has-not-dao';
@@ -15,10 +15,6 @@ import {Portlet} from '~/shared/ui/components/portlet';
 export const DaoInit = () => {
   const {t} = useTranslation('dao');
   const userDAOs = useStore($daoIds);
-
-  useEffect(() => {
-    loadDaos();
-  }, []);
 
   return (
     <Portlet gap='xl'>

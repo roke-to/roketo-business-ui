@@ -134,8 +134,6 @@ export const $daoIds = $daos.map((arr) =>
   arr.map(({id}) => id).concat(SOME_DAOS_WITH_SOME_DATA_FOR_DEV),
 );
 
-export const loadDaos = createEvent();
-
 const loadDaosFx = attach({
   source: {
     accountId: $accountId,
@@ -151,10 +149,6 @@ sample({
   target: loadDaosFx,
 });
 
-sample({
-  source: loadDaos,
-  target: loadDaosFx,
-});
 sample({
   source: loadDaosFx.doneData,
   fn: (response) => response.data,
