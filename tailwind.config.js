@@ -30,9 +30,9 @@ module.exports = {
       inherit: 'inherit',
       current: 'currentColor',
       transparent: 'transparent',
-      black: colors.black,
+      black: '#2B313B',
       white: colors.white,
-      gray: colors.gray,
+      gray: '#8A96A8',
       green: {
         default: '#1EBA52',
         light: '#D6F5DF',
