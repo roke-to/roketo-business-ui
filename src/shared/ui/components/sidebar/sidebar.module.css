@@ -1,15 +1,18 @@
 .sidebar {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 
   min-width: 240px;
   height: 100vh;
 
-  padding-top: 100px;
+  padding-top: 110px;
+  padding-bottom: 52px;
 
   background: theme('colors.white');
 
   @media screen and (max-width: theme('screens.mobile')) {
     display: none;
+    padding-top: 104px;
   }
 }

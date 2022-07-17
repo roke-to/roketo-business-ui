@@ -99,3 +99,7 @@
     @apply bg-[#A6C8FF];
   }
 }
+
+.full {
+  width: 100%;
+}

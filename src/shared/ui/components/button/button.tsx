@@ -15,6 +15,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   variant?: ButtonVariant;
   size?: ButtonSize;
   gap?: 'sm' | number;
+  width?: 'full';
 }
 
 const DEFAULT_TAG = 'button';
@@ -28,6 +29,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       variant = 'soft',
       size = 'md',
+      width = '',
       startIcon,
       endIcon,
       gap,
@@ -45,7 +47,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           styles.button,
           styles[size],
           styles[variant],
-          {[styles.hasIcon]: (startIcon || endIcon) && !hasGap},
+          styles[width],
+        {[styles.hasIcon]: (startIcon || endIcon) && !hasGap},
           `gap-${gap}`,
           className,
         )}
