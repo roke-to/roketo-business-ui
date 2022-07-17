@@ -5,7 +5,7 @@ import styles from './typography.module.css';
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: 'h1' | 'h2' | 'span';
-  color?: 'muted' | 'positive' | 'negative';
+  color?: 'muted' | 'positive' | 'negative' | 'black';
   font?: string;
   weight?: 'normal' | 'bold' | 'medium' | 'semibold';
   isCapitalizeFirstLetter?: boolean;
@@ -17,7 +17,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     {
       as: Tag = 'h1',
       color = '',
-      font,
+      font = 'base',
       weight = '',
       isCapitalizeFirstLetter = false,
       className,

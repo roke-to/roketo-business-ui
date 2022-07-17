@@ -8,8 +8,6 @@
   padding-top: 100px;
 
   background: theme('colors.white');
-  box-shadow: theme('dropShadow.DEFAULT');
-  border-radius: theme('borderRadius.3xl');
 
   @media screen and (max-width: theme('screens.mobile')) {
     display: none;

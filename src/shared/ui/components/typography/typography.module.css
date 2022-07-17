@@ -33,3 +33,7 @@
 .capitalizeFirstLetter:first-letter {
   text-transform: uppercase;
 }
+
+.medium {
+  @apply font-medium; /* font-weight: 500; */
+}
