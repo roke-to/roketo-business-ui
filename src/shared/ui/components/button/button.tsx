@@ -14,6 +14,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   endIcon?: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
+  gap?: 'sm' | number;
 }
 
 const DEFAULT_TAG = 'button';
@@ -29,25 +30,30 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       startIcon,
       endIcon,
+      gap,
       ...props
     },
     ref,
-  ) => (
-    <Tag
-      {...props}
-      ref={ref}
-      type={type}
-      className={clsx(
-        styles.button,
-        styles[size],
-        styles[variant],
-        {[styles.hasIcon]: startIcon || endIcon},
-        className,
-      )}
-    >
-      {startIcon}
-      {children}
-      {endIcon}
-    </Tag>
-  ),
+  ) => {
+    const hasGap = gap || gap === 0;
+    return (
+      <Tag
+        {...props}
+        ref={ref}
+        type={type}
+        className={clsx(
+          styles.button,
+          styles[size],
+          styles[variant],
+          {[styles.hasIcon]: (startIcon || endIcon) && !hasGap},
+          `gap-${gap}`,
+          className,
+        )}
+      >
+        {startIcon}
+        {children}
+        {endIcon}
+      </Tag>
+    );
+  },
 );

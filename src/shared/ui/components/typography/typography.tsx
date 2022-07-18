@@ -5,15 +5,25 @@ import styles from './typography.module.css';
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: 'h1' | 'h2' | 'span';
-  color?: string;
+  color?: 'muted' | 'positive' | 'negative';
   font?: string;
-  weight?: 'normal' | 'bold';
+  weight?: 'normal' | 'bold' | 'medium' | 'semibold';
+  isCapitalizeFirstLetter?: boolean;
 }
 
 // TODO сменить тип HTMLHeadingElement
 export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
   (
-    {as: Tag = 'h1', color = '', font = 'base', weight = '', className, children, ...props},
+    {
+      as: Tag = 'h1',
+      color = '',
+      font,
+      weight = '',
+      isCapitalizeFirstLetter = false,
+      className,
+      children,
+      ...props
+    },
     ref,
   ) => {
     const isHeading = ['h1', 'h2', 'h3'].includes(Tag);
@@ -28,6 +38,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
           styles[weight],
           {
             [styles.heading]: isHeading,
+            [styles.capitalizeFirstLetter]: isCapitalizeFirstLetter,
           },
           className,
         )}

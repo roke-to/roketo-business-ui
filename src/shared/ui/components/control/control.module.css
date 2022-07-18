@@ -10,3 +10,32 @@
 .negative {
   color: theme('colors.red.default');
 }
+
+.viewMode {
+  &.root {
+    display: none;
+  }
+}
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .activeMode {
+    &.root {
+      width: 100%;
+    }
+    & .mobileButton {
+      width: 100%;
+      height: 2.75rem;
+      border-radius: 3rem;
+    }
+    & .text {
+      display: none;
+    }
+  }
+
+  .viewMode {
+    &.root {
+      display: flex;
+      max-width: 100%;
+    }
+  }
+}
