@@ -18,6 +18,7 @@ module.exports = {
     dropShadow: {
       // TODO: use color from theme
       DEFAULT: ['0px 5px 20px rgba(87, 140, 219, 0.25)'], // #578cdb
+      layout: ['-5px 0px 20px rgba(87, 140, 219, 0.25)'],
     },
     fontFamily: {
       // TODO: нужны ли тут остальные дефолтные шрифты
