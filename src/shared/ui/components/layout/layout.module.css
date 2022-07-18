@@ -10,7 +10,7 @@
 .layout {
   display: flex;
   width: 100%;
-  box-shadow: -5px 0px 20px rgba(87, 140, 219, 0.25);
+  box-shadow: theme('dropShadow.layout');
 }
 
 .column {
