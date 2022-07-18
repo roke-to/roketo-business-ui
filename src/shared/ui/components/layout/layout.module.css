@@ -25,3 +25,10 @@
   padding-right: 5rem;
   padding-left: 5rem;
 }
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .content {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}

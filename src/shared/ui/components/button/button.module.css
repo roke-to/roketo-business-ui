@@ -90,14 +90,6 @@
 
 .clean {
   @apply text-black;
-
-  &:hover {
-    @apply bg-[#D6E6FF];
-  }
-
-  &:active {
-    @apply bg-[#A6C8FF];
-  }
 }
 
 .full {

@@ -16,3 +16,11 @@
     padding-top: 104px;
   }
 }
+
+.isOpen {
+  display: flex;
+
+  @media screen and (max-width: theme('screens.mobile')) {
+    display: flex;
+  }
+}
