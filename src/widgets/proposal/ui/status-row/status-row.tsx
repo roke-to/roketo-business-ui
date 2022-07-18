@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Proposal} from '~/shared/api/astro';
-import {formatISODate, toMillis} from '~/shared/lib/dateFormat';
+import {formatISODate, toMilliseconds} from '~/shared/lib/dateFormat';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Clock} from '~/shared/ui/icons/clock.svg';
@@ -24,7 +24,7 @@ export const StatusRow = ({
   updatedAt: string;
 }) => {
   /* это 💩, потому что votePeriodEnd типизируется в апи как number, а приходит string */
-  const readableVotePeriodEnd = useCountdown(toMillis(votePeriodEnd as unknown as string));
+  const readableVotePeriodEnd = useCountdown(toMilliseconds(votePeriodEnd as unknown as string));
 
   return canVote ? (
     <Row gap={2} align='center'>

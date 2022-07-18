@@ -1,6 +1,7 @@
 import {format, parseISO} from 'date-fns';
 
-export const toMillis = (timePeriod: string): number => Math.round(Number(timePeriod) / 1000000);
+export const toMilliseconds = (timePeriod: string): number =>
+  Math.round(Number(timePeriod) / 1000000);
 
 export function formatISODate(
   date: string | null | undefined,
