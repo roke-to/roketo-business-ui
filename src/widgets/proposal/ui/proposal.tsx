@@ -2,7 +2,10 @@ import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Proposal as ProposalType} from '~/shared/api/astro';
+import {
+  ProposalKindSwaggerDto as BaseProposalKindSwaggerDto,
+  Proposal as ProposalType,
+} from '~/shared/api/astro';
 import {formatYoktoValue} from '~/shared/lib/currency';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
@@ -12,8 +15,16 @@ import {Votes} from '~/widgets/proposal/ui/votes';
 
 import styles from './proposal.module.css';
 
+interface ProposalKindSwaggerDto extends BaseProposalKindSwaggerDto {
+  amount?: string;
+}
+
+interface ImprovedProposalType extends ProposalType {
+  kind: ProposalKindSwaggerDto;
+}
+
 export interface ProposalProps extends React.HTMLAttributes<HTMLDivElement> {
-  proposal: ProposalType;
+  proposal: ImprovedProposalType;
 }
 
 export const Proposal = ({proposal}: ProposalProps) => {
