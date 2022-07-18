@@ -4,11 +4,11 @@ import React from 'react';
 
 import styles from './dropdown-item.module.css';
 
-export interface IDropDownItemProps extends React.HTMLAttributes<HTMLLIElement> {
+export interface IDropdownItemProps extends React.HTMLAttributes<HTMLLIElement> {
   isActive?: boolean;
 }
 
-export const DropDownItem: React.FC<IDropDownItemProps> = ({children, isActive, onClick}) => (
+export const DropdownItem: React.FC<IDropdownItemProps> = ({children, isActive, onClick}) => (
   <li
     className={clsx(styles.contentItem, styles.disableListType, {
       [styles.active]: isActive,

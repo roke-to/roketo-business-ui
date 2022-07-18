@@ -13,10 +13,6 @@ export const ROUTES = typedRoutes({
     path: '/authorize',
     title: 'Authorize',
   },
-  profile: {
-    path: '/profile',
-    title: 'Profile',
-  },
   dao: {
     path: '/dao',
     title: 'DAO',

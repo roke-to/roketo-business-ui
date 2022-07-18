@@ -33,6 +33,10 @@ sample({
   source: loadTreasuryProposals,
   target: loadTreasuryProposalsFx,
 });
+sample({
+  clock: $daoId,
+  target: loadTreasuryProposalsFx,
+});
 
 sample({
   source: loadTreasuryProposalsFx.doneData,
@@ -61,6 +65,10 @@ const loadTokenBalancesFx = attach({
 
 sample({
   source: loadTokenBalances,
+  target: loadTokenBalancesFx,
+});
+sample({
+  clock: $daoId,
   target: loadTokenBalancesFx,
 });
 

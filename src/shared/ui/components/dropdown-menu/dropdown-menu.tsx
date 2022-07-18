@@ -7,17 +7,17 @@ import {ReactComponent as ArrowDown} from '~/shared/ui/icons/arrow-down.svg';
 
 import styles from './dropdown-menu.module.css';
 
-export type DropDownMenuRootElementSize = ButtonSize;
+export type DropdownMenuRootElementSize = ButtonSize;
 
-export interface DropDownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   label?: string;
   contentRef: React.RefObject<HTMLElement>;
   withOverlay?: boolean;
-  size?: DropDownMenuRootElementSize;
+  size?: DropdownMenuRootElementSize;
   variant?: ButtonVariant;
 }
 
-export const DropDownMenu = React.forwardRef<HTMLDivElement, DropDownMenuProps>(
+export const DropdownMenu = React.forwardRef<HTMLDivElement, DropdownMenuProps>(
   (
     {label, contentRef, size = 'md', variant = 'plain', withOverlay = true, className, children},
     ref,

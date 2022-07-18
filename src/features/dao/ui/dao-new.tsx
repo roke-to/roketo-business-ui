@@ -2,8 +2,10 @@ import {useForm} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {useTranslation} from 'react-i18next';
+import {Link} from 'react-router-dom';
 
 import {createDaoForm, createDaoFx} from '~/entities/dao';
+import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
@@ -27,34 +29,42 @@ export const DaoNew = () => {
   return (
     <Portlet gap='xl'>
       <Col>
-        <Typography>{t('newDao.title')}</Typography>
-        <Typography as='span'>{t('newDao.subTitle')}</Typography>
+        <Typography>{t('daoNew.title')}</Typography>
+        <Typography as='span'>{t('daoNew.subTitle')}</Typography>
       </Col>
       <form onSubmit={handleSubmit}>
         <Col gap='xl'>
           <Col gap='md'>
-            <Label required content={t('newDao.nameLabel')} error={fields.name.errorText()}>
+            <Label required content={t('daoNew.nameLabel')} error={fields.name.errorText()}>
               <Input
                 name='daoName'
                 value={fields.name.value}
                 disabled={pending}
-                placeholder={t('newDao.namePlaceholder')}
+                placeholder={t('daoNew.namePlaceholder')}
                 onChange={(e) => fields.name.onChange(e.target.value)}
               />
             </Label>
-            <Label required content={t('newDao.addressLabel')} error={fields.address.errorText()}>
+            <Label required content={t('daoNew.addressLabel')} error={fields.address.errorText()}>
               <Input
                 name='daoAddress'
                 size='md'
                 value={fields.address.value}
                 disabled={pending}
-                placeholder={t('newDao.addressPlaceholder')}
+                placeholder={t('daoNew.addressPlaceholder')}
                 onChange={(e) => fields.address.onChange(e.target.value)}
               />
             </Label>
           </Col>
           <Button disabled={!eachValid || pending} type='submit' variant='outlined'>
-            {t('newDao.submit')}
+            {t('daoNew.submit')}
+          </Button>
+          <Button
+            as={Link}
+            // @ts-expect-error
+            to={ROUTES.dao.path}
+            variant='soft'
+          >
+            {t('daoNew.back')}
           </Button>
         </Col>
       </form>

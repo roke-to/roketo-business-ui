@@ -8,10 +8,11 @@
     "createDAO": "Create DAO",
     "selectDAO": "Select DAO"
   },
-  "newDao": {
+  "daoNew": {
     "title": "New DAO setup",
     "subTitle": "Enter DAO name and address",
     "submit": "Create DAO",
+    "back": "Cancel",
     "addressLabel": "Address",
     "addressPlaceholder": "'newdaoname.sputnikv2.testnet'",
     "nameLabel": "Name",

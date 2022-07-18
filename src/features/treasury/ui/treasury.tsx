@@ -4,7 +4,6 @@ import React from 'react';
 import {$tokenBalances, loadTokenBalances} from '~/entities/treasury';
 import {ProposalDateSort} from '~/features/treasury/ui/filters/proposal-date-sort';
 import {ProposalKindFilter} from '~/features/treasury/ui/filters/proposal-kind-filter';
-import {MockDaoList} from '~/features/treasury/ui/mock-dao-list';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
@@ -66,9 +65,6 @@ export const Treasury = () => {
           <ProposalKindFilter />
           <ProposalDateSort />
         </div>
-      </div>
-      <div className='flex gap-2 items-center'>
-        <MockDaoList />
       </div>
       <ProposalsList />
     </>

@@ -5,11 +5,9 @@ import {Sidebar} from '~/shared/ui/components/sidebar';
 import {Header} from '~/widgets/header';
 import {Navigate} from '~/widgets/navigate';
 
-export interface PageLayoutProps {
-  children?: JSX.Element | JSX.Element[];
-}
+export interface IPageLayoutProps {}
 
-export const PageLayout = ({children}: PageLayoutProps) => (
+export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => (
   <Layout type='row' withBackground={false}>
     <Sidebar>
       <Navigate />

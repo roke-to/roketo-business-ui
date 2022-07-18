@@ -1,46 +1,38 @@
-import React, {useState} from 'react';
+import {useStore} from 'effector-react';
+import React from 'react';
 
-import mockDaoList from '~/features/treasury/ui/mockDao.json';
-import {DropDownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropDownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropDownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
+import {$daoId, $daoIds, setDaoId} from '~/entities/dao';
+import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
+import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {RadioGroupItem} from '~/shared/ui/components/radio-group';
 
 const contentRef = React.createRef<HTMLUListElement>();
 
 export const DaoSwitcher = () => {
-  React.useEffect(() => {
-    // load list dao
-  }, []);
-
-  const [daoId, setDaoId] = useState(mockDaoList[0].id);
-  const [daoIndex, setDaoIndex] = useState(0);
+  const daoId = useStore($daoId);
+  const userDaos = useStore($daoIds);
 
   const handleChange = (index: number) => {
-    console.log('CHOOSE DAO ->', mockDaoList[index].id);
-    setDaoIndex(index);
-    setDaoId(mockDaoList[index].id);
+    setDaoId(userDaos[index]);
   };
 
   return (
-    <DropDownMenu label='Mydaoname' contentRef={contentRef} size='xxs' variant='clean'>
-      <DropDownContent
+    <DropdownMenu label={daoId} contentRef={contentRef} size='xxs' variant='clean'>
+      <DropdownContent
         ref={contentRef}
-        selected={daoIndex}
+        selected={daoId}
         handleChange={handleChange}
         gap={3}
         size='xxs'
         offset='xs'
       >
-        {mockDaoList.map((dao) => {
-          const {id, transactionHash} = dao;
-          return (
-            <DropDownItem key={transactionHash}>
-              <RadioGroupItem value={id} label={id} checked={id === daoId} />
-            </DropDownItem>
-          );
-        })}
-      </DropDownContent>
-    </DropDownMenu>
+        {userDaos.map((id) => (
+          <DropdownItem key={id}>
+            <RadioGroupItem value={id} label={id} checked={id === daoId} />
+          </DropdownItem>
+        ))}
+      </DropdownContent>
+    </DropdownMenu>
   );
 };
