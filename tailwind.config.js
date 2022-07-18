@@ -19,6 +19,8 @@ module.exports = {
       // TODO: use color from theme
       DEFAULT: ['0px 5px 20px rgba(87, 140, 219, 0.25)'], // #578cdb
       layout: ['-5px 0px 20px rgba(87, 140, 219, 0.25)'],
+      positive: ['0px 5px 20px #d6f5df'], // colors.green.default
+      negative: ['0px 5px 20px #fccfd2'], // colors.red.default
     },
     fontFamily: {
       // TODO: нужны ли тут остальные дефолтные шрифты
