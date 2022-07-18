@@ -1,31 +1,48 @@
-import React, {useState} from 'react';
+import {useStore} from 'effector-react';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
 
+import {
+  $treasuryProposalSortOrder,
+  changeTreasuryProposalSortOrder,
+  ProposalSortOrderType,
+} from '~/entities/treasury';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
+import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-const ProposalSort = [
-  {label: 'Show new first', value: 'New'},
-  {label: 'Show old first', value: 'Old'},
+interface ProposalSort {
+  label: string;
+  value: string;
+  sortType: ProposalSortOrderType;
+}
+
+const ProposalSorts: ProposalSort[] = [
+  {label: 'Show new first', value: 'New', sortType: 'DESC'},
+  {label: 'Show old first', value: 'Old', sortType: 'ASC'},
 ];
 
 const contentRef = React.createRef<HTMLUListElement>();
 
 export const ProposalDateSort = () => {
-  const [selected, setSelected] = useState(0);
+  const {t} = useTranslation('treasury');
 
-  const handleChange = (n: number) => {
-    console.log('SORT ->', ProposalSort[n]);
-    setSelected(n);
+  const treasuryProposalSortOrder = useStore($treasuryProposalSortOrder);
+
+  const selected = ProposalSorts.findIndex(({sortType}) => sortType === treasuryProposalSortOrder);
+
+  const handleChange = (index: number) => {
+    changeTreasuryProposalSortOrder(ProposalSorts[index].sortType);
   };
 
   return (
-    <>
+    <Row align='center' gap='sm'>
       <Typography as='span' color='muted'>
-        Sort:
+        {t('sort')}:
       </Typography>
-      <DropdownMenu label={ProposalSort[selected].value} contentRef={contentRef} variant='soft'>
+      <DropdownMenu label={ProposalSorts[selected].value} contentRef={contentRef} variant='soft'>
         <DropdownContent
           ref={contentRef}
           selected={selected}
@@ -33,11 +50,11 @@ export const ProposalDateSort = () => {
           direction='end'
           offset='m'
         >
-          {ProposalSort.map(({label}) => (
+          {ProposalSorts.map(({label}) => (
             <DropdownItem key={label}>{label}</DropdownItem>
           ))}
         </DropdownContent>
       </DropdownMenu>
-    </>
+    </Row>
   );
 };

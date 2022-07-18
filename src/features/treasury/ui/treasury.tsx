@@ -75,10 +75,12 @@ export const Treasury = () => {
           onCloseModal={createProposalModal.hide}
         />
       </div>
-      <div className='flex justify-between flex-wrap'>
-        <ProposalStatusFilter />
-        <div className='flex gap-2 items-center'>
+      <div className='flex justify-between'>
+        <div className='flex flex-wrap gap-4'>
+          <ProposalStatusFilter />
           <ProposalKindFilter />
+        </div>
+        <div className='flex gap-2 items-center'>
           <ProposalDateSort />
         </div>
       </div>
