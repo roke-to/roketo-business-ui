@@ -47,7 +47,7 @@
   }
 
   &:disabled + .visual {
-    background-color: theme('colors.gray.400');
+    background-color: theme('colors.gray');
   }
 
   &:checked + .visual,
