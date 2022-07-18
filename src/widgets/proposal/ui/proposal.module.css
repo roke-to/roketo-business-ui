@@ -11,8 +11,7 @@
   border-radius: theme('borderRadius.3xl');
   width: 100%;
 
-  &:hover,
-  :active {
+  &:hover {
     box-shadow: theme('dropShadow.DEFAULT');
   }
 }
@@ -20,18 +19,17 @@
 .Approved {
   border: 1px solid theme('colors.green.default');
 
-  &:hover,
-  :active {
-    box-shadow: 0px 5px 20px #d6f5df;
+  &:hover {
+    box-shadow: theme('dropShadow.positive');
   }
 }
 
 .Failed,
 .Rejected {
   border: 1px solid theme('colors.red.default');
-  &:hover,
-  :active {
-    box-shadow: 0px 5px 20px #fccfd2;
+
+  &:hover {
+    box-shadow: theme('dropShadow.negative');
   }
 }
 
@@ -39,9 +37,9 @@
   .proposal {
     flex-direction: column;
     gap: 1rem;
+    min-width: 24rem;
 
-    &:hover,
-    :active {
+    &:hover {
       .votes {
         display: flex;
       }

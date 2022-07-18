@@ -1,6 +1,7 @@
 .root {
   min-width: 15rem;
   border-left: 1px solid theme('colors.blue.sat_1');
+  margin-left: 1rem;
   padding-left: 2.5rem;
   gap: 0;
 }
@@ -46,6 +47,7 @@
     width: 100%;
     border-left: none;
     padding-left: 0;
+    margin-left: 0;
     gap: 1rem;
   }
 
