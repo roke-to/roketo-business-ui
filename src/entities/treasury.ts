@@ -13,6 +13,8 @@ export const $treasuryProposals = createStore<Proposal[]>([]);
 
 export const loadTreasuryProposals = createEvent();
 
+export const $treasuryProposalLoading = createStore(true);
+
 // /------------ proposals ------------
 
 //  ------------ proposals filter by status ------------
@@ -166,6 +168,16 @@ sample({
 sample({
   clock: changeTreasuryProposalSortOrder,
   target: loadTreasuryProposalsFx,
+});
+sample({
+  clock: loadTreasuryProposalsFx.finally,
+  fn: () => false,
+  target: $treasuryProposalLoading,
+});
+sample({
+  clock: loadTreasuryProposalsFx,
+  fn: () => true,
+  target: $treasuryProposalLoading,
 });
 
 // ------------- tokens --------------

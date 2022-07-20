@@ -21,7 +21,7 @@
 
   max-width: calc(100vw - 32px);
 
-  border-radius: 12px;
+  border-radius: theme('borderRadius.xl');
 
   background-color: theme('colors.white');
   outline-color: theme('colors.white');
@@ -31,6 +31,11 @@
 
   @media (min-width: theme('screens.mobile')) {
     min-width: 774px;
+  }
+
+  @media (max-width: theme('screens.mobile')) {
+    padding: theme('spacing.4');
+    border-radius: theme('borderRadius.3xl');
   }
 }
 

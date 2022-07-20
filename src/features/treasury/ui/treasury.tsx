@@ -3,16 +3,13 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$tokenBalances, loadTokenBalances} from '~/entities/treasury';
-import {ProposalDateSort} from '~/features/treasury/ui/filters/proposal-date-sort';
-import {ProposalKindFilter} from '~/features/treasury/ui/filters/proposal-kind-filter';
+import {ProposalsFilters} from '~/features/treasury/ui/proposals-filters';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {Modal, useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
-
-import {ProposalStatusFilter} from './filters/proposal-status-filter';
 
 export const Treasury = () => {
   const {t} = useTranslation('treasury');
@@ -75,15 +72,7 @@ export const Treasury = () => {
           onCloseModal={createProposalModal.hide}
         />
       </div>
-      <div className='flex justify-between'>
-        <div className='flex flex-wrap gap-4'>
-          <ProposalStatusFilter />
-          <ProposalKindFilter />
-        </div>
-        <div className='flex gap-2 items-center'>
-          <ProposalDateSort />
-        </div>
-      </div>
+      <ProposalsFilters />
       <ProposalsList />
     </>
   );

@@ -10,5 +10,7 @@
   },
   "status": "Status",
   "type": "Type",
-  "sort": "Sort"
+  "sort": "Sort",
+  "sortModal": "Sort proposals",
+  "showProposals": "Show proposals"
 }
