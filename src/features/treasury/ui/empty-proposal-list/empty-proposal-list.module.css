@@ -1,0 +1,9 @@
+.container {
+  background-color: theme('colors.white');
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid theme('colors.blue.sat_1');
+  border-radius: theme('borderRadius.3xl');
+  width: 100%;
+}
