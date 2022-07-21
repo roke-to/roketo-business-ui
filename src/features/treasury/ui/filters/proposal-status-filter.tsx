@@ -45,6 +45,7 @@ export const ProposalStatusFilter = () => {
           selected={selected}
           handleChange={handleChange}
           offset='m'
+          gap={3}
         >
           {ProposalStatuses.map((status) => (
             <DropdownItem key={status}>{t(`proposalStatus.${status}`)}</DropdownItem>

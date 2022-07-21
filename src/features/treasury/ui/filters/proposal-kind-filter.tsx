@@ -53,6 +53,7 @@ export const ProposalKindFilter = () => {
           selected={selected}
           handleChange={handleChange}
           offset='m'
+          gap={3}
         >
           {ProposalKind.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>

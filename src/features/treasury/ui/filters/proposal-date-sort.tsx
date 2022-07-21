@@ -49,6 +49,7 @@ export const ProposalDateSort = () => {
           handleChange={handleChange}
           direction='end'
           offset='m'
+          gap={3}
         >
           {ProposalSorts.map(({label}) => (
             <DropdownItem key={label}>{label}</DropdownItem>
