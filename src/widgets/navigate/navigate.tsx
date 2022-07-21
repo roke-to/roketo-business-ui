@@ -15,10 +15,13 @@ import styles from './navigate.module.css';
 
 const LINKS: RouteKey[] = ['dashboard', 'treasury', 'governance', 'employees', 'streams'];
 
-export const Navigate = () => {
+export const Navigate = ({isMobileWidth}: {isMobileWidth: boolean}) => {
   const {t} = useTranslation('dao');
   const location = useLocation();
   const accountId = useStore($accountId);
+
+  const gapInBottom = isMobileWidth ? 4 : 1;
+  const buttonVariant = isMobileWidth ? 'outlined' : 'clean';
 
   return (
     <>
@@ -39,9 +42,15 @@ export const Navigate = () => {
         })}
       </List>
 
-      <Col align='center' className={styles.bottomNavigate}>
+      <Col align='center' className={styles.bottomNavigate} gap={gapInBottom}>
         <Typography as='span'>{accountId}</Typography>
-        <Button variant='outlined' size='sm' width='full' onClick={() => logoutClicked()}>
+        <Button
+          variant={buttonVariant}
+          size='sm'
+          width='full'
+          onClick={() => logoutClicked()}
+          className={styles.logoutButton}
+        >
           {t('daoInit.logout')}
         </Button>
       </Col>

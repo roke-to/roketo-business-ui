@@ -22,7 +22,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
   return (
     <Layout type='row' withBackground={false}>
       <nav className={clsx(styles.sidebar, {[styles.isOpen]: showSideBar})}>
-        <Navigate />
+        <Navigate isMobileWidth={isMobileWidth} />
       </nav>
       <Layout
         as='main'
