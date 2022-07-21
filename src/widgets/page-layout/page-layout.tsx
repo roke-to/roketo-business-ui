@@ -2,6 +2,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {$sideBarState} from '~/entities/menu';
+import {tailwindConfig} from '~/shared/config/tailwindConfig';
 import {useMediaQuery} from '~/shared/hook/useMatchQuery';
 import {Layout} from '~/shared/ui/components/layout';
 import {Sidebar} from '~/shared/ui/components/sidebar';
@@ -13,7 +14,7 @@ export interface IPageLayoutProps {}
 export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
   const sideBarState = useStore($sideBarState);
 
-  const isMobileWidth = useMediaQuery('(max-width: 640px)');
+  const isMobileWidth = useMediaQuery(`(max-width: ${tailwindConfig.theme.screens.tablet})`);
   const showSideBar = !isMobileWidth || sideBarState.isOpen;
   const mainLayoutSideBarMargin = showSideBar ? 'sidebar' : undefined;
 

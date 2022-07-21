@@ -25,7 +25,7 @@ module.exports = {
     },
     fontFamily: {
       // TODO: нужны ли тут остальные дефолтные шрифты
-      sans: ['"Inter"', ...defaultTheme.fontFamily.sans],
+      sans: ['"Nunito"', ...defaultTheme.fontFamily.sans],
       heading: ['"Nunito"', ...defaultTheme.fontFamily.sans],
       serif: defaultTheme.fontFamily.serif,
       mono: defaultTheme.fontFamily.mono,
