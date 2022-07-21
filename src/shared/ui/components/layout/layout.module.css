@@ -24,13 +24,14 @@
 .content {
   padding-right: 5rem;
   padding-left: 5rem;
+  padding-bottom: 3.25rem;
 }
 
 .sidebar {
   margin-left: 15rem;
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen and (max-width: theme('screens.tablet')) {
   .content {
     padding-right: 1rem;
     padding-left: 1rem;

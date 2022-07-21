@@ -13,7 +13,7 @@ import {ReactComponent as NavigateIcon} from '~/shared/ui/icons/dashboard_ico.sv
 
 import styles from './navigate.module.css';
 
-const LINKS: RouteKey[] = ['dashboard', 'treasury', 'governance', 'employees'];
+const LINKS: RouteKey[] = ['dashboard', 'treasury', 'governance', 'employees', 'streams'];
 
 export const Navigate = () => {
   const {t} = useTranslation('dao');
@@ -30,7 +30,7 @@ export const Navigate = () => {
           return (
             <ListItem key={title} isSelected={isSelected} icon={NavigateIcon}>
               <Link to={path}>
-                <Typography as='span' weight='medium'>
+                <Typography as='span' font='sm'>
                   {title}
                 </Typography>
               </Link>

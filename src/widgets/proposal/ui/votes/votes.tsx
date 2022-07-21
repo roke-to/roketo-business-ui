@@ -42,29 +42,23 @@ export const Votes = ({
   return (
     <Col className={clsx(styles.root, className)}>
       <Col gap={0}>
-        <Typography as='span' color='muted' weight='medium' isCapitalizeFirstLetter>
+        <Typography as='span' color='muted' font='xs' isCapitalizeFirstLetter>
           {t('quorum')} 50%
         </Typography>
         <Row gap={0}>
           {!canVote && (
-            <Typography
-              as='span'
-              color='positive'
-              weight='medium'
-              className={styles.mobileShortText}
-            >
+            <Typography as='span' color='positive' className={styles.mobileShortText}>
               {status} {formatISODate(updatedAt, 'dd MMMM yyyy')}&nbsp;—&nbsp;
             </Typography>
           )}
           {canVote && (
-            <Typography as='span' color='positive' weight='medium' isCapitalizeFirstLetter>
+            <Typography as='span' color='positive' isCapitalizeFirstLetter>
               {t('approved')}&nbsp;
             </Typography>
           )}
           <Typography
             as='span'
             color={canVote || isPositiveStatus(status) ? 'positive' : 'negative'}
-            weight='medium'
           >
             {voteYes} {t('of')} {numberOfMembers} ({floorPositivePercent}%)
           </Typography>

@@ -18,7 +18,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
       as: Tag = 'h1',
       color = '',
       font = 'base',
-      weight = '',
+      weight = 'normal',
       isCapitalizeFirstLetter = false,
       className,
       children,

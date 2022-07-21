@@ -1,12 +1,4 @@
 .list {
   display: flex;
   flex-direction: column;
-
-  gap: 1.25rem;
-}
-
-@media screen and (max-width: theme('screens.mobile')) {
-  .list {
-    gap: 0.5rem;
-  }
 }

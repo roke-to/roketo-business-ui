@@ -14,6 +14,10 @@
   &:hover {
     box-shadow: theme('dropShadow.DEFAULT');
   }
+
+  .info {
+    gap: 1rem;
+  }
 }
 
 .Approved {
@@ -47,6 +51,10 @@
       .voteStatusBar {
         display: none;
       }
+    }
+
+    .info {
+      gap: 0.5rem;
     }
   }
 

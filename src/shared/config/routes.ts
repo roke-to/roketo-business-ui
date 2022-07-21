@@ -37,6 +37,10 @@ export const ROUTES = typedRoutes({
     path: '/employees',
     title: 'Employees',
   },
+  streams: {
+    path: '/streams',
+    title: 'Streams',
+  },
 });
 
 export type RouteKey = keyof typeof ROUTES;
