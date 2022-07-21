@@ -10,7 +10,7 @@ import styles from './dropdown-menu.module.css';
 export type DropdownMenuRootElementSize = ButtonSize;
 
 export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
-  label?: string;
+  label: string | null;
   contentRef: React.RefObject<HTMLElement>;
   withOverlay?: boolean;
   size?: DropdownMenuRootElementSize;

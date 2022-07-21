@@ -10,6 +10,7 @@ export interface ITabProps<T = any> {
   className?: string;
 }
 
+// ts-unused-exports:disable-next-line
 export const Tab: React.FC<ITabProps> = ({children, value, ...props}) => {
   const {value: selected, onChange} = React.useContext(TabsContext);
   const handleClick = React.useCallback(() => onChange?.(value), [value, onChange]);

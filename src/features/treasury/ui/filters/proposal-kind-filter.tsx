@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
+import {useStore} from 'effector-react';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
 
-import {ProposalKindSwaggerDto} from '~/shared/api/astro';
+import {
+  $treasurySelectedProposalKind,
+  changeTreasuryProposalSelectedKind,
+  ProposalKindFilterType,
+} from '~/entities/treasury';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
+import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-const ProposalKind: Pick<ProposalKindSwaggerDto, 'type'>['type'][] = [
+const ProposalKind: ProposalKindFilterType[] = [
+  'Any',
   'ChangeConfig',
   'ChangePolicy',
   'AddMemberToRole',
@@ -24,30 +32,34 @@ const ProposalKind: Pick<ProposalKindSwaggerDto, 'type'>['type'][] = [
 const contentRef = React.createRef<HTMLUListElement>();
 
 export const ProposalKindFilter = () => {
-  const [selected, setSelected] = useState(2);
+  const {t} = useTranslation('treasury');
 
-  const handleChange = (n: number) => {
-    console.log('PROPOSAL KIND ->', ProposalKind[n]);
-    setSelected(n);
+  const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
+
+  const selected = ProposalKind.findIndex((kind) => kind === treasurySelectedProposalKind);
+
+  const handleChange = (index: number) => {
+    changeTreasuryProposalSelectedKind(ProposalKind[index]);
   };
 
   return (
-    <>
+    <Row align='center' gap='sm'>
       <Typography as='span' color='muted'>
-        Type:
+        {t('type')}:
       </Typography>
-      <DropdownMenu label='Any' contentRef={contentRef} variant='soft'>
+      <DropdownMenu label={treasurySelectedProposalKind} contentRef={contentRef} variant='soft'>
         <DropdownContent
           ref={contentRef}
           selected={selected}
           handleChange={handleChange}
           offset='m'
+          gap={3}
         >
           {ProposalKind.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>
           ))}
         </DropdownContent>
       </DropdownMenu>
-    </>
+    </Row>
   );
 };

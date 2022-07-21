@@ -11,6 +11,7 @@ export interface ITabsProps<T = any> {
 }
 
 // uncontrolled
+// ts-unused-exports:disable-next-line
 export const Tabs: React.FC<ITabsProps> = ({children, className, value, onChange, ...props}) => {
   const context = React.useMemo(
     () => ({
