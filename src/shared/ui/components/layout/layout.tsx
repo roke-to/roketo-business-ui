@@ -11,7 +11,6 @@ export interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: 'row' | 'column';
   withContent?: boolean;
   withBackground?: boolean;
-  marginLeft?: 'sidebar';
 }
 
 const DEFAULT_TAG = 'div';
@@ -24,7 +23,6 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
       type = 'column',
       withBackground = true,
       withContent,
-      marginLeft = '',
       children,
       className,
       ...props
@@ -36,7 +34,6 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
       className={clsx(
         `gap-${gap}`,
         styles[type],
-        styles[marginLeft],
         {
           [styles.scene]: withBackground,
           [styles.layout]: !withBackground,
