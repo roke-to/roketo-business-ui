@@ -1,0 +1,7 @@
+.divider {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid theme('colors.blue.sat_1');
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

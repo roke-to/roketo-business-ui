@@ -1,0 +1,9 @@
+.root {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading {
+  opacity: 1;
+  visibility: visible;
+}

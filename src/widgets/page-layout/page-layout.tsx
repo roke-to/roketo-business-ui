@@ -4,7 +4,7 @@ import React from 'react';
 
 import {$sideBarState} from '~/entities/menu';
 import {tailwindConfig} from '~/shared/config/tailwindConfig';
-import {useMediaQuery} from '~/shared/hook/useMatchQuery';
+import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {Layout} from '~/shared/ui/components/layout';
 import {Header} from '~/widgets/header';
 import {Navigate} from '~/widgets/navigate';

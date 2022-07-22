@@ -5,29 +5,15 @@ import {useTranslation} from 'react-i18next';
 import {
   $treasurySelectedProposalKind,
   changeTreasuryProposalSelectedKind,
-  ProposalKindFilterType,
 } from '~/entities/treasury';
+import {ProposalKind} from '~/features/treasury/model/constants';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-const ProposalKind: ProposalKindFilterType[] = [
-  'Any',
-  'ChangeConfig',
-  'ChangePolicy',
-  'AddMemberToRole',
-  'RemoveMemberFromRole',
-  'FunctionCall',
-  'UpgradeSelf',
-  'UpgradeRemote',
-  'Transfer',
-  'SetStakingContract',
-  'AddBounty',
-  'BountyDone',
-  'Vote',
-];
+import styles from './filter.module.css';
 
 export const ProposalKindFilter = () => {
   const {t} = useTranslation('treasury');
@@ -41,7 +27,7 @@ export const ProposalKindFilter = () => {
   };
 
   return (
-    <Row align='center' gap='sm'>
+    <Row align='center' gap='sm' className={styles.kindButton}>
       <Typography as='span' color='muted'>
         {t('type')}:
       </Typography>

@@ -1,0 +1,46 @@
+.filtersContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.sortDateIcon {
+  display: none;
+
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.modal {
+  width: calc(100vw - 2rem);
+}
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .filtersContainer {
+    margin-top: 1.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .statusText {
+    display: none;
+  }
+
+  .kindButton {
+    display: none;
+  }
+
+  .sortDateButton {
+    display: none;
+  }
+
+  .sortDateIcon {
+    display: flex;
+  }
+}

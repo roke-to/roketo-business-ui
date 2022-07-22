@@ -17,3 +17,9 @@
 .disabled {
   opacity: 0.5;
 }
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .root {
+    line-height: 2.5rem;
+  }
+}

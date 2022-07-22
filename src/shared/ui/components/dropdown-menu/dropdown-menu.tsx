@@ -13,13 +13,15 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
   size?: DropdownMenuRootElementSize;
   variant?: ButtonVariant;
   children: React.ReactElement;
+  onClick?(): void;
 }
 
 export const DropdownMenu = React.forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({label, size = 'md', variant = 'plain', className, children}, ref) => (
+  ({label, size = 'md', variant = 'plain', onClick, className, children}, ref) => (
     <Dropdown
       ref={ref}
       className={className}
+      onClick={onClick}
       target={
         <Button variant={variant} size={size}>
           <div className={styles.menuLabel}>
