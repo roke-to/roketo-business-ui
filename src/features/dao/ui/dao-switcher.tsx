@@ -7,8 +7,6 @@ import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-con
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {RadioGroupItem} from '~/shared/ui/components/radio-group';
 
-const contentRef = React.createRef<HTMLUListElement>();
-
 export const DaoSwitcher = () => {
   const daoId = useStore($daoId);
   const userDaos = useStore($daoIds);
@@ -18,15 +16,8 @@ export const DaoSwitcher = () => {
   };
 
   return (
-    <DropdownMenu label={daoId} contentRef={contentRef} size='xxs' variant='clean'>
-      <DropdownContent
-        ref={contentRef}
-        selected={daoId}
-        handleChange={handleChange}
-        gap={3}
-        size='xxs'
-        offset='xs'
-      >
+    <DropdownMenu label={daoId} size='xxs' variant='clean'>
+      <DropdownContent selected={daoId} handleChange={handleChange} gap={3} size='xxs' offset='xs'>
         {userDaos.map((id) => (
           <DropdownItem key={id}>
             <RadioGroupItem value={id} label={id} checked={id === daoId} />

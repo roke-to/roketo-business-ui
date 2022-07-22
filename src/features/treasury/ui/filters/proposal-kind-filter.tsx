@@ -29,8 +29,6 @@ const ProposalKind: ProposalKindFilterType[] = [
   'Vote',
 ];
 
-const contentRef = React.createRef<HTMLUListElement>();
-
 export const ProposalKindFilter = () => {
   const {t} = useTranslation('treasury');
 
@@ -47,14 +45,8 @@ export const ProposalKindFilter = () => {
       <Typography as='span' color='muted'>
         {t('type')}:
       </Typography>
-      <DropdownMenu label={treasurySelectedProposalKind} contentRef={contentRef} variant='soft'>
-        <DropdownContent
-          ref={contentRef}
-          selected={selected}
-          handleChange={handleChange}
-          offset='m'
-          gap={3}
-        >
+      <DropdownMenu label={treasurySelectedProposalKind} variant='soft'>
+        <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
           {ProposalKind.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>
           ))}
