@@ -8,6 +8,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement
   color?: 'muted' | 'positive' | 'negative' | 'black';
   font?: string;
   weight?: 'normal' | 'bold' | 'medium' | 'semibold';
+  align?: 'left' | 'center' | 'right' | 'justify';
   isCapitalizeFirstLetter?: boolean;
 }
 
@@ -18,6 +19,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
       as: Tag = 'h1',
       color = '',
       font = 'base',
+      align = '',
       weight = 'normal',
       isCapitalizeFirstLetter = false,
       className,
@@ -34,6 +36,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
         ref={ref}
         className={clsx(
           `text-${font}`,
+          `text-${align}`,
           styles[color],
           styles[weight],
           {
