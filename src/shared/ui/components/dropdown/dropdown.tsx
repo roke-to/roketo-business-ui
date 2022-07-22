@@ -17,7 +17,7 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const [isOpen, setOpen] = useState(false);
 
     const onChangeIsOpen = () => {
-      setOpen((o) => !o);
+      setOpen((currentIsOpen) => !currentIsOpen);
     };
 
     const onClose = () => {
