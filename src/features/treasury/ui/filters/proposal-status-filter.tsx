@@ -9,7 +9,7 @@ import {
 import {ProposalStatuses} from '~/features/treasury/model/constants';
 import styles from '~/features/treasury/ui/filters/filter.module.css';
 import {ProposalFilterModal} from '~/features/treasury/ui/filters/modal/proposal-filter-modal';
-import {config} from '~/shared/config/theme';
+import {theme} from '~/shared/config/theme';
 import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
@@ -20,7 +20,7 @@ import {Typography} from '~/shared/ui/components/typography';
 
 export const ProposalStatusFilter = () => {
   const {t} = useTranslation('treasury');
-  const canShowModal = useMediaQuery(`(max-width: ${config.theme.screens.mobile})`);
+  const canShowModal = useMediaQuery(`(max-width: ${theme.screens.mobile})`);
 
   const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
   const proposalFiltersModal = useModal();
