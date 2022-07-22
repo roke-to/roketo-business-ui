@@ -6,7 +6,7 @@ import {ReactComponent as CloseIcon} from '../../icons/close.svg';
 import {Typography} from '../typography';
 import styles from './modal.module.css';
 
-type Props = {
+export type ModalProps = {
   isOpen: boolean;
   children?: React.ReactNode;
   title?: React.ReactNode;
@@ -29,7 +29,7 @@ const renderOverlay = (props: React.ComponentPropsWithRef<'div'>, children: Reac
   </div>
 );
 
-export const Modal = ({title, children, isOpen = true, onCloseModal, className}: Props) => (
+export const Modal = ({title, children, isOpen = true, onCloseModal, className}: ModalProps) => (
   <ReactModal
     isOpen={isOpen}
     onRequestClose={onCloseModal}

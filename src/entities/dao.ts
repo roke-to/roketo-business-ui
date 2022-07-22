@@ -59,14 +59,14 @@ forward({
   to: updateAddressByNameFx,
 });
 
-type FormFields = typeof createDaoForm['fields'];
+type CreateDaoFormFields = typeof createDaoForm['fields'];
 
 export const createDaoFx = attach({
   source: {
     sputnikFactoryDaoApi: $sputnikFactoryDaoApi,
     accountId: $accountId,
   },
-  async effect({sputnikFactoryDaoApi, accountId}, data: FormValues<FormFields>) {
+  async effect({sputnikFactoryDaoApi, accountId}, data: FormValues<CreateDaoFormFields>) {
     if (!sputnikFactoryDaoApi) {
       // TODO: show error on form
       throw new Error('Contract not initialized');
