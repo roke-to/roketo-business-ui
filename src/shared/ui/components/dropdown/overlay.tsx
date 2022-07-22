@@ -18,6 +18,8 @@ export const Overlay = ({
 }: React.PropsWithChildren<IOverlayProps>) => {
   const outSideClick = (event: MouseEvent | TouchEvent) => {
     const itemsToIgnore: IgnoreItems[] = getItemsToIgnore();
+
+    // element inside dropdown ignores closing
     if (!itemsToIgnore.some((el) => el && event.composedPath().includes(el))) {
       onClose();
     }

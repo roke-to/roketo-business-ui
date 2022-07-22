@@ -24,8 +24,6 @@ const ProposalSorts: ProposalSort[] = [
   {label: 'Show old first', value: 'Old', sortType: 'ASC'},
 ];
 
-const contentRef = React.createRef<HTMLUListElement>();
-
 export const ProposalDateSort = () => {
   const {t} = useTranslation('treasury');
 
@@ -42,9 +40,8 @@ export const ProposalDateSort = () => {
       <Typography as='span' color='muted'>
         {t('sort')}:
       </Typography>
-      <DropdownMenu label={ProposalSorts[selected].value} contentRef={contentRef} variant='soft'>
+      <DropdownMenu label={ProposalSorts[selected].value} variant='soft'>
         <DropdownContent
-          ref={contentRef}
           selected={selected}
           handleChange={handleChange}
           direction='end'

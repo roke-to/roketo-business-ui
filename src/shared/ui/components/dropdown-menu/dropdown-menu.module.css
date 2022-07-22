@@ -1,9 +1,3 @@
-.root {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
 .menuLabel {
   display: flex;
   align-items: center;

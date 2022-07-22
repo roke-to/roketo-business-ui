@@ -15,8 +15,6 @@ import {Typography} from '~/shared/ui/components/typography';
 
 const ProposalStatuses: TreasuryProposalStatus[] = ['all', 'active', 'approved', 'failed'];
 
-const contentRef = React.createRef<HTMLUListElement>();
-
 export const ProposalStatusFilter = () => {
   const {t} = useTranslation('treasury');
 
@@ -35,18 +33,8 @@ export const ProposalStatusFilter = () => {
       <Typography as='span' color='muted'>
         {t('status')}:
       </Typography>
-      <DropdownMenu
-        label={t(`proposalStatus.${treasurySelectedProposalStatus}`)}
-        contentRef={contentRef}
-        variant='soft'
-      >
-        <DropdownContent
-          ref={contentRef}
-          selected={selected}
-          handleChange={handleChange}
-          offset='m'
-          gap={3}
-        >
+      <DropdownMenu label={t(`proposalStatus.${treasurySelectedProposalStatus}`)} variant='soft'>
+        <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
           {ProposalStatuses.map((status) => (
             <DropdownItem key={status}>{t(`proposalStatus.${status}`)}</DropdownItem>
           ))}

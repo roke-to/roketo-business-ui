@@ -1,57 +1,35 @@
-import clsx from 'clsx';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {Button, ButtonSize, ButtonVariant} from '~/shared/ui/components/button';
-import {Overlay} from '~/shared/ui/components/overlay';
 import {ReactComponent as ArrowDown} from '~/shared/ui/icons/arrow-down.svg';
 
+import {Dropdown} from '../dropdown/dropdown';
 import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuRootElementSize = ButtonSize;
 
 export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
   label: string | null;
-  contentRef: React.RefObject<HTMLElement>;
-  withOverlay?: boolean;
   size?: DropdownMenuRootElementSize;
   variant?: ButtonVariant;
+  children: React.ReactElement;
 }
 
 export const DropdownMenu = React.forwardRef<HTMLDivElement, DropdownMenuProps>(
-  (
-    {label, contentRef, size = 'md', variant = 'plain', withOverlay = true, className, children},
-    ref,
-  ) => {
-    const [isOpen, setOpen] = useState(false);
-
-    const onChangeIsOpen = () => {
-      setOpen(!isOpen);
-    };
-
-    const onClose = () => {
-      setOpen(false);
-    };
-
-    const getItemsToIgnore = () => [contentRef?.current];
-
-    const content = withOverlay ? (
-      <Overlay onClose={onClose} getItemsToIgnore={getItemsToIgnore}>
-        {children}
-      </Overlay>
-    ) : (
-      children
-    );
-
-    return (
-      <div ref={ref} className={clsx(styles.root, className)}>
-        <Button variant={variant} size={size} onClick={onChangeIsOpen}>
+  ({label, size = 'md', variant = 'plain', className, children}, ref) => (
+    <Dropdown
+      ref={ref}
+      className={className}
+      target={
+        <Button variant={variant} size={size}>
           <div className={styles.menuLabel}>
             {label}
             <ArrowDown className={styles.icon} />
           </div>
         </Button>
-        {isOpen && content}
-      </div>
-    );
-  },
+      }
+    >
+      {children}
+    </Dropdown>
+  ),
 );
