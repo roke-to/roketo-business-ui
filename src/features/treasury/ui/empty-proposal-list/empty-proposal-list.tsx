@@ -3,7 +3,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$treasurySelectedProposalKind, $treasurySelectedProposalStatus} from '~/entities/treasury';
-import {tailwindConfig} from '~/shared/config/tailwindConfig';
+import {theme} from '~/shared/config/theme';
 import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {Button} from '~/shared/ui/components/button';
 import {Modal, useModal} from '~/shared/ui/components/modal';
@@ -25,7 +25,7 @@ const TextEmptyProposalList = () => {
 
 export const EmptyProposalList = () => {
   const {t} = useTranslation('treasury');
-  const isMobileWidth = useMediaQuery(`(max-width: ${tailwindConfig.theme.screens.tablet})`);
+  const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet})`);
   const createProposalModal = useModal();
 
   const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);

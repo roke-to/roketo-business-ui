@@ -1,13 +1,7 @@
-// @ts-ignore
-// const resolveConfig = require('tailwindcss/resolveConfig');
-// const tailwindConfig = require('../../../tailwind.config');
+import resolveConfig from 'tailwindcss/resolveConfig';
 
-// export const {theme} = resolveConfig(tailwindConfig);
-export const theme = {
-  screens: {
-    mobile: '640px',
-    tablet: '768px',
-    laptop: '1024px',
-    desktop: '1280px',
-  },
-};
+import tailwindConfig from '../../../tailwind.config';
+
+// it parses incorrectly destructuring export
+// ts-unused-exports:disable-next-line
+export const {theme} = resolveConfig(tailwindConfig);
