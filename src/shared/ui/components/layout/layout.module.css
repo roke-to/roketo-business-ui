@@ -10,7 +10,7 @@
 .layout {
   display: flex;
   width: 100%;
-  box-shadow: theme('dropShadow.layout');
+  transition: transform ease-in 0.15s, margin-left 0.15s;
 }
 
 .column {
@@ -24,9 +24,10 @@
 .content {
   padding-right: 5rem;
   padding-left: 5rem;
+  padding-bottom: 3.25rem;
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen and (max-width: theme('screens.tablet')) {
   .content {
     padding-right: 1rem;
     padding-left: 1rem;

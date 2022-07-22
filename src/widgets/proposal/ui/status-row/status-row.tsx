@@ -37,7 +37,7 @@ export const StatusRow = ({
       <Typography
         as='span'
         color={isPositiveStatus(status) ? 'positive' : 'negative'}
-        weight='semibold'
+        weight='bold'
       >
         {status} {formatISODate(updatedAt, 'dd MMMM yyyy')}
       </Typography>

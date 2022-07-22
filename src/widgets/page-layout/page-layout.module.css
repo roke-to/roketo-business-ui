@@ -1,0 +1,33 @@
+.sidebar {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-width: 15rem;
+  height: 100vh;
+
+  padding-top: 7rem;
+  padding-bottom: 3.25rem;
+
+  background: theme('colors.white');
+  box-shadow: theme('dropShadow.sideBar');
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1);
+  transition: transform ease-in 0.15s, opacity 0.15s, visibility 0.15s;
+
+  @media screen and (max-width: theme('screens.tablet')) {
+    padding-top: 6rem;
+  }
+}
+
+.isOpen {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mainContainer {
+  margin-left: 15rem;
+}

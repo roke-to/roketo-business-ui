@@ -11,6 +11,7 @@ import {EmployeesPage} from '~/pages/employees';
 import {GovernancePage} from '~/pages/governance';
 import {LoginPage} from '~/pages/login';
 import {NotFoundPage} from '~/pages/not-found';
+import {StreamsPage} from '~/pages/streams';
 import {TreasuryPage} from '~/pages/treasury';
 import {ROUTES} from '~/shared/config/routes';
 import {history, PrivateRoute} from '~/shared/lib/router';
@@ -83,6 +84,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <EmployeesPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.streams.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <StreamsPage />
         </PrivateRoute>
 
         <Route render={NotFoundPage} />

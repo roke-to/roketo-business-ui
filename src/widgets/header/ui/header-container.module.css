@@ -1,3 +1,13 @@
 .header {
   @apply flex flex-row justify-between mt-4 mb-16;
 }
+
+.burgerMenu {
+  display: none;
+}
+
+@media screen and (max-width: theme('screens.tablet')) {
+  .burgerMenu {
+    display: flex;
+  }
+}

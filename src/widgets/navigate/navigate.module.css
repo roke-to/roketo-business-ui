@@ -1,3 +1,6 @@
 .bottomNavigate {
   padding: 0 1rem;
 }
+.logoutButton {
+  color: theme('colors.blue.textDefault');
+}

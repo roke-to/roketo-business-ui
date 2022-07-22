@@ -39,8 +39,10 @@ export const Controls = ({
       justify='start'
       gap={4}
       className={clsx(
-        styles.controls,
-        {[styles.votePeriodEnd]: !canVote && !isViewMode},
+        {
+          [styles.controls]: canVote && !isViewMode,
+          [styles.votePeriodEnd]: !canVote && !isViewMode,
+        },
         className,
       )}
     >
