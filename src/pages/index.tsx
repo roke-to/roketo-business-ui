@@ -5,6 +5,7 @@ import {Redirect, Route, Router, Switch} from 'react-router-dom';
 import {$daoId} from '~/entities/dao';
 import {$isSignedIn} from '~/entities/wallet';
 import {DaoPage} from '~/pages/dao';
+import {DaoManagementPage} from '~/pages/dao-management';
 import {DaoNewPage} from '~/pages/dao-new';
 import {DashboardPage} from '~/pages/dashboard';
 import {EmployeesPage} from '~/pages/employees';
@@ -75,6 +76,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <TreasuryPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.daoManagement.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <DaoManagementPage />
         </PrivateRoute>
 
         <PrivateRoute

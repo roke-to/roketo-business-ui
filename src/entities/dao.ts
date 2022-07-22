@@ -143,6 +143,15 @@ const loadDaosFx = attach({
   },
 });
 
+export const $selectedDao = createStore<AccountDaoResponse | null>(null);
+
+sample({
+  source: $daos,
+  clock: saveCurrentDaoInLsFx.doneData,
+  fn: (daos, daoId) => daos.filter((dao) => dao.id === daoId)[0],
+  target: $selectedDao,
+});
+
 sample({
   clock: initNearInstanceFx.doneData,
   filter: (near) => Boolean(near.accountId),

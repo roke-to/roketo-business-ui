@@ -13,7 +13,14 @@ import {ReactComponent as NavigateIcon} from '~/shared/ui/icons/dashboard_ico.sv
 
 import styles from './navigate.module.css';
 
-const LINKS: RouteKey[] = ['dashboard', 'treasury', 'governance', 'employees', 'streams'];
+const LINKS: RouteKey[] = [
+  'dashboard',
+  'treasury',
+  'daoManagement',
+  'governance',
+  'employees',
+  'streams',
+];
 
 export const Navigate = ({isMobileWidth}: {isMobileWidth: boolean}) => {
   const {t} = useTranslation('dao');
