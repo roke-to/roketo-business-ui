@@ -1,6 +1,8 @@
-import {attach, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {createForm, FormValues} from 'effector-forms';
 
 import {astroApi, HttpResponse, Proposal, ProposalKindSwaggerDto, Token} from '~/shared/api/astro';
+import {validators} from '~/shared/lib/validators';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
@@ -212,4 +214,22 @@ sample({
   source: loadTokenBalancesFx.doneData,
   fn: (response) => response.data,
   target: $tokenBalances,
+});
+
+//  ------------ proposals create  ------------
+
+export const createProposalForm = createForm({
+  fields: {
+    type: {
+      init: 'transfer',
+      rules: [validators.required],
+    },
+  },
+  validateOn: ['submit'],
+});
+
+type CreateProposalFormFields = typeof createProposalForm['fields'];
+
+export const createProposalFx = createEffect(async (data: FormValues<CreateProposalFormFields>) => {
+  console.log('create proposal', data);
 });

@@ -8,8 +8,9 @@ import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';
-import {Modal, useModal} from '~/shared/ui/components/modal';
+import {useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
+import {CreateProposalFormModal} from '~/widgets/proposal/ui/create-form-modal';
 
 export const Treasury = () => {
   const {t} = useTranslation('treasury');
@@ -66,7 +67,7 @@ export const Treasury = () => {
         <Button variant='soft' onClick={createProposalModal.show}>
           {t('list.createProposal')}
         </Button>
-        <Modal
+        <CreateProposalFormModal
           isOpen={createProposalModal.isOpen}
           title={t('list.createProposal')}
           onCloseModal={createProposalModal.hide}

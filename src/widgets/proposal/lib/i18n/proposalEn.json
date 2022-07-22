@@ -4,5 +4,20 @@
   "of": "of",
   "description": "Description",
   "quorum": "Quorum",
-  "approved": "Approved"
+  "approved": "Approved",
+  "createForm": {
+    "proposalTypeLabel": "Proposal type",
+    "proposerLabel": "Proposer",
+    "targetLabel": "Target",
+    "amountLabel": "Amount",
+    "tokenLabel": "Token",
+    "descriptionLabel": "Description",
+    "submit": "Propose",
+    "cancel": "Cancel",
+    "transfer": "Transfer",
+    "transferNftMintbase": "Transfer NFT Mintbase",
+    "transferNftParas": "Transfer NFT Paras",
+    "functionalCall": "Functional call",
+    "createStream": "Create a stream"
+  }
 }
