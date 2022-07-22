@@ -13,6 +13,9 @@
   "sort": "Sort",
   "sortModal": "Sort proposals",
   "showProposals": "Show proposals",
-  "emptyProposalList": "No proposals have been created yet. \nYou can create a new proposal",
+  "emptyProposalList": {
+    "firstLine": "No proposals have been created yet.",
+    "secondLine": "You can create a new proposal"
+  },
   "emptySearchProposalList": "No proposals with current filters"
 }
