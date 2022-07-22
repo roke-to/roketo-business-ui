@@ -8,16 +8,21 @@ export interface DropdownProps {
   target: React.ReactElement;
   children: React.ReactElement;
   className?: string;
+  onClick?(): void;
 }
 
 export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
-  ({target, children, className}, ref) => {
+  ({target, onClick, children, className}, ref) => {
     const contentRef = React.useRef<HTMLElement>(null);
     const targetRef = React.useRef<HTMLElement>(null);
     const [isOpen, setOpen] = useState(false);
 
     const onChangeIsOpen = () => {
-      setOpen((currentIsOpen) => !currentIsOpen);
+      if (onClick) {
+        onClick();
+      } else {
+        setOpen((currentIsOpen) => !currentIsOpen);
+      }
     };
 
     const onClose = () => {

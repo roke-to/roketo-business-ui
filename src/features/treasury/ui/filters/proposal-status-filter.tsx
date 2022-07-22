@@ -38,7 +38,11 @@ export const ProposalStatusFilter = () => {
       <Typography as='span' color='muted' className={styles.statusText}>
         {t('status')}:
       </Typography>
-      <DropdownMenu label={t(`proposalStatus.${treasurySelectedProposalStatus}`)} variant='soft'>
+      <DropdownMenu
+        label={t(`proposalStatus.${treasurySelectedProposalStatus}`)}
+        variant='soft'
+        onClick={canShowModal ? proposalFiltersModal.show : undefined}
+      >
         <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
           {ProposalStatuses.map((status) => (
             <DropdownItem key={status}>{t(`proposalStatus.${status}`)}</DropdownItem>
