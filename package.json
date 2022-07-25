@@ -20,7 +20,9 @@
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
-    "generate:astro-api": "swagger-typescript-api --path https://api.testnet.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses"
+    "generate:astro-api": "swagger-typescript-api --path https://api.testnet.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
+    "test:e2e": "playwright test",
+    "test:e2e-report": "playwright show-report"
   },
   "dependencies": {
     "@effector/reflect": "^7.1.1",
@@ -76,6 +78,7 @@
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@playwright/test": "^1.24.0",
     "@rollup/plugin-babel": "^5.3.1",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/json-bigint": "^1.0.1",
