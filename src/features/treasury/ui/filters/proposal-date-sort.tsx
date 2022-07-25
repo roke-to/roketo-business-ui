@@ -47,14 +47,14 @@ export const ProposalDateSort = () => {
         <Typography as='span' color='muted'>
           {t('sort')}:
         </Typography>
-        <DropdownMenu label={ProposalSorts[selected].value}  variant='soft'>
+        <DropdownMenu label={ProposalSorts[selected].value} variant='soft'>
           <DropdownContent
-
             selected={selected}
             handleChange={handleChange}
             direction='end'
             offset='m'
-          gap={3}>
+            gap={3}
+          >
             {ProposalSorts.map(({label}) => (
               <DropdownItem key={label}>{label}</DropdownItem>
             ))}
