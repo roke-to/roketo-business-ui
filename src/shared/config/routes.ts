@@ -25,10 +25,6 @@ export const ROUTES = typedRoutes({
     path: '/treasury',
     title: 'Treasury',
   },
-  daoManagement: {
-    path: '/dao-management',
-    title: 'DAO management',
-  },
   governance: {
     path: '/governance',
     title: 'Governance',
