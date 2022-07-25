@@ -1,5 +1,7 @@
-// @ts-ignore
-const resolveConfig = require('tailwindcss/resolveConfig');
-const tailwindConfig = require('../../../tailwind.config');
+import resolveConfig from 'tailwindcss/resolveConfig';
 
-export const config = resolveConfig(tailwindConfig);
+import tailwindConfig from '../../../tailwind.config';
+
+// it parses incorrectly destructuring export
+// ts-unused-exports:disable-next-line
+export const {theme} = resolveConfig(tailwindConfig);

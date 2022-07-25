@@ -1,8 +1,8 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+import colors from 'tailwindcss/colors';
+import {theme as defaultTheme} from 'tailwindcss/defaultConfig';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ['./src/**/*.{ts,tsx}', './index.html'],
   corePlugins: {
     // https://github.com/tailwindlabs/tailwindcss/issues/6602
@@ -84,10 +84,4 @@ module.exports = {
       desktop: '1280px',
     },
   },
-  plugins: [
-    // TODO: это дает возможность использовать любое значение
-    // из конфига как css переменную, например var(--text-blue), var(--font-sans)
-    // нужена ли нам такая возможность
-    require('tailwind-css-variables')(),
-  ],
 };
