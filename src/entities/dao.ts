@@ -143,12 +143,12 @@ const loadDaosFx = attach({
   },
 });
 
-export const $selectedDao = createStore<AccountDaoResponse | null>(null);
+export const $selectedDao = createStore<AccountDaoResponse | undefined>(undefined);
 
 sample({
   source: $daos,
   clock: saveCurrentDaoInLsFx.doneData,
-  fn: (daos, daoId) => daos.filter((dao) => dao.id === daoId)[0],
+  fn: (daos, daoId) => daos.find((dao) => dao.id === daoId),
   target: $selectedDao,
 });
 
