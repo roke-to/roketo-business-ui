@@ -110,7 +110,9 @@ export const setDaoId = createEvent<string>();
 const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
   // todo: put ls key to the shared consts
   localStorage.setItem('currentDaoId', selectedDaoId);
-  history.replace(ROUTES.treasury.path);
+  if (window.location.pathname === ROUTES.dao.path) {
+    history.replace(ROUTES.treasury.path);
+  }
   return selectedDaoId;
 });
 
@@ -143,12 +145,16 @@ const loadDaosFx = attach({
   },
 });
 
-export const $selectedDao = createStore<AccountDaoResponse | undefined>(undefined);
+export const loadDaos = createEvent();
+
+export const $selectedDao = createStore<AccountDaoResponse | null>(null);
 
 sample({
-  source: $daos,
-  clock: saveCurrentDaoInLsFx.doneData,
-  fn: (daos, daoId) => daos.find((dao) => dao.id === daoId),
+  source: {
+    daoId: $daoId,
+    daos: $daos,
+  },
+  fn: ({daoId, daos}) => daos.find((dao) => dao.id === daoId) || null,
   target: $selectedDao,
 });
 
@@ -162,4 +168,9 @@ sample({
   source: loadDaosFx.doneData,
   fn: (response) => response.data,
   target: $daos,
+});
+
+sample({
+  source: loadDaos,
+  target: loadDaosFx,
 });

@@ -14,9 +14,9 @@ export const CouncilsList = () => {
         Councils
       </Typography>
       <Col gap={2}>
-        {selectedDao?.council.map((item) => (
-          <Typography as='span' font='sm'>
-            {item}
+        {selectedDao?.council.map((councilAccountId) => (
+          <Typography as='span' font='sm' key={councilAccountId}>
+            {councilAccountId}
           </Typography>
         ))}
       </Col>
