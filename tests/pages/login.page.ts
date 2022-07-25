@@ -1,53 +1,55 @@
 import {expect, Page} from '@playwright/test';
-
-import {isVisible} from '../shared/commonFunctions';
 import {createTestAccount} from '../shared/createTestAccount';
 import {findButtonByText} from '../utils/findButtonByText';
+import nearElements from './nearwallet.page.elements.json' 
+import elements from './login.page.elements.json'
 
 export class LoginPage {
   readonly page: Page;
+  readonly nearElements = nearElements;
+  readonly elements = elements;
 
   constructor(page: Page) {
     this.page = page;
   }
 
   async openLoginPage() {
-    await this.page.goto('/');
+    await this.page.goto(this.elements.loginURL);
   }
 
-  async userLoggedIn(): Promise<boolean> {
-    return isVisible(this.page, 'a[href="/dashboard"]');
+  async checkUserLoggedIn() {
+    await expect(this.page).toHaveURL(this.elements.dashboardPageURL)
   }
 
-  async chooseDao(text: string) {
-    await this.page.locator('span', {hasText: text}).click();
-    await this.page.locator('button:has-text("Select DAO")').click();
+  async chooseDao(daoid: string) {
+    await this.page.locator('span', {hasText: daoid}).click();
+    await this.page.locator(this.elements.buttonSelectDao).click();
   }
 
   async chooseNearWallet() {
-    await findButtonByText(this.page, 'NEAR Wallet').first().click();
+    await findButtonByText(this.page, this.elements.buttonNearWallet).first().click();
   }
 
   async loginToNear(page: Page) {
-    await expect(page).toHaveURL('https://wallet.testnet.near.org/');
+    await expect(page).toHaveURL(this.nearElements.startURL);
 
-    await page.locator('[data-test-id="homePageImportAccountButton"]').click();
-    await expect(page).toHaveURL('https://wallet.testnet.near.org/recover-account');
+    await page.locator(this.nearElements.recoverAccountButton).click();
+    await expect(page).toHaveURL(nearElements.recoverAccountURL);
 
-    await page.locator('[data-test-id="recoverAccountWithPassphraseButton"]').click();
-    await expect(page).toHaveURL('https://wallet.testnet.near.org/recover-seed-phrase');
+    await page.locator(this.nearElements.recoverAccountWithPassphraseButton).click();
+    await expect(page).toHaveURL(nearElements.recoverSeedPhraseURL);
 
-    await page.locator('[data-test-id="seedPhraseRecoveryInput"]').click();
+    await page.locator(this.nearElements.seedPhraseRecoveryInput).click();
 
     const {seedPhrase} = await createTestAccount();
-    await page.locator('[data-test-id="seedPhraseRecoveryInput"]').fill(seedPhrase);
+    await page.locator(this.nearElements.seedPhraseRecoveryInput).fill(seedPhrase);
 
-    await page.locator('[data-test-id="seedPhraseRecoverySubmitButton"]').click();
-    await expect(page).toHaveURL(/https:\/\/wallet.testnet.near.org\/login/);
+    await page.locator(this.nearElements.seedPhraseRecoverySubmitButton).click();
+    await expect(page).toHaveURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
 
-    await page.locator('.button-group button.blue').click();
+    await page.locator(this.nearElements.commonSubmitButton).click();
 
-    await page.locator('.button-group button.blue').click();
-    await expect(page).toHaveURL('/dao');
+    await page.locator(this.nearElements.commonSubmitButton).click();
+    await expect(this.page).toHaveURL(this.elements.chooseDaoURL);
   }
 }

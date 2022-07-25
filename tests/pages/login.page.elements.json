@@ -1,0 +1,7 @@
+{
+    "chooseDaoURL": "/dao",
+    "dashboardPageURL": "/dashboard",
+    "loginURL": "/",
+    "buttonSelectDao": "button:has-text('Select DAO')",
+    "buttonNearWallet": "NEAR Wallet"
+}

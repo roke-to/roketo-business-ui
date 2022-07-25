@@ -9,5 +9,5 @@ test('login via NEAR wallet', async ({page}) => {
   await loginpage.chooseNearWallet();
   await loginpage.loginToNear(page);
   await loginpage.chooseDao('animatronic.testnet');
-  await loginpage.userLoggedIn();
+  await loginpage.checkUserLoggedIn();
 });
