@@ -1,5 +1,7 @@
 import {Account, Contract} from 'near-api-js';
 
+import {env} from '~/shared/config/env';
+
 import {
   AccountId,
   Base58CryptoHash,
@@ -8,12 +10,11 @@ import {
   DaosParams,
   MetaDataSputnikContractParams,
   SputnikBaseParams,
-  SputnikFactoryDAO,
-} from '~/shared/api/sputnik-factory-dao/types';
-import {env} from '~/shared/config/env';
+  SputnikFactoryDao,
+} from './contract.types';
 
-export class SputnikFactoryDaoApi {
-  contract: SputnikFactoryDAO;
+export class SputnikFactoryDaoContract {
+  contract: SputnikFactoryDao;
 
   account: Account;
 
@@ -41,7 +42,7 @@ export class SputnikFactoryDaoApi {
         'delete_contract_metadata',
         'store',
       ],
-    }) as SputnikFactoryDAO;
+    }) as SputnikFactoryDao;
   }
 
   async getDaoList() {

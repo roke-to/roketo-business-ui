@@ -1,4 +1,4 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
@@ -9,7 +9,7 @@ import {ProposalStatus} from '~/shared/types/proposal-status';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$daoId} from './dao';
+import {$daoId, $sputnikFactoryDaoContract} from './dao';
 import {$accountId} from './wallet';
 
 // ------------ proposals ------------
@@ -250,6 +250,17 @@ export const createProposalForm = createForm({
 
 type CreateProposalFormFields = typeof createProposalForm['fields'];
 
-export const createProposalFx = createEffect(async (data: FormValues<CreateProposalFormFields>) => {
-  console.log('create proposal', data);
+export const createProposalFx = attach({
+  source: {
+    sputnikFactoryDaoContract: $sputnikFactoryDaoContract,
+    accountId: $accountId,
+  },
+  async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateProposalFormFields>) {
+    console.log('create proposal', sputnikFactoryDaoContract, accountId, data);
+  },
+});
+
+forward({
+  from: createProposalForm.formValidated,
+  to: createProposalFx,
 });

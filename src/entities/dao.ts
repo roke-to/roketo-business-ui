@@ -5,7 +5,7 @@ import {createForm, FormValues} from 'effector-forms';
 
 import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
 import {NearInstance} from '~/shared/api/near';
-import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/api';
+import {SputnikFactoryDaoContract} from '~/shared/api/sputnik-factory-dao/contract';
 import {templateCreateArgs} from '~/shared/api/sputnik-factory-dao/template-create-args';
 import {ROUTES} from '~/shared/config/routes';
 import {history} from '~/shared/lib/router';
@@ -13,21 +13,22 @@ import {validators} from '~/shared/lib/validators';
 
 import {$accountId, initNearInstanceFx} from './wallet';
 
-const $sputnikFactoryDaoApi = createStore<SputnikFactoryDaoApi | null>(null);
+export const $sputnikFactoryDaoContract = createStore<SputnikFactoryDaoContract | null>(null);
+// export const $sputnikDaoApi = createStore<SputnikDaoApi | null>(null);
 
 // TODO: pass account to walletSelector
-const initSputnikFactoryDaoApiFx = createEffect(
-  ({account}: NearInstance) => new SputnikFactoryDaoApi(account),
+const initSputnikFactoryDaoContractFx = createEffect(
+  ({account}: NearInstance) => new SputnikFactoryDaoContract(account),
 );
 
 sample({
   clock: initNearInstanceFx.doneData,
-  target: initSputnikFactoryDaoApiFx,
+  target: initSputnikFactoryDaoContractFx,
 });
 
 sample({
-  clock: initSputnikFactoryDaoApiFx.doneData,
-  target: $sputnikFactoryDaoApi,
+  clock: initSputnikFactoryDaoContractFx.doneData,
+  target: $sputnikFactoryDaoContract,
 });
 
 export const createDaoForm = createForm({
@@ -63,11 +64,11 @@ type CreateDaoFormFields = typeof createDaoForm['fields'];
 
 export const createDaoFx = attach({
   source: {
-    sputnikFactoryDaoApi: $sputnikFactoryDaoApi,
+    sputnikFactoryDaoContract: $sputnikFactoryDaoContract,
     accountId: $accountId,
   },
-  async effect({sputnikFactoryDaoApi, accountId}, data: FormValues<CreateDaoFormFields>) {
-    if (!sputnikFactoryDaoApi) {
+  async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateDaoFormFields>) {
+    if (!sputnikFactoryDaoContract) {
       // TODO: show error on form
       throw new Error('Contract not initialized');
     }
@@ -78,13 +79,13 @@ export const createDaoFx = attach({
       const attachedDeposit = new BN('6000000000000000000000000');
       const args = templateCreateArgs({displayName: data.name, accountId, name: data.address});
 
-      console.log('api', sputnikFactoryDaoApi);
+      console.log('api', sputnikFactoryDaoContract);
       console.log('data', data);
       console.log('args', JSON.parse(atob(args)));
 
       // TODO: now here is error: {"index":0,"kind":{"ExecutionError":"Smart contract panicked: panicked at 'Failed to deserialize input from JSON.: Error(\"the account ID is invalid\", line: 1, column: 27)', sputnikdao-factory2/src/lib.rs:49:1"}}
       // this is redirected to near
-      await sputnikFactoryDaoApi?.create({
+      await sputnikFactoryDaoContract?.create({
         args: {
           name: data.name,
           args: templateCreateArgs({displayName: data.name, accountId, name: data.address}),
