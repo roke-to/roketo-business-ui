@@ -20,5 +20,5 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src", "env.d.ts"]
+  "include": ["src", "env.d.ts", "playwright.config.ts", "tests"]
 }
