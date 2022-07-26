@@ -5,6 +5,7 @@ import {createForm, FormValues} from 'effector-forms';
 
 import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
 import {NearInstance} from '~/shared/api/near';
+import {SputnikDaoContract} from '~/shared/api/sputnik-dao/contract';
 import {SputnikFactoryDaoContract} from '~/shared/api/sputnik-factory-dao/contract';
 import {templateCreateArgs} from '~/shared/api/sputnik-factory-dao/template-create-args';
 import {ROUTES} from '~/shared/config/routes';
@@ -13,10 +14,10 @@ import {validators} from '~/shared/lib/validators';
 
 import {$accountId, initNearInstanceFx} from './wallet';
 
-export const $sputnikFactoryDaoContract = createStore<SputnikFactoryDaoContract | null>(null);
-// export const $sputnikDaoApi = createStore<SputnikDaoApi | null>(null);
+// ------------ sputnikFactoryDaoContract ------------
 
-// TODO: pass account to walletSelector
+export const $sputnikFactoryDaoContract = createStore<SputnikFactoryDaoContract | null>(null);
+
 const initSputnikFactoryDaoContractFx = createEffect(
   ({account}: NearInstance) => new SputnikFactoryDaoContract(account),
 );
@@ -30,6 +31,8 @@ sample({
   clock: initSputnikFactoryDaoContractFx.doneData,
   target: $sputnikFactoryDaoContract,
 });
+
+//  ------------ createDao ------------
 
 export const createDaoForm = createForm({
   fields: {
@@ -105,7 +108,9 @@ forward({
   to: createDaoFx,
 });
 
-export const $daoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
+//  ------------ current DAO ------------
+
+export const $currentDaoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
 
 export const setDaoId = createEvent<string>();
 const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
@@ -124,7 +129,7 @@ sample({
 
 sample({
   source: saveCurrentDaoInLsFx.doneData,
-  target: $daoId,
+  target: $currentDaoId,
 });
 
 const SOME_DAOS_WITH_SOME_DATA_FOR_DEV = [
@@ -146,9 +151,13 @@ const loadDaosFx = attach({
   },
 });
 
+export const loadDaos = createEvent();
+
+export const $currentDao = createStore<AccountDaoResponse | null>(null);
+
 const loadDaoFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
   },
   async effect({daoId}) {
     return astroApi.daoControllerDaoById(daoId);
@@ -186,4 +195,25 @@ sample({
 sample({
   source: loadDao,
   target: loadDaoFx,
+});
+
+//  ------------ sputnikDaoContract ------------
+
+export const $sputnikDaoContract = createStore<SputnikDaoContract | null>(null);
+
+const initSputnikDaoContractFx = attach({
+  source: {currentDaoId: $currentDaoId},
+  effect({currentDaoId}, {account}: NearInstance) {
+    return currentDaoId ? new SputnikDaoContract(account, currentDaoId) : null;
+  },
+});
+
+sample({
+  clock: initNearInstanceFx.doneData,
+  target: initSputnikDaoContractFx,
+});
+
+sample({
+  clock: initSputnikDaoContractFx.doneData,
+  target: $sputnikDaoContract,
 });

@@ -2,7 +2,7 @@ import {Account, Contract} from 'near-api-js';
 
 import {SputnikDao} from './contract.types';
 
-export class SputnikFactoryDaoContract {
+export class SputnikDaoContract {
   contract: SputnikDao;
 
   account: Account;

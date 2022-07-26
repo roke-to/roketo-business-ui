@@ -9,7 +9,7 @@ import {ProposalStatus} from '~/shared/types/proposal-status';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$daoId, $sputnikFactoryDaoContract} from './dao';
+import {$currentDaoId, $sputnikFactoryDaoContract} from './dao';
 import {$accountId} from './wallet';
 
 // ------------ proposals ------------
@@ -53,7 +53,7 @@ export const $treasuryProposalSortOrder = createStore<ProposalSortOrderType>('DE
 
 const loadTreasuryProposalsFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
     accountId: $accountId,
     status: $treasurySelectedProposalStatus,
     kind: $treasurySelectedProposalKind,
@@ -145,7 +145,7 @@ sample({
   target: loadTreasuryProposalsFx,
 });
 sample({
-  clock: $daoId,
+  clock: $currentDaoId,
   target: loadTreasuryProposalsFx,
 });
 
@@ -188,7 +188,7 @@ export const loadTokenBalances = createEvent();
 
 const loadTokenBalancesFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
   },
   async effect({daoId}) {
     // TODO: remove after PR https://github.com/near-daos/astro-api-gateway/pull/386 merged
@@ -204,7 +204,7 @@ sample({
   target: loadTokenBalancesFx,
 });
 sample({
-  clock: $daoId,
+  clock: $currentDaoId,
   target: loadTokenBalancesFx,
 });
 

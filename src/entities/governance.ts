@@ -4,7 +4,7 @@ import {astroApi, Proposal} from '~/shared/api/astro';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
-import {$daoId} from './dao';
+import {$currentDaoId} from './dao';
 import {$accountId} from './wallet';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
@@ -33,7 +33,7 @@ export const $governanceProposalSortOrder = createStore<ProposalSortOrderType>('
 //  /------------ proposals sort by createAt ------------
 const loadGovernanceProposalsFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
     accountId: $accountId,
     sort: $governanceProposalSortOrder,
   },

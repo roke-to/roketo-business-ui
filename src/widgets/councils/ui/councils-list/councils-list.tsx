@@ -1,12 +1,12 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
-import {$selectedDao} from '~/entities/dao';
+import {$currentDao} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
 
 export const CouncilsList = () => {
-  const selectedDao = useStore($selectedDao);
+  const selectedDao = useStore($currentDao);
 
   return (
     <Col gap={1}>
