@@ -41,7 +41,7 @@ export const DaoNew = () => {
                 value={fields.name.value}
                 disabled={pending}
                 placeholder={t('daoNew.namePlaceholder')}
-                onChange={(e) => fields.name.onChange(e.target.value)}
+                onChange={fields.name.onChange}
               />
             </Label>
             <Label required content={t('daoNew.addressLabel')} error={fields.address.errorText()}>
@@ -51,7 +51,7 @@ export const DaoNew = () => {
                 value={fields.address.value}
                 disabled={pending}
                 placeholder={t('daoNew.addressPlaceholder')}
-                onChange={(e) => fields.address.onChange(e.target.value)}
+                onChange={fields.address.onChange}
               />
             </Label>
           </Col>
