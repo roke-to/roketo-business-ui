@@ -1,3 +1,4 @@
+import BN from 'bn.js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
@@ -9,7 +10,7 @@ import {ProposalStatus} from '~/shared/types/proposal-status';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$currentDaoId, $sputnikFactoryDaoContract} from './dao';
+import {$currentDaoId, $sputnikDaoContract} from './dao';
 import {$accountId} from './wallet';
 
 // ------------ proposals ------------
@@ -252,11 +253,44 @@ type CreateProposalFormFields = typeof createProposalForm['fields'];
 
 export const createProposalFx = attach({
   source: {
-    sputnikFactoryDaoContract: $sputnikFactoryDaoContract,
+    sputnikDaoContract: $sputnikDaoContract,
     accountId: $accountId,
   },
-  async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateProposalFormFields>) {
-    console.log('create proposal', sputnikFactoryDaoContract, accountId, data);
+  async effect({sputnikDaoContract, accountId}, data: FormValues<CreateProposalFormFields>) {
+    if (!sputnikDaoContract) {
+      // TODO: show error on form
+      throw new Error('SputnikDaoContract not initialized');
+    }
+
+    console.log('create proposal', sputnikDaoContract, accountId, data);
+
+    try {
+      const gas = new BN('300000000000000');
+      const attachedDeposit = new BN('6000000000000000000000000'); // 6 NEAR
+
+      await sputnikDaoContract;
+      // TODO: now here is error: {"index":0,"kind":{"ExecutionError":"Smart contract panicked: panicked at 'Failed to deserialize input from JSON.: Error(\"the account ID is invalid\", line: 1, column: 27)', sputnikdao-factory2/src/lib.rs:49:1"}}
+      // this is redirected to near
+      await sputnikDaoContract.addProposal({
+        args: {
+          proposal: {
+            description: data.description,
+            kind: {
+              Transfer: {
+                token_id: data.token,
+                amount: data.amount,
+                receiver_id: data.target,
+              },
+            },
+          },
+        },
+        gas,
+        amount: attachedDeposit,
+      });
+      // TODO: redirect to dashboard
+    } catch (err) {
+      console.log('err', err);
+    }
   },
 });
 

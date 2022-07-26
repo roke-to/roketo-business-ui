@@ -2,10 +2,10 @@ import {Account, Contract} from 'near-api-js';
 
 import {env} from '~/shared/config/env';
 
+import {ChangeMethodOptions} from '../contract.types';
 import {
   AccountId,
   Base58CryptoHash,
-  ChangeMethodOptions,
   CreateSputnikContractParams,
   DaosParams,
   MetaDataSputnikContractParams,

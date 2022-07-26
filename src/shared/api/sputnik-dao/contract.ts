@@ -1,6 +1,7 @@
 import {Account, Contract} from 'near-api-js';
 
-import {SputnikDao} from './contract.types';
+import {ChangeMethodOptions} from '../contract.types';
+import {ProposalInput, SputnikDao} from './contract.types';
 
 export class SputnikDaoContract {
   contract: SputnikDao;
@@ -46,5 +47,9 @@ export class SputnikDaoContract {
         'undelegate',
       ],
     }) as SputnikDao;
+  }
+
+  async addProposal(options: ChangeMethodOptions<{proposal: ProposalInput}>) {
+    return this.contract.add_proposal(options);
   }
 }
