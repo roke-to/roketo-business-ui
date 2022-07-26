@@ -19,7 +19,7 @@ export const ProposalsDateSortModal = ({
   selected: ProposalSortOrderType;
   onChange(value: string): void;
 }) => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposalFilters');
 
   return (
     <>

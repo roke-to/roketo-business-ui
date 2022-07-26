@@ -20,7 +20,7 @@ export const ProposalKindFilter = ({
   selectedProposalKind,
   handleChangeProposalKind,
 }: ProposalKindFilterProps) => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposalFilters');
 
   const selected = ProposalKind.findIndex((kind) => kind === selectedProposalKind);
 

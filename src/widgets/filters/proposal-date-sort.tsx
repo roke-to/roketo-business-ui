@@ -29,7 +29,7 @@ export const ProposalDateSort = ({
   proposalSortOrder,
   handleChangeProposalSortOrder,
 }: ProposalDateSortProps) => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposalFilters');
 
   const sortProposalModal = useModal();
 

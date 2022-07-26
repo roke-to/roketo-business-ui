@@ -27,7 +27,7 @@ export const ProposalFilterModal = ({
   handleChangeProposalStatus,
   handleChangeProposalKind,
 }: ProposalFilterModalProps) => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposalFilters');
 
   const onChangeProposalStatus = (status: string) => {
     handleChangeProposalStatus(status as ProposalStatus);
@@ -36,7 +36,7 @@ export const ProposalFilterModal = ({
     handleChangeProposalKind?.(kind as ProposalKindFilterType);
   };
 
-  const hasKindModule = selectedProposalKind && typeof handleChangeProposalKind !== undefined;
+  const hasKindModule = selectedProposalKind && handleChangeProposalKind;
 
   return (
     <>

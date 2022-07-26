@@ -31,7 +31,7 @@ export const ProposalStatusFilter = ({
   handleChangeProposalStatus,
   handleChangeProposalKind,
 }: ProposalStatusFilterProps) => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposalFilters');
   const canShowModal = useMediaQuery(`(max-width: ${theme.screens.mobile})`);
 
   const proposalFiltersModal = useModal();

@@ -28,7 +28,7 @@ export const ProposalsFilters = ({
   handleChangeProposalKind,
   handleChangeProposalSortOrder,
 }: ProposalsFiltersProps) => {
-  const hasKindModule = selectedProposalKind && typeof handleChangeProposalKind !== undefined;
+  const hasKindModule = selectedProposalKind && handleChangeProposalKind;
 
   return (
     <div className={styles.filtersContainer}>
