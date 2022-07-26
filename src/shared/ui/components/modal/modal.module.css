@@ -27,7 +27,7 @@
   outline-color: theme('colors.white');
   margin: auto 0;
 
-  padding: theme('spacing.4') theme('spacing.8');
+  padding: theme('spacing.4') theme('spacing.8') theme('spacing.8') theme('spacing.8');
 
   @media (min-width: theme('screens.mobile')) {
     min-width: 774px;
@@ -41,6 +41,7 @@
 
 .header {
   display: flex;
+  margin-bottom: theme('spacing.6');
 }
 
 .close {

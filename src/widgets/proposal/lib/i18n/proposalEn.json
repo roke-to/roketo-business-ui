@@ -9,15 +9,24 @@
     "proposalTypeLabel": "Proposal type",
     "proposerLabel": "Proposer",
     "targetLabel": "Target",
+    "targetPlaceholder": "name.account",
     "amountLabel": "Amount",
+    "amountPlaceholder": "0.00",
     "tokenLabel": "Token",
+    "tokenPlaceholder": "",
     "descriptionLabel": "Description",
+    "descriptionPlaceholder": "You can type something to highlight the main terms",
     "submit": "Propose",
     "cancel": "Cancel",
     "transfer": "Transfer",
     "transferNftMintbase": "Transfer NFT Mintbase",
     "transferNftParas": "Transfer NFT Paras",
     "functionalCall": "Functional call",
-    "createStream": "Create a stream"
+    "createStream": "Create a stream",
+    "linkLabel": "Add link",
+    "linkPlaceholder": "link.com/example",
+    "tgasLabel": "TGAS",
+    "tgasPlaceholder": "150",
+    "charge": "You will be charge"
   }
 }

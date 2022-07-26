@@ -17,6 +17,7 @@ type InputProps = Merge<
     endIcon?: React.ReactNode;
     variant?: InputVariant;
     size?: InputSize;
+    onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   }
 >;
 
@@ -30,6 +31,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       size = 'md',
       startIcon,
       endIcon,
+      onChange,
       ...props
     },
     ref,
@@ -38,6 +40,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       {...props}
       ref={ref}
       type={type}
+      onChange={(e) => onChange?.(e.target.value, e)}
       className={clsx(
         styles.input,
         styles[size],

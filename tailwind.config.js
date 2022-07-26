@@ -67,6 +67,7 @@ export default {
     },
     gap: ({theme}) => ({
       ...theme('spacing'),
+      xs: '0.25rem',
       sm: '0.5rem',
       md: '1rem',
       DEFAULT: '1rem', // 16px

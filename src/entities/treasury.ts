@@ -224,6 +224,28 @@ export const createProposalForm = createForm({
       init: 'transfer',
       rules: [validators.required],
     },
+    target: {
+      init: '',
+      rules: [validators.required],
+    },
+    amount: {
+      init: '',
+      rules: [validators.required],
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required],
+    },
+    description: {
+      init: '',
+    },
+    link: {
+      init: '',
+    },
+    tgas: {
+      init: '150',
+      rules: [validators.required],
+    },
   },
   validateOn: ['submit'],
 });
