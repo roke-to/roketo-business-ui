@@ -1,14 +1,8 @@
-import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {
-  $treasuryProposalSortOrder,
-  changeTreasuryProposalSortOrder,
-  ProposalSortOrderType,
-} from '~/entities/treasury';
 import {ProposalSort} from '~/features/treasury/model/types/proposal-date-sort.types';
-import {ProposalsDateSortModal} from '~/features/treasury/ui/filters/modal/proposals-date-sort-modal';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {Button} from '~/shared/ui/components/button';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
@@ -19,26 +13,34 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as SortIcon} from '~/shared/ui/icons/sort.svg';
 
 import styles from './filter.module.css';
+import {ProposalsDateSortModal} from './modal/proposals-date-sort-modal';
 
 const ProposalSorts: ProposalSort[] = [
   {label: 'Show new first', value: 'New', sortType: 'DESC'},
   {label: 'Show old first', value: 'Old', sortType: 'ASC'},
 ];
 
-export const ProposalDateSort = () => {
+export interface ProposalDateSortProps {
+  proposalSortOrder: ProposalSortOrderType;
+  handleChangeProposalSortOrder(sortType: ProposalSortOrderType): void;
+}
+
+export const ProposalDateSort = ({
+  proposalSortOrder,
+  handleChangeProposalSortOrder,
+}: ProposalDateSortProps) => {
   const {t} = useTranslation('treasury');
 
-  const treasuryProposalSortOrder = useStore($treasuryProposalSortOrder);
   const sortProposalModal = useModal();
 
-  const selected = ProposalSorts.findIndex(({sortType}) => sortType === treasuryProposalSortOrder);
+  const selected = ProposalSorts.findIndex(({sortType}) => sortType === proposalSortOrder);
 
   const handleChange = (index: number) => {
-    changeTreasuryProposalSortOrder(ProposalSorts[index].sortType);
+    handleChangeProposalSortOrder(ProposalSorts[index].sortType);
   };
 
   const handleChangeRadioGroup = (sortType: string) => {
-    changeTreasuryProposalSortOrder(sortType as ProposalSortOrderType);
+    handleChangeProposalSortOrder(sortType as ProposalSortOrderType);
   };
 
   return (
@@ -73,7 +75,7 @@ export const ProposalDateSort = () => {
       >
         <ProposalsDateSortModal
           values={ProposalSorts}
-          selected={treasuryProposalSortOrder}
+          selected={proposalSortOrder}
           onChange={handleChangeRadioGroup}
         />
       </Modal>

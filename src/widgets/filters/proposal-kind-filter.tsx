@@ -1,12 +1,8 @@
-import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {
-  $treasurySelectedProposalKind,
-  changeTreasuryProposalSelectedKind,
-} from '~/entities/treasury';
 import {ProposalKind} from '~/features/treasury/model/constants';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
@@ -15,15 +11,21 @@ import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './filter.module.css';
 
-export const ProposalKindFilter = () => {
+export interface ProposalKindFilterProps {
+  selectedProposalKind: ProposalKindFilterType;
+  handleChangeProposalKind(kind: ProposalKindFilterType): void;
+}
+
+export const ProposalKindFilter = ({
+  selectedProposalKind,
+  handleChangeProposalKind,
+}: ProposalKindFilterProps) => {
   const {t} = useTranslation('treasury');
 
-  const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
-
-  const selected = ProposalKind.findIndex((kind) => kind === treasurySelectedProposalKind);
+  const selected = ProposalKind.findIndex((kind) => kind === selectedProposalKind);
 
   const handleChange = (index: number) => {
-    changeTreasuryProposalSelectedKind(ProposalKind[index]);
+    handleChangeProposalKind(ProposalKind[index]);
   };
 
   return (
@@ -31,7 +33,7 @@ export const ProposalKindFilter = () => {
       <Typography as='span' color='muted'>
         {t('type')}:
       </Typography>
-      <DropdownMenu label={treasurySelectedProposalKind} variant='soft'>
+      <DropdownMenu label={selectedProposalKind} variant='soft'>
         <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
           {ProposalKind.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>

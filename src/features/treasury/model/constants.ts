@@ -1,6 +1,7 @@
-import {ProposalKindFilterType, TreasuryProposalStatus} from '~/entities/treasury';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
+import {ProposalStatus} from '~/shared/types/proposal-status';
 
-export const ProposalStatuses: TreasuryProposalStatus[] = ['all', 'active', 'approved', 'failed'];
+export const ProposalStatuses: ProposalStatus[] = ['all', 'active', 'approved', 'failed'];
 export const ProposalKind: ProposalKindFilterType[] = [
   'Any',
   'ChangeConfig',
