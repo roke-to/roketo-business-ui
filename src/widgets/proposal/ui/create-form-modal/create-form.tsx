@@ -119,6 +119,7 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   transferNftParas: EmptyFormType,
   functionalCall: EmptyFormType,
   createStream: EmptyFormType,
+  changePolicy: ChangePolicy,
 };
 
 export const CreateProposalForm = () => {
