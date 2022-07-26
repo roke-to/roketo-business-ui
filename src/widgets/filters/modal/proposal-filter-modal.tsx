@@ -37,6 +37,7 @@ export const ProposalFilterModal = ({
   };
 
   const hasKindModule = selectedProposalKind && typeof handleChangeProposalKind !== undefined;
+
   return (
     <>
       <Row className={styles.header} align='center' justify='between'>

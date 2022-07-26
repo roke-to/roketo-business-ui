@@ -8,9 +8,7 @@ import {
   changeGovernanceProposalSelectedStatus,
   changeGovernanceProposalSortOrder,
 } from '~/entities/governance';
-import styles from '~/widgets/filters/filter.module.css';
-import {ProposalDateSort} from '~/widgets/filters/proposal-date-sort';
-import {ProposalStatusFilter} from '~/widgets/filters/proposal-status-filter';
+import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
 
 export const GovernanceProposalsFilters = () => {
   const governanceSelectedProposalStatus = useStore($governanceSelectedProposalStatus);
@@ -18,18 +16,12 @@ export const GovernanceProposalsFilters = () => {
   const governanceProposalSortOrder = useStore($governanceProposalSortOrder);
 
   return (
-    <div className={styles.filtersContainer}>
-      <div className={styles.filterGroup}>
-        <ProposalStatusFilter
-          isLoading={isLoading}
-          selectedProposalStatus={governanceSelectedProposalStatus}
-          handleChangeProposalStatus={changeGovernanceProposalSelectedStatus}
-        />
-      </div>
-      <ProposalDateSort
-        proposalSortOrder={governanceProposalSortOrder}
-        handleChangeProposalSortOrder={changeGovernanceProposalSortOrder}
-      />
-    </div>
+    <ProposalsFilters
+      isLoading={isLoading}
+      selectedProposalStatus={governanceSelectedProposalStatus}
+      proposalSortOrder={governanceProposalSortOrder}
+      handleChangeProposalStatus={changeGovernanceProposalSelectedStatus}
+      handleChangeProposalSortOrder={changeGovernanceProposalSortOrder}
+    />
   );
 };

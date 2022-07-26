@@ -11,11 +11,11 @@ import {ProposalStatusFilter} from './proposal-status-filter';
 
 export interface ProposalsFiltersProps {
   selectedProposalStatus: ProposalStatus;
-  selectedProposalKind: ProposalKindFilterType;
+  selectedProposalKind?: ProposalKindFilterType;
   proposalSortOrder: ProposalSortOrderType;
   isLoading: boolean;
   handleChangeProposalStatus(status: ProposalStatus): void;
-  handleChangeProposalKind(kind: ProposalKindFilterType): void;
+  handleChangeProposalKind?(kind: ProposalKindFilterType): void;
   handleChangeProposalSortOrder(sortType: ProposalSortOrderType): void;
 }
 
@@ -27,24 +27,30 @@ export const ProposalsFilters = ({
   handleChangeProposalStatus,
   handleChangeProposalKind,
   handleChangeProposalSortOrder,
-}: ProposalsFiltersProps) => (
-  <div className={styles.filtersContainer}>
-    <div className={styles.filterGroup}>
-      <ProposalStatusFilter
-        isLoading={isLoading}
-        selectedProposalStatus={selectedProposalStatus}
-        selectedProposalKind={selectedProposalKind}
-        handleChangeProposalStatus={handleChangeProposalStatus}
-        handleChangeProposalKind={handleChangeProposalKind}
-      />
-      <ProposalKindFilter
-        selectedProposalKind={selectedProposalKind}
-        handleChangeProposalKind={handleChangeProposalKind}
+}: ProposalsFiltersProps) => {
+  const hasKindModule = selectedProposalKind && typeof handleChangeProposalKind !== undefined;
+
+  return (
+    <div className={styles.filtersContainer}>
+      <div className={styles.filterGroup}>
+        <ProposalStatusFilter
+          isLoading={isLoading}
+          selectedProposalStatus={selectedProposalStatus}
+          selectedProposalKind={selectedProposalKind}
+          handleChangeProposalStatus={handleChangeProposalStatus}
+          handleChangeProposalKind={handleChangeProposalKind}
+        />
+        {hasKindModule && (
+          <ProposalKindFilter
+            selectedProposalKind={selectedProposalKind}
+            handleChangeProposalKind={handleChangeProposalKind}
+          />
+        )}
+      </div>
+      <ProposalDateSort
+        proposalSortOrder={proposalSortOrder}
+        handleChangeProposalSortOrder={handleChangeProposalSortOrder}
       />
     </div>
-    <ProposalDateSort
-      proposalSortOrder={proposalSortOrder}
-      handleChangeProposalSortOrder={handleChangeProposalSortOrder}
-    />
-  </div>
-);
+  );
+};
