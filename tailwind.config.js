@@ -37,6 +37,7 @@ export default {
       black: '#2B313B',
       white: colors.white,
       gray: '#8A96A8',
+      orange: '#E87C4C',
       green: {
         default: '#1EBA52',
         light: '#D6F5DF',

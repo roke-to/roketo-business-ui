@@ -1,0 +1,9 @@
+.status {
+  --borderColor: none;
+  --bgColor: none;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--borderColor);
+  background-color: var(--bgColor);
+  border-radius: 50%;
+}
