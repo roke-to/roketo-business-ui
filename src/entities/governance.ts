@@ -1,6 +1,8 @@
-import {attach, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {createForm, FormValues} from 'effector-forms';
 
 import {astroApi, Proposal} from '~/shared/api/astro';
+import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
@@ -86,3 +88,45 @@ sample({
   fn: () => true,
   target: $governanceProposalLoading,
 });
+
+//  ------------ proposals change policy  ------------
+
+export const changePolicyProposalForm = createForm({
+  fields: {
+    type: {
+      init: 'changePolic',
+      rules: [validators.required],
+    },
+    target: {
+      init: '',
+      rules: [validators.required],
+    },
+    amount: {
+      init: '',
+      rules: [validators.required],
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required],
+    },
+    description: {
+      init: '',
+    },
+    link: {
+      init: '',
+    },
+    tgas: {
+      init: '150',
+      rules: [validators.required],
+    },
+  },
+  validateOn: ['submit'],
+});
+
+type ChangePolicyProposalFormFields = typeof changePolicyProposalForm['fields'];
+
+export const changePolicyProposalFx = createEffect(
+  async (data: FormValues<ChangePolicyProposalFormFields>) => {
+    console.log('changePolicy proposal', data);
+  },
+);

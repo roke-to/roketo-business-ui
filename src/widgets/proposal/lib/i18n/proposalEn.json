@@ -23,6 +23,7 @@
     "transferNftParas": "Transfer NFT Paras",
     "functionalCall": "Functional call",
     "createStream": "Create a stream",
+    "changePolicy": "Change Policy",
     "linkLabel": "Add link",
     "linkPlaceholder": "link.com/example",
     "tgasLabel": "TGAS",
