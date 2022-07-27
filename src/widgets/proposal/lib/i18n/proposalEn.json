@@ -30,6 +30,7 @@
     "tgasPlaceholder": "150",
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
-    "councilAddressPlaceholder": "Addcouncilname.near"
+    "councilAddressPlaceholder": "Addcouncilname.near",
+    "councilListLabel": "Council list"
   }
 }

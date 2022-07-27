@@ -1,0 +1,23 @@
+.button {
+  width: theme('spacing.5');
+  height: theme('spacing.5');
+  padding-left: theme('spacing.1');
+  padding-right: theme('spacing.1');
+}
+
+.deleteIcon {
+  transform: rotate(45deg);
+}
+
+.icon {
+  width: theme('spacing.5');
+  height: theme('spacing.5');
+}
+
+.deleteText {
+  color: theme('colors.blue.textDefault');
+}
+
+.addText {
+  color: theme('colors.blue.default');
+}
