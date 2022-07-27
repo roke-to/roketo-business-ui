@@ -1,14 +1,14 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
-import {$daoId, $daoIds, setDaoId} from '~/entities/dao';
+import {$currentDaoId, $daoIds, setDaoId} from '~/entities/dao';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {RadioGroupItem} from '~/shared/ui/components/radio-group';
 
 export const DaoSwitcher = () => {
-  const daoId = useStore($daoId);
+  const daoId = useStore($currentDaoId);
   const userDaos = useStore($daoIds);
 
   const handleChange = (index: number) => {

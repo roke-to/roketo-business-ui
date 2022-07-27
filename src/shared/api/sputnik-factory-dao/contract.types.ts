@@ -1,17 +1,6 @@
-import BN from 'bn.js';
 import {Contract} from 'near-api-js';
 
-// https://github.com/near/near-api-js/blob/a05667361ddab208423f5a5c0e3dd0ce182b9880/src/contract.ts#L22
-export interface ChangeMethodOptions<T extends object> {
-  args: T;
-  gas?: BN;
-  amount?: BN;
-  meta?: string;
-  callbackUrl?: string;
-}
-
-type ContractViewFunction<P, T> = (args?: P) => Promise<T>;
-type ContractChangeFunction<P extends object, T> = (args: ChangeMethodOptions<P>) => Promise<T>;
+import {ContractChangeFunction, ContractViewFunction} from '../contract.types';
 
 export type AccountId = string;
 
@@ -52,7 +41,7 @@ type ContractMetadata = [Base58CryptoHash, DaoContractMetadata];
 
 type Version = [number, number];
 
-export type SputnikFactoryDAO = Contract & {
+export type SputnikFactoryDao = Contract & {
   get_dao_list: ContractViewFunction<never, AccountId[]>;
   get_number_daos: ContractViewFunction<never, number>;
   get_daos: ContractViewFunction<DaosParams, AccountId[]>;
@@ -63,7 +52,7 @@ export type SputnikFactoryDAO = Contract & {
   get_code: ContractViewFunction<SputnikBaseParams, string>;
   get_contracts_metadata: ContractViewFunction<never, ContractMetadata[]>;
 
-  new: ContractChangeFunction<never, SputnikFactoryDAO>;
+  new: ContractChangeFunction<never, SputnikFactoryDao>;
   create: ContractChangeFunction<CreateSputnikContractParams, void>;
   set_owner: ContractChangeFunction<{owner_id: AccountId}, void>;
   set_default_code_hash: ContractChangeFunction<SputnikBaseParams, void>;

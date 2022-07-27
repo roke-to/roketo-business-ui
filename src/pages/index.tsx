@@ -2,7 +2,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {Redirect, Route, Router, Switch} from 'react-router-dom';
 
-import {$daoId} from '~/entities/dao';
+import {$currentDaoId} from '~/entities/dao';
 import {$isSignedIn} from '~/entities/wallet';
 import {DaoPage} from '~/pages/dao';
 import {DaoNewPage} from '~/pages/dao-new';
@@ -18,7 +18,7 @@ import {history, PrivateRoute} from '~/shared/lib/router';
 
 export function Routing() {
   const signedIn = useStore($isSignedIn);
-  const daoId = useStore($daoId);
+  const daoId = useStore($currentDaoId);
 
   return (
     <Router history={history}>
