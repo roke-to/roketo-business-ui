@@ -1,8 +1,11 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
-import {astroApi, HttpResponse, Proposal, ProposalKindSwaggerDto, Token} from '~/shared/api/astro';
+import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {validators} from '~/shared/lib/validators';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
+import {ProposalStatus} from '~/shared/types/proposal-status';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
@@ -20,11 +23,10 @@ export const $treasuryProposalLoading = createStore(true);
 // /------------ proposals ------------
 
 //  ------------ proposals filter by status ------------
-export type TreasuryProposalStatus = 'all' | 'active' | 'approved' | 'failed';
 
-export const changeTreasuryProposalSelectedStatus = createEvent<TreasuryProposalStatus>();
+export const changeTreasuryProposalSelectedStatus = createEvent<ProposalStatus>();
 
-export const $treasurySelectedProposalStatus = createStore<TreasuryProposalStatus>('all').on(
+export const $treasurySelectedProposalStatus = createStore<ProposalStatus>('all').on(
   changeTreasuryProposalSelectedStatus,
   (_, status) => status,
 );
@@ -34,8 +36,6 @@ export const $treasurySelectedProposalStatus = createStore<TreasuryProposalStatu
 //  ------------ proposals filter by kind ------------
 export const changeTreasuryProposalSelectedKind = createEvent<ProposalKindFilterType>();
 
-export type ProposalKindFilterType = ProposalKindSwaggerDto['type'] | 'Any';
-
 export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>('Transfer').on(
   changeTreasuryProposalSelectedKind,
   (_, proposalKind) => proposalKind,
@@ -44,8 +44,6 @@ export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>
 
 //  ------------ proposals sort by createAt  ------------
 export const changeTreasuryProposalSortOrder = createEvent<ProposalSortOrderType>();
-
-export type ProposalSortOrderType = 'ASC' | 'DESC';
 
 export const $treasuryProposalSortOrder = createStore<ProposalSortOrderType>('DESC').on(
   changeTreasuryProposalSortOrder,

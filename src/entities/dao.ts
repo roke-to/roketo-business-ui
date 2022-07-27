@@ -3,7 +3,7 @@ import decamelize from 'decamelize';
 import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
-import {AccountDaoResponse, astroApi} from '~/shared/api/astro';
+import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
 import {NearInstance} from '~/shared/api/near';
 import {SputnikFactoryDaoApi} from '~/shared/api/sputnik-factory-dao/api';
 import {templateCreateArgs} from '~/shared/api/sputnik-factory-dao/template-create-args';
@@ -145,18 +145,19 @@ const loadDaosFx = attach({
   },
 });
 
-export const loadDaos = createEvent();
-
-export const $selectedDao = createStore<AccountDaoResponse | null>(null);
-
-sample({
+const loadDaoFx = attach({
   source: {
     daoId: $daoId,
-    daos: $daos,
   },
-  fn: ({daoId, daos}) => daos.find((dao) => dao.id === daoId) || null,
-  target: $selectedDao,
+  async effect({daoId}) {
+    return astroApi.daoControllerDaoById(daoId);
+  },
 });
+
+export const loadDaos = createEvent();
+export const loadDao = createEvent();
+
+export const $selectedDao = createStore<Dao | null>(null);
 
 sample({
   clock: initNearInstanceFx.doneData,
@@ -171,6 +172,17 @@ sample({
 });
 
 sample({
+  source: loadDaoFx.doneData,
+  fn: (response) => response.data,
+  target: $selectedDao,
+});
+
+sample({
   source: loadDaos,
   target: loadDaosFx,
+});
+
+sample({
+  source: loadDao,
+  target: loadDaoFx,
 });

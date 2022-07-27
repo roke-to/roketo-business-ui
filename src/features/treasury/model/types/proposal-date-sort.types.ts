@@ -1,4 +1,4 @@
-import {ProposalSortOrderType} from '~/entities/treasury';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 
 export interface ProposalSort {
   label: string;
