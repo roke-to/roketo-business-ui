@@ -152,8 +152,9 @@ const loadDaosFx = attach({
 });
 
 export const loadDaos = createEvent();
+export const loadDao = createEvent();
 
-export const $currentDao = createStore<AccountDaoResponse | null>(null);
+export const $currentDao = createStore<Dao | null>(null);
 
 const loadDaoFx = attach({
   source: {
@@ -163,11 +164,6 @@ const loadDaoFx = attach({
     return astroApi.daoControllerDaoById(daoId);
   },
 });
-
-export const loadDaos = createEvent();
-export const loadDao = createEvent();
-
-export const $selectedDao = createStore<Dao | null>(null);
 
 sample({
   clock: initNearInstanceFx.doneData,
@@ -184,7 +180,7 @@ sample({
 sample({
   source: loadDaoFx.doneData,
   fn: (response) => response.data,
-  target: $selectedDao,
+  target: $currentDao,
 });
 
 sample({
@@ -193,7 +189,7 @@ sample({
 });
 
 sample({
-  source: loadDao,
+  source: $currentDaoId,
   target: loadDaoFx,
 });
 
