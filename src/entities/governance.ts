@@ -97,17 +97,15 @@ export const changePolicyProposalForm = createForm({
       init: 'changePolic',
       rules: [validators.required],
     },
-    target: {
+    quorum: {
+      init: 50,
+    },
+    councilAddress: {
       init: '',
       rules: [validators.required],
     },
-    amount: {
+    councilList: {
       init: '',
-      rules: [validators.required],
-    },
-    token: {
-      init: 'near',
-      rules: [validators.required],
     },
     description: {
       init: '',
