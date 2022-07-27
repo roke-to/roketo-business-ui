@@ -16,7 +16,7 @@ import {$accountId, initNearInstanceFx} from './wallet';
 
 // ------------ sputnikFactoryDaoContract ------------
 
-export const $sputnikFactoryDaoContract = createStore<SputnikFactoryDaoContract | null>(null);
+const $sputnikFactoryDaoContract = createStore<SputnikFactoryDaoContract | null>(null);
 
 const initSputnikFactoryDaoContractFx = createEffect(
   ({account}: NearInstance) => new SputnikFactoryDaoContract(account),
@@ -212,6 +212,8 @@ sample({
   clock: initNearInstanceFx.doneData,
   target: initSputnikDaoContractFx,
 });
+
+// TODO: on change currentDaoId recreate SputnikDaoContract
 
 sample({
   clock: initSputnikDaoContractFx.doneData,

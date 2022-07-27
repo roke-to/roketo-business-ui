@@ -266,19 +266,17 @@ export const createProposalFx = attach({
 
     try {
       const gas = new BN('300000000000000');
-      const attachedDeposit = new BN('6000000000000000000000000'); // 6 NEAR
+      const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
 
-      await sputnikDaoContract;
-      // TODO: now here is error: {"index":0,"kind":{"ExecutionError":"Smart contract panicked: panicked at 'Failed to deserialize input from JSON.: Error(\"the account ID is invalid\", line: 1, column: 27)', sputnikdao-factory2/src/lib.rs:49:1"}}
-      // this is redirected to near
+      // {"daoId":"extg2.sputnikv2.testnet","description":"aa$$$$","kind":"Transfer","bond":"100000000000000000000000","data":{"token_id":"wrap.testnet","receiver_id":"extg.testnet","amount":"1000000000000000000000000"}
       await sputnikDaoContract.addProposal({
         args: {
           proposal: {
             description: data.description,
             kind: {
               Transfer: {
-                token_id: data.token,
-                amount: data.amount,
+                token_id: 'wrap.testnet',
+                amount: '1000000000000000000000000', // 1 NEAR
                 receiver_id: data.target,
               },
             },

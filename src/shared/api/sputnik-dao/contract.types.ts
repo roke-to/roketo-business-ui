@@ -1,100 +1,13 @@
 import {Contract} from 'near-api-js';
 
 import {ContractChangeFunction} from '../contract.types';
-
-export type AddBountyRequest = {
-  description: string;
-  token: string;
-  amount: string;
-  times: number;
-  max_deadline: string;
-};
-
-interface AddBounty {
-  bounty: AddBountyRequest;
-}
-
-interface UpgradeRemote {
-  // valid account id
-  receiver_id: string;
-  method_name: string;
-  hash: string;
-}
-
-interface UpgradeSelf {
-  hash: string;
-}
-
-interface ChangePolicy {
-  policy: unknown;
-}
-
-interface AddRemoveMemberRole {
-  // valid account id
-  member_id: string;
-  role: string;
-}
-
-export type FunctionCallAction = {
-  method_name: string;
-  args: string;
-  deposit: string;
-  gas: string;
-};
-
-interface FunctionCall {
-  receiver_id: string;
-  actions: FunctionCallAction[];
-}
-
-export interface Transfer {
-  token_id: string;
-  // valid account id
-  receiver_id: string;
-  amount: string;
-}
-
-interface BountyDone {
-  bounty_id: number;
-  // valid account id
-  receiver_id: string;
-}
-
-interface ChangeConfig {
-  config: DaoConfig;
-}
-
-export interface DaoConfig {
-  name: string;
-  purpose: string;
-  metadata: string | undefined;
-}
-
-enum Vote {
-  Approve = 0x0,
-  Reject = 0x1,
-  Remove = 0x2,
-}
-
-type ProposalKind = Partial<{
-  ChangeConfig: ChangeConfig;
-  ChangePolicy: ChangePolicy;
-  AddMemberToRole: AddRemoveMemberRole;
-  RemoveMemberFromRole: AddRemoveMemberRole;
-  UpgradeSelf: UpgradeSelf;
-  UpgradeRemote: UpgradeRemote;
-  Transfer: Transfer;
-  AddBounty: AddBounty;
-  BountyDone: BountyDone;
-  Vote: Vote;
-  FunctionCall: FunctionCall;
-}>;
+import {CreateProposalKind} from './proposal';
 
 export type ProposalInput = {
   // Description of this proposal.
   description: string;
   // Kind of proposal with relevant information.
-  kind: ProposalKind;
+  kind: CreateProposalKind;
 };
 
 enum Action {
