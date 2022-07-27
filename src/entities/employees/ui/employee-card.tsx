@@ -49,32 +49,11 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
       ));
   }, [employee]);
 
-  // TODO: статус можно вынести в компонент если будет нужен где-то ещё
-  const statusColor = useMemo(() => {
-    const map = {
-      // TODO: запровайдить тему, тащить цвета из контекста
-      Active: '#1EBA52',
-      Suspended: '#E87C4C',
-      Fired: '#D80A1F',
-    };
-
-    const color = map[employee.status];
-    const hasFill = employee.type === 'Contractor';
-    return {
-      borderColor: color,
-      bgColor: hasFill ? color : 'none',
-    };
-  }, [employee]);
-  const statusStyle = {
-    '--borderColor': statusColor.borderColor,
-    '--bgColor': statusColor.bgColor,
-  } as React.CSSProperties;
-
   return (
     <Portlet>
       <Row align='center' gap='sm'>
         <Typography>{employee.name}</Typography>
-        <div className={clsx(styles.status)} style={statusStyle} />
+        <div className={clsx(styles.status, styles[employee.status], styles[employee.type])} />
       </Row>
       <Col>{labelSubRenders}</Col>
       <Button>Actions</Button>
