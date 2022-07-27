@@ -15,7 +15,7 @@ export const CouncilControl = ({
 }: {
   council: string;
   action?: 'delete' | 'add' | '';
-  onClick(currentCouncil: string): void;
+  onClick(props: {council: string; action: 'delete' | 'add'}): void;
 }) => (
   <Row className='justify-between items-start'>
     <Typography as='span' weight='bold' className={styles[`${action}Text`]}>
@@ -26,7 +26,7 @@ export const CouncilControl = ({
         size='xxs'
         startIcon={<Plus className={clsx(styles.icon, styles[`${action}Icon`])} />}
         className={styles.button}
-        onClick={() => onClick(council)}
+        onClick={() => onClick({council, action})}
       />
     )}
   </Row>

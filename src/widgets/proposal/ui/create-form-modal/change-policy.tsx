@@ -1,6 +1,8 @@
+import {useStore} from 'effector-react';
 import React, {useCallback, useState} from 'react';
 
-// import {$accountId} from '~/entities/wallet';
+import {$currentDao} from '~/entities/dao';
+import {$accountId} from '~/entities/wallet';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
@@ -10,44 +12,17 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 import {CouncilControl} from '~/widgets/proposal/ui/council-control';
 
-// import {useStore} from 'effector-react';
-// import {$currentDao} from '~/entities/dao';
-
 type CouncilListItem = {council: string; action: 'delete' | 'add'};
 
 const getInitialState = (councils: string[]): CouncilListItem[] =>
   councils.map((council) => ({council, action: 'delete'}));
 
 export const ChangePolicy = ({fields, t, pending}: any) => {
-  // const currentDao = useStore($currentDao);
-
-  // const accountId = useStore($accountId);
-
-  const accountId = 'rkatarine.testnet';
-
-  const currentDao = {
-    createdAt: '2022-07-27T13:18:34.622Z',
-    transactionHash: '7cjaSMhU3hcCb6RBUG8xb7SHff8MzurVpu5kDxpJrWfZ',
-    id: 'testdaoastro.sputnikv2.testnet',
-    config: {
-      name: 'testdaoastro',
-      purpose: '',
-      metadata:
-        'eyJsaW5rcyI6W10sImZsYWdDb3ZlciI6IiIsImZsYWdMb2dvIjoiIiwiZGlzcGxheU5hbWUiOiJ0ZXN0ZGFvYXN0cm8iLCJsZWdhbCI6eyJsZWdhbFN0YXR1cyI6IiIsImxlZ2FsTGluayI6IiJ9fQ==',
-    },
-    numberOfMembers: 3,
-    numberOfGroups: 1,
-    council: ['extg.testnet', 'rkatarine.testnet', 'extg2.testnet'],
-    accountIds: ['extg.testnet', 'rkatarine.testnet', 'extg2.testnet'],
-    status: 'Active',
-    activeProposalCount: 1,
-    totalProposalCount: 1,
-    totalDaoFunds: 23.94,
-    isCouncil: true,
-  };
+  const currentDao = useStore($currentDao);
+  const accountId = useStore($accountId);
 
   const [councilsList, setCouncil] = useState<CouncilListItem[]>(
-    getInitialState(currentDao.council),
+    getInitialState(currentDao?.council || []),
   );
 
   const handleAddTypedCouncil = () => {
@@ -57,21 +32,18 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
     ]);
   };
 
-  const handleAddCouncil = useCallback((currentCouncil: string) => {
-    setCouncil((prevState: CouncilListItem[]) =>
-      prevState.map(({council, action}) =>
-        council === currentCouncil ? {council, action: 'add'} : {council, action},
-      ),
-    );
-  }, []);
-
-  const handleDeleteCouncil = useCallback((currentCouncil: string) => {
-    setCouncil((prevState: CouncilListItem[]) =>
-      prevState.map(({council, action}) =>
-        council === currentCouncil ? {council, action: 'delete'} : {council, action},
-      ),
-    );
-  }, []);
+  const handleClick = useCallback(
+    ({council: currentCouncil, action: currentAction}: CouncilListItem) => {
+      setCouncil((prevState: CouncilListItem[]) =>
+        prevState.map(({council, action}) =>
+          council === currentCouncil
+            ? {council, action: currentAction === 'add' ? 'delete' : currentAction}
+            : {council, action},
+        ),
+      );
+    },
+    [],
+  );
 
   return (
     <>
@@ -110,7 +82,7 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
                 key={council}
                 council={council}
                 action={action}
-                onClick={action === 'add' ? handleDeleteCouncil : handleAddCouncil}
+                onClick={handleClick}
               />
             ))}
           </Col>
