@@ -1,4 +1,4 @@
-import {ConnectedFields} from 'effector-forms';
+import {AnyFormValues, ConnectedFields} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {TFunction} from 'react-i18next';
@@ -29,8 +29,8 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   changePolicy: ChangePolicy,
 };
 
-export interface CreateProposalFormProps {
-  fields: ConnectedFields<Record<string, string>>;
+export interface CreateProposalFormProps<T extends AnyFormValues> {
+  fields: ConnectedFields<T>;
   submit(p: void): void;
   eachValid: boolean;
   pending: boolean;
@@ -38,14 +38,14 @@ export interface CreateProposalFormProps {
   formOptions: {value: string; label: string}[];
 }
 
-export const CreateProposalForm = ({
+export function CreateProposalForm<T extends AnyFormValues>({
   fields,
   submit,
   eachValid,
   pending,
   t,
   formOptions,
-}: CreateProposalFormProps) => {
+}: CreateProposalFormProps<T>) {
   const accountId = useStore($accountId);
 
   const handleSubmit: FormEventHandler = (e) => {
@@ -115,4 +115,4 @@ export const CreateProposalForm = ({
       </Col>
     </form>
   );
-};
+}

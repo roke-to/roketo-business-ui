@@ -94,18 +94,26 @@ sample({
 export const changePolicyProposalForm = createForm({
   fields: {
     type: {
-      init: 'changePolic',
+      init: 'changePolicy',
       rules: [validators.required],
     },
     quorum: {
       init: 50,
     },
     councilAddress: {
-      init: '',
+      init: '.near',
       rules: [validators.required],
     },
     councilList: {
       init: '',
+    },
+    amount: {
+      init: '',
+      rules: [validators.required],
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required],
     },
     description: {
       init: '',
