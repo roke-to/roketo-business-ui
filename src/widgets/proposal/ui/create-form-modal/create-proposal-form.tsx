@@ -14,6 +14,7 @@ import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 import {ChangePolicy} from './change-policy';
+import styles from './create-proposal-form.module.css';
 import {Transfer} from './transfer';
 
 const EmptyFormType = () => <Typography>Coming soon...</Typography>;
@@ -63,7 +64,7 @@ export function CreateProposalForm<T extends AnyFormValues>({
             required
             content={t('createForm.proposalTypeLabel')}
             error={fields.type.errorText()}
-            className='basis-1/3'
+            className={styles.proposalTypeLabel}
           >
             <InputDropdown
               name='type'
@@ -76,9 +77,9 @@ export function CreateProposalForm<T extends AnyFormValues>({
           </Label>
           <Label
             required
-            content={t('createForm.proposalTypeLabel')}
+            content={t('createForm.proposerLabel')}
             error={fields.type.errorText()}
-            className='basis-1/3'
+            className={styles.proposerLabel}
           >
             <Typography>{accountId}</Typography>
           </Label>
