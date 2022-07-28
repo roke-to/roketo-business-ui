@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: theme('gap.DEFAULT');
+}
+
+@media screen and (min-width: theme('screens.laptop')) {
+  .wrapper {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

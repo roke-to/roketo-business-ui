@@ -50,12 +50,14 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
   }, [employee]);
 
   return (
-    <Portlet>
-      <Row align='center' gap='sm'>
-        <Typography>{employee.name}</Typography>
-        <div className={clsx(styles.status, styles[employee.status], styles[employee.type])} />
-      </Row>
-      <Col>{labelSubRenders}</Col>
+    <Portlet className={clsx(styles.card)} justify='between'>
+      <div>
+        <Row align='center' gap='sm' className='mb-2'>
+          <Typography>{employee.name}</Typography>
+          <div className={clsx(styles.status, styles[employee.status], styles[employee.type])} />
+        </Row>
+        <Col gap='xs'>{labelSubRenders}</Col>
+      </div>
       <Button>Actions</Button>
     </Portlet>
   );

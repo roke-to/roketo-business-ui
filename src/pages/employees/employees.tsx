@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useEffect} from 'react';
 
@@ -5,6 +6,8 @@ import {EmployeeCard, employeesModel} from '~/entities/employees';
 import {Button} from '~/shared/ui/components/button';
 import {Row} from '~/shared/ui/components/row';
 import {PageLayout} from '~/widgets/page-layout';
+
+import styles from './employees.module.css';
 
 export const EmployeesPage = () => {
   const employees = useStore(employeesModel.$employees);
@@ -18,9 +21,11 @@ export const EmployeesPage = () => {
       <Row>
         <Button>Add new employee</Button>
       </Row>
-      {employees.map((employee) => (
-        <EmployeeCard employee={employee} key={employee.id} />
-      ))}
+      <div className={clsx(styles.wrapper)}>
+        {employees.map((employee) => (
+          <EmployeeCard employee={employee} key={employee.id} />
+        ))}
+      </div>
     </PageLayout>
   );
 };
