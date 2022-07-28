@@ -96,7 +96,7 @@ sample({
 
 export type CouncilListFormFieldItem = {council: string; action: 'delete' | 'add'};
 
-export const getCouncilListInitialState = (
+const getCouncilListInitialState = (
   councils: string[],
   accountId: string,
 ): CouncilListFormFieldItem[] =>
@@ -104,7 +104,7 @@ export const getCouncilListInitialState = (
     .filter((council) => council !== accountId)
     .map((council) => ({council, action: 'delete'}));
 
-export const initChangePolicyProposalFormFx = attach({
+const initChangePolicyProposalFormFx = attach({
   source: {
     accountId: $accountId,
     currentDao: $currentDao,
