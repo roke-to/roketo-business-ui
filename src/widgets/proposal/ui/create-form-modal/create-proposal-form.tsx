@@ -50,6 +50,7 @@ export function CreateProposalForm<T extends AnyFormValues>({
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    console.log('----> SUBMIT');
     submit();
   };
 

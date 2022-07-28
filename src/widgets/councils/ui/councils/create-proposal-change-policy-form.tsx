@@ -3,23 +3,12 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ChangePolicyProposalFormType, changePolicyProposalFx} from '~/entities/governance';
+import {changePolicyProposalForm, changePolicyProposalFx} from '~/entities/governance';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 import {CreateProposalForm} from '~/widgets/proposal/ui/create-form-modal';
 
-export interface CreateProposalChangePolicyFormProps extends ModalProps {
-  initializedChangePolicyProposalForm: ChangePolicyProposalFormType;
-}
-
-export const CreateProposalChangePolicyForm = ({
-  initializedChangePolicyProposalForm,
-  ...modalProps
-}: CreateProposalChangePolicyFormProps) => {
+export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');
-
-  const {fields, submit, eachValid} = useForm(initializedChangePolicyProposalForm);
-
-  const pending = useStore(changePolicyProposalFx.pending);
 
   const formOptions = React.useMemo(
     () => [
@@ -30,6 +19,9 @@ export const CreateProposalChangePolicyForm = ({
     ],
     [t],
   );
+
+  const {fields, submit, eachValid} = useForm(changePolicyProposalForm);
+  const pending = useStore(changePolicyProposalFx.pending);
 
   return (
     <Modal {...modalProps}>

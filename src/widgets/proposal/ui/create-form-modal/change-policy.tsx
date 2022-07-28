@@ -1,7 +1,7 @@
 import {useStore} from 'effector-react';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 
-import {$currentDao} from '~/entities/dao';
+import {CouncilListFormFieldItem} from '~/entities/governance';
 import {$accountId} from '~/entities/wallet';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
@@ -13,37 +13,29 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 import {CouncilControl} from '~/widgets/proposal/ui/council-control';
 
-type CouncilListItem = {council: string; action: 'delete' | 'add'};
-
-const getInitialState = (councils: string[]): CouncilListItem[] =>
-  councils.map((council) => ({council, action: 'delete'}));
-
 export const ChangePolicy = ({fields, t, pending}: any) => {
-  const currentDao = useStore($currentDao);
   const accountId = useStore($accountId);
 
-  const [councilsList, setCouncil] = useState<CouncilListItem[]>(
-    getInitialState(currentDao?.council || []),
-  );
-
   const handleAddTypedCouncil = () => {
-    setCouncil((prevState: CouncilListItem[]) => [
-      ...prevState,
+    const updatedCouncilList = [
+      ...fields.councilList.value,
       {council: fields.councilAddress.value, action: 'delete'},
-    ]);
+    ];
+
+    fields.councilList.onChange(updatedCouncilList);
   };
 
   const handleClick = useCallback(
-    ({council: currentCouncil, action: currentAction}: CouncilListItem) => {
-      setCouncil((prevState: CouncilListItem[]) =>
-        prevState.map(({council, action}) =>
+    ({council: currentCouncil, action: currentAction}: CouncilListFormFieldItem) => {
+      const updatedCouncilList = fields.councilList.value.map(
+        ({council, action}: CouncilListFormFieldItem) =>
           council === currentCouncil
             ? {council, action: currentAction === 'add' ? 'delete' : 'add'}
             : {council, action},
-        ),
       );
+      fields.councilList.onChange(updatedCouncilList);
     },
-    [],
+    [fields.councilList],
   );
 
   return (
@@ -87,7 +79,7 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
             <Typography as='span' weight='bold'>
               {accountId}
             </Typography>
-            {councilsList.map(({council, action}) => (
+            {fields.councilList.value.map(({council, action}: CouncilListFormFieldItem) => (
               <CouncilControl
                 key={council}
                 council={council}
