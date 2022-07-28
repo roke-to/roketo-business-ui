@@ -4,7 +4,7 @@ import {ITrackProps} from 'react-range/lib/types';
 
 import styles from './track.module.css';
 
-export interface TrackProps extends ITrackProps {
+export interface TrackProps extends Partial<ITrackProps> {
   value: number;
   children: React.ReactNode;
 }

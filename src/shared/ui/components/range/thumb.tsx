@@ -4,7 +4,7 @@ import {IThumbProps} from 'react-range/lib/types';
 
 import styles from './thumb.module.css';
 
-export interface ThumbProps extends IThumbProps {
+export interface ThumbProps extends Partial<IThumbProps> {
   className?: string;
 }
 
