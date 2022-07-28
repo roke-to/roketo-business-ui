@@ -18,3 +18,21 @@
 .scaleFull {
   border-radius: 0.5rem;
 }
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .scaleContainer {
+    height: 1.5rem;
+  }
+
+  .positive {
+    border-radius: 0.75rem 0 0 0.75rem;
+  }
+
+  .negative {
+    border-radius: 0 0.75rem 0.75rem 0;
+  }
+
+  .scaleFull {
+    border-radius: 0.75rem;
+  }
+}
