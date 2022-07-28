@@ -8,7 +8,9 @@ test('login via NEAR wallet', async ({page}) => {
   await page.goto('/');
 
   // Click text=NEAR Wallet >> nth=0
+  // await findButtonByText(page, '/^NEAR Wallet$').click();
   await findButtonByText(page, 'NEAR Wallet').first().click();
+
   await expect(page).toHaveURL('https://wallet.testnet.near.org/');
 
   // Click [data-test-id="homePageImportAccountButton"]
