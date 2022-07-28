@@ -13,6 +13,8 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 import {CouncilControl} from '~/widgets/proposal/ui/council-control';
 
+import styles from './change-policy.module.css';
+
 export const ChangePolicy = ({fields, t, pending}: any) => {
   const accountId = useStore($accountId);
 
@@ -44,17 +46,17 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
         <Label
           content={`${t('createForm.quorum')} ${fields.quorum.value}%`}
           error={fields.quorum.errorText()}
-          className='basis-1/2'
+          className={styles.quorum}
         >
           <Range value={fields.quorum.value} onChange={fields.quorum.onChange} />
         </Label>
       </Row>
-      <Row gap='xl' className='items-start'>
+      <Row gap='xl' className={styles.councilSection}>
         <Row gap='md' className='items-end'>
           <Label
             content={t('createForm.councilAddressLabel')}
             error={fields.councilAddress.errorText()}
-            className='basis-1/2'
+            className={styles.councilAddressLabel}
           >
             <Input
               name='councilAddress'
@@ -73,7 +75,7 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
         <Label
           content={t('createForm.councilListLabel')}
           error={fields.councilList.errorText()}
-          className='basis-1/2'
+          className={styles.councilListLabel}
         >
           <Col gap='sm'>
             <Typography as='span' weight='bold'>

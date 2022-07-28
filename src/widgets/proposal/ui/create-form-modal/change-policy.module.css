@@ -1,0 +1,33 @@
+.quorum {
+  @apply basis-1/2;
+}
+
+.councilAddressLabel {
+  @apply basis-1/2;
+}
+
+.councilListLabel {
+  @apply basis-1/2;
+}
+
+.councilSection {
+  @apply items-start;
+}
+
+@media screen and (max-width: theme('screens.mobile')) {
+  .quorum {
+    @apply basis-full;
+  }
+
+  .councilAddressLabel {
+    @apply basis-full w-full;
+  }
+
+  .councilListLabel {
+    @apply basis-full w-full;
+  }
+
+  .councilSection {
+    @apply flex-col-reverse;
+  }
+}
