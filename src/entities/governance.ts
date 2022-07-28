@@ -91,45 +91,54 @@ sample({
 
 //  ------------ proposals change policy  ------------
 
-export const changePolicyProposalForm = createForm({
-  fields: {
-    type: {
-      init: 'changePolicy',
-      rules: [validators.required],
+export const changePolicyProposalForm = ({
+  quorum,
+  councilList,
+}: {
+  quorum: number;
+  councilList: string[];
+}) =>
+  createForm({
+    fields: {
+      type: {
+        init: 'changePolicy',
+        rules: [validators.required],
+      },
+      quorum: {
+        init: quorum,
+      },
+      councilAddress: {
+        init: '.near',
+        rules: [validators.required],
+      },
+      councilList: {
+        init: councilList,
+      },
+      amount: {
+        init: '',
+        rules: [validators.required],
+      },
+      token: {
+        init: 'near',
+        rules: [validators.required],
+      },
+      description: {
+        init: '',
+      },
+      link: {
+        init: '',
+      },
+      tgas: {
+        init: '150',
+        rules: [validators.required],
+      },
     },
-    quorum: {
-      init: 50,
-    },
-    councilAddress: {
-      init: '.near',
-      rules: [validators.required],
-    },
-    councilList: {
-      init: '',
-    },
-    amount: {
-      init: '',
-      rules: [validators.required],
-    },
-    token: {
-      init: 'near',
-      rules: [validators.required],
-    },
-    description: {
-      init: '',
-    },
-    link: {
-      init: '',
-    },
-    tgas: {
-      init: '150',
-      rules: [validators.required],
-    },
-  },
-  validateOn: ['submit'],
-});
+    validateOn: ['submit'],
+  });
 
-type ChangePolicyProposalFormFields = typeof changePolicyProposalForm['fields'];
+export type ChangePolicyProposalFormType = ReturnType<typeof changePolicyProposalForm>;
+
+type ChangePolicyProposalFormFields = ChangePolicyProposalFormType['fields'];
 
 export const changePolicyProposalFx = createEffect(
   async (data: FormValues<ChangePolicyProposalFormFields>) => {

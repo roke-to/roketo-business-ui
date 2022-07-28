@@ -31,6 +31,7 @@
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
     "councilAddressPlaceholder": "Addcouncilname.near",
-    "councilListLabel": "Council list"
+    "councilListLabel": "Council list",
+    "quorum": "Quorum"
   }
 }

@@ -7,6 +7,7 @@ import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
+import {Range} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
@@ -37,7 +38,7 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
       setCouncil((prevState: CouncilListItem[]) =>
         prevState.map(({council, action}) =>
           council === currentCouncil
-            ? {council, action: currentAction === 'add' ? 'delete' : currentAction}
+            ? {council, action: currentAction === 'add' ? 'delete' : 'add'}
             : {council, action},
         ),
       );
@@ -47,6 +48,15 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
 
   return (
     <>
+      <Row gap='xl' className='items-start'>
+        <Label
+          content={`${t('createForm.quorum')} ${fields.quorum.value}%`}
+          error={fields.quorum.errorText()}
+          className='basis-1/2'
+        >
+          <Range value={fields.quorum.value} onChange={fields.quorum.onChange} />
+        </Label>
+      </Row>
       <Row gap='xl' className='items-start'>
         <Row gap='md' className='items-end'>
           <Label

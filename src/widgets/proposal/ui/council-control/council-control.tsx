@@ -10,11 +10,11 @@ import styles from './council-control.module.css';
 
 export const CouncilControl = ({
   council,
-  action = '',
+  action,
   onClick,
 }: {
   council: string;
-  action?: 'delete' | 'add' | '';
+  action: 'delete' | 'add';
   onClick(props: {council: string; action: 'delete' | 'add'}): void;
 }) => (
   <Row className='justify-between items-start'>

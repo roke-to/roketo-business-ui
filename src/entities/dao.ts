@@ -177,6 +177,11 @@ sample({
   target: loadDaoFx,
 });
 
+sample({
+  source: loadDao,
+  target: loadDaoFx,
+});
+
 //  ------------ sputnikDaoContract ------------
 
 export const $sputnikDaoContract = createStore<SputnikDaoContract | null>(null);
