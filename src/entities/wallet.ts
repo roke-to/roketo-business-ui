@@ -1,12 +1,17 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 import {Get} from 'type-fest';
 
-import {createNearInstance, initWalletSelector, NearInstance, WalletId} from '~/shared/api/near';
+import {
+  createNearInstance,
+  createWalletSelectorInstance,
+  NearInstance,
+  WalletId,
+} from '~/shared/api/near';
 import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
 
-// initWalletSelector is async and it could be null until intialized
+// createWalletSelectorInstance is async and it could be null until intialized
 const $walletSelector = createStore<WalletSelector | null>(null);
 export const $walletSelectorState = createStore<WalletSelectorState>({
   contract: null,
@@ -23,8 +28,8 @@ const setWalletSelectorState = createEvent<WalletSelectorState>();
 
 let walletSelectorStoreSubscription: ReturnType<Get<WalletSelector, 'store.observable.subscribe'>>;
 
-export const initWalletSelectorFx = createEffect(async () => {
-  const walletSelector = await initWalletSelector();
+export const createWalletSelectorInstanceFx = createEffect(async () => {
+  const walletSelector = await createWalletSelectorInstance();
 
   if (!walletSelectorStoreSubscription) {
     walletSelectorStoreSubscription = walletSelector.store.observable.subscribe((state) => {
@@ -38,10 +43,10 @@ export const initWalletSelectorFx = createEffect(async () => {
 // Init empty wallet selector
 sample({
   clock: initWallet,
-  target: initWalletSelectorFx,
+  target: createWalletSelectorInstanceFx,
 });
 sample({
-  clock: initWalletSelectorFx.doneData,
+  clock: createWalletSelectorInstanceFx.doneData,
   target: $walletSelector,
 });
 
@@ -101,7 +106,7 @@ sample({
 // TODO: remove createNearInstance logic, when walletSelector expose account
 // now this logic is necessary to get an account for the "Сontract"
 sample({
-  clock: initWalletSelectorFx.doneData,
+  clock: createWalletSelectorInstanceFx.doneData,
   target: initNearInstanceFx,
 });
 sample({

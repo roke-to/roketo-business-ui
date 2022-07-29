@@ -1,3 +1,7 @@
+import {ReactComponent as MyNearWalletLogo} from '~/shared/ui/icons/my-near-wallet.svg';
+import {ReactComponent as NearWalletLogo} from '~/shared/ui/icons/near-wallet.svg';
+import {ReactComponent as SenderLogo} from '~/shared/ui/icons/sender.svg';
+
 export type NetworkId = 'mainnet' | 'testnet';
 
 export interface Network {
@@ -31,3 +35,17 @@ export const getNetworkPreset = (networkId: NetworkId): Network => {
       throw Error(`Failed to find config for: '${networkId}'`);
   }
 };
+
+export enum WalletIconType {
+  MyNearWallet = 'MyNearWallet',
+  NearWallet = 'NearWallet',
+  Sender = 'Sender',
+}
+
+const walletIcons = {
+  [WalletIconType.MyNearWallet]: MyNearWalletLogo,
+  [WalletIconType.NearWallet]: NearWalletLogo,
+  [WalletIconType.Sender]: SenderLogo,
+};
+
+export const resolveWalletIcon = (iconUrl: WalletIconType) => walletIcons[iconUrl];

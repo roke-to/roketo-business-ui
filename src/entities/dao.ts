@@ -4,9 +4,12 @@ import {attach, createEffect, createEvent, createStore, forward, sample} from 'e
 import {createForm, FormValues} from 'effector-forms';
 
 import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
-import {NearInstance} from '~/shared/api/near';
-import {SputnikDaoContract} from '~/shared/api/sputnik-dao/contract';
-import {mapCreateArgs, SputnikFactoryDaoContract} from '~/shared/api/sputnik-factory-dao/contract';
+import {
+  mapCreateArgs,
+  NearInstance,
+  SputnikDaoContract,
+  SputnikFactoryDaoContract,
+} from '~/shared/api/near';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {history} from '~/shared/lib/router';
