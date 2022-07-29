@@ -64,9 +64,8 @@ const loadTreasuryProposalsFx = attach({
     const search: SFields | SConditionAND = {
       $and: [
         {
-          kind: {
-            $cont: 'Transfer',
-            $excl: 'ChangePolicy',
+          daoId: {
+            $eq: daoId,
           },
         },
       ],
@@ -104,7 +103,6 @@ const loadTreasuryProposalsFx = attach({
         search.$and?.push({
           kind: {
             $cont: 'Transfer',
-            $excl: 'ChangePolicy',
           },
         });
         break;
@@ -137,7 +135,7 @@ const loadTreasuryProposalsFx = attach({
       accountId,
     };
 
-    return astroApi.proposalControllerProposalByAccount(daoId, query);
+    return astroApi.proposalControllerProposals(query);
   },
 });
 
