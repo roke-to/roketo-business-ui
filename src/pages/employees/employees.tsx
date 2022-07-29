@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useEffect, useState} from 'react';
 
-import {EmployeeCard, employeesModel} from '~/entities/employees';
+import {EmployeeCard, EmployeeListItem, employeesModel} from '~/entities/employees';
 import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
@@ -57,11 +57,7 @@ export const EmployeesPage = () => {
             return <EmployeeCard employee={employee} key={employee.id} />;
           }
 
-          return (
-            <Row key={employee.id}>
-              <pre>{employee.name}</pre>
-            </Row>
-          );
+          return <EmployeeListItem employee={employee} key={employee.id} />;
         })}
       </div>
     </PageLayout>
