@@ -15,7 +15,7 @@ import {ROUTES} from '~/shared/config/routes';
 import {history} from '~/shared/lib/router';
 import {validators} from '~/shared/lib/validators';
 
-import {$accountId, initNearInstanceFx} from './wallet';
+import {$accountId, $near, initNearInstanceFx} from './wallet';
 
 // ------------ sputnikFactoryDaoContract ------------
 
@@ -182,9 +182,12 @@ sample({
 export const $sputnikDaoContract = createStore<SputnikDaoContract | null>(null);
 
 const initSputnikDaoContractFx = attach({
-  source: {currentDaoId: $currentDaoId},
-  effect({currentDaoId}, {account}: NearInstance) {
-    return currentDaoId ? new SputnikDaoContract(account, currentDaoId) : null;
+  source: {
+    currentDaoId: $currentDaoId,
+    near: $near,
+  },
+  effect({currentDaoId, near}) {
+    return currentDaoId && near ? new SputnikDaoContract(near.account, currentDaoId) : null;
   },
 });
 
@@ -193,7 +196,10 @@ sample({
   target: initSputnikDaoContractFx,
 });
 
-// TODO: on change currentDaoId recreate SputnikDaoContract
+sample({
+  clock: setDaoId,
+  target: initSputnikDaoContractFx,
+});
 
 sample({
   clock: initSputnikDaoContractFx.doneData,

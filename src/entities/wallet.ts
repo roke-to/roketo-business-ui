@@ -19,7 +19,7 @@ export const $walletSelectorState = createStore<WalletSelectorState>({
   accounts: [],
   selectedWalletId: null,
 });
-const $near = createStore<NearInstance | null>(null);
+export const $near = createStore<NearInstance | null>(null);
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();
