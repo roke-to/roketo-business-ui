@@ -4,7 +4,7 @@ import React from 'react';
 import {Employee} from '~/entities/employees';
 import styles from '~/entities/employees/ui/status.module.css';
 
-type Props = {
+type Props = React.HTMLAttributes<HTMLDivElement> & {
   status: Employee['status'];
   type: Employee['type'];
 };
