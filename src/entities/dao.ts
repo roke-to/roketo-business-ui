@@ -76,7 +76,7 @@ export const createDaoFx = attach({
   },
   async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateDaoFormFields>) {
     if (!sputnikFactoryDaoContract) {
-      throw new Error('SputnikFactoryDaoContract not initialized');
+      throw new Error('SputnikFactoryDaoContract is not initialized');
     }
 
     await sputnikFactoryDaoContract.create({
