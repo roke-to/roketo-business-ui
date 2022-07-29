@@ -1,4 +1,4 @@
-import BN from 'bn.js';
+import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
@@ -267,14 +267,14 @@ export const createProposalFx = attach({
           kind: {
             Transfer: {
               token_id: 'wrap.testnet',
-              amount: '1000000000000000000000000', // 1 NEAR
+              amount: nearApi.utils.format.parseNearAmount('1')!, // 1 NEAR
               receiver_id: data.target,
             },
           },
         },
       },
-      gas: new BN('300000000000000'),
-      amount: new BN('100000000000000000000000'), // attachec deposit — bond 1e+23 0.1 NEAR,
+      gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
+      amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
     });
   },
 });

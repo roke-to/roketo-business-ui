@@ -1,17 +1,17 @@
+import * as nearApi from 'near-api-js';
 import Decimal from 'decimal.js';
 
-const YOKTO_NEAR = 1000000000000000000000000;
-
-export function formatYoktoValue(value: string, divider?: number): string {
+export function formatYoktoValue(
+  value: string,
+  exponent: number = nearApi.utils.format.NEAR_NOMINATION_EXP,
+): string {
   if (!value) {
     return '0';
   }
 
-  const dividerValue = divider !== undefined ? 10 ** divider : YOKTO_NEAR;
+  const decimals = new Decimal(10).pow(exponent);
 
-  const amountYokto = new Decimal(value);
-
-  return Number(amountYokto.div(dividerValue).toFixed(4)).toString();
+  return new Decimal(value).div(decimals).toDecimalPlaces(4).toString();
 }
 
 export function formatCurrency(amount: number): string {

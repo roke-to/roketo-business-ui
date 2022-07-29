@@ -356,7 +356,7 @@ export async function getTransferProposal(
     data: {
       token_id: token?.tokenId,
       receiver_id: target.trim(),
-      amount: new Decimal(amount).mul(10 ** token.decimals).toFixed(),
+      amount: new Decimal(amount).mul(new Decimal(10).pow(token.decimals)).toString(),
     },
   };
 }
