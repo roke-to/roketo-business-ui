@@ -254,41 +254,28 @@ type CreateProposalFormFields = typeof createProposalForm['fields'];
 export const createProposalFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
-    accountId: $accountId,
   },
-  async effect({sputnikDaoContract, accountId}, data: FormValues<CreateProposalFormFields>) {
+  async effect({sputnikDaoContract}, data: FormValues<CreateProposalFormFields>) {
     if (!sputnikDaoContract) {
-      // TODO: show error on form
-      throw new Error('SputnikDaoContract not initialized');
+      throw new Error('SputnikDaoContract is not initialized');
     }
 
-    console.log('create proposal', sputnikDaoContract, accountId, data);
-
-    try {
-      const gas = new BN('300000000000000');
-      const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
-
-      // {"daoId":"extg2.sputnikv2.testnet","description":"aa$$$$","kind":"Transfer","bond":"100000000000000000000000","data":{"token_id":"wrap.testnet","receiver_id":"extg.testnet","amount":"1000000000000000000000000"}
-      await sputnikDaoContract.addProposal({
-        args: {
-          proposal: {
-            description: data.description,
-            kind: {
-              Transfer: {
-                token_id: 'wrap.testnet',
-                amount: '1000000000000000000000000', // 1 NEAR
-                receiver_id: data.target,
-              },
+    await sputnikDaoContract.add_proposal({
+      args: {
+        proposal: {
+          description: data.description,
+          kind: {
+            Transfer: {
+              token_id: 'wrap.testnet',
+              amount: '1000000000000000000000000', // 1 NEAR
+              receiver_id: data.target,
             },
           },
         },
-        gas,
-        amount: attachedDeposit,
-      });
-      // TODO: redirect to dashboard
-    } catch (err) {
-      console.log('err', err);
-    }
+      },
+      gas: new BN('300000000000000'),
+      amount: new BN('100000000000000000000000'), // attachec deposit — bond 1e+23 0.1 NEAR,
+    });
   },
 });
 
