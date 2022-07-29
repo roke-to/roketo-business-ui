@@ -1,26 +1,49 @@
 import {Account, Contract} from 'near-api-js';
 
-import {env} from '~/shared/config/env';
+import {ContractChangeFunction, ContractViewFunction} from '../contract.types';
 
-import {ChangeMethodOptions} from '../contract.types';
-import {
-  AccountId,
-  Base58CryptoHash,
-  CreateSputnikContractParams,
-  DaosParams,
-  MetaDataSputnikContractParams,
-  SputnikBaseParams,
-  SputnikFactoryDao,
-} from './contract.types';
+export type AccountId = string;
 
-export class SputnikFactoryDaoContract {
-  contract: SputnikFactoryDao;
+export type Base58CryptoHash = string;
 
-  account: Account;
+export interface DaoContractMetadata {
+  version: Version;
+  commit_id: string;
+  changelog_url?: string;
+}
 
-  constructor(account: Account) {
-    this.account = account;
-    this.contract = new Contract(account, env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME, {
+export interface SputnikBaseParams {
+  code_hash: Base58CryptoHash;
+}
+
+export interface UpdateSputnikContractParams extends SputnikBaseParams {
+  account_id: AccountId;
+}
+
+export interface MetaDataSputnikContractParams extends SputnikBaseParams {
+  metadata: DaoContractMetadata;
+  set_default: boolean;
+}
+
+export interface DaosParams {
+  from_index: number;
+  limit: number;
+}
+
+export interface CreateSputnikContractParams {
+  name: AccountId;
+  args?: Base64VecU8;
+}
+
+type Base64VecU8 = string;
+
+type ContractMetadata = [Base58CryptoHash, DaoContractMetadata];
+
+type Version = [number, number];
+
+export class SputnikFactoryDaoContract extends Contract {
+  constructor(account: Account, contractId: string) {
+    super(account, contractId, {
       viewMethods: [
         'get_dao_list',
         'get_number_daos',
@@ -42,82 +65,43 @@ export class SputnikFactoryDaoContract {
         'delete_contract_metadata',
         'store',
       ],
-    }) as SputnikFactoryDao;
-  }
-
-  async getDaoList() {
-    return this.contract.get_dao_list();
-  }
-
-  async getNumberDaos() {
-    return this.contract.get_number_daos();
-  }
-
-  async getDaos(params: DaosParams) {
-    return this.contract.get_daos(params);
-  }
-
-  async getOwner() {
-    return this.contract.get_owner();
-  }
-
-  async getDefaultCodeHash() {
-    return this.contract.get_default_code_hash();
-  }
-
-  async getDefaultVersion() {
-    return this.contract.get_default_version();
-  }
-
-  async getCode(params: SputnikBaseParams) {
-    return this.contract.get_code(params);
-  }
-
-  async getContractsMetadata() {
-    return this.contract.get_contracts_metadata();
-  }
-
-  async newContract() {
-    // TODO: как прокидывать вывзов без аргументов, в near-api-js они вроде обязательны
-    // @ts-expect-error
-    return this.contract.new();
-  }
-
-  async create(options: ChangeMethodOptions<CreateSputnikContractParams>) {
-    return this.contract.create(options);
-  }
-
-  async setOwner(options: ChangeMethodOptions<{owner_id: AccountId}>) {
-    return this.contract.set_owner(options);
-  }
-
-  async setDefaultCodeHash(options: ChangeMethodOptions<{code_hash: Base58CryptoHash}>) {
-    return this.contract.set_default_code_hash(options);
-  }
-
-  async deleteContract(options: ChangeMethodOptions<SputnikBaseParams>) {
-    return this.contract.set_default_code_hash(options);
-  }
-
-  async update(options: ChangeMethodOptions<{account_id: string; code_hash: string}>) {
-    return this.contract.update(options);
-  }
-
-  async storeContractMetadata(
-    options: ChangeMethodOptions<Omit<MetaDataSputnikContractParams, 'set_default'>>,
-  ) {
-    return this.contract.store_contract_metadata({
-      ...options,
-      args: {...options.args, set_default: false},
     });
   }
 
-  async deleteContractMetadata(options: ChangeMethodOptions<{code_hash: Base58CryptoHash}>) {
-    return this.contract.delete_contract_metadata(options);
-  }
+  get_dao_list!: ContractViewFunction<never, AccountId[]>;
 
-  async store() {
-    // @ts-expect-error
-    return this.contract.store();
-  }
+  get_number_daos!: ContractViewFunction<never, number>;
+
+  get_daos!: ContractViewFunction<DaosParams, AccountId[]>;
+
+  get_owner!: ContractViewFunction<never, AccountId>;
+
+  get_default_code_hash!: ContractViewFunction<never, Base58CryptoHash>;
+
+  get_default_version!: ContractViewFunction<never, Version>;
+
+  /// Returns non serialized code by given code hash.
+  get_code!: ContractViewFunction<SputnikBaseParams, string>;
+
+  get_contracts_metadata!: ContractViewFunction<never, ContractMetadata[]>;
+
+  new!: ContractChangeFunction<never, SputnikFactoryDaoContract>;
+
+  create!: ContractChangeFunction<CreateSputnikContractParams, void>;
+
+  set_owner!: ContractChangeFunction<{owner_id: AccountId}, void>;
+
+  set_default_code_hash!: ContractChangeFunction<SputnikBaseParams, void>;
+
+  delete_contract!: ContractChangeFunction<SputnikBaseParams, void>;
+
+  update!: ContractChangeFunction<UpdateSputnikContractParams, void>;
+
+  store_contract_metadata!: ContractChangeFunction<MetaDataSputnikContractParams, void>;
+
+  delete_contract_metadata!: ContractChangeFunction<SputnikBaseParams, void>;
+
+  store!: ContractChangeFunction<never, Base58CryptoHash>;
 }
+
+export {mapCreateArgs} from './map-create-args';
