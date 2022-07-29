@@ -1,3 +1,4 @@
+import BN from 'bn.js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
@@ -47,7 +48,14 @@ const loadGovernanceProposalsFx = attach({
       s: JSON.stringify({
         $and: [
           {daoId: {$eq: daoId}},
-          {$or: [{kind: {$cont: 'ChangeConfig'}}, {kind: {$cont: 'ChangePolicy'}}]},
+          {
+            $or: [
+              {kind: {$cont: 'ChangeConfig'}},
+              {kind: {$cont: 'ChangePolicy'}},
+              {kind: {$cont: 'AddMemberToRole'}},
+              {kind: {$cont: 'RemoveMemberFromRole'}},
+            ],
+          },
         ],
       }),
       limit: 20,
@@ -61,6 +69,11 @@ const loadGovernanceProposalsFx = attach({
 
 sample({
   source: loadGovernanceProposals,
+  target: loadGovernanceProposalsFx,
+});
+
+sample({
+  source: $currentDao,
   target: loadGovernanceProposalsFx,
 });
 
@@ -189,39 +202,86 @@ export const changePolicyProposalFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
     accountId: $accountId,
+    currentDao: $currentDao,
   },
-  async effect({sputnikDaoContract, accountId}, data: FormValues<ChangePolicyProposalFormFields>) {
+  async effect(
+    {sputnikDaoContract, accountId, currentDao},
+    data: FormValues<ChangePolicyProposalFormFields>,
+  ) {
     if (!sputnikDaoContract) {
       // TODO: show error on form
-      throw new Error('SputnikDaoContract not initialized');
+      throw new Error('SputnikDaoContract is not initialized');
+    }
+    if (!currentDao) {
+      // TODO: show error on form
+      throw new Error('You should create dao');
     }
 
     console.log('change policy ', sputnikDaoContract, accountId, data);
-    // try {
-    //   const gas = new BN('300000000000000');
-    //   const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
 
-    // {"daoId":"extg2.sputnikv2.testnet","description":"aa$$$$","kind":"Transfer","bond":"100000000000000000000000","data":{"token_id":"wrap.testnet","receiver_id":"extg.testnet","amount":"1000000000000000000000000"}
-    // await sputnikDaoContract.addProposal({
-    //   args: {
-    //     proposal: {
-    //       description: data.description,
-    //       kind: {
-    //        ChangePolicy: {
-    //          policy: {
-    //
-    //          }
-    //        }
-    //       },
-    //     },
-    //   },
-    //   gas,
-    //   amount: attachedDeposit,
-    // });
-    // TODO: redirect to dashboard
-    // } catch (err) {
-    //   console.log('err', err);
-    // }
+    const createdProposals: Promise<void>[] = [];
+
+    const updatedCouncilList = data.councilList.reduce(
+      (acc, current) => {
+        if (currentDao.council.includes(current.council) && current.action === 'add') {
+          acc.RemoveMemberFromRole.push(current.council);
+        }
+        if (!currentDao.council.includes(current.council) && current.action === 'delete') {
+          acc.AddMemberToRole.push(current.council);
+        }
+        return acc;
+      },
+      {RemoveMemberFromRole: [] as string[], AddMemberToRole: [] as string[]},
+    );
+
+    console.log('updatedCouncilList', updatedCouncilList);
+
+    const gas = new BN('300000000000000');
+    const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
+
+    updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
+      createdProposals.push(
+        sputnikDaoContract.addProposal({
+          args: {
+            proposal: {
+              description: data.description,
+              kind: {
+                RemoveMemberFromRole: {
+                  member_id: council,
+                  role: 'council',
+                },
+              },
+            },
+          },
+          gas,
+          amount: attachedDeposit,
+        }),
+      );
+    });
+
+    updatedCouncilList.AddMemberToRole.forEach((council) => {
+      createdProposals.push(
+        sputnikDaoContract.addProposal({
+          args: {
+            proposal: {
+              description: data.description,
+              kind: {
+                AddMemberToRole: {
+                  member_id: council,
+                  role: 'council',
+                },
+              },
+            },
+          },
+        }),
+      );
+    });
+
+    try {
+      await Promise.all(createdProposals);
+    } catch (err) {
+      console.log('errror', err);
+    }
   },
 });
 
