@@ -8,6 +8,7 @@
   .wrapper-card {
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .wrapper-list {
