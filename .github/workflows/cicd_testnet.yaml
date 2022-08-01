@@ -43,10 +43,10 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
-            TAG_NAME=${{env.TAG_NAME}}
-            APP=${{env.APP}}
-            SHORT_SHA=${{env.SHORT_SHA}}
-            GIT_BRANCH=${{env.GIT_BRANCH}}
+            export TAG_NAME=${{env.TAG_NAME}}
+            export APP=${{env.APP}}
+            export SHORT_SHA=${{env.SHORT_SHA}}
+            export GIT_BRANCH=${{env.GIT_BRANCH}}
             export
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               APP_NAME=$APP
