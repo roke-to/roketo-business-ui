@@ -14,7 +14,7 @@ export const CouncilControl = ({
   onClick,
 }: {
   council: string;
-  action: 'delete' | 'add';
+  action?: 'delete' | 'add';
   onClick(props: {council: string; action: 'delete' | 'add'}): void;
 }) => (
   <Row className='justify-between items-start'>

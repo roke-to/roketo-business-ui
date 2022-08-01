@@ -2,6 +2,8 @@ import BN from 'bn.js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
+import {dataRoleToContractRole} from '~/entities/governance/lib/dataRoleToContractRole';
+import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generateVotePolicyForEachProposalType';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {getQuorum} from '~/shared/lib/getQuorum';
 import {validators} from '~/shared/lib/validators';
@@ -179,6 +181,7 @@ export const changePolicyProposalForm = createForm({
     },
     description: {
       init: '',
+      rules: [validators.required],
     },
     link: {
       init: '',
@@ -237,6 +240,7 @@ export const changePolicyProposalFx = attach({
     console.log('updatedCouncilList', updatedCouncilList);
 
     const gas = new BN('300000000000000');
+    const gasForChangeQuorum = new BN('230000000000000');
     const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
 
     updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
@@ -273,14 +277,75 @@ export const changePolicyProposalFx = attach({
               },
             },
           },
+          gas,
+          amount: attachedDeposit,
         }),
       );
     });
 
+    // TODO change condition currentDao.policy.defaultVotePolicy.quorum
+    if (data.quorum !== 50) {
+      const {
+        policy: {
+          bountyBond,
+          proposalBond,
+          proposalPeriod,
+          defaultVotePolicy: {weightKind, ratio, quorum},
+          bountyForgivenessPeriod,
+        },
+      } = currentDao;
+
+      const otherRoles = currentDao.policy.roles
+        .filter(({name}) => name !== 'council')
+        .map(dataRoleToContractRole);
+
+      const indexCouncilRole = currentDao.policy.roles.findIndex(({name}) => name === 'council');
+
+      const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
+
+      createdProposals.push(
+        sputnikDaoContract.addProposal({
+          args: {
+            proposal: {
+              description: data.description,
+              kind: {
+                ChangePolicy: {
+                  policy: {
+                    roles: [
+                      ...otherRoles,
+                      {
+                        name,
+                        kind: {
+                          Group: accountIds,
+                        },
+                        permissions,
+                        vote_policy: generateVotePolicyForEachProposalType(data.quorum),
+                      },
+                    ],
+                    default_vote_policy: {
+                      quorum,
+                      threshold: ratio,
+                      weight_kind: weightKind,
+                    },
+                    proposal_bond: proposalBond,
+                    proposal_period: proposalPeriod,
+                    bounty_bond: bountyBond,
+                    bounty_forgiveness_period: bountyForgivenessPeriod,
+                  },
+                },
+              },
+            },
+          },
+          gas: gasForChangeQuorum,
+          amount: attachedDeposit,
+        }),
+      );
+    }
+
     try {
       await Promise.all(createdProposals);
     } catch (err) {
-      console.log('errror', err);
+      console.log('change policy error', err);
     }
   },
 });

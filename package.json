@@ -50,6 +50,7 @@
     "formik": "^2.2.9",
     "history": "^4.9.0",
     "i18next": "^21.8.12",
+    "lodash.isempty": "^4.4.0",
     "near-api-js": "0.45.1",
     "numbro": "^2.3.5",
     "patronum": "^1.8.2",

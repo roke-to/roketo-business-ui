@@ -24,6 +24,8 @@
     "functionalCall": "Functional call",
     "createStream": "Create a stream",
     "changePolicy": "Change Policy",
+    "addMemberToRole": "Add member to role",
+    "removeMemberFromRole": "Remove member from role",
     "linkLabel": "Add link",
     "linkPlaceholder": "link.com/example",
     "tgasLabel": "TGAS",

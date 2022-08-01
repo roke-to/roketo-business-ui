@@ -95,6 +95,7 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
 
       <Row>
         <Label
+          required
           content={t('createForm.descriptionLabel')}
           error={fields.description.errorText()}
           className='w-full'
