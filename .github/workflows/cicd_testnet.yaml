@@ -97,7 +97,7 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
-            TAG_NAME=${{env_var.TAG_NAME}}
+            TAG_NAME=${{env.TAG_NAME}}
             APP=${{env.APP}}
             SHORT_SHA=${{env.SHORT_SHA}}
             GIT_BRANCH=${env.GITHUB_BASE_REF:-${env.GITHUB_REF#refs/heads/}}
