@@ -57,7 +57,7 @@ jobs:
               export APP_TAG=main-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             else
-              export APP_NAME=$APP:branch-$GIT_BRANCH
+              export APP_NAME=$APP-branch-$GIT_BRANCH
               export APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             fi
