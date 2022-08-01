@@ -1,0 +1,12 @@
+{
+  "employeeCard": {
+    "button": "Actions",
+    "labels": {
+      "role": "Role",
+      "wallet": "wallet address",
+      "email": "e-mail",
+      "salary": "Salary",
+      "comment": "Comment"
+    }
+  }
+}

@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import styles from '~/entities/employees/ui/status.module.css';
-
 import type {Employee} from '../model/types';
+import styles from './status.module.css';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   status: Employee['status'];

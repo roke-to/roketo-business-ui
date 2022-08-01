@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React, {useMemo} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
@@ -17,26 +18,28 @@ type Props = {
 };
 
 export const EmployeeCard: React.FC<Props> = ({employee}) => {
+  const {t} = useTranslation('employees');
+
   const labelSubRenders = useMemo(() => {
     const labeledFields = [
       {
-        content: 'Role',
+        content: t('employeeCard.labels.role'),
         children: employee.role,
       },
       {
-        content: 'wallet address',
+        content: t('employeeCard.labels.wallet'),
         children: employee.wallet,
       },
       {
-        content: 'e-mail',
+        content: t('employeeCard.labels.email'),
         children: employee.email,
       },
       {
-        content: 'Salary',
+        content: t('employeeCard.labels.salary'),
         children: `${employee.salary} (salary frequency)`,
       },
       {
-        content: 'Comment',
+        content: t('employeeCard.labels.comment'),
         children: employee.comment,
       },
     ];
@@ -48,7 +51,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
           <Typography>{children}</Typography>
         </Label>
       ));
-  }, [employee]);
+  }, [employee, t]);
 
   return (
     <Portlet className={clsx(styles.card)} justify='between'>
@@ -59,7 +62,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
         </Row>
         <Col gap='xs'>{labelSubRenders}</Col>
       </div>
-      <Button>Actions</Button>
+      <Button>{t('employeeCard.button')}</Button>
     </Portlet>
   );
 };

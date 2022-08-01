@@ -1,6 +1,8 @@
 import i18n, {ResourceLanguage} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
+// TODO: по FSD этот файл должен быть гденить в app, в shared не должно быть импортов из верхних слоев
+import employeesEn from '../../entities/employees/i18n/employeesEn.json';
 import authEn from '../../features/auth/i18n/authEn.json';
 import daoEn from '../../features/dao/i18n/daoEn.json';
 import treasuryEn from '../../features/treasury/i18n/treasuryEn.json';
@@ -18,6 +20,7 @@ const resources: Record<Locale, ResourceLanguage> = {
     validators: validatorsEn,
     proposal: proposalEn,
     councils: councilsEn,
+    employees: employeesEn,
   },
 };
 
@@ -31,6 +34,7 @@ declare module 'react-i18next' {
       validators: typeof validatorsEn;
       proposal: typeof proposalEn;
       councils: typeof councilsEn;
+      employees: typeof employeesEn;
     };
   }
 }
