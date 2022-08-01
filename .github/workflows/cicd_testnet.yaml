@@ -59,8 +59,6 @@ jobs:
           tags: ${{ env.DOCKER_TAGS }}
 
   publish:
-    needs:
-      - build
     runs-on:
       - self-hosted
       - Linux
@@ -97,27 +95,28 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
-            TAG_NAME=${{env_var.TAG_NAME}}
-            APP=${{env.APP}}
-            SHORT_SHA=${{env.SHORT_SHA}}
-            GIT_BRANCH=${env.GITHUB_BASE_REF:-${env.GITHUB_REF#refs/heads/}}
+            export TAG_NAME=${{env.TAG_NAME}}
+            export APP=${{env.APP}}
+            export SHORT_SHA=${{env.SHORT_SHA}}
+            export GIT_BRANCH=${{env.GIT_BRANCH}}
             export
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-              APP_NAME=$APP
-              APP_TAG=main-$SHORT_SHA
+              export APP_NAME=$APP
+              export APP_TAG=main-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             elif [ "$TAG_NAME" != "" ]; then
-              APP_NAME=$APP-$TAG_NAME
-              APP_TAG=main-$SHORT_SHA
+              export APP_NAME=$APP-$TAG_NAME
+              export APP_TAG=main-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             else
-              APP_NAME=$APP:branch-$GIT_BRANCH
-              APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
+              export APP_NAME=$APP-branch-$GIT_BRANCH
+              export APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             fi
           host: zeus.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
+          args: "-tt"
 
 
 
