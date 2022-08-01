@@ -1,20 +1,12 @@
 import isEmpty from 'lodash/isEmpty';
 
 import {Role} from '~/shared/api/astro';
-import {DaoRole, DefaultVotePolicy} from '~/shared/api/sputnik-dao/proposal';
-
-export interface VotePolicyRequest {
-  weight_kind: string;
-  quorum: string;
-  threshold: number[] | string;
-}
-
-export interface ContractRole {
-  name: string;
-  kind: 'Everyone' | {Group: string[] | null} | {Member: string};
-  permissions: string[];
-  vote_policy: Record<string, VotePolicyRequest> | {};
-}
+import {
+  ContractRole,
+  DaoRole,
+  DefaultVotePolicy,
+  VotePolicyRequest,
+} from '~/shared/api/sputnik-dao/proposal';
 
 function formatVotePolicy(value: DefaultVotePolicy) {
   return {

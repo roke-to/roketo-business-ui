@@ -331,6 +331,19 @@ export interface CreateProposalParams {
   variant?: ProposalVariant;
 }
 
+export interface VotePolicyRequest {
+  weight_kind: string;
+  quorum: string;
+  threshold: number[] | string;
+}
+
+export interface ContractRole {
+  name: string;
+  kind: 'Everyone' | {Group: string[] | null} | {Member: string};
+  permissions: string[];
+  vote_policy: Record<string, VotePolicyRequest> | {};
+}
+
 const DATA_SEPARATOR = '$$$$';
 
 // https://github.com/near-daos/astro-ui/blob/0bb743e91e2b2d32eb73eeb6d442313ddc5e836e/astro_2.0/features/CreateProposal/helpers/proposalObjectHelpers.ts
