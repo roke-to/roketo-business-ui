@@ -1,3 +1,4 @@
+import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {jsonToBase64} from '~/shared/lib/json-to-base64';
 
 export const mapCreateArgs = ({
@@ -20,8 +21,8 @@ export const mapCreateArgs = ({
     policy: {
       roles: [
         {
-          name: 'council',
-          slug: 'council',
+          name: COUNCIL,
+          slug: COUNCIL,
           kind: {Group: [accountId]},
           permissions: [
             '*:Finalize',

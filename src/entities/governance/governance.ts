@@ -5,6 +5,7 @@ import isEmpty from 'lodash/isEmpty';
 
 import {getChangeQuorumProps} from '~/entities/governance/lib/get-change-quorum';
 import {astroApi, Proposal} from '~/shared/api/astro';
+import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {getQuorum} from '~/shared/lib/get-quorum';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
@@ -142,7 +143,7 @@ const initChangePolicyProposalFormFx = attach({
       },
     } = currentDao;
 
-    const councilRole = roles.find(({name}) => name === 'council');
+    const councilRole = roles.find(({name}) => name === COUNCIL);
 
     let quorum: number;
 
@@ -265,7 +266,7 @@ export const changePolicyProposalFx = attach({
               kind: {
                 RemoveMemberFromRole: {
                   member_id: council,
-                  role: 'council',
+                  role: COUNCIL,
                 },
               },
             },
@@ -285,7 +286,7 @@ export const changePolicyProposalFx = attach({
               kind: {
                 AddMemberToRole: {
                   member_id: council,
-                  role: 'council',
+                  role: COUNCIL,
                 },
               },
             },

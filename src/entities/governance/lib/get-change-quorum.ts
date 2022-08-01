@@ -5,6 +5,7 @@ import type {ChangePolicyProposalFormFields} from '~/entities/governance';
 import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-contract-role';
 import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
 import {Dao} from '~/shared/api/astro';
+import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 
 export const getChangeQuorumProps = (
   currentDao: Dao,
@@ -23,9 +24,9 @@ export const getChangeQuorumProps = (
     },
   } = currentDao;
 
-  const otherRoles = roles.filter(({name}) => name !== 'council').map(dataRoleToContractRole);
+  const otherRoles = roles.filter(({name}) => name !== COUNCIL).map(dataRoleToContractRole);
 
-  const indexCouncilRole = currentDao.policy.roles.findIndex(({name}) => name === 'council');
+  const indexCouncilRole = currentDao.policy.roles.findIndex(({name}) => name === COUNCIL);
 
   const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
 
