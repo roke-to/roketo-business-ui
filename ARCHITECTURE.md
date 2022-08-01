@@ -73,3 +73,21 @@ TODO: Choose headless UI lib by needs:
 
 - [near-api-js](https://docs.near.org/docs/api/javascript-library)
 - [axios](https://github.com/axios/axios)
+
+## Currency
+
+[near-api-js](https://github.com/near/near-api-js/search?q=bn.js) is using [bn.js](https://github.com/indutny/bn.js/). But we need to consider the precision of the calculations for formatting. Therefore, we use [decimal.js](https://github.com/MikeMcl/decimal.js).
+
+> Read more about comparison of js libraries: [A comparison of BigNumber libraries in JavaScript](https://dev.to/fvictorio/a-comparison-of-bignumber-libraries-in-javascript-2gc5) and [big.js vs. bignumber.js vs. decimal.js](https://github.com/MikeMcl/big.js/issues/45#issuecomment-104211175)
+
+Also use [formatting utils](https://near.github.io/near-api-js/modules/utils_format.html) from `near-api-js`
+
+```js
+import * as nearApi from 'near-api-js';
+
+// converts NEAR amount into yoctoNEAR (10^-24)
+const yoktoValue = nearApi.utils.format.parseNearAmount('1'); // 1000000000000000000000000
+
+// converts yoctoNEAR (10^-24) amount into NEAR
+const nearValue = nearApi.utils.format.formatNearAmount('1000000000000000000000000'); // 1
+```

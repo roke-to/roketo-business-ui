@@ -1,4 +1,4 @@
-import BN from 'bn.js';
+import * as nearApi from 'near-api-js';
 import decamelize from 'decamelize';
 import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
@@ -81,8 +81,8 @@ export const createDaoFx = attach({
 
     await sputnikFactoryDaoContract.create({
       args: mapCreateArgs({...data, accountId}),
-      gas: new BN('300000000000000'), // 300 TGas
-      amount: new BN('6000000000000000000000000'), // 6 NEAR
+      gas: nearApi.DEFAULT_FUNCTION_CALL_GAS, // 300 TGas
+      amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
     });
   },
 });
