@@ -54,7 +54,7 @@ export const EmployeesPage = () => {
           </Label>
         </Row>
       </Row>
-      <div className={clsx(styles.wrapper, styles[`wrapper-${viewType}`])}>
+      <div className={clsx(styles.wrapper, styles[viewType])}>
         {employees.map((employee) => {
           if (viewType === 'card') {
             return <EmployeeCard employee={employee} key={employee.id} />;
