@@ -1,0 +1,13 @@
+.wrapper {
+  border-bottom: 1px solid theme('colors.blue.sat_1');
+  padding: 0.5rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: theme('colors.blue.light');
+    cursor: pointer;
+  }
+}

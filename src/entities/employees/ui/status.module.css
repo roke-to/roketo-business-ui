@@ -1,0 +1,30 @@
+.root {
+  width: 12px;
+  height: 12px;
+  border: 2px solid transparent;
+  border-radius: theme('borderRadius.full');
+}
+
+.Active {
+  border-color: theme('colors.green.default');
+
+  &.Contractor {
+    background-color: theme('colors.green.default');
+  }
+}
+
+.Suspended {
+  border-color: theme('colors.orange');
+
+  &.Contractor {
+    background-color: theme('colors.orange');
+  }
+}
+
+.Fired {
+  border-color: theme('colors.red.default');
+
+  &.Contractor {
+    background-color: theme('colors.red.default');
+  }
+}
