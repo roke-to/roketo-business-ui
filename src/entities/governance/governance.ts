@@ -1,9 +1,9 @@
-import BN from 'bn.js';
+import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
+import isEmpty from 'lodash/isEmpty';
 
-import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-contract-role';
-import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
+import {getChangeQuorumProps} from '~/entities/governance/lib/get-change-quorum';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {getQuorum} from '~/shared/lib/get-quorum';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
@@ -137,14 +137,25 @@ const initChangePolicyProposalFormFx = attach({
 
     const {
       policy: {
+        roles,
         defaultVotePolicy: {ratio},
       },
     } = currentDao;
 
-    const quorum = getQuorum(ratio);
+    const councilRole = roles.find(({name}) => name === 'council');
+
+    let quorum: number;
+
+    if (councilRole && !isEmpty(councilRole.votePolicy)) {
+      const keysVotePolicy = Object.keys(councilRole.votePolicy);
+      const key = keysVotePolicy[0];
+      quorum = getQuorum(councilRole.votePolicy[key].ratio);
+    } else {
+      quorum = getQuorum(ratio);
+    }
 
     return {
-      type: 'changePolicy',
+      type: 'changeQuorum',
       quorum,
       councilAddress: '.near',
       councilList: getCouncilListInitialState(currentDao.council, accountId),
@@ -165,7 +176,7 @@ sample({
 export const changePolicyProposalForm = createForm({
   fields: {
     type: {
-      init: 'changePolicy',
+      init: 'changeQuorum',
       rules: [validators.required],
     },
     quorum: {
@@ -245,10 +256,6 @@ export const changePolicyProposalFx = attach({
 
     console.log('updatedCouncilList', updatedCouncilList);
 
-    const gas = new BN('300000000000000');
-    const gasForChangeQuorum = new BN('230000000000000');
-    const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
-
     updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
       createdProposals.push(
         sputnikDaoContract.add_proposal({
@@ -263,8 +270,8 @@ export const changePolicyProposalFx = attach({
               },
             },
           },
-          gas,
-          amount: attachedDeposit,
+          gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
+          amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
         }),
       );
     });
@@ -283,69 +290,14 @@ export const changePolicyProposalFx = attach({
               },
             },
           },
-          gas,
-          amount: attachedDeposit,
+          gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
+          amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
         }),
       );
     });
 
-    // TODO change condition currentDao.policy.defaultVotePolicy.quorum
-    if (data.quorum !== 50) {
-      const {
-        policy: {
-          bountyBond,
-          proposalBond,
-          proposalPeriod,
-          defaultVotePolicy: {weightKind, ratio, quorum},
-          bountyForgivenessPeriod,
-        },
-      } = currentDao;
-
-      const otherRoles = currentDao.policy.roles
-        .filter(({name}) => name !== 'council')
-        .map(dataRoleToContractRole);
-
-      const indexCouncilRole = currentDao.policy.roles.findIndex(({name}) => name === 'council');
-
-      const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
-
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                ChangePolicy: {
-                  policy: {
-                    roles: [
-                      ...otherRoles,
-                      {
-                        name,
-                        kind: {
-                          Group: accountIds,
-                        },
-                        permissions,
-                        vote_policy: generateVotePolicyForEachProposalType(data.quorum),
-                      },
-                    ],
-                    default_vote_policy: {
-                      quorum,
-                      threshold: ratio,
-                      weight_kind: weightKind,
-                    },
-                    proposal_bond: proposalBond,
-                    proposal_period: proposalPeriod,
-                    bounty_bond: bountyBond,
-                    bounty_forgiveness_period: bountyForgivenessPeriod,
-                  },
-                },
-              },
-            },
-          },
-          gas: gasForChangeQuorum,
-          amount: attachedDeposit,
-        }),
-      );
+    if (data.type === 'changeQuorum') {
+      await sputnikDaoContract.add_proposal(getChangeQuorumProps(currentDao, data));
     }
 
     try {
