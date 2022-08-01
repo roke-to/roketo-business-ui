@@ -70,7 +70,6 @@ jobs:
 
   success:
     needs:
-      - build
       - publish
 
     runs-on:
