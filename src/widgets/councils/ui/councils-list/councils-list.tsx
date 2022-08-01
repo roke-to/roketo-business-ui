@@ -6,7 +6,7 @@ import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
 
 export const CouncilsList = () => {
-  const selectedDao = useStore($currentDao);
+  const currentDao = useStore($currentDao);
 
   return (
     <Col gap={1}>
@@ -14,7 +14,7 @@ export const CouncilsList = () => {
         Councils
       </Typography>
       <Col gap={2}>
-        {selectedDao?.council.map((councilAccountId) => (
+        {currentDao?.council.map((councilAccountId) => (
           <Typography as='span' font='sm' key={councilAccountId}>
             {councilAccountId}
           </Typography>

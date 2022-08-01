@@ -3,12 +3,11 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {loadDao, loadDaos} from '~/entities/dao';
-import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
-import {Modal, useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
 import {CouncilsList} from '~/widgets/councils/ui/councils-list';
 
+import {ChangePolicyButton} from './change-policy-button';
 import styles from './councils.module.css';
 
 export const Councils = () => {
@@ -18,8 +17,6 @@ export const Councils = () => {
     loadDaos();
     loadDao();
   }, []);
-
-  const changePolicyModal = useModal();
 
   const quorumPercent: number = 50;
   const rightPartScale = 100 - quorumPercent;
@@ -51,16 +48,7 @@ export const Councils = () => {
         </div>
       </Col>
 
-      <Col className={styles.changePolicyButton}>
-        <Button variant='soft' onClick={changePolicyModal.show}>
-          {t('changePolicy')}
-        </Button>
-        <Modal
-          isOpen={changePolicyModal.isOpen}
-          title={t('changePolicy')}
-          onCloseModal={changePolicyModal.hide}
-        />
-      </Col>
+      <ChangePolicyButton />
     </div>
   );
 };

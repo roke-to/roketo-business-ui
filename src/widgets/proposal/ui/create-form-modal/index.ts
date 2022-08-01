@@ -1,1 +1,1 @@
-export * from './create-form-modal';
+export * from './create-proposal-form';

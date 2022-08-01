@@ -13,6 +13,7 @@ import {
   changeTreasuryProposalSortOrder,
   loadTokenBalances,
 } from '~/entities/treasury';
+import {CreateProposalTransferFormModal} from '~/features/treasury/ui/create-proposal-transfer-form-modal';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Button} from '~/shared/ui/components/button';
@@ -20,7 +21,6 @@ import {Chip} from '~/shared/ui/components/chip/Chip';
 import {useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
 import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
-import {CreateProposalFormModal} from '~/widgets/proposal/ui/create-form-modal';
 
 export const Treasury = () => {
   const {t} = useTranslation('treasury');
@@ -82,7 +82,7 @@ export const Treasury = () => {
         <Button variant='soft' onClick={createProposalModal.show}>
           {t('list.createProposal')}
         </Button>
-        <CreateProposalFormModal
+        <CreateProposalTransferFormModal
           isOpen={createProposalModal.isOpen}
           title={t('list.createProposal')}
           onCloseModal={createProposalModal.hide}

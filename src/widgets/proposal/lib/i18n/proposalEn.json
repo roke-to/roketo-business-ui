@@ -23,10 +23,17 @@
     "transferNftParas": "Transfer NFT Paras",
     "functionalCall": "Functional call",
     "createStream": "Create a stream",
+    "changePolicy": "Change Policy",
+    "addMemberToRole": "Add member to role",
+    "removeMemberFromRole": "Remove member from role",
     "linkLabel": "Add link",
     "linkPlaceholder": "link.com/example",
     "tgasLabel": "TGAS",
     "tgasPlaceholder": "150",
-    "charge": "You will be charge"
+    "charge": "You will be charge",
+    "councilAddressLabel": "Council.address",
+    "councilAddressPlaceholder": "Addcouncilname.near",
+    "councilListLabel": "Council list",
+    "quorum": "Quorum"
   }
 }

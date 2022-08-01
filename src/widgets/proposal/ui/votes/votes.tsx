@@ -5,6 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {Proposal} from '~/shared/api/astro';
 import {formatISODate} from '~/shared/lib/dateFormat';
 import {Col} from '~/shared/ui/components/col';
+import {Thumb, Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {Controls} from '~/widgets/proposal/controls';
@@ -32,7 +33,6 @@ export const Votes = ({
   const {voteYes} = getVotesStatistic(votes);
 
   const positivePercent = (voteYes / numberOfMembers) * 100;
-  const negativePercent = 100 - positivePercent;
   const floorPositivePercent = Math.floor(positivePercent * 10) / 10;
 
   const handleVoteAction = (vote: 'Approve' | 'Reject') => {
@@ -63,17 +63,9 @@ export const Votes = ({
             {voteYes} {t('of')} {numberOfMembers} ({floorPositivePercent}%)
           </Typography>
         </Row>
-        <div className={styles.scaleContainer}>
-          <div
-            style={{width: `${positivePercent}%`}}
-            className={clsx(styles.positive, {[styles.scaleFull]: positivePercent === 100})}
-          />
-          <div
-            style={{width: `${negativePercent}%`}}
-            className={clsx(styles.negative, {[styles.scaleFull]: negativePercent === 100})}
-          />
-          <div className={styles.quorumLine} />
-        </div>
+        <Track value={positivePercent}>
+          <Thumb className={styles.quorumLine} />
+        </Track>
       </Col>
 
       <Controls votes={votes} canVote={canVote} handleVoteAction={handleVoteAction} />
