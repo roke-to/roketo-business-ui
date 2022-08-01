@@ -24,8 +24,6 @@ RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 # Copy build output
 FROM nginx:1.22.0-alpine
 
-USER web:web
-
-COPY --from=build --chown=web:web /build/dist /usr/share/nginx/html/
+COPY --from=build /build/dist /usr/share/nginx/html/
 
 CMD ["nginx", "-g", "daemon off;"]
