@@ -49,16 +49,16 @@ jobs:
             export GIT_BRANCH=${{env.GIT_BRANCH}}
             export
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-              APP_NAME=$APP
-              APP_TAG=main-$SHORT_SHA
+              export APP_NAME=$APP
+              export APP_TAG=main-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             elif [ "$TAG_NAME" != "" ]; then
-              APP_NAME=$APP-$TAG_NAME
-              APP_TAG=main-$SHORT_SHA
+              export APP_NAME=$APP-$TAG_NAME
+              export APP_TAG=main-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             else
-              APP_NAME=$APP:branch-$GIT_BRANCH
-              APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
+              export APP_NAME=$APP:branch-$GIT_BRANCH
+              export APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             fi
           host: zeus.roke.to
