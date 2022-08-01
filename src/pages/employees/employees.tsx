@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useEffect, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {EmployeeCard, EmployeeListItem, employeesModel} from '~/entities/employees';
 import {Button} from '~/shared/ui/components/button';
@@ -13,6 +14,8 @@ import styles from './employees.module.css';
 type ViewType = 'card' | 'list';
 
 export const EmployeesPage = () => {
+  const {t} = useTranslation('employees');
+
   const employees = useStore(employeesModel.$employees);
 
   useEffect(() => {
@@ -26,7 +29,7 @@ export const EmployeesPage = () => {
   return (
     <PageLayout>
       <Row>
-        <Button>Add new employee</Button>
+        <Button>{t('employeesPage.addEmployee.button')}</Button>
       </Row>
       <Row justify='between'>
         <div>filters</div>

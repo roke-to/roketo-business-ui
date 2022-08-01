@@ -8,5 +8,10 @@
       "salary": "Salary",
       "comment": "Comment"
     }
+  },
+  "employeesPage": {
+    "addEmployee": {
+      "button": "Add new employee"
+    }
   }
 }
