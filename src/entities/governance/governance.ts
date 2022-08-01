@@ -10,8 +10,8 @@ import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
-import {$currentDao, $currentDaoId, $sputnikDaoContract} from './dao';
-import {$accountId} from './wallet';
+import {$currentDao, $currentDaoId, $sputnikDaoContract} from '../dao';
+import {$accountId} from '../wallet';
 
 // import BN from 'bn.js';
 
