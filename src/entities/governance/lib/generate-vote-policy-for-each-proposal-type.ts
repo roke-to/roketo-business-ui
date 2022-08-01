@@ -1,4 +1,4 @@
-import {DaoVotePolicy} from '~/shared/api/sputnik-dao/proposal';
+import {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal';
 
 export enum ProposalType {
   AddMemberToRole = 'AddMemberToRole',

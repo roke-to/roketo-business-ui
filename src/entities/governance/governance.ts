@@ -2,10 +2,10 @@ import BN from 'bn.js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
-import {dataRoleToContractRole} from '~/entities/governance/lib/dataRoleToContractRole';
-import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generateVotePolicyForEachProposalType';
+import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-contract-role';
+import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
 import {astroApi, Proposal} from '~/shared/api/astro';
-import {getQuorum} from '~/shared/lib/getQuorum';
+import {getQuorum} from '~/shared/lib/get-quorum';
 import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
