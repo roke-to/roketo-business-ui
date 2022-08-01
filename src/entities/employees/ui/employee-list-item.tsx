@@ -9,9 +9,9 @@ import {Typography} from '~/shared/ui/components/typography';
 import type {Employee} from '../model/types';
 import styles from './employee-list-item.module.css';
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   employee: Employee;
-};
+}
 
 export const EmployeeListItem: React.FC<Props> = ({employee}) => (
   <Row justify='between' align='center' className={clsx(styles.wrapper)}>
