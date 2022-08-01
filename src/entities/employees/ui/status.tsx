@@ -10,5 +10,5 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Status: React.FC<Props> = ({status, type}) => (
-  <div className={clsx(styles.status, styles[status], styles[type])} />
+  <div className={clsx(styles.root, styles[status], styles[type])} />
 );
