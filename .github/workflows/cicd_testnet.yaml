@@ -94,7 +94,8 @@ jobs:
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
         with:
           command: |
-            /bin/bash
+            export
+            cat .env
             GIT_BRANCH=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               APP_NAME=$APP
