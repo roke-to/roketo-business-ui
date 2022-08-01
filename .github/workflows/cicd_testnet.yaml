@@ -92,11 +92,13 @@ jobs:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ matrix.app }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
+          GIT_BRANCH: ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
         with:
           command: |
-            export
-            cat .env
-            GIT_BRANCH=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
+            TAG_NAME=env.TAG_NAME
+            APP=env.APP
+            SHORT_SHA=env.SHORT_SHA
+            GIT_BRANCH=env.GIT_BRANCH
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               APP_NAME=$APP
               APP_TAG=main-$SHORT_SHA
