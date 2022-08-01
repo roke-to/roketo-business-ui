@@ -245,7 +245,7 @@ export const changePolicyProposalFx = attach({
 
     updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
       createdProposals.push(
-        sputnikDaoContract.addProposal({
+        sputnikDaoContract.add_proposal({
           args: {
             proposal: {
               description: data.description,
@@ -265,7 +265,7 @@ export const changePolicyProposalFx = attach({
 
     updatedCouncilList.AddMemberToRole.forEach((council) => {
       createdProposals.push(
-        sputnikDaoContract.addProposal({
+        sputnikDaoContract.add_proposal({
           args: {
             proposal: {
               description: data.description,
@@ -304,7 +304,7 @@ export const changePolicyProposalFx = attach({
       const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
 
       createdProposals.push(
-        sputnikDaoContract.addProposal({
+        sputnikDaoContract.add_proposal({
           args: {
             proposal: {
               description: data.description,
