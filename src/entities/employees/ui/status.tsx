@@ -4,7 +4,7 @@ import React from 'react';
 import type {Employee} from '../model/types';
 import styles from './status.module.css';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   status: Employee['status'];
   type: Employee['type'];
 }

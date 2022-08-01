@@ -9,7 +9,7 @@ import {Typography} from '~/shared/ui/components/typography';
 import type {Employee} from '../model/types';
 import styles from './employee-list-item.module.css';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
+interface Props {
   employee: Employee;
 }
 
