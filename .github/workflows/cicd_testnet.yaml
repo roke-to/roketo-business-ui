@@ -87,13 +87,14 @@ jobs:
         uses: benjlevesque/short-sha@v1.2
         id: short-sha
       - name: deploy
-        uses: fifsky/ssh-action@master
+        uses: fifsky/ssh-action@master Pseudo-terminal will not be allocated because stdin is not a terminal
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ matrix.app }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
         with:
           command: |
+            /bin/bash
             GIT_BRANCH=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               APP_NAME=$APP
@@ -107,6 +108,7 @@ jobs:
               APP_NAME=$APP:branch-$GIT_BRANCH
               APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
               docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
+            fi
           host: zeus.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
