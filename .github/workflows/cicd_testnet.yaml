@@ -59,6 +59,8 @@ jobs:
           tags: ${{ env.DOCKER_TAGS }}
 
   publish:
+    needs:
+      - build
     runs-on:
       - self-hosted
       - Linux
