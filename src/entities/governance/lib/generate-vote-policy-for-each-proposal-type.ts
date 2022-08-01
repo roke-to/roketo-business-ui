@@ -1,21 +1,21 @@
-import {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal';
+import type {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal';
 
-export enum ProposalType {
-  AddMemberToRole = 'AddMemberToRole',
-  RemoveMemberFromRole = 'RemoveMemberFromRole',
-  FunctionCall = 'FunctionCall',
-  Transfer = 'Transfer',
-  SetStakingContract = 'SetStakingContract',
-  ChangePolicy = 'ChangePolicy',
-  ChangeConfig = 'ChangeConfig',
-  UpgradeSelf = 'UpgradeSelf',
-  UpgradeRemote = 'UpgradeRemote',
-  AddBounty = 'AddBounty',
-  BountyDone = 'BountyDone',
-  Vote = 'Vote',
-}
+const ProposalType = {
+  AddMemberToRole: 'AddMemberToRole',
+  RemoveMemberFromRole: 'RemoveMemberFromRole',
+  FunctionCall: 'FunctionCall',
+  Transfer: 'Transfer',
+  SetStakingContract: 'SetStakingContract',
+  ChangePolicy: 'ChangePolicy',
+  ChangeConfig: 'ChangeConfig',
+  UpgradeSelf: 'UpgradeSelf',
+  UpgradeRemote: 'UpgradeRemote',
+  AddBounty: 'AddBounty',
+  BountyDone: 'BountyDone',
+  Vote: 'Vote',
+};
 
-export const APP_TO_CONTRACT_PROPOSAL_TYPE = {
+const APP_TO_CONTRACT_PROPOSAL_TYPE = {
   [ProposalType.ChangeConfig]: 'config',
   [ProposalType.ChangePolicy]: 'policy',
   [ProposalType.AddMemberToRole]: 'add_member_to_role',
@@ -30,7 +30,7 @@ export const APP_TO_CONTRACT_PROPOSAL_TYPE = {
   [ProposalType.Vote]: 'vote',
 };
 
-export function getThreshold(value: number): [number, number] {
+function getThreshold(value: number): [number, number] {
   const fraction = value / 100;
   const gcd = (a: number, b: number): number => {
     if (b < 0.0000001) {

@@ -1,7 +1,7 @@
 import isEmpty from 'lodash/isEmpty';
 
-import {Role} from '~/shared/api/astro';
-import {
+import type {Role} from '~/shared/api/astro';
+import type {
   ContractRole,
   DaoRole,
   DefaultVotePolicy,
