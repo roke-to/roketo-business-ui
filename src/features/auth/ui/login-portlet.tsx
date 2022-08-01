@@ -3,7 +3,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
-import {resolveWalletIcon} from '~/shared/api/near';
+import {resolveWalletIcon, WalletIconType} from '~/shared/api/near';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Icon} from '~/shared/ui/components/icon';
@@ -29,7 +29,7 @@ export const LoginPortlet = () => {
           // @ts-expect-error
           const {name, description, iconUrl, available, downloadUrl} = module.metadata;
           const selected = module.id === selectedWalletId;
-          const WalletIcon = resolveWalletIcon(iconUrl);
+          const WalletIcon = resolveWalletIcon(iconUrl as WalletIconType);
 
           if (!available) {
             return (

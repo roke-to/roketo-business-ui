@@ -1,12 +1,16 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import BN from 'bn.js';
+import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
-import {astroApi, HttpResponse, Proposal, ProposalKindSwaggerDto, Token} from '~/shared/api/astro';
+import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {validators} from '~/shared/lib/validators';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
+import {ProposalStatus} from '~/shared/types/proposal-status';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$daoId} from './dao';
+import {$currentDaoId, $sputnikDaoContract} from './dao';
 import {$accountId} from './wallet';
 
 // ------------ proposals ------------
@@ -20,11 +24,10 @@ export const $treasuryProposalLoading = createStore(true);
 // /------------ proposals ------------
 
 //  ------------ proposals filter by status ------------
-export type TreasuryProposalStatus = 'all' | 'active' | 'approved' | 'failed';
 
-export const changeTreasuryProposalSelectedStatus = createEvent<TreasuryProposalStatus>();
+export const changeTreasuryProposalSelectedStatus = createEvent<ProposalStatus>();
 
-export const $treasurySelectedProposalStatus = createStore<TreasuryProposalStatus>('all').on(
+export const $treasurySelectedProposalStatus = createStore<ProposalStatus>('all').on(
   changeTreasuryProposalSelectedStatus,
   (_, status) => status,
 );
@@ -33,8 +36,6 @@ export const $treasurySelectedProposalStatus = createStore<TreasuryProposalStatu
 
 //  ------------ proposals filter by kind ------------
 export const changeTreasuryProposalSelectedKind = createEvent<ProposalKindFilterType>();
-
-export type ProposalKindFilterType = ProposalKindSwaggerDto['type'] | 'Any';
 
 export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>('Transfer').on(
   changeTreasuryProposalSelectedKind,
@@ -45,8 +46,6 @@ export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>
 //  ------------ proposals sort by createAt  ------------
 export const changeTreasuryProposalSortOrder = createEvent<ProposalSortOrderType>();
 
-export type ProposalSortOrderType = 'ASC' | 'DESC';
-
 export const $treasuryProposalSortOrder = createStore<ProposalSortOrderType>('DESC').on(
   changeTreasuryProposalSortOrder,
   (_, sortType) => sortType,
@@ -55,7 +54,7 @@ export const $treasuryProposalSortOrder = createStore<ProposalSortOrderType>('DE
 
 const loadTreasuryProposalsFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
     accountId: $accountId,
     status: $treasurySelectedProposalStatus,
     kind: $treasurySelectedProposalKind,
@@ -65,9 +64,8 @@ const loadTreasuryProposalsFx = attach({
     const search: SFields | SConditionAND = {
       $and: [
         {
-          kind: {
-            $cont: 'Transfer',
-            $excl: 'ChangePolicy',
+          daoId: {
+            $eq: daoId,
           },
         },
       ],
@@ -105,7 +103,6 @@ const loadTreasuryProposalsFx = attach({
         search.$and?.push({
           kind: {
             $cont: 'Transfer',
-            $excl: 'ChangePolicy',
           },
         });
         break;
@@ -138,7 +135,7 @@ const loadTreasuryProposalsFx = attach({
       accountId,
     };
 
-    return astroApi.proposalControllerProposalByAccount(daoId, query);
+    return astroApi.proposalControllerProposals(query);
   },
 });
 
@@ -147,7 +144,7 @@ sample({
   target: loadTreasuryProposalsFx,
 });
 sample({
-  clock: $daoId,
+  clock: $currentDaoId,
   target: loadTreasuryProposalsFx,
 });
 
@@ -190,7 +187,7 @@ export const loadTokenBalances = createEvent();
 
 const loadTokenBalancesFx = attach({
   source: {
-    daoId: $daoId,
+    daoId: $currentDaoId,
   },
   async effect({daoId}) {
     // TODO: remove after PR https://github.com/near-daos/astro-api-gateway/pull/386 merged
@@ -206,7 +203,7 @@ sample({
   target: loadTokenBalancesFx,
 });
 sample({
-  clock: $daoId,
+  clock: $currentDaoId,
   target: loadTokenBalancesFx,
 });
 
@@ -252,6 +249,35 @@ export const createProposalForm = createForm({
 
 type CreateProposalFormFields = typeof createProposalForm['fields'];
 
-export const createProposalFx = createEffect(async (data: FormValues<CreateProposalFormFields>) => {
-  console.log('create proposal', data);
+export const createProposalFx = attach({
+  source: {
+    sputnikDaoContract: $sputnikDaoContract,
+  },
+  async effect({sputnikDaoContract}, data: FormValues<CreateProposalFormFields>) {
+    if (!sputnikDaoContract) {
+      throw new Error('SputnikDaoContract is not initialized');
+    }
+
+    await sputnikDaoContract.add_proposal({
+      args: {
+        proposal: {
+          description: data.description,
+          kind: {
+            Transfer: {
+              token_id: 'wrap.testnet',
+              amount: '1000000000000000000000000', // 1 NEAR
+              receiver_id: data.target,
+            },
+          },
+        },
+      },
+      gas: new BN('300000000000000'),
+      amount: new BN('100000000000000000000000'), // attachec deposit — bond 1e+23 0.1 NEAR,
+    });
+  },
+});
+
+forward({
+  from: createProposalForm.formValidated,
+  to: createProposalFx,
 });

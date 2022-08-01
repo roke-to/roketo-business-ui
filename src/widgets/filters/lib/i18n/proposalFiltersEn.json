@@ -1,0 +1,13 @@
+{
+  "proposalStatus": {
+    "all": "All proposals",
+    "active": "Active",
+    "approved": "Approved",
+    "failed": "Failed"
+  },
+  "status": "Status",
+  "type": "Type",
+  "sort": "Sort",
+  "sortModal": "Sort proposals",
+  "showProposals": "Show proposals"
+}

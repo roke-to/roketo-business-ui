@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {loadDaos} from '~/entities/dao';
+import {loadDao, loadDaos} from '~/entities/dao';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Modal, useModal} from '~/shared/ui/components/modal';
@@ -16,6 +16,7 @@ export const Councils = () => {
 
   React.useEffect(() => {
     loadDaos();
+    loadDao();
   }, []);
 
   const changePolicyModal = useModal();

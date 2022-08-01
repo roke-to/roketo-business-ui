@@ -2,19 +2,34 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$tokenBalances, loadTokenBalances} from '~/entities/treasury';
-import {ProposalsFilters} from '~/features/treasury/ui/proposals-filters';
+import {
+  $tokenBalances,
+  $treasuryProposalLoading,
+  $treasuryProposalSortOrder,
+  $treasurySelectedProposalKind,
+  $treasurySelectedProposalStatus,
+  changeTreasuryProposalSelectedKind,
+  changeTreasuryProposalSelectedStatus,
+  changeTreasuryProposalSortOrder,
+  loadTokenBalances,
+} from '~/entities/treasury';
 import {ProposalsList} from '~/features/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
+import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
 import {CreateProposalFormModal} from '~/widgets/proposal/ui/create-form-modal';
 
 export const Treasury = () => {
   const {t} = useTranslation('treasury');
   const tokenBalances = useStore($tokenBalances);
+  const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
+  const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
+  const isLoading = useStore($treasuryProposalLoading);
+  const treasuryProposalSortOrder = useStore($treasuryProposalSortOrder);
+
   const createProposalModal = useModal();
 
   React.useEffect(() => {
@@ -73,7 +88,15 @@ export const Treasury = () => {
           onCloseModal={createProposalModal.hide}
         />
       </div>
-      <ProposalsFilters />
+      <ProposalsFilters
+        isLoading={isLoading}
+        selectedProposalStatus={treasurySelectedProposalStatus}
+        selectedProposalKind={treasurySelectedProposalKind}
+        proposalSortOrder={treasuryProposalSortOrder}
+        handleChangeProposalStatus={changeTreasuryProposalSelectedStatus}
+        handleChangeProposalKind={changeTreasuryProposalSelectedKind}
+        handleChangeProposalSortOrder={changeTreasuryProposalSortOrder}
+      />
       <ProposalsList />
     </>
   );
