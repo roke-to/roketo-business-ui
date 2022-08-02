@@ -1,5 +1,6 @@
 import type {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal';
 
+// @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/types/proposal.ts#L26
 const ProposalType = {
   AddMemberToRole: 'AddMemberToRole',
   RemoveMemberFromRole: 'RemoveMemberFromRole',
@@ -15,6 +16,7 @@ const ProposalType = {
   Vote: 'Vote',
 };
 
+// @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/utils/dataConverter.ts#L3
 const APP_TO_CONTRACT_PROPOSAL_TYPE = {
   [ProposalType.ChangeConfig]: 'config',
   [ProposalType.ChangePolicy]: 'policy',
@@ -30,6 +32,7 @@ const APP_TO_CONTRACT_PROPOSAL_TYPE = {
   [ProposalType.Vote]: 'vote',
 };
 
+// @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/features/groups/helpers.ts#L168
 function getThreshold(value: number): [number, number] {
   const fraction = value / 100;
   const gcd = (a: number, b: number): number => {
@@ -53,6 +56,7 @@ function getThreshold(value: number): [number, number] {
   return [numerator, denominator];
 }
 
+// @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/features/groups/helpers.ts#L191
 export function generateVotePolicyForEachProposalType(
   quorum: number,
 ): Record<string, DaoVotePolicy> {
