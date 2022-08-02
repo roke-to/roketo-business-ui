@@ -35,5 +35,11 @@
     "councilAddressPlaceholder": "Addcouncilname.near",
     "councilListLabel": "Council list",
     "quorum": "Quorum"
-  }
+  },
+  "emptyProposalList": {
+    "firstLine": "No proposals have been created yet.",
+    "secondLine": "You can create a new proposal"
+  },
+  "emptySearchProposalList": "No proposals with current filters",
+  "createProposal": "Create proposal"
 }

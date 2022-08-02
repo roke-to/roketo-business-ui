@@ -23,7 +23,7 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
 
 export const Treasury = () => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposal');
   const tokenBalances = useStore($tokenBalances);
   const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
   const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
@@ -80,11 +80,11 @@ export const Treasury = () => {
           </div>
         </div>
         <Button variant='soft' onClick={createProposalModal.show}>
-          {t('list.createProposal')}
+          {t('createProposal')}
         </Button>
         <CreateProposalTransferFormModal
           isOpen={createProposalModal.isOpen}
-          title={t('list.createProposal')}
+          title={t('createProposal')}
           onCloseModal={createProposalModal.hide}
         />
       </div>
