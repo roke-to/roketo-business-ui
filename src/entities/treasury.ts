@@ -3,6 +3,7 @@ import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
+import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
@@ -71,32 +72,7 @@ const loadTreasuryProposalsFx = attach({
       ],
     };
 
-    switch (status) {
-      case 'active':
-        search.$and?.push({
-          status: {
-            $eq: 'InProgress',
-          },
-        });
-        break;
-      case 'approved':
-        search.$and?.push({
-          status: {
-            $eq: 'Approved',
-          },
-        });
-        break;
-      case 'failed':
-        search.$and?.push({
-          status: {
-            $in: ['Rejected', 'Failed'],
-          },
-        });
-        break;
-      case 'all':
-      default:
-        break;
-    }
+    addStatusProposalQuery(search, status);
 
     switch (kind) {
       case 'Transfer':
