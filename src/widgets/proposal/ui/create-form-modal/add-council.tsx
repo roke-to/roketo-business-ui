@@ -1,32 +1,34 @@
+import clsx from 'clsx';
 import {useStore} from 'effector-react';
-import React from 'react';
+import React, {useState} from 'react';
 
-import {CouncilListFormFieldItem} from '~/entities/governance';
 import {$accountId} from '~/entities/wallet';
+import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
+import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module.css';
 
 export const AddCouncil = ({fields, t, pending}: any) => {
+  const [wasAdded, setWasAdded] = useState(false);
   const accountId = useStore($accountId);
 
-  // const handleAddTypedCouncil = () => {
-  //   const updatedCouncilList = [
-  //     ...fields.councilList.value,
-  //     {council: fields.councilAddress.value, action: 'delete'},
-  //   ];
-  //
-  //   fields.councilList.onChange(updatedCouncilList);
-  // };
+  const handleAddTypedCouncil = () => {
+    const updatedCouncilList = [...fields.councilList.value, fields.councilAddress.value];
+
+    fields.councilList.onChange(updatedCouncilList);
+    setWasAdded(true);
+  };
 
   return (
     <>
       <Row gap='xl' className={styles.councilSection}>
         <Row gap='md' className='items-end'>
           <Label
+            required
             content={t('createForm.councilAddressLabel')}
             error={fields.councilAddress.errorText()}
             className={styles.councilAddressLabel}
@@ -39,6 +41,12 @@ export const AddCouncil = ({fields, t, pending}: any) => {
               onChange={fields.councilAddress.onChange}
             />
           </Label>
+          <Button
+            startIcon={<Plus className='w-6 h-6' />}
+            className='w-12 p-3 mb-1'
+            onClick={handleAddTypedCouncil}
+            disabled={wasAdded}
+          />
         </Row>
         <Label
           content={t('createForm.councilListLabel')}
@@ -49,8 +57,12 @@ export const AddCouncil = ({fields, t, pending}: any) => {
             <Typography as='span' weight='bold'>
               {accountId}
             </Typography>
-            {fields.councilList.value.map(({council}: CouncilListFormFieldItem) => (
-              <Typography as='span' weight='bold'>
+            {fields.councilList.value.map((council: string) => (
+              <Typography
+                as='span'
+                weight='bold'
+                className={clsx({[styles.addedCouncil]: fields.councilAddress.value === council})}
+              >
                 {council}
               </Typography>
             ))}

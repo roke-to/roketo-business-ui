@@ -1,9 +1,10 @@
-import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 import isEmpty from 'lodash/isEmpty';
 
+import {getAddCouncilProps} from '~/entities/governance/lib/get-add-council-props';
 import {getChangeQuorumProps} from '~/entities/governance/lib/get-change-quorum';
+import {getRemoveCouncilProps} from '~/entities/governance/lib/get-remove-council-props';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {getQuorum} from '~/shared/lib/get-quorum';
@@ -116,15 +117,8 @@ sample({
 
 //  ------------ proposals change policy  ------------
 
-export type CouncilListFormFieldItem = {council: string; action: 'delete' | 'add'};
-
-const getCouncilListInitialState = (
-  councils: string[],
-  accountId: string,
-): CouncilListFormFieldItem[] =>
-  councils
-    .filter((council) => council !== accountId)
-    .map((council) => ({council, action: 'delete'}));
+const getCouncilListInitialState = (councils: string[], accountId: string): string[] =>
+  councils.filter((council) => council !== accountId);
 
 const initChangePolicyProposalFormFx = attach({
   source: {
@@ -185,9 +179,10 @@ export const changePolicyProposalForm = createForm({
     },
     councilAddress: {
       init: '.near',
+      rules: [validators.required],
     },
     councilList: {
-      init: [] as CouncilListFormFieldItem[],
+      init: [] as string[],
     },
     amount: {
       init: '1',
@@ -222,13 +217,9 @@ export type ChangePolicyProposalFormFields = typeof changePolicyProposalForm['fi
 export const changePolicyProposalFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
-    accountId: $accountId,
     currentDao: $currentDao,
   },
-  async effect(
-    {sputnikDaoContract, accountId, currentDao},
-    data: FormValues<ChangePolicyProposalFormFields>,
-  ) {
+  async effect({sputnikDaoContract, currentDao}, data: FormValues<ChangePolicyProposalFormFields>) {
     if (!sputnikDaoContract) {
       // TODO: show error on form
       throw new Error('SputnikDaoContract is not initialized');
@@ -238,71 +229,20 @@ export const changePolicyProposalFx = attach({
       throw new Error('You should create dao');
     }
 
-    console.log('change policy ', sputnikDaoContract, accountId, data);
-
-    const createdProposals: Promise<void>[] = [];
-
-    const updatedCouncilList = data.councilList.reduce(
-      (acc, current) => {
-        if (currentDao.council.includes(current.council) && current.action === 'add') {
-          acc.RemoveMemberFromRole.push(current.council);
-        }
-        if (!currentDao.council.includes(current.council) && current.action === 'delete') {
-          acc.AddMemberToRole.push(current.council);
-        }
-        return acc;
-      },
-      {RemoveMemberFromRole: [] as string[], AddMemberToRole: [] as string[]},
-    );
-
-    console.log('updatedCouncilList', updatedCouncilList);
-
-    updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                RemoveMemberFromRole: {
-                  member_id: council,
-                  role: COUNCIL,
-                },
-              },
-            },
-          },
-          gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
-          amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
-        }),
-      );
-    });
-
-    updatedCouncilList.AddMemberToRole.forEach((council) => {
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                AddMemberToRole: {
-                  member_id: council,
-                  role: COUNCIL,
-                },
-              },
-            },
-          },
-          gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
-          amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
-        }),
-      );
-    });
-
-    if (data.type === 'changeQuorum') {
-      await sputnikDaoContract.add_proposal(getChangeQuorumProps(currentDao, data));
-    }
-
     try {
-      await Promise.all(createdProposals);
+      switch (data.type) {
+        case 'removeCouncil':
+          await sputnikDaoContract.add_proposal(getRemoveCouncilProps(currentDao, data));
+          break;
+        case 'addCouncil':
+          await sputnikDaoContract.add_proposal(getAddCouncilProps(currentDao, data));
+          break;
+        case 'changeQuorum':
+          await sputnikDaoContract.add_proposal(getChangeQuorumProps(currentDao, data));
+          break;
+        default:
+          throw Error(`We don't recognize action for ${data.type}`);
+      }
     } catch (err) {
       console.log('change policy error', err);
     }

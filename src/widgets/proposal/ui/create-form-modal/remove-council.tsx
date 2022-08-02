@@ -1,7 +1,6 @@
 import {useStore} from 'effector-react';
 import React, {useCallback} from 'react';
 
-import {CouncilListFormFieldItem} from '~/entities/governance';
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
@@ -15,16 +14,12 @@ export const RemoveCouncil = ({fields, t, pending}: any) => {
   const accountId = useStore($accountId);
 
   const handleClick = useCallback(
-    ({council: currentCouncil, action: currentAction}: CouncilListFormFieldItem) => {
-      const updatedCouncilList = fields.councilList.value.map(
-        ({council, action}: CouncilListFormFieldItem) =>
-          council === currentCouncil
-            ? {council, action: currentAction === 'add' ? 'delete' : 'add'}
-            : {council, action},
-      );
-      fields.councilList.onChange(updatedCouncilList);
+    (council: string) => {
+      const updatedValue = fields.councilAddress.value === council ? '' : council;
+
+      fields.councilAddress.onChange(updatedValue);
     },
-    [fields.councilList],
+    [fields.councilAddress],
   );
 
   return (
@@ -39,11 +34,11 @@ export const RemoveCouncil = ({fields, t, pending}: any) => {
             <Typography as='span' weight='bold'>
               {accountId}
             </Typography>
-            {fields.councilList.value.map(({council, action}: CouncilListFormFieldItem) => (
+            {fields.councilList.value.map((council: string) => (
               <CouncilControl
                 key={council}
                 council={council}
-                action={action}
+                willDelete={fields.councilAddress.value === council}
                 onClick={handleClick}
               />
             ))}
