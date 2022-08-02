@@ -142,8 +142,10 @@ const initChangePolicyProposalFormFx = attach({
     let quorum: number;
 
     if (councilRole && !isEmpty(councilRole.votePolicy)) {
+      // We don't change some votePolicy item, only all collection
       const keysVotePolicy = Object.keys(councilRole.votePolicy);
       const key = keysVotePolicy[0];
+      // all `ratio` props equal
       quorum = getQuorum(councilRole.votePolicy[key].ratio);
     } else {
       quorum = getQuorum(ratio);
