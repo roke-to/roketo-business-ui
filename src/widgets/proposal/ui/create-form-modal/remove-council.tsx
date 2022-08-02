@@ -1,5 +1,5 @@
 import {useStore} from 'effector-react';
-import React, {useCallback} from 'react';
+import React from 'react';
 
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
@@ -13,14 +13,10 @@ import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module
 export const RemoveCouncil = ({fields, t, pending}: any) => {
   const accountId = useStore($accountId);
 
-  const handleClick = useCallback(
-    (council: string) => {
-      const updatedValue = fields.councilAddress.value === council ? '' : council;
-
-      fields.councilAddress.onChange(updatedValue);
-    },
-    [fields.councilAddress],
-  );
+  const handleClick = (council: string) => {
+    const updatedValue = fields.councilAddress.value === council ? '' : council;
+    fields.councilAddress.onChange(updatedValue);
+  };
 
   return (
     <>
