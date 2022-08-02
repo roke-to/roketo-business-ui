@@ -11,8 +11,6 @@ export const getChangeQuorumProps = (
   currentDao: Dao,
   formData: FormValues<ChangePolicyProposalFormFields>,
 ) => {
-  // const gasForChangeQuorum = new BN('230000000000000');
-  // const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
   const {
     policy: {
       bountyBond,
@@ -37,35 +35,31 @@ export const getChangeQuorumProps = (
         kind: {
           ChangePolicy: {
             policy: {
-              policy: {
-                roles: [
-                  ...otherRoles,
-                  {
-                    name,
-                    kind: {
-                      Group: accountIds,
-                    },
-                    permissions,
-                    vote_policy: generateVotePolicyForEachProposalType(formData.quorum),
+              roles: [
+                ...otherRoles,
+                {
+                  name,
+                  kind: {
+                    Group: accountIds,
                   },
-                ],
-                default_vote_policy: {
-                  quorum,
-                  threshold: ratio,
-                  weight_kind: weightKind,
+                  permissions,
+                  vote_policy: generateVotePolicyForEachProposalType(formData.quorum),
                 },
-                proposal_bond: proposalBond,
-                proposal_period: proposalPeriod,
-                bounty_bond: bountyBond,
-                bounty_forgiveness_period: bountyForgivenessPeriod,
+              ],
+              default_vote_policy: {
+                quorum,
+                threshold: ratio,
+                weight_kind: weightKind,
               },
+              proposal_bond: proposalBond,
+              proposal_period: proposalPeriod,
+              bounty_bond: bountyBond,
+              bounty_forgiveness_period: bountyForgivenessPeriod,
             },
           },
         },
       },
     },
-    // gas: gasForChangeQuorum,
-    // amount: attachedDeposit,
     gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
     amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
   };
