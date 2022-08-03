@@ -2,7 +2,7 @@ import * as nearApi from 'near-api-js';
 
 export type VoteAction = 'VoteApprove' | 'VoteRemove' | 'VoteReject';
 
-export const mapMultiVoteOptions = (proposalId: string, action: VoteAction) => ({
+export const mapMultiVoteOptions = (proposalId: number, action: VoteAction) => ({
   args: {
     id: proposalId,
     action,
