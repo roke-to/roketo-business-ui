@@ -24,6 +24,7 @@ RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 # Copy build output
 FROM nginx:latest
 
+COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /build/dist /usr/share/nginx/html/
 
 CMD ["nginx", "-g", "daemon off;"]
