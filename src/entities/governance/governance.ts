@@ -2,10 +2,12 @@ import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 import isEmpty from 'lodash/isEmpty';
 
-import {getAddCouncilProps} from '~/entities/governance/lib/get-add-council-props';
-import {getChangeQuorumProps} from '~/entities/governance/lib/get-change-quorum';
-import {getRemoveCouncilProps} from '~/entities/governance/lib/get-remove-council-props';
 import {astroApi, Proposal} from '~/shared/api/astro';
+import {
+  mapAddCouncilOptions,
+  mapChangeQuorumOptions,
+  mapRemoveCouncilOptions,
+} from '~/shared/api/near';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {getQuorum} from '~/shared/lib/get-quorum';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
@@ -234,13 +236,13 @@ export const changePolicyProposalFx = attach({
     try {
       switch (data.type) {
         case 'removeCouncil':
-          await sputnikDaoContract.add_proposal(getRemoveCouncilProps(currentDao, data));
+          await sputnikDaoContract.add_proposal(mapRemoveCouncilOptions(currentDao, data));
           break;
         case 'addCouncil':
-          await sputnikDaoContract.add_proposal(getAddCouncilProps(currentDao, data));
+          await sputnikDaoContract.add_proposal(mapAddCouncilOptions(currentDao, data));
           break;
         case 'changeQuorum':
-          await sputnikDaoContract.add_proposal(getChangeQuorumProps(currentDao, data));
+          await sputnikDaoContract.add_proposal(mapChangeQuorumOptions(currentDao, data));
           break;
         default:
           throw Error(`We don't recognize action for ${data.type}`);

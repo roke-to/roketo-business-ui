@@ -5,7 +5,7 @@ import type {ChangePolicyProposalFormFields} from '~/entities/governance';
 import {Dao} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 
-export const getRemoveCouncilProps = (
+export const mapRemoveCouncilOptions = (
   currentDao: Dao,
   formData: FormValues<ChangePolicyProposalFormFields>,
 ) => ({

@@ -7,7 +7,7 @@ import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/g
 import {Dao} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 
-export const getChangeQuorumProps = (
+export const mapChangeQuorumOptions = (
   currentDao: Dao,
   formData: FormValues<ChangePolicyProposalFormFields>,
 ) => {
