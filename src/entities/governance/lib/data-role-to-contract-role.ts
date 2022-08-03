@@ -28,6 +28,7 @@ function formatVotePolicies(
   }, {} as Record<string, VotePolicyRequest>);
 }
 
+// @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/features/groups/helpers.ts#L75
 export function dataRoleToContractRole(role: Role): ContractRole {
   const {name, kind, permissions, votePolicy, accountIds, balance} = role as unknown as DaoRole;
 

@@ -13,8 +13,16 @@ export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const formOptions = React.useMemo(
     () => [
       {
-        value: 'changePolicy',
-        label: t(`createForm.changePolicy`),
+        value: 'changeQuorum',
+        label: t(`createForm.changeQuorum`),
+      },
+      {
+        value: 'addCouncil',
+        label: t(`createForm.addCouncil`),
+      },
+      {
+        value: 'removeCouncil',
+        label: t(`createForm.removeCouncil`),
       },
     ],
     [t],

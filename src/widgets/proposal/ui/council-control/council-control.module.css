@@ -9,15 +9,15 @@
   transform: rotate(45deg);
 }
 
+.deleteText {
+  color: theme('colors.blue.textDefault');
+}
+
 .icon {
   width: theme('spacing.5');
   height: theme('spacing.5');
 }
 
-.deleteText {
-  color: theme('colors.blue.textDefault');
-}
-
-.addText {
+.text {
   color: theme('colors.blue.default');
 }
