@@ -25,6 +25,7 @@ RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 FROM node:16.13.2-alpine3.15
 WORKDIR /build
 
+COPY --from=build /build/node_modules node_modules
 COPY --from=build /build/static-server.js .
 COPY --from=build /build/dist ./dist/
 
