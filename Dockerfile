@@ -22,9 +22,11 @@ RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 # STAGE 3 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
 # Copy build output
-FROM nginx:latest
+FROM node:16.13.2-alpine3.15
+WORKDIR /build
 
-COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /build/dist /usr/share/nginx/html/
+USER web:web
 
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build --chown=web:web /build/dist ./dist/
+
+CMD ["node_modules/.bin/serve", "-l", "80", "dist/"]
