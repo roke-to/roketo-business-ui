@@ -1,8 +1,6 @@
-import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$treasurySelectedProposalKind, $treasurySelectedProposalStatus} from '~/entities/treasury';
 import {theme} from '~/shared/config/theme';
 import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {Button} from '~/shared/ui/components/button';
@@ -12,7 +10,7 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './empty-proposal-list.module.css';
 
 const TextEmptyProposalList = () => {
-  const {t} = useTranslation('treasury');
+  const {t} = useTranslation('proposal');
 
   return (
     <>
@@ -23,16 +21,10 @@ const TextEmptyProposalList = () => {
   );
 };
 
-export const EmptyProposalList = () => {
-  const {t} = useTranslation('treasury');
+export const EmptyProposalList = ({isDefaultFiltersValue}: {isDefaultFiltersValue?: boolean}) => {
+  const {t} = useTranslation('proposal');
   const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet})`);
   const createProposalModal = useModal();
-
-  const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
-  const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
-
-  const isDefaultFiltersValue =
-    treasurySelectedProposalKind === 'Transfer' && treasurySelectedProposalStatus === 'all';
 
   const text = isDefaultFiltersValue ? <TextEmptyProposalList /> : t('emptySearchProposalList');
   const showCreateButton = isDefaultFiltersValue || isMobileWidth;
@@ -45,11 +37,11 @@ export const EmptyProposalList = () => {
       {showCreateButton && (
         <>
           <Button variant='soft' onClick={createProposalModal.show}>
-            {t('list.createProposal')}
+            {t('createProposal')}
           </Button>
           <Modal
             isOpen={createProposalModal.isOpen}
-            title={t('list.createProposal')}
+            title={t('createProposal')}
             onCloseModal={createProposalModal.hide}
           />
         </>

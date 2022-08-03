@@ -6,14 +6,15 @@ import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-con
 import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {getQuorum} from '~/shared/lib/get-quorum';
+import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
+import {SConditionAND, SFields} from '@nestjsx/crud-request';
+
 import {$currentDao, $currentDaoId, $sputnikDaoContract} from '../dao';
 import {$accountId} from '../wallet';
-
-// import BN from 'bn.js';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
 
@@ -44,22 +45,27 @@ const loadGovernanceProposalsFx = attach({
     daoId: $currentDaoId,
     accountId: $accountId,
     sort: $governanceProposalSortOrder,
+    status: $governanceSelectedProposalStatus,
   },
-  async effect({daoId, accountId, sort}) {
+  async effect({daoId, accountId, sort, status}) {
+    const search: SFields | SConditionAND = {
+      $and: [
+        {daoId: {$eq: daoId}},
+        {
+          $or: [
+            {kind: {$cont: 'ChangeConfig'}},
+            {kind: {$cont: 'ChangePolicy'}},
+            {kind: {$cont: 'AddMemberToRole'}},
+            {kind: {$cont: 'RemoveMemberFromRole'}},
+          ],
+        },
+      ],
+    };
+
+    addStatusProposalQuery(search, status);
+
     const query = {
-      s: JSON.stringify({
-        $and: [
-          {daoId: {$eq: daoId}},
-          {
-            $or: [
-              {kind: {$cont: 'ChangeConfig'}},
-              {kind: {$cont: 'ChangePolicy'}},
-              {kind: {$cont: 'AddMemberToRole'}},
-              {kind: {$cont: 'RemoveMemberFromRole'}},
-            ],
-          },
-        ],
-      }),
+      s: JSON.stringify(search),
       limit: 20,
       offset: 0,
       sort: [`createdAt,${sort}`],
