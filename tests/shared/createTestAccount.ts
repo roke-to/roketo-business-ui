@@ -9,7 +9,7 @@ export async function createTestAccount() {
   const accountId = `roketo-${Date.now()}-${randomNumber}`;
 
   const {seedPhrase, publicKey} = generateSeedPhrase();
-  const broswerLocalStorageKey = new keyStores.BrowserLocalStorageKeyStore();
+  const broswerLocalStorageKey = new keyStores.InMemoryKeyStore();
 
   const near = await connect({
     networkId: 'testnet',
