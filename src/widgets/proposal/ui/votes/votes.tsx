@@ -40,7 +40,6 @@ export const Votes = ({
   const floorPositivePercent = Math.floor(positivePercent * 10) / 10;
 
   const handleVoteAction = (voteAction: Action) => {
-    console.log('VOTE', proposalId, voteAction);
     multiVote({proposalId, voteAction});
   };
 
