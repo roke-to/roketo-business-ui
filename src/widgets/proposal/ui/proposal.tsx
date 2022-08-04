@@ -37,6 +37,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
     status,
     dao: {numberOfMembers},
     updatedAt,
+    voteStatus,
   } = proposal;
 
   const {t} = useTranslation('proposal');
@@ -64,6 +65,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
           canVote={canVote}
           votePeriodEnd={votePeriodEnd}
           updatedAt={updatedAt}
+          voteStatus={voteStatus}
         />
       </Col>
       <Votes
