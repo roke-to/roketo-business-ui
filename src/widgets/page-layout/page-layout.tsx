@@ -29,10 +29,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
         gap={3}
         withContent
         withBackground={false}
-        className={clsx({[styles.mainContainer]: showSideBar})}
+        className={clsx({[styles.main]: showSideBar})}
       >
         <Header />
-        {children}
+        <div className={styles.content}>{children}</div>
       </Layout>
     </Layout>
   );
