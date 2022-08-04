@@ -32,13 +32,18 @@ jobs:
       - name: Get short sha
         uses: benjlevesque/short-sha@v1.2
         id: short-sha
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
+        id: extract_branch
       - name: Set docker tags
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ matrix.app }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
-          GIT_BRANCH=${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}}
+          export GIT_BRANCH=${{env.GIT_BRANCH}}
           echo 'DOCKER_TAGS<<EOF' >> $GITHUB_ENV
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "gcr.io/main-project-354317/$APP:latest"
@@ -57,6 +62,8 @@ jobs:
           build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet
           push: true
           tags: ${{ env.DOCKER_TAGS }}
+          cache-from: type=registry,ref=gcr.io/main-project-354317/${{ matrix.app }}:${{ steps.extract_branch.outputs.branch }}
+          cache-to: type=inline
 
   publish:
     needs:
@@ -93,7 +100,7 @@ jobs:
         with:
           local: docker-compose.yaml
           remote: ~/services/bizui/docker-compose.yaml
-          host: ${{ secrets.HOST }}
+          host: germes.roke.to
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           privateKey: ${{ secrets.ROKETO_DEPLOYER_KEY }}
       - name: deploy
