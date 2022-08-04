@@ -11,7 +11,7 @@ export interface MultiVoteProps {
 
 export const multiVote = createEvent<MultiVoteProps>();
 
-export const multiVoteFx = attach({
+const multiVoteFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
   },
