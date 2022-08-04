@@ -10,22 +10,22 @@ export type ProposalInput = {
   kind: CreateProposalKind;
 };
 
-enum Action {
+export enum Action {
   // Action to add proposal. Used internally.
-  AddProposal,
+  AddProposal = 'AddProposal',
   // Action to remove given proposal. Used for immediate deletion in special cases.
-  RemoveProposal,
+  RemoveProposal = 'RemoveProposal',
   // Vote to approve given proposal or bounty.
-  VoteApprove,
+  VoteApprove = 'VoteApprove',
   // Vote to reject given proposal or bounty.
-  VoteReject,
+  VoteReject = 'VoteReject',
   // Vote to remove given proposal or bounty (because it's spam).
-  VoteRemove,
+  VoteRemove = 'VoteRemove',
   // Finalize proposal, called when it's expired to return the funds
   // (or in the future can be used for early proposal closure).
-  Finalize,
+  Finalize = 'Finalize',
   // Move a proposal to the hub to shift into another DAO.
-  MoveToHub,
+  MoveToHub = 'MoveToHub',
 }
 
 export class SputnikDaoContract extends Contract {
@@ -116,7 +116,7 @@ export class SputnikDaoContract extends Contract {
    * Memo is logged but not stored in the state.
    * Can be used to leave notes or explain the action.
    */
-  act_proposal!: (id: number, action: Action, memo?: string) => void;
+  act_proposal!: ContractChangeFunction<{id: number; action: Action; memo?: string}>;
 
   /**
    * Add proposal to this DAO.

@@ -37,6 +37,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
     status,
     dao: {numberOfMembers},
     updatedAt,
+    proposalId,
     voteStatus,
   } = proposal;
 
@@ -69,6 +70,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
         />
       </Col>
       <Votes
+        proposalId={proposalId}
         status={status}
         votes={votes}
         canVote={canVote}

@@ -2,7 +2,9 @@ import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {multiVote} from '~/entities/proposal';
 import {Proposal} from '~/shared/api/astro';
+import {Action} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
 import {Col} from '~/shared/ui/components/col';
 import {Thumb, Track} from '~/shared/ui/components/range';
@@ -14,6 +16,7 @@ import {getVotesStatistic, isPositiveStatus} from '~/widgets/proposal/lib';
 import styles from './votes.module.css';
 
 export const Votes = ({
+  proposalId,
   status,
   votes,
   numberOfMembers,
@@ -21,6 +24,7 @@ export const Votes = ({
   updatedAt,
   className,
 }: {
+  proposalId: number;
   status: Proposal['status'];
   votes: Proposal['votes'];
   numberOfMembers: number;
@@ -35,8 +39,9 @@ export const Votes = ({
   const positivePercent = (voteYes / numberOfMembers) * 100;
   const floorPositivePercent = Math.floor(positivePercent * 10) / 10;
 
-  const handleVoteAction = (vote: 'Approve' | 'Reject') => {
-    console.log('VOTE', vote);
+  const handleVoteAction = (voteAction: Action) => {
+    console.log('VOTE', proposalId, voteAction);
+    multiVote({proposalId, voteAction});
   };
 
   return (
