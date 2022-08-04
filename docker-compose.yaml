@@ -1,25 +1,19 @@
 version: '3.3'
 services:
-  ${APP_NAME?Variable not set}:
-    image: gcr.io/main-project-354317/${APP?Variable not set}:${APP_TAG|latest}
+  frontbizui:
+    image: gcr.io/main-project-354317/${APP?Variable not set}:${APP_TAG}
+    container_name: ${APP_NAME}
     networks:
-      - traefik-public
-    deploy:
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=traefik-public
-        - traefik.constraint-label=traefik-public
-        - traefik.http.middlewares.${APP_NAME?Variable not set}-https-redirect.redirectscheme.scheme=https
-        - traefik.http.middlewares.${APP_NAME?Variable not set}-https-redirect.redirectscheme.permanent=true
-        - traefik.http.routers.${APP_NAME?Variable not set}-http.rule=Host(`${APP_NAME?Variable not set}.zeus.roke.to`)
-        - traefik.http.routers.${APP_NAME?Variable not set}-http.entrypoints=http
-        - traefik.http.routers.${APP_NAME?Variable not set}-http.middlewares=${APP_NAME?Variable not set}-https-redirect
-        - traefik.http.routers.${APP_NAME?Variable not set}-https.rule=Host(`${APP_NAME?Variable not set}.zeus.roke.to`)
-        - traefik.http.routers.${APP_NAME?Variable not set}-https.entrypoints=https
-        - traefik.http.routers.${APP_NAME?Variable not set}-https.tls=true
-        - traefik.http.routers.${APP_NAME?Variable not set}-https.tls.certresolver=le
-        - traefik.http.services.${APP_NAME?Variable not set}.loadbalancer.server.port=80
+      - proxy
+    logging:
+      driver: json-file
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=80"
+      - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(`${APP_NAME}.germes.roke.to`)"
 networks:
-  traefik-public:
+  proxy:
     external:
-      name: traefik-public
+      name: "traefik-global-proxy"

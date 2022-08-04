@@ -88,6 +88,14 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
         id: extract_branch
+      - name: Copy single file to remote
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: docker-compose.yaml
+          remote: ~/services/bizui/docker-compose.yaml
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.ROKETO_DEPLOYER_USER }}
+          privateKey: ${{ secrets.ROKETO_DEPLOYER_KEY }}
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
@@ -101,21 +109,19 @@ jobs:
             export APP=${{env.APP}}
             export SHORT_SHA=${{env.SHORT_SHA}}
             export GIT_BRANCH=${{env.GIT_BRANCH}}
-            export
+            cd ~/services/bizui/
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               export APP_NAME=$APP
               export APP_TAG=main-$SHORT_SHA
-              docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             elif [ "$TAG_NAME" != "" ]; then
               export APP_NAME=$APP-$TAG_NAME
               export APP_TAG=main-$SHORT_SHA
-              docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             else
               export APP_NAME=$APP-branch-$GIT_BRANCH
               export APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
-              docker stack deploy -c docker-compose.yaml $APP_NAME --with-registry-auth
             fi
-          host: zeus.roke.to
+            docker-compose up -d
+          host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           args: "-tt"
