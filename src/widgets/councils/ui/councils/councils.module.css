@@ -30,7 +30,7 @@
   border-radius: theme('spacing.2');
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .councilWidget {
     flex-direction: column;
     box-shadow: theme('dropShadow.DEFAULT');

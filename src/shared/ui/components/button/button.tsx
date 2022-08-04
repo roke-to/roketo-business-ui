@@ -49,7 +49,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           styles[variant],
           styles[width],
           {[styles.hasIcon]: (startIcon || endIcon) && !hasGap},
-          `gap-${gap}`,
+          gap && `gap-${gap}`,
           className,
         )}
       >

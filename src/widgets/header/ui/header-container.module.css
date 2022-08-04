@@ -6,7 +6,7 @@
   display: none;
 }
 
-@media screen and (max-width: theme('screens.tablet')) {
+@media screen(tablet) {
   .burgerMenu {
     display: flex;
   }

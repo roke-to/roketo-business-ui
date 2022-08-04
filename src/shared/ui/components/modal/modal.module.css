@@ -29,11 +29,11 @@
 
   padding: theme('spacing.4') theme('spacing.8') theme('spacing.8') theme('spacing.8');
 
-  @media (min-width: theme('screens.mobile')) {
+  @media screen(mobile) {
     min-width: 774px;
   }
 
-  @media (max-width: theme('screens.mobile')) {
+  @media screen(mobile) {
     padding: theme('spacing.4');
     border-radius: theme('borderRadius.3xl');
   }
@@ -63,7 +63,7 @@
     color: theme('colors.black');
   }
 
-  @media (max-width: theme('screens.mobile')) {
+  @media screen(mobile) {
     display: none;
   }
 }
@@ -80,7 +80,7 @@
 
   color: theme('colors.white');
 
-  @media (max-width: theme('screens.mobile')) {
+  @media screen(mobile) {
     display: block;
   }
 }

@@ -32,7 +32,7 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
     <Tag
       ref={ref}
       className={clsx(
-        `gap-${gap}`,
+        gap && `gap-${gap}`,
         styles[type],
         {
           [styles.scene]: withBackground,

@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  line-height: 1.25rem;
+  line-height: 2rem;
   cursor: pointer;
 }
 
@@ -16,10 +16,4 @@
 
 .disabled {
   opacity: 0.5;
-}
-
-@media screen and (max-width: theme('screens.mobile')) {
-  .root {
-    line-height: 2.5rem;
-  }
 }

@@ -37,7 +37,7 @@
   }
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .proposal {
     flex-direction: column;
     gap: 1rem;

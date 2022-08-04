@@ -17,7 +17,7 @@
   display: none;
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .root {
     display: flex;
     width: 100%;

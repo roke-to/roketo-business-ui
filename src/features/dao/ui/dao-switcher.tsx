@@ -17,7 +17,7 @@ export const DaoSwitcher = () => {
 
   return (
     <DropdownMenu label={daoId} size='xxs' variant='clean'>
-      <DropdownContent selected={daoId} handleChange={handleChange} gap={3} size='xxs' offset='xs'>
+      <DropdownContent selected={daoId} handleChange={handleChange} size='xxs' offset='xs'>
         {userDaos.map((id) => (
           <DropdownItem key={id}>
             <RadioGroupItem value={id} label={id} checked={id === daoId} />

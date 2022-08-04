@@ -28,17 +28,29 @@ export interface IDropdownContentProps extends React.HTMLAttributes<HTMLUListEle
 
 export const DropdownContent = React.forwardRef<HTMLUListElement, IDropdownContentProps>(
   (
-    {selected, handleChange, size = 'md', direction = 'start', gap = 0, offset = '', children},
+    {
+      selected,
+      handleChange,
+      size = 'md',
+      direction = 'start',
+      gap = 0,
+      offset = '',
+      children,
+      className,
+      ...props
+    },
     ref,
   ) => (
     <ul
+      {...props}
       ref={ref}
       className={clsx(
         styles.contentBlock,
         styles[size],
         styles[direction],
         styles[`offset_${offset}`],
-        `gap-${gap}`,
+        gap && `gap-${gap}`,
+        className,
       )}
     >
       {React.Children.map(children, (child, id) => {

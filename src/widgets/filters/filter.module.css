@@ -22,7 +22,7 @@
   width: calc(100vw - 2rem);
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .filtersContainer {
     margin-top: 1.25rem;
     margin-bottom: 0.25rem;
