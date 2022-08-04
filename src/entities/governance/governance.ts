@@ -1,19 +1,24 @@
-import BN from 'bn.js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
+import isEmpty from 'lodash/isEmpty';
 
-import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-contract-role';
-import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
 import {astroApi, Proposal} from '~/shared/api/astro';
+import {
+  mapAddCouncilOptions,
+  mapChangeQuorumOptions,
+  mapRemoveCouncilOptions,
+} from '~/shared/api/near';
+import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {getQuorum} from '~/shared/lib/get-quorum';
+import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
+import {SConditionAND, SFields} from '@nestjsx/crud-request';
+
 import {$currentDao, $currentDaoId, $sputnikDaoContract} from '../dao';
 import {$accountId} from '../wallet';
-
-// import BN from 'bn.js';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
 
@@ -44,22 +49,27 @@ const loadGovernanceProposalsFx = attach({
     daoId: $currentDaoId,
     accountId: $accountId,
     sort: $governanceProposalSortOrder,
+    status: $governanceSelectedProposalStatus,
   },
-  async effect({daoId, accountId, sort}) {
+  async effect({daoId, accountId, sort, status}) {
+    const search: SFields | SConditionAND = {
+      $and: [
+        {daoId: {$eq: daoId}},
+        {
+          $or: [
+            {kind: {$cont: 'ChangeConfig'}},
+            {kind: {$cont: 'ChangePolicy'}},
+            {kind: {$cont: 'AddMemberToRole'}},
+            {kind: {$cont: 'RemoveMemberFromRole'}},
+          ],
+        },
+      ],
+    };
+
+    addStatusProposalQuery(search, status);
+
     const query = {
-      s: JSON.stringify({
-        $and: [
-          {daoId: {$eq: daoId}},
-          {
-            $or: [
-              {kind: {$cont: 'ChangeConfig'}},
-              {kind: {$cont: 'ChangePolicy'}},
-              {kind: {$cont: 'AddMemberToRole'}},
-              {kind: {$cont: 'RemoveMemberFromRole'}},
-            ],
-          },
-        ],
-      }),
+      s: JSON.stringify(search),
       limit: 20,
       offset: 0,
       sort: [`createdAt,${sort}`],
@@ -109,15 +119,8 @@ sample({
 
 //  ------------ proposals change policy  ------------
 
-export type CouncilListFormFieldItem = {council: string; action: 'delete' | 'add'};
-
-const getCouncilListInitialState = (
-  councils: string[],
-  accountId: string,
-): CouncilListFormFieldItem[] =>
-  councils
-    .filter((council) => council !== accountId)
-    .map((council) => ({council, action: 'delete'}));
+const getCouncilListInitialState = (councils: string[], accountId: string): string[] =>
+  councils.filter((council) => council !== accountId);
 
 const initChangePolicyProposalFormFx = attach({
   source: {
@@ -131,14 +134,27 @@ const initChangePolicyProposalFormFx = attach({
 
     const {
       policy: {
+        roles,
         defaultVotePolicy: {ratio},
       },
     } = currentDao;
 
-    const quorum = getQuorum(ratio);
+    const councilRole = roles.find(({name}) => name === COUNCIL);
+
+    let quorum: number;
+
+    if (councilRole && !isEmpty(councilRole.votePolicy)) {
+      // We don't change some votePolicy item, only all collection
+      const keysVotePolicy = Object.keys(councilRole.votePolicy);
+      const key = keysVotePolicy[0];
+      // all `ratio` props equal
+      quorum = getQuorum(councilRole.votePolicy[key].ratio);
+    } else {
+      quorum = getQuorum(ratio);
+    }
 
     return {
-      type: 'changePolicy',
+      type: 'changeQuorum',
       quorum,
       councilAddress: '.near',
       councilList: getCouncilListInitialState(currentDao.council, accountId),
@@ -159,7 +175,7 @@ sample({
 export const changePolicyProposalForm = createForm({
   fields: {
     type: {
-      init: 'changePolicy',
+      init: 'changeQuorum',
       rules: [validators.required],
     },
     quorum: {
@@ -167,9 +183,10 @@ export const changePolicyProposalForm = createForm({
     },
     councilAddress: {
       init: '.near',
+      rules: [validators.required],
     },
     councilList: {
-      init: [] as CouncilListFormFieldItem[],
+      init: [] as string[],
     },
     amount: {
       init: '1',
@@ -204,13 +221,9 @@ export type ChangePolicyProposalFormFields = typeof changePolicyProposalForm['fi
 export const changePolicyProposalFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
-    accountId: $accountId,
     currentDao: $currentDao,
   },
-  async effect(
-    {sputnikDaoContract, accountId, currentDao},
-    data: FormValues<ChangePolicyProposalFormFields>,
-  ) {
+  async effect({sputnikDaoContract, currentDao}, data: FormValues<ChangePolicyProposalFormFields>) {
     if (!sputnikDaoContract) {
       // TODO: show error on form
       throw new Error('SputnikDaoContract is not initialized');
@@ -220,130 +233,20 @@ export const changePolicyProposalFx = attach({
       throw new Error('You should create dao');
     }
 
-    console.log('change policy ', sputnikDaoContract, accountId, data);
-
-    const createdProposals: Promise<void>[] = [];
-
-    const updatedCouncilList = data.councilList.reduce(
-      (acc, current) => {
-        if (currentDao.council.includes(current.council) && current.action === 'add') {
-          acc.RemoveMemberFromRole.push(current.council);
-        }
-        if (!currentDao.council.includes(current.council) && current.action === 'delete') {
-          acc.AddMemberToRole.push(current.council);
-        }
-        return acc;
-      },
-      {RemoveMemberFromRole: [] as string[], AddMemberToRole: [] as string[]},
-    );
-
-    console.log('updatedCouncilList', updatedCouncilList);
-
-    const gas = new BN('300000000000000');
-    const gasForChangeQuorum = new BN('230000000000000');
-    const attachedDeposit = new BN('100000000000000000000000'); // bond 1e+23 0.1 NEAR
-
-    updatedCouncilList.RemoveMemberFromRole.forEach((council) => {
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                RemoveMemberFromRole: {
-                  member_id: council,
-                  role: 'council',
-                },
-              },
-            },
-          },
-          gas,
-          amount: attachedDeposit,
-        }),
-      );
-    });
-
-    updatedCouncilList.AddMemberToRole.forEach((council) => {
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                AddMemberToRole: {
-                  member_id: council,
-                  role: 'council',
-                },
-              },
-            },
-          },
-          gas,
-          amount: attachedDeposit,
-        }),
-      );
-    });
-
-    // TODO change condition currentDao.policy.defaultVotePolicy.quorum
-    if (data.quorum !== 50) {
-      const {
-        policy: {
-          bountyBond,
-          proposalBond,
-          proposalPeriod,
-          defaultVotePolicy: {weightKind, ratio, quorum},
-          bountyForgivenessPeriod,
-        },
-      } = currentDao;
-
-      const otherRoles = currentDao.policy.roles
-        .filter(({name}) => name !== 'council')
-        .map(dataRoleToContractRole);
-
-      const indexCouncilRole = currentDao.policy.roles.findIndex(({name}) => name === 'council');
-
-      const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
-
-      createdProposals.push(
-        sputnikDaoContract.add_proposal({
-          args: {
-            proposal: {
-              description: data.description,
-              kind: {
-                ChangePolicy: {
-                  policy: {
-                    roles: [
-                      ...otherRoles,
-                      {
-                        name,
-                        kind: {
-                          Group: accountIds,
-                        },
-                        permissions,
-                        vote_policy: generateVotePolicyForEachProposalType(data.quorum),
-                      },
-                    ],
-                    default_vote_policy: {
-                      quorum,
-                      threshold: ratio,
-                      weight_kind: weightKind,
-                    },
-                    proposal_bond: proposalBond,
-                    proposal_period: proposalPeriod,
-                    bounty_bond: bountyBond,
-                    bounty_forgiveness_period: bountyForgivenessPeriod,
-                  },
-                },
-              },
-            },
-          },
-          gas: gasForChangeQuorum,
-          amount: attachedDeposit,
-        }),
-      );
-    }
-
     try {
-      await Promise.all(createdProposals);
+      switch (data.type) {
+        case 'removeCouncil':
+          await sputnikDaoContract.add_proposal(mapRemoveCouncilOptions(currentDao, data));
+          break;
+        case 'addCouncil':
+          await sputnikDaoContract.add_proposal(mapAddCouncilOptions(currentDao, data));
+          break;
+        case 'changeQuorum':
+          await sputnikDaoContract.add_proposal(mapChangeQuorumOptions(currentDao, data));
+          break;
+        default:
+          throw Error(`We don't recognize action for ${data.type}`);
+      }
     } catch (err) {
       console.log('change policy error', err);
     }

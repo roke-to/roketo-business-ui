@@ -1,77 +1,26 @@
 import {useStore} from 'effector-react';
-import React, {useCallback} from 'react';
+import React from 'react';
 
-import {CouncilListFormFieldItem} from '~/entities/governance';
 import {$accountId} from '~/entities/wallet';
-import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
-import {Range} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 import {CouncilControl} from '~/widgets/proposal/ui/council-control';
+import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module.css';
 
-import styles from './change-policy.module.css';
-
-export const ChangePolicy = ({fields, t, pending}: any) => {
+export const RemoveCouncil = ({fields, t, pending}: any) => {
   const accountId = useStore($accountId);
 
-  const handleAddTypedCouncil = () => {
-    const updatedCouncilList = [
-      ...fields.councilList.value,
-      {council: fields.councilAddress.value, action: 'delete'},
-    ];
-
-    fields.councilList.onChange(updatedCouncilList);
+  const handleClick = (council: string) => {
+    const updatedValue = fields.councilAddress.value === council ? '' : council;
+    fields.councilAddress.onChange(updatedValue);
   };
-
-  const handleClick = useCallback(
-    ({council: currentCouncil, action: currentAction}: CouncilListFormFieldItem) => {
-      const updatedCouncilList = fields.councilList.value.map(
-        ({council, action}: CouncilListFormFieldItem) =>
-          council === currentCouncil
-            ? {council, action: currentAction === 'add' ? 'delete' : 'add'}
-            : {council, action},
-      );
-      fields.councilList.onChange(updatedCouncilList);
-    },
-    [fields.councilList],
-  );
 
   return (
     <>
-      <Row gap='xl' className='items-start'>
-        <Label
-          content={`${t('createForm.quorum')} ${fields.quorum.value}%`}
-          error={fields.quorum.errorText()}
-          className={styles.quorum}
-        >
-          <Range value={fields.quorum.value} onChange={fields.quorum.onChange} />
-        </Label>
-      </Row>
       <Row gap='xl' className={styles.councilSection}>
-        <Row gap='md' className='items-end'>
-          <Label
-            content={t('createForm.councilAddressLabel')}
-            error={fields.councilAddress.errorText()}
-            className={styles.councilAddressLabel}
-          >
-            <Input
-              name='councilAddress'
-              value={fields.councilAddress.value}
-              disabled={pending}
-              placeholder={t('createForm.councilAddressPlaceholder')}
-              onChange={fields.councilAddress.onChange}
-            />
-          </Label>
-          <Button
-            startIcon={<Plus className='w-6 h-6' />}
-            className='w-12 p-3 mb-1'
-            onClick={handleAddTypedCouncil}
-          />
-        </Row>
         <Label
           content={t('createForm.councilListLabel')}
           error={fields.councilList.errorText()}
@@ -81,11 +30,11 @@ export const ChangePolicy = ({fields, t, pending}: any) => {
             <Typography as='span' weight='bold'>
               {accountId}
             </Typography>
-            {fields.councilList.value.map(({council, action}: CouncilListFormFieldItem) => (
+            {fields.councilList.value.map((council: string) => (
               <CouncilControl
                 key={council}
                 council={council}
-                action={action}
+                willDelete={fields.councilAddress.value === council}
                 onClick={handleClick}
               />
             ))}

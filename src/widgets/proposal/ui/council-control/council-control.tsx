@@ -10,24 +10,29 @@ import styles from './council-control.module.css';
 
 export const CouncilControl = ({
   council,
-  action,
+  willDelete,
   onClick,
 }: {
   council: string;
-  action?: 'delete' | 'add';
-  onClick(props: {council: string; action: 'delete' | 'add'}): void;
+  willDelete: boolean;
+  onClick(council: string): void;
 }) => (
   <Row className='justify-between items-start'>
-    <Typography as='span' weight='bold' className={styles[`${action}Text`]}>
+    <Typography
+      as='span'
+      weight='bold'
+      className={clsx({
+        [styles.text]: willDelete,
+        [styles.deleteText]: !willDelete,
+      })}
+    >
       {council}
     </Typography>
-    {action && (
-      <Button
-        size='xxs'
-        startIcon={<Plus className={clsx(styles.icon, styles[`${action}Icon`])} />}
-        className={styles.button}
-        onClick={() => onClick({council, action})}
-      />
-    )}
+    <Button
+      size='xxs'
+      startIcon={<Plus className={clsx(styles.icon, {[styles.deleteIcon]: !willDelete})} />}
+      className={styles.button}
+      onClick={() => onClick(council)}
+    />
   </Row>
 );
