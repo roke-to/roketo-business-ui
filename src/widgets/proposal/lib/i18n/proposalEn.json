@@ -5,6 +5,7 @@
   "description": "Description",
   "quorum": "Quorum",
   "approved": "Approved",
+  "timeExpired": "Time expired",
   "createForm": {
     "proposalTypeLabel": "Proposal type",
     "proposerLabel": "Proposer",

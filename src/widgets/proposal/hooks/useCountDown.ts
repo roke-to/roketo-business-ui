@@ -36,7 +36,7 @@ export function useCountdown(endsAt: string | number): string | null | undefined
   const start = new Date().getTime();
   const [started, setStarted] = useState(false);
 
-  const diff = differenceInMilliseconds(start, endsAtFormatted);
+  const diff = differenceInMilliseconds(endsAtFormatted, start);
 
   const [timeLeft, actions] = useCountDown(diff, 1000 * 15);
 
