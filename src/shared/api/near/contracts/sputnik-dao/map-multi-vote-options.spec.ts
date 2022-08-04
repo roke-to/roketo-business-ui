@@ -12,6 +12,12 @@ describe('Multi vote ', () => {
         id: proposalId,
         action,
       },
+      gas: {
+        length: 2,
+        negative: 0,
+        red: null,
+        words: [56090624, 447034],
+      },
     });
   });
 });
