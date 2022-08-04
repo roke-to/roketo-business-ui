@@ -95,14 +95,15 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
         id: extract_branch
-      - name: Copy single file to remote
-        uses: garygrossgarten/github-action-scp@release
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
         with:
-          local: docker-compose.yaml
-          remote: ~/services/bizui/docker-compose.yaml
           host: germes.roke.to
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
-          privateKey: ${{ secrets.ROKETO_DEPLOYER_KEY }}
+          key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
+          port: 22
+          source: "docker-compose.yaml"
+          target: "~/services/bizui/docker-compose.yaml"
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
