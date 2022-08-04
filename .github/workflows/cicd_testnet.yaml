@@ -62,7 +62,7 @@ jobs:
           build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet
           push: true
           tags: ${{ env.DOCKER_TAGS }}
-          cache-from: type=registry,ref=gcr.io/main-project-354317/${{ matrix.app }}:${{ steps.extract_branch.outputs.branch }}
+          cache-from: type=registry,ref=gcr.io/main-project-354317/${{ matrix.app }}:latest
           cache-to: type=inline
 
   publish:
@@ -103,7 +103,7 @@ jobs:
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
           source: "docker-compose.yaml"
-          target: "~/services/bizui/docker-compose.yaml"
+          target: "~/services/bizui/"
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
