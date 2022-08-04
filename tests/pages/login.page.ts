@@ -43,7 +43,7 @@ export class LoginPage {
     await page.locator('[data-test-id="seedPhraseRecoveryInput"]').fill(seedPhrase);
 
     await page.locator('[data-test-id="seedPhraseRecoverySubmitButton"]').click();
-    await expect(page).toHaveURL(/https:\/\/wallet.testnet.near.org\/login/);
+    await expect(page).toHaveURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
 
     await page.locator('.button-group button.blue').click();
 
