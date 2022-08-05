@@ -65,6 +65,7 @@ export default {
       '3xl': '1.5rem',
       '4xl': '2rem',
       full: '9999px',
+      circle: '50%',
     },
     gap: ({theme}) => ({
       ...theme('spacing'),

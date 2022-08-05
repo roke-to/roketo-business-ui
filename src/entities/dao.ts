@@ -49,6 +49,12 @@ export const createDaoForm = createForm({
       // TODO: async validate address of contract
       rules: [validators.required],
     },
+    councilAddress: {
+      init: '',
+    },
+    councilList: {
+      init: [] as string[],
+    },
   },
   validateOn: ['submit'],
 });
@@ -80,10 +86,13 @@ export const createDaoFx = attach({
     }
 
     await sputnikFactoryDaoContract.create({
-      args: mapCreateArgs({...data, accountId}),
+      args: mapCreateArgs({...data, accountId, councilList: data.councilList}),
       gas: nearApi.DEFAULT_FUNCTION_CALL_GAS, // 300 TGas
       amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
     });
+
+    // TODO: подумать как возвращать после редиректа с нира, потому что после редиректа
+    // с нира нет информации о последнем созданном дао
   },
 });
 

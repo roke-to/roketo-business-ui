@@ -1,0 +1,42 @@
+.root {
+  border-radius: theme('borderRadius.circle');
+  padding: 0;
+}
+
+.root svg {
+  width: 16px;
+}
+
+/* sizes */
+.xxs {
+  @apply h-5 w-5;
+}
+.xs {
+  @apply h-8 w-8;
+}
+.sm {
+  @apply h-8 w-8;
+}
+.md {
+  @apply h-12 w-12;
+}
+.lg {
+  @apply h-16 w-16;
+}
+
+/* sizes */
+.xxs svg {
+  @apply w-3;
+}
+.xs svg {
+  @apply w-6;
+}
+.sm svg {
+  @apply w-6;
+}
+.md svg {
+  @apply w-6;
+}
+.lg svg {
+  @apply w-14;
+}

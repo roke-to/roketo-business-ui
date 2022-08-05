@@ -6,11 +6,13 @@ export const mapCreateArgs = ({
   address,
   displayName = address,
   accountId,
+  councilList = [],
 }: {
   name: string;
   address: string;
   accountId: string;
   displayName?: string;
+  councilList?: string[];
 }) => ({
   name,
   args: jsonToBase64({
@@ -23,7 +25,7 @@ export const mapCreateArgs = ({
         {
           name: COUNCIL,
           slug: COUNCIL,
-          kind: {Group: [accountId]},
+          kind: {Group: [accountId, ...councilList]},
           permissions: [
             '*:Finalize',
             'policy:AddProposal',
