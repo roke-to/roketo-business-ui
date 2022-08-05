@@ -3,16 +3,10 @@
     "browser": true,
     "node": true
   },
-  "plugins": [
-    "prettier",
-    "boundaries"
-  ],
+  "plugins": ["prettier", "boundaries"],
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
+      "files": ["*.ts", "*.tsx"],
       "extends": [
         "airbnb",
         "airbnb/hooks",
@@ -25,10 +19,7 @@
       },
       "settings": {
         "import/parsers": {
-          "@typescript-eslint/parser": [
-            ".ts",
-            ".tsx"
-          ]
+          "@typescript-eslint/parser": [".ts", ".tsx"]
         },
         "import/resolver": {
           "typescript": {
@@ -40,45 +31,27 @@
         "boundaries/elements": [
           {
             "type": "app",
-            "pattern": [
-              "src/app/*",
-              "src/app/"
-            ]
+            "pattern": ["src/app/*", "src/app/"]
           },
           {
             "type": "pages",
-            "pattern": [
-              "src/pages/*",
-              "src/pages/"
-            ]
+            "pattern": ["src/pages/*", "src/pages/"]
           },
           {
             "type": "widgets",
-            "pattern": [
-              "src/widgets/*",
-              "src/widgets/"
-            ]
+            "pattern": ["src/widgets/*", "src/widgets/"]
           },
           {
             "type": "features",
-            "pattern": [
-              "src/features/*",
-              "src/features/"
-            ]
+            "pattern": ["src/features/*", "src/features/"]
           },
           {
             "type": "entities",
-            "pattern": [
-              "src/entities/*",
-              "src/entities/"
-            ]
+            "pattern": ["src/entities/*", "src/entities/"]
           },
           {
             "type": "shared",
-            "pattern": [
-              "src/shared/*",
-              "src/shared/"
-            ]
+            "pattern": ["src/shared/*", "src/shared/"]
           }
         ]
       },
@@ -109,12 +82,12 @@
             "default": "disallow",
             "message": "${file.type} is not allowed to import ${dependency.type}",
             "rules": [
-              { "from": "app", "allow": ["pages", "widgets", "features", "entities", "shared"] },
-              { "from": "pages", "allow": ["widgets", "features", "entities", "shared"] },
-              { "from": "widgets", "allow": ["features", "entities", "shared"] },
-              { "from": "features", "allow": ["entities", "shared"] },
-              { "from": "entities", "allow": ["entities", "shared"] },
-              { "from": "shared", "allow": ["shared"] }
+              {"from": "app", "allow": ["pages", "widgets", "features", "entities", "shared"]},
+              {"from": "pages", "allow": ["widgets", "features", "entities", "shared"]},
+              {"from": "widgets", "allow": ["widgets", "features", "entities", "shared"]},
+              {"from": "features", "allow": ["entities", "shared"]},
+              {"from": "entities", "allow": ["entities", "shared"]},
+              {"from": "shared", "allow": ["shared"]}
             ]
           }
         ]
@@ -128,9 +101,7 @@
       }
     },
     {
-      "files": [
-        "vite.config.js"
-      ],
+      "files": ["vite.config.js"],
       "rules": {
         "import/no-extraneous-dependencies": "off"
       }
