@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 
+import type {Employee} from '~/shared/types/employee';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Label} from '~/shared/ui/components/label';
@@ -9,7 +10,6 @@ import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-import type {Employee} from '../model/types';
 import styles from './employee-card.module.css';
 import {Status} from './status';
 

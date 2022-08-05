@@ -1,4 +1,3 @@
-export * as employeesModel from './model';
-export type {Employee} from './model/types';
+export * as employeesModel from './model/employees-model';
 export {EmployeeCard} from './ui/employee-card';
 export {EmployeeListItem} from './ui/employee-list-item';

@@ -2,11 +2,11 @@ import clsx from 'clsx';
 import React from 'react';
 
 import {Status} from '~/entities/employees/ui/status';
+import type {Employee} from '~/shared/types/employee';
 import {Button} from '~/shared/ui/components/button';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-import type {Employee} from '../model/types';
 import styles from './employee-list-item.module.css';
 
 interface Props {
