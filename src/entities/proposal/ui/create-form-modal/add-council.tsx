@@ -10,7 +10,8 @@ import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
-import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module.css';
+
+import styles from './change-policy.module.css';
 
 export const AddCouncil = ({fields, t, pending}: any) => {
   const [wasAdded, setWasAdded] = useState(false);

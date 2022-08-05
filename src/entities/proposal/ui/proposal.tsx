@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
+import {StatusRow} from '~/entities/proposal/ui/status-row';
+import {Votes} from '~/entities/proposal/ui/votes';
 import {
   ProposalKindSwaggerDto as BaseProposalKindSwaggerDto,
   Proposal as ProposalType,
@@ -9,9 +12,6 @@ import {
 import {formatYoktoValue} from '~/shared/lib/currency';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
-import {ASTRO_DATA_SEPARATOR} from '~/widgets/proposal/lib';
-import {StatusRow} from '~/widgets/proposal/ui/status-row';
-import {Votes} from '~/widgets/proposal/ui/votes';
 
 import styles from './proposal.module.css';
 

@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import React, {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {Controls} from '~/entities/proposal/controls';
+import {getVotesStatistic, isPositiveStatus} from '~/entities/proposal/lib';
 import {multiVote} from '~/entities/proposal/model/proposal';
 import {Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
@@ -10,8 +12,6 @@ import {Col} from '~/shared/ui/components/col';
 import {Thumb, Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
-import {Controls} from '~/widgets/proposal/controls';
-import {getVotesStatistic, isPositiveStatus} from '~/widgets/proposal/lib';
 
 import styles from './votes.module.css';
 

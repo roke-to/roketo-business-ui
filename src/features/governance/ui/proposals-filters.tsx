@@ -1,6 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {ProposalsFilters} from '~/entities/filters/proposals-filters';
 import {
   $governanceProposalLoading,
   $governanceProposalSortOrder,
@@ -8,7 +9,6 @@ import {
   changeGovernanceProposalSelectedStatus,
   changeGovernanceProposalSortOrder,
 } from '~/entities/governance';
-import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
 
 export const GovernanceProposalsFilters = () => {
   const governanceSelectedProposalStatus = useStore($governanceSelectedProposalStatus);

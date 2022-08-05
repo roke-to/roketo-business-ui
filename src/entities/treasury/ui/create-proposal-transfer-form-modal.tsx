@@ -3,9 +3,9 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {CreateProposalForm} from '~/entities/proposal/ui/create-form-modal/create-proposal-form';
 import {createProposalForm, createProposalFx} from '~/entities/treasury/model/treasury';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
-import {CreateProposalForm} from '~/widgets/proposal/ui/create-form-modal/create-proposal-form';
 
 export const CreateProposalTransferFormModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');

@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {loadDao, loadDaos} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
-import {CouncilsList} from '~/widgets/councils/ui/councils-list';
 
 import {ChangePolicyButton} from './change-policy-button';
 import styles from './councils.module.css';

@@ -4,8 +4,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {changePolicyProposalForm, changePolicyProposalFx} from '~/entities/governance';
+import {CreateProposalForm} from '~/entities/proposal/ui/create-form-modal';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
-import {CreateProposalForm} from '~/widgets/proposal/ui/create-form-modal';
 
 export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');

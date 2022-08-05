@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {getVotesStatistic} from '~/entities/proposal/lib/getVotesStatistic';
+import styles from '~/entities/proposal/ui/votes/votes.module.css';
 import {$accountId} from '~/entities/wallet';
 import {Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
@@ -9,8 +11,6 @@ import {Control} from '~/shared/ui/components/control';
 import {Row} from '~/shared/ui/components/row';
 import {ReactComponent as Minus} from '~/shared/ui/icons/minus.svg';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
-import {getVotesStatistic} from '~/widgets/proposal/lib';
-import styles from '~/widgets/proposal/ui/votes/votes.module.css';
 
 export const Controls = ({
   votes,

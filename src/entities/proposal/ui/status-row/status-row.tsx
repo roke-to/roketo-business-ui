@@ -1,15 +1,16 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {Controls} from '~/entities/proposal/controls';
+import {useCountdown} from '~/entities/proposal/hooks/useCountDown';
+import {isPositiveStatus} from '~/entities/proposal/lib';
 import {Proposal} from '~/shared/api/astro';
 import {formatISODate, toMilliseconds} from '~/shared/lib/dateFormat';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Clock} from '~/shared/ui/icons/clock.svg';
-import {Controls} from '~/widgets/proposal/controls';
-import {useCountdown} from '~/widgets/proposal/hooks/useCountDown';
-import {isPositiveStatus} from '~/widgets/proposal/lib';
-import styles from '~/widgets/proposal/ui/proposal.module.css';
+
+import styles from '../proposal.module.css';
 
 export const StatusRow = ({
   status,

@@ -2,6 +2,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {ProposalsFilters} from '~/entities/filters/proposals-filters';
 import {
   $tokenBalances,
   $treasuryProposalLoading,
@@ -20,7 +21,6 @@ import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
-import {ProposalsFilters} from '~/widgets/filters/proposals-filters';
 
 export const Treasury = () => {
   const {t} = useTranslation('proposal');

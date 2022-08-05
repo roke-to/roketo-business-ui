@@ -4,7 +4,8 @@ import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Range} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
-import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module.css';
+
+import styles from './change-policy.module.css';
 
 export const ChangeQuorum = ({fields, t, pending}: any) => (
   <>

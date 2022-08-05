@@ -1,14 +1,15 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {CouncilControl} from '~/entities/proposal/ui/council-control';
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
-import {CouncilControl} from '~/widgets/proposal/ui/council-control';
-import styles from '~/widgets/proposal/ui/create-form-modal/change-policy.module.css';
+
+import styles from './change-policy.module.css';
 
 export const RemoveCouncil = ({fields, t, pending}: any) => {
   const accountId = useStore($accountId);

@@ -1,15 +1,15 @@
 import i18n, {ResourceLanguage} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
+import councilsEn from '../entities/councils/lib/i18n/councilsEn.json';
 // TODO: по FSD этот файл должен быть гденить в app, в shared не должно быть импортов из верхних слоев
-import employeesEn from '../../entities/employees/i18n/employeesEn.json';
-import authEn from '../../features/auth/i18n/authEn.json';
-import daoEn from '../../features/dao/i18n/daoEn.json';
-import treasuryEn from '../../pages/treasury/i18n/treasuryEn.json';
-import councilsEn from '../../widgets/councils/lib/i18n/councilsEn.json';
-import proposalFiltersEn from '../../widgets/filters/lib/i18n/proposalFiltersEn.json';
-import proposalEn from '../../widgets/proposal/lib/i18n/proposalEn.json';
-import validatorsEn from '../lib/i18n/validatorsEn.json';
+import employeesEn from '../entities/employees/lib/i18n/employeesEn.json';
+import proposalFiltersEn from '../entities/filters/lib/i18n/proposalFiltersEn.json';
+import proposalEn from '../entities/proposal/lib/i18n/proposalEn.json';
+import treasuryEn from '../entities/treasury/lib/i18n/treasuryEn.json';
+import authEn from '../features/auth/lib/i18n/authEn.json';
+import daoEn from '../features/dao/lib/i18n/daoEn.json';
+import validatorsEn from '../shared/lib/i18n/validatorsEn.json';
 
 export type Locale = 'en';
 

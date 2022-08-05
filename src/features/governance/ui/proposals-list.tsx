@@ -6,8 +6,8 @@ import {
   $governanceSelectedProposalStatus,
   loadGovernanceProposals,
 } from '~/entities/governance';
-import {Proposal} from '~/widgets/proposal';
-import {EmptyProposalList} from '~/widgets/proposal/ui/empty-proposal-list';
+import {Proposal} from '~/entities/proposal';
+import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
 
 export const ProposalsList = () => {
   const governanceProposals = useStore($governanceProposals);

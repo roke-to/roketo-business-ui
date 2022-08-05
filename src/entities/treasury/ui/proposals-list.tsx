@@ -1,14 +1,14 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {Proposal} from '~/entities/proposal';
+import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
 import {
   $treasuryProposals,
   $treasurySelectedProposalKind,
   $treasurySelectedProposalStatus,
   loadTreasuryProposals,
 } from '~/entities/treasury/model/treasury';
-import {Proposal} from '~/widgets/proposal';
-import {EmptyProposalList} from '~/widgets/proposal/ui/empty-proposal-list';
 
 export const ProposalsList = () => {
   const treasuryProposal = useStore($treasuryProposals);
