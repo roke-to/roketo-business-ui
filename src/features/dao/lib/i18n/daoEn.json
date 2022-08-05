@@ -21,7 +21,7 @@
     "submitDaoName": "Create DAO",
     "back": "Cancel",
     "addressLabel": "Address",
-    "addressPlaceholder": "'newdaoname.sputnikv2.testnet'",
+    "addressPlaceholder": "newdaoname.sputnikv2.testnet",
     "nameLabel": "Name",
     "namePlaceholder": "New DAO Name"
   }

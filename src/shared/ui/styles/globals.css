@@ -48,6 +48,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-x: none;
+  color: theme('colors.black');
 }
 
 li {

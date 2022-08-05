@@ -1,11 +1,10 @@
-import * as nearApi from 'near-api-js';
 import decamelize from 'decamelize';
 import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
 import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
 import {
-  mapCreateArgs,
+  mapCreateOptions,
   NearInstance,
   SputnikDaoContract,
   SputnikFactoryDaoContract,
@@ -85,11 +84,9 @@ export const createDaoFx = attach({
       throw new Error('SputnikFactoryDaoContract is not initialized');
     }
 
-    await sputnikFactoryDaoContract.create({
-      args: mapCreateArgs({...data, accountId, councilList: data.councilList}),
-      gas: nearApi.DEFAULT_FUNCTION_CALL_GAS, // 300 TGas
-      amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
-    });
+    await sputnikFactoryDaoContract.create(
+      mapCreateOptions({...data, accountId, councilList: data.councilList}),
+    );
 
     // TODO: подумать как возвращать после редиректа с нира, потому что после редиректа
     // с нира нет информации о последнем созданном дао

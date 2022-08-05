@@ -2,7 +2,6 @@ import i18n, {ResourceLanguage} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
 import councilsEn from '../entities/councils/lib/i18n/councilsEn.json';
-// TODO: по FSD этот файл должен быть гденить в app, в shared не должно быть импортов из верхних слоев
 import employeesEn from '../entities/employees/lib/i18n/employeesEn.json';
 import proposalFiltersEn from '../entities/filters/lib/i18n/proposalFiltersEn.json';
 import proposalEn from '../entities/proposal/lib/i18n/proposalEn.json';
