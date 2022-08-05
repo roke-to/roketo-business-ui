@@ -23,7 +23,7 @@ export const UserHasDao = ({userDAOs}: Props) => {
       </Col>
 
       <Col>
-        <RadioGroup name='daoID' value={selectedDaoId} onChange={setSelectedDaoId}>
+        <RadioGroup name='daoID' value={selectedDaoId} onChange={setSelectedDaoId} gap={1}>
           {userDAOs.map((daoID) => (
             <RadioGroupItem key={daoID} value={daoID} label={daoID} />
           ))}

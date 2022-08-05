@@ -39,7 +39,7 @@
   color: theme('colors.blue.sat_1');
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .listItem {
     height: 5rem;
   }

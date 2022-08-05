@@ -2,7 +2,7 @@
   margin: 0;
 }
 
-@media screen and (min-width: theme('screens.laptop')) {
+@media screen(laptop) {
   .card {
     min-height: 400px;
   }

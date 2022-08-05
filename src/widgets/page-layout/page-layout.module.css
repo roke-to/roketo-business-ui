@@ -18,7 +18,7 @@
   transform: scale(1);
   transition: transform ease-in 0.15s, opacity 0.15s, visibility 0.15s;
 
-  @media screen and (max-width: theme('screens.tablet')) {
+  @media screen(tablet) {
     padding-top: 6rem;
   }
 }

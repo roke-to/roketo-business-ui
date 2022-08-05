@@ -19,7 +19,7 @@
   border-radius: 0.5rem;
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .scaleContainer {
     height: 1.5rem;
   }

@@ -17,7 +17,7 @@
   }
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .activeMode {
     &.root {
       width: 100%;

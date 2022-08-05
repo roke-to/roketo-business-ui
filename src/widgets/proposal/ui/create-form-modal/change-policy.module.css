@@ -18,7 +18,7 @@
   color: theme('colors.blue.textDefault');
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .quorum {
     @apply basis-full;
   }

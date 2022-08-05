@@ -15,7 +15,7 @@ export interface IRadioGroupProps {
 }
 
 export const RadioGroup = React.forwardRef<HTMLDivElement, PropsWithChildren<IRadioGroupProps>>(
-  ({name, value, gap = 3, className, onChange, children}, ref) => {
+  ({name, value, gap = 0, className, onChange, children}, ref) => {
     const contextProps = useMemo(() => {
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e.target.value);
@@ -30,7 +30,7 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, PropsWithChildren<IRa
 
     return (
       <RadioGroupContext.Provider value={contextProps}>
-        <div ref={ref} className={clsx(styles.root, `gap-${gap}`, className)}>
+        <div ref={ref} className={clsx(styles.root, gap && `gap-${gap}`, className)}>
           {children}
         </div>
       </RadioGroupContext.Provider>

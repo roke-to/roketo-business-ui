@@ -33,7 +33,7 @@ For example:
 
 ```jsx
 export const Portlet = ({children, className, gap = 'md', ...props}) => (
-  <div className={clsx(styles.portlet, className, `gap-${gap}`)} {...props}>
+  <div className={clsx(styles.portlet, className, gap && `gap-${gap}`)} {...props}>
     {children}
   </div>
 );
