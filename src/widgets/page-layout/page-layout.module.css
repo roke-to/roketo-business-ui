@@ -28,6 +28,16 @@
   visibility: visible;
 }
 
-.mainContainer {
+.main {
   margin-left: 15rem;
+}
+
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  /* same as at src/shared/ui/components/layout/layout.module.css .layout */
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+  flex-direction: column;
+  gap: theme('spacing.3');
 }
