@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {multiVote} from '~/entities/proposal';
@@ -39,9 +39,12 @@ export const Votes = ({
   const positivePercent = (voteYes / numberOfMembers) * 100;
   const floorPositivePercent = Math.floor(positivePercent * 10) / 10;
 
-  const handleVoteAction = (voteAction: Action) => {
-    multiVote({proposalId, voteAction});
-  };
+  const handleVoteAction = useCallback(
+    (voteAction: Action) => {
+      multiVote({proposalId, voteAction});
+    },
+    [proposalId],
+  );
 
   return (
     <Col className={clsx(styles.root, className)}>
