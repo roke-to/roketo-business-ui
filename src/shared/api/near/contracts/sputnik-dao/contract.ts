@@ -144,6 +144,6 @@ export class SputnikDaoContract extends Contract {
   undelegate!: any;
 }
 
-export {mapChangeQuorumOptions} from './map-change-quorum-options/map-change-quorum-options';
+export {mapChangeQuorumOptions} from './map-change-quorum-options';
 export {mapAddCouncilOptions} from './map-add-council-options';
 export {mapRemoveCouncilOptions} from './map-remove-council-options';
