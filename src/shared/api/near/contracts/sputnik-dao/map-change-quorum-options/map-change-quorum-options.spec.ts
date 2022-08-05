@@ -1,7 +1,5 @@
-import {FormValues} from 'effector-forms';
-
-import type {ChangePolicyProposalFormFields} from '~/entities/governance';
 import {Dao} from '~/shared/api/astro';
+import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 import {mapChangeQuorumOptions} from './map-change-quorum-options';
 
@@ -238,7 +236,7 @@ describe('Change quorum options', () => {
       description: 'change 10$$$$$$$$ProposeUpdateGroup',
       link: '',
       tgas: '150',
-    } as unknown as FormValues<ChangePolicyProposalFormFields>;
+    } as unknown as ChangePolicyProposalFormValues;
     expect(mapChangeQuorumOptions(currentDao, formData)).toEqual({
       args: {
         proposal: {

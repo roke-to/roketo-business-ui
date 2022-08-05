@@ -1,13 +1,12 @@
 import * as nearApi from 'near-api-js';
-import {FormValues} from 'effector-forms';
 
-import type {ChangePolicyProposalFormFields} from '~/entities/governance';
 import {Dao} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
+import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 export const mapRemoveCouncilOptions = (
   currentDao: Dao,
-  formData: FormValues<ChangePolicyProposalFormFields>,
+  formData: ChangePolicyProposalFormValues,
 ) => ({
   args: {
     proposal: {

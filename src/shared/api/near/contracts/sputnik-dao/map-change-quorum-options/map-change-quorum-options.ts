@@ -1,15 +1,14 @@
 import * as nearApi from 'near-api-js';
-import {FormValues} from 'effector-forms';
 
-import type {ChangePolicyProposalFormFields} from '~/entities/governance';
-import {dataRoleToContractRole} from '~/entities/governance/lib/data-role-to-contract-role';
-import {generateVotePolicyForEachProposalType} from '~/entities/governance/lib/generate-vote-policy-for-each-proposal-type';
 import {Dao} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
+import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
+import {dataRoleToContractRole} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/data-role-to-contract-role';
+import {generateVotePolicyForEachProposalType} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/generate-vote-policy-for-each-proposal-type';
 
 export const mapChangeQuorumOptions = (
   currentDao: Dao,
-  formData: FormValues<ChangePolicyProposalFormFields>,
+  formData: ChangePolicyProposalFormValues,
 ) => {
   const {
     policy: {
