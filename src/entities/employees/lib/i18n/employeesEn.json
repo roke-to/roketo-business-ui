@@ -11,7 +11,10 @@
   },
   "employeesPage": {
     "addEmployee": {
-      "button": "Add new employee"
+      "button": "Add new employee",
+      "modal": {
+        "title": "Add a new employee"
+      }
     }
   }
 }

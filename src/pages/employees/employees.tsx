@@ -6,7 +6,9 @@ import {useTranslation} from 'react-i18next';
 import {EmployeeCard, EmployeeListItem, employeesModel} from '~/entities/employees';
 import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
+import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
+import {AddEmployeeModal} from '~/widgets/employee';
 import {PageLayout} from '~/widgets/page-layout';
 
 import styles from './employees.module.css';
@@ -14,7 +16,9 @@ import styles from './employees.module.css';
 type ViewType = 'card' | 'list';
 
 export const EmployeesPage = () => {
+  // TODO extract i18n for page from entity
   const {t} = useTranslation('employees');
+  const addEmployeeModal = useModal();
 
   const employees = useStore(employeesModel.$employees);
 
@@ -29,7 +33,12 @@ export const EmployeesPage = () => {
   return (
     <PageLayout>
       <Row>
-        <Button>{t('employeesPage.addEmployee.button')}</Button>
+        <Button onClick={addEmployeeModal.show}>{t('employeesPage.addEmployee.button')}</Button>
+        <AddEmployeeModal
+          isOpen={addEmployeeModal.isOpen}
+          title={t('employeesPage.addEmployee.modal.title')}
+          onCloseModal={addEmployeeModal.hide}
+        />
       </Row>
       <Row justify='between'>
         <div>filters</div>
