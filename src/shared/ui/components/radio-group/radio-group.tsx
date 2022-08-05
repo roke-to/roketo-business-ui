@@ -8,8 +8,8 @@ export type RadioGroupGap = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface IRadioGroupProps {
   name: string;
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   className?: string;
   gap?: RadioGroupGap | number;
 }
@@ -18,7 +18,7 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, PropsWithChildren<IRa
   ({name, value, gap = 0, className, onChange, children}, ref) => {
     const contextProps = useMemo(() => {
       const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
+        onChange?.(e.target.value);
       };
 
       return {

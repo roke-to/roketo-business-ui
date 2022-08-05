@@ -5,8 +5,9 @@
     "hasNotDAOTitle": "You don’t have any DAO",
     "hasNotDAOSubTitle": "Check if the wallet address is correct or create a new DAO:",
     "logout": "Logout",
-    "createDAO": "Create DAO",
-    "selectDAO": "Select DAO"
+    "createDao": "Create DAO",
+    "selectDao": "Select DAO",
+    "showAll": "show all"
   },
   "daoNew": {
     "setupTitle": "New DAO setup",

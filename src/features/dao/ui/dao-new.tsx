@@ -55,9 +55,9 @@ export const DaoNew = () => {
   switch (formView) {
     case FormView.DAO_SETUP:
       return (
-        <Portlet gap='xl'>
-          <Col>
-            <Typography>{t('daoNew.setupTitle')}</Typography>
+        <Portlet gap='md' className='pb-12 mobile:pb-8'>
+          <Col gap='xs'>
+            <Typography font='heading'>{t('daoNew.setupTitle')}</Typography>
             <Typography as='span'>{t('daoNew.setupSubTitle')}</Typography>
           </Col>
           <form onSubmit={handleSubmit}>
@@ -87,21 +87,23 @@ export const DaoNew = () => {
                   />
                 </Label>
               </Col>
-              <Button
-                disabled={!eachValid || pending}
-                variant='outlined'
-                onClick={() => setFormView(FormView.ADD_COUNCILS)}
-              >
-                {t('daoNew.submitDaoName')}
-              </Button>
-              <Button
-                as={Link}
-                // @ts-expect-error
-                to={ROUTES.dao.path}
-                variant='soft'
-              >
-                {t('daoNew.back')}
-              </Button>
+              <Col>
+                <Button
+                  disabled={!eachValid || pending}
+                  variant='outlined'
+                  onClick={() => setFormView(FormView.ADD_COUNCILS)}
+                >
+                  {t('daoNew.submitDaoName')}
+                </Button>
+                <Button
+                  as={Link}
+                  // @ts-expect-error
+                  to={ROUTES.dao.path}
+                  variant='soft'
+                >
+                  {t('daoNew.back')}
+                </Button>
+              </Col>
             </Col>
           </form>
         </Portlet>

@@ -19,7 +19,7 @@ export const LoginPortlet = () => {
   const handleWalletClick = (module: ModuleState) => () => walletClicked(module);
 
   return (
-    <Portlet gap='xl' className='pb-12'>
+    <Portlet gap='xl' className='pb-12 mobile:pb-8'>
       <Col gap='sm'>
         <Typography font='heading' className='text-center'>
           {t('title')}

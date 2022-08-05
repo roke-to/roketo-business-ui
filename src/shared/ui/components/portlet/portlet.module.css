@@ -7,10 +7,16 @@
   margin-right: auto;
   overflow: hidden;
   box-shadow: theme('dropShadow.DEFAULT');
-  padding: theme('spacing.8');
+  padding: theme('gap.xl');
   border-radius: theme('borderRadius.3xl');
   width: 100%;
   @apply max-w-md;
+}
+
+@media screen(mobile) {
+  .portlet {
+    padding: theme('gap.lg');
+  }
 }
 
 .row {
@@ -21,7 +27,7 @@
   min-width: 100%;
 }
 
-/** justify **/
+/** props.justify **/
 .between {
   justify-content: space-between;
 }
