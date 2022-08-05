@@ -6,7 +6,7 @@ import {
   $treasurySelectedProposalKind,
   $treasurySelectedProposalStatus,
   loadTreasuryProposals,
-} from '~/entities/treasury';
+} from '~/entities/treasury/model/treasury';
 import {Proposal} from '~/widgets/proposal';
 import {EmptyProposalList} from '~/widgets/proposal/ui/empty-proposal-list';
 

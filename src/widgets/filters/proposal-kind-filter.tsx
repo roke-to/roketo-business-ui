@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalKind} from '~/features/treasury/model/constants';
+import {ProposalKind} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';

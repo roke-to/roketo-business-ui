@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalSort} from '~/features/treasury/model/types/proposal-date-sort.types';
+import {ProposalSort} from '~/entities/treasury/model/types/proposal-date-sort.types';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {Button} from '~/shared/ui/components/button';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalKind, ProposalStatuses} from '~/features/treasury/model/constants';
+import {ProposalKind, ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 import {Divider} from '~/shared/ui/components/divider';

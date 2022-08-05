@@ -12,9 +12,9 @@ import {
   changeTreasuryProposalSelectedStatus,
   changeTreasuryProposalSortOrder,
   loadTokenBalances,
-} from '~/entities/treasury';
-import {CreateProposalTransferFormModal} from '~/features/treasury/ui/create-proposal-transfer-form-modal';
-import {ProposalsList} from '~/features/treasury/ui/proposals-list';
+} from '~/entities/treasury/model/treasury';
+import {CreateProposalTransferFormModal} from '~/entities/treasury/ui/create-proposal-transfer-form-modal';
+import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';

@@ -5,7 +5,7 @@ import {initReactI18next} from 'react-i18next';
 import employeesEn from '../../entities/employees/i18n/employeesEn.json';
 import authEn from '../../features/auth/i18n/authEn.json';
 import daoEn from '../../features/dao/i18n/daoEn.json';
-import treasuryEn from '../../features/treasury/i18n/treasuryEn.json';
+import treasuryEn from '../../pages/treasury/i18n/treasuryEn.json';
 import councilsEn from '../../widgets/councils/lib/i18n/councilsEn.json';
 import proposalFiltersEn from '../../widgets/filters/lib/i18n/proposalFiltersEn.json';
 import proposalEn from '../../widgets/proposal/lib/i18n/proposalEn.json';

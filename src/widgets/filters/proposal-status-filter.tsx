@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalStatuses} from '~/features/treasury/model/constants';
+import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {theme} from '~/shared/config/theme';
 import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';

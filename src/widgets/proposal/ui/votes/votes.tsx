@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React, {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {multiVote} from '~/entities/proposal';
+import {multiVote} from '~/entities/proposal/model/proposal';
 import {Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
