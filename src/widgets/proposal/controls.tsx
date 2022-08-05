@@ -4,7 +4,7 @@ import React from 'react';
 
 import {$accountId} from '~/entities/wallet';
 import {Proposal} from '~/shared/api/astro';
-import {Action} from '~/shared/api/near';
+import {VoteAction} from '~/shared/api/near';
 import {Control} from '~/shared/ui/components/control';
 import {Row} from '~/shared/ui/components/row';
 import {ReactComponent as Minus} from '~/shared/ui/icons/minus.svg';
@@ -21,7 +21,7 @@ export const Controls = ({
   votes: Proposal['votes'];
   canVote: boolean;
   className?: string;
-  handleVoteAction?(vote: Action): void;
+  handleVoteAction?(vote: VoteAction): void;
 }) => {
   const accountId = useStore($accountId);
 
@@ -34,8 +34,10 @@ export const Controls = ({
 
   const handleApproveVoteAction = isViewMode
     ? undefined
-    : () => handleVoteAction(Action.VoteApprove);
-  const handleRejectVoteAction = isViewMode ? undefined : () => handleVoteAction(Action.VoteReject);
+    : () => handleVoteAction(VoteAction.VoteApprove);
+  const handleRejectVoteAction = isViewMode
+    ? undefined
+    : () => handleVoteAction(VoteAction.VoteReject);
 
   return (
     <Row

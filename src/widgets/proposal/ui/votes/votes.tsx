@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import {multiVote} from '~/entities/proposal';
 import {Proposal} from '~/shared/api/astro';
-import {Action} from '~/shared/api/near';
+import {VoteAction} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
 import {Col} from '~/shared/ui/components/col';
 import {Thumb, Track} from '~/shared/ui/components/range';
@@ -40,7 +40,7 @@ export const Votes = ({
   const floorPositivePercent = Math.floor(positivePercent * 10) / 10;
 
   const handleVoteAction = useCallback(
-    (voteAction: Action) => {
+    (voteAction: VoteAction) => {
       multiVote({proposalId, voteAction});
     },
     [proposalId],

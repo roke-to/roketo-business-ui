@@ -1,12 +1,12 @@
 import {attach, createEvent, sample} from 'effector';
 
 import {$sputnikDaoContract} from '~/entities/dao';
-import {Action} from '~/shared/api/near';
+import {VoteAction} from '~/shared/api/near';
 import {mapMultiVoteOptions} from '~/shared/api/near/contracts/sputnik-dao/map-multi-vote-options';
 
 export interface MultiVoteProps {
   proposalId: number;
-  voteAction: Action;
+  voteAction: VoteAction;
 }
 
 export const multiVote = createEvent<MultiVoteProps>();

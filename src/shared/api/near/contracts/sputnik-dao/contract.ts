@@ -10,7 +10,7 @@ export type ProposalInput = {
   kind: CreateProposalKind;
 };
 
-export enum Action {
+export enum VoteAction {
   // Action to add proposal. Used internally.
   AddProposal = 'AddProposal',
   // Action to remove given proposal. Used for immediate deletion in special cases.
@@ -116,7 +116,7 @@ export class SputnikDaoContract extends Contract {
    * Memo is logged but not stored in the state.
    * Can be used to leave notes or explain the action.
    */
-  act_proposal!: ContractChangeFunction<{id: number; action: Action; memo?: string}>;
+  act_proposal!: ContractChangeFunction<{id: number; action: VoteAction; memo?: string}>;
 
   /**
    * Add proposal to this DAO.
