@@ -8,7 +8,7 @@ import {
   $governanceSelectedProposalStatus,
   changeGovernanceProposalSelectedStatus,
   changeGovernanceProposalSortOrder,
-} from '~/entities/governance';
+} from '~/entities/governance/model';
 
 export const GovernanceProposalsFilters = () => {
   const governanceSelectedProposalStatus = useStore($governanceSelectedProposalStatus);
