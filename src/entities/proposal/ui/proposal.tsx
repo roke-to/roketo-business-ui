@@ -35,11 +35,13 @@ export const Proposal = ({proposal}: ProposalProps) => {
     votes,
     kind: {type, amount = '0', receiverId},
     status,
-    dao: {numberOfMembers},
+    dao,
     updatedAt,
     proposalId,
     voteStatus,
   } = proposal;
+
+  const {numberOfMembers} = dao;
 
   const {t} = useTranslation('proposal');
 
@@ -71,6 +73,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
       </Col>
       <Votes
         proposalId={proposalId}
+        dao={dao}
         status={status}
         votes={votes}
         canVote={canVote}

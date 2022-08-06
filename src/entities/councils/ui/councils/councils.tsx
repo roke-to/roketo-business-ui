@@ -1,8 +1,9 @@
+import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {CouncilsList} from '~/entities/councils/ui/councils-list';
-import {loadDao, loadDaos} from '~/entities/dao';
+import {$currentDaoQuorumValue, loadDao, loadDaos} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
 import {Track} from '~/shared/ui/components/range';
 import {Typography} from '~/shared/ui/components/typography';
@@ -12,13 +13,12 @@ import styles from './councils.module.css';
 
 export const Councils = () => {
   const {t} = useTranslation('councils');
+  const quorumPercent = useStore($currentDaoQuorumValue);
 
   React.useEffect(() => {
     loadDaos();
     loadDao();
   }, []);
-
-  const quorumPercent: number = 5;
 
   return (
     <div className={styles.councilWidget}>

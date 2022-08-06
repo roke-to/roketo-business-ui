@@ -1,1 +1,1 @@
-export * from './ui/treasury'
+export * from './ui/treasury';

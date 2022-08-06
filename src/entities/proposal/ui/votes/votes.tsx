@@ -5,9 +5,10 @@ import {useTranslation} from 'react-i18next';
 import {Controls} from '~/entities/proposal/controls';
 import {getVotesStatistic, isPositiveStatus} from '~/entities/proposal/lib';
 import {multiVote} from '~/entities/proposal/model/proposal';
-import {Proposal} from '~/shared/api/astro';
+import {Dao, Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
 import {Col} from '~/shared/ui/components/col';
 import {Thumb, Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
@@ -17,6 +18,7 @@ import styles from './votes.module.css';
 
 export const Votes = ({
   proposalId,
+  dao,
   status,
   votes,
   numberOfMembers,
@@ -25,6 +27,7 @@ export const Votes = ({
   className,
 }: {
   proposalId: number;
+  dao: Dao;
   status: Proposal['status'];
   votes: Proposal['votes'];
   numberOfMembers: number;
@@ -46,11 +49,13 @@ export const Votes = ({
     [proposalId],
   );
 
+  const quorum = getQuorumValueFromDao(dao);
+
   return (
     <Col className={clsx(styles.root, className)}>
       <Col gap={0}>
         <Typography as='span' color='muted' font='xs' isCapitalizeFirstLetter>
-          {t('quorum')} 50%
+          {t('quorum')} {quorum}%
         </Typography>
         <Row gap={0}>
           {!canVote && (
