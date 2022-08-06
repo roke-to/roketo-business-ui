@@ -49,6 +49,7 @@ export default {
       red: {
         default: '#D80A1F',
         light: '#FCCFD2',
+        lightDefault: '#FEF0F1',
       },
       blue: {
         default: '#A0C2F8',
@@ -57,6 +58,7 @@ export default {
         textDefault: '#3E65F2',
         sat_1: '#D6E6FF',
       },
+      bg: {},
     },
     borderRadius: {
       none: '0px',

@@ -8,6 +8,8 @@ import {Link} from 'react-router-dom';
 import {createDaoForm, createDaoFx} from '~/entities/dao';
 import {$accountId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
+import {useQuery} from '~/shared/hooks/use-query';
+import {Alert} from '~/shared/ui/components/alert';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
@@ -33,6 +35,7 @@ export const DaoNew = () => {
   const pending = useStore(createDaoFx.pending);
   const [formView, setFormView] = React.useState(FormView.DAO_SETUP);
   const accountId = useStore($accountId);
+  const {errorMessage} = useQuery();
 
   const handleAddTypedCouncil = () => {
     const updatedCouncilList = [...fields.councilList.value, fields.councilAddress.value];
@@ -106,6 +109,11 @@ export const DaoNew = () => {
               </Col>
             </Col>
           </form>
+          {errorMessage && (
+            <Alert variant='danger' className='mt-4'>
+              {errorMessage}
+            </Alert>
+          )}
         </Portlet>
       );
       break;

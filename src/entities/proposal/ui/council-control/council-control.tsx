@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {Button} from '~/shared/ui/components/button';
+import {IconButton} from '~/shared/ui/components/icon-button';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
@@ -28,11 +28,8 @@ export const CouncilControl = ({
     >
       {council}
     </Typography>
-    <Button
-      size='xxs'
-      startIcon={<Plus className={clsx(styles.icon, {[styles.deleteIcon]: !willDelete})} />}
-      className={styles.button}
-      onClick={() => onClick(council)}
-    />
+    <IconButton size='xxs' onClick={() => onClick(council)}>
+      <Plus className={clsx({[styles.deleteIcon]: !willDelete})} />
+    </IconButton>
   </Row>
 );

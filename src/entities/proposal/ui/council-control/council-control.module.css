@@ -13,11 +13,6 @@
   color: theme('colors.blue.textDefault');
 }
 
-.icon {
-  width: theme('spacing.5');
-  height: theme('spacing.5');
-}
-
 .text {
   color: theme('colors.blue.default');
 }
