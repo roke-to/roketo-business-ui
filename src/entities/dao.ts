@@ -12,6 +12,7 @@ import {
 } from '~/shared/api/near';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
 import {history} from '~/shared/lib/router';
 import {validators} from '~/shared/lib/validators';
 
@@ -139,6 +140,7 @@ export const loadDaos = createEvent();
 export const loadDao = createEvent();
 
 export const $currentDao = createStore<Dao | null>(null);
+export const $currentDaoQuorumValue = createStore<number>(0);
 
 const loadDaoFx = attach({
   source: {
@@ -165,6 +167,12 @@ sample({
   source: loadDaoFx.doneData,
   fn: (response) => response.data,
   target: $currentDao,
+});
+
+sample({
+  source: loadDaoFx.doneData,
+  fn: (response) => getQuorumValueFromDao(response.data),
+  target: $currentDaoQuorumValue,
 });
 
 sample({

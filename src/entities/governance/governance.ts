@@ -1,6 +1,5 @@
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
-import isEmpty from 'lodash/isEmpty';
 
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {
@@ -8,8 +7,7 @@ import {
   mapChangeQuorumOptions,
   mapRemoveCouncilOptions,
 } from '~/shared/api/near';
-import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
-import {getQuorum} from '~/shared/lib/get-quorum';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
@@ -132,26 +130,7 @@ const initChangePolicyProposalFormFx = attach({
       throw Error('You need create Dao');
     }
 
-    const {
-      policy: {
-        roles,
-        defaultVotePolicy: {ratio},
-      },
-    } = currentDao;
-
-    const councilRole = roles.find(({name}) => name === COUNCIL);
-
-    let quorum: number;
-
-    if (councilRole && !isEmpty(councilRole.votePolicy)) {
-      // We don't change some votePolicy item, only all collection
-      const keysVotePolicy = Object.keys(councilRole.votePolicy);
-      const key = keysVotePolicy[0];
-      // all `ratio` props equal
-      quorum = getQuorum(councilRole.votePolicy[key].ratio);
-    } else {
-      quorum = getQuorum(ratio);
-    }
+    const quorum = getQuorumValueFromDao(currentDao);
 
     return {
       type: 'changeQuorum',
