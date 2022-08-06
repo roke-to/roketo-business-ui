@@ -1,38 +1,29 @@
-.scaleContainer {
+.root {
   position: relative;
-  display: flex;
-  height: 1rem;
   margin-top: 0.75rem;
 }
 
-.positive {
-  background-color: theme('colors.green.light');
-  border-radius: 0.5rem 0 0 0.5rem;
-}
-
-.negative {
-  background-color: theme('colors.red.light');
-  border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.scaleFull {
+.scaleContainer {
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
   border-radius: 0.5rem;
 }
 
+.rightPart {
+  background-color: theme('colors.green.light');
+}
+
+.leftPart {
+  background-color: theme('colors.red.light');
+}
+
 @media screen(mobile) {
-  .scaleContainer {
+  .root {
     height: 1.5rem;
   }
 
-  .positive {
-    border-radius: 0.75rem 0 0 0.75rem;
-  }
-
-  .negative {
-    border-radius: 0 0.75rem 0.75rem 0;
-  }
-
-  .scaleFull {
+  .scaleContainer {
     border-radius: 0.75rem;
   }
 }

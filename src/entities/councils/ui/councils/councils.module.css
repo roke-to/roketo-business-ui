@@ -9,25 +9,16 @@
 }
 
 .scaleContainer {
-  display: flex;
-  height: theme('spacing.3');
+  border: 1px solid theme('colors.blue.default');
   min-width: theme('spacing.20');
 }
 
 .rightPart {
   background-color: theme('colors.blue.default');
-  border: 1px solid theme('colors.blue.default');
-  border-radius: theme('spacing.2') 0 0 theme('spacing.2');
 }
 
 .leftPart {
   background-color: theme('colors.white');
-  border: 1px solid theme('colors.blue.default');
-  border-radius: 0 theme('spacing.2') theme('spacing.2') 0;
-}
-
-.scaleFull {
-  border-radius: theme('spacing.2');
 }
 
 @media screen(mobile) {
@@ -47,7 +38,7 @@
     margin-top: theme('spacing.3');
   }
 
-  .scaleContainer {
+  .scaleContainerRoot {
     margin-top: theme('spacing.2');
   }
 
