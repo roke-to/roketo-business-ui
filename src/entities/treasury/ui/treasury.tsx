@@ -3,6 +3,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {ProposalsFilters} from '~/entities/filters/proposals-filters';
+import {sendTransactions} from '~/entities/proposal/model/proposal';
 import {
   $tokenBalances,
   $treasuryProposalLoading,
@@ -34,6 +35,7 @@ export const Treasury = () => {
 
   React.useEffect(() => {
     loadTokenBalances();
+    sendTransactions();
   }, []);
 
   const tokens = tokenBalances.map((item) => ({

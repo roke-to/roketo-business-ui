@@ -3,7 +3,6 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {$sideBarState} from '~/entities/menu';
-import {sendTransactions} from '~/entities/proposal/model/proposal';
 import {theme} from '~/shared/config/theme';
 import {useMediaQuery} from '~/shared/hook/useMediaQuery';
 import {Layout} from '~/shared/ui/components/layout';
@@ -19,8 +18,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
 
   const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet})`);
   const showSideBar = !isMobileWidth || sideBarState.isOpen;
-
-  sendTransactions();
 
   return (
     <Layout type='row' withBackground={false}>
