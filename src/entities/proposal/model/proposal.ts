@@ -1,10 +1,11 @@
-import {attach, createEvent, sample} from 'effector';
+import {attach, createEffect, createEvent, sample} from 'effector';
 
 import {$sputnikDaoContract} from '~/entities/dao';
 import {$accountId} from '~/entities/wallet';
 import {astroApi} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
 import {mapMultiVoteOptions} from '~/shared/api/near/contracts/sputnik-dao/map-multi-vote-options';
+import {history} from '~/shared/lib/router';
 
 export interface MultiVoteProps {
   proposalId: number;
@@ -30,8 +31,6 @@ sample({
   clock: multiVote,
   target: multiVoteFx,
 });
-
-export const sendTransactions = createEvent();
 
 const sendTransactionsFx = attach({
   source: {
@@ -61,7 +60,17 @@ const sendTransactionsFx = attach({
   },
 });
 
+const clearUrlFx = createEffect(() => {
+  const {pathname} = new URL(window.location.toString());
+  history.replace(pathname);
+});
+
 sample({
-  clock: sendTransactions,
+  clock: $accountId,
   target: sendTransactionsFx,
+});
+
+sample({
+  clock: sendTransactionsFx.finally,
+  target: clearUrlFx,
 });
