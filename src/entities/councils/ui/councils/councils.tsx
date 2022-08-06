@@ -18,7 +18,7 @@ export const Councils = () => {
     loadDao();
   }, []);
 
-  const quorumPercent: number = 50;
+  const quorumPercent: number = 5;
 
   return (
     <div className={styles.councilWidget}>
@@ -36,6 +36,8 @@ export const Councils = () => {
         </Typography>
         <Track
           value={quorumPercent}
+          className={styles.scaleContainerRoot}
+          scaleContainer={styles.scaleContainer}
           rightPartClassName={styles.rightPart}
           leftPartClassName={styles.leftPart}
         />
