@@ -1,10 +1,10 @@
-import clsx from 'clsx';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {loadDao, loadDaos} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
+import {Track} from '~/shared/ui/components/range';
 import {Typography} from '~/shared/ui/components/typography';
 
 import {ChangePolicyButton} from './change-policy-button';
@@ -19,7 +19,6 @@ export const Councils = () => {
   }, []);
 
   const quorumPercent: number = 50;
-  const rightPartScale = 100 - quorumPercent;
 
   return (
     <div className={styles.councilWidget}>
@@ -35,17 +34,11 @@ export const Councils = () => {
         <Typography as='span' weight='semibold' font='lg' className={styles.mobileDesktop}>
           {t('quorum')} {quorumPercent}%
         </Typography>
-        <div className={styles.scaleContainer}>
-          <div
-            style={{width: `${quorumPercent}%`}}
-            className={clsx(styles.rightPart, {[styles.scaleFull]: quorumPercent === 100})}
-          />
-          <div
-            style={{width: `${rightPartScale}%`}}
-            className={clsx(styles.leftPart, {[styles.scaleFull]: rightPartScale === 100})}
-          />
-          <div className={styles.quorumLine} />
-        </div>
+        <Track
+          value={quorumPercent}
+          rightPartClassName={styles.rightPart}
+          leftPartClassName={styles.leftPart}
+        />
       </Col>
 
       <ChangePolicyButton />
