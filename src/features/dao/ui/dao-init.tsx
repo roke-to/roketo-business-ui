@@ -3,7 +3,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
-import {$daoIds, setDaoId} from '~/entities/dao';
+import {$daoIds, $daosLoading, setDaoId} from '~/entities/dao';
 import {$accountId, logoutClicked} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
@@ -12,23 +12,42 @@ import {Portlet} from '~/shared/ui/components/portlet';
 import {RadioSelect} from '~/shared/ui/components/radio-select';
 import {Typography} from '~/shared/ui/components/typography';
 
+enum View {
+  LOADING = 'loading',
+  EMPTY = 'empty',
+  LIST = 'list',
+}
+
 export const DaoInit = () => {
   const {t} = useTranslation('dao');
   const daoIds = useStore($daoIds);
   const accountId = useStore($accountId);
+  const daosLoading = useStore($daosLoading);
   const [selectedDao, setSelectedDao] = React.useState('');
 
   const handleSelectDao = React.useCallback(() => {
     setDaoId(selectedDao);
   }, [selectedDao]);
 
-  const hadDao = daoIds.length > 0;
+  const hasDao = daoIds.length > 0;
 
   const daoOptions = daoIds.map((value) => ({label: value, value}));
 
+  // view state mashine
+  let view = View.LOADING;
+
+  if (hasDao) {
+    view = View.LIST;
+  } else {
+    view = View.EMPTY;
+  }
+  if (daosLoading) {
+    return null;
+  }
+
   return (
     <Portlet gap='md' className='pb-12 mobile:pb-8'>
-      {hadDao ? (
+      {view === View.LIST && (
         <Col gap='lg'>
           <Col gap='xs'>
             <Typography font='heading'>{t('daoInit.hasDAOTitle')}</Typography>
@@ -46,7 +65,8 @@ export const DaoInit = () => {
             </Button>
           </Col>
         </Col>
-      ) : (
+      )}
+      {view === View.EMPTY && (
         <Col>
           <Typography>{t('daoInit.hasNotDAOTitle')}</Typography>
           <Typography as='span'>{t('daoInit.hasNotDAOSubTitle')}</Typography>

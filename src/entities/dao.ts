@@ -141,6 +141,14 @@ const loadDaosFx = attach({
   },
 });
 
+export const $daosLoading = createStore(true);
+
+sample({
+  clock: loadDaosFx.doneData,
+  fn: () => false,
+  target: $daosLoading,
+});
+
 export const loadDaos = createEvent();
 export const loadDao = createEvent();
 

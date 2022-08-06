@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './typography.module.css';
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  as?: 'h1' | 'h2' | 'span' | 'p';
+  as?: 'h1' | 'h2' | 'span' | 'p' | 'button';
   color?: 'muted' | 'positive' | 'negative' | 'black';
   font?: string;
   weight?: 'normal' | 'bold' | 'medium' | 'semibold';
@@ -33,6 +33,7 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     return (
       <Tag
         {...props}
+        // @ts-expect-error need generic type for "as" prop
         ref={ref}
         className={clsx(
           `text-${font}`,

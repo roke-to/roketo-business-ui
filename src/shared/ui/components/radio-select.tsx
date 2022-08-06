@@ -27,11 +27,11 @@ export const RadioSelect = ({
       {visibleOptions.map((option) => (
         <RadioGroupItem key={option.value} value={option.value} label={option.label} />
       ))}
-      {visibleOptions.length !== options.length ? (
+      {visibleOptions.length !== options.length && options.length > maxVisibleCount ? (
         <Typography
-          as='span'
+          as='button'
           font='muted'
-          className='ml-7 text-gray hover:text-blue-textDefault hover:cursor-pointer transition-colors'
+          className='ml-7 w-min whitespace-nowrap text-gray hover:text-blue-textDefault hover:cursor-pointer transition-colors'
           onClick={() => setIsAllVisible(true)}
         >
           {showAllText}

@@ -1,5 +1,6 @@
 {
   "daoInit": {
+    "loading": "Loading DAO list...",
     "hasDAOTitle": "Select DAO",
     "hasDAOSubTitle": "You has multiple DAO, please select one of them, or create a new one",
     "hasNotDAOTitle": "You don’t have any DAO",
