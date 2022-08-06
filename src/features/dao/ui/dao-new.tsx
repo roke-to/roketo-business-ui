@@ -55,6 +55,10 @@ export const DaoNew = () => {
     submit();
   };
 
+  console.log('!eachValid || pending', !eachValid || pending);
+  console.log('eachValid', eachValid);
+  console.log('fields', fields);
+
   switch (formView) {
     case FormView.DAO_SETUP:
       return (
@@ -92,7 +96,7 @@ export const DaoNew = () => {
               </Col>
               <Col>
                 <Button
-                  disabled={!eachValid || pending}
+                  disabled={!eachValid || pending || !fields.name.value || !fields.address.value}
                   variant='outlined'
                   onClick={() => setFormView(FormView.ADD_COUNCILS)}
                 >
@@ -119,80 +123,74 @@ export const DaoNew = () => {
       break;
     case FormView.ADD_COUNCILS:
       return (
-        <Portlet gap='md'>
-          <Col>
-            <Typography>{t('daoNew.addCouncilsTitle')}</Typography>
-            <Typography as='span'>{t('daoNew.addCouncilsSubTitle')}</Typography>
+        <Portlet gap='md' className='pb-12 mobile:pb-8'>
+          <Col gap='xs'>
+            <Typography font='heading'>{t('daoNew.addCouncilsTitle')}</Typography>
+            <Typography as='span' weight='medium'>
+              {t('daoNew.addCouncilsSubTitle')}
+            </Typography>
           </Col>
           <form onSubmit={handleSubmit}>
             <Col gap='xl'>
-              <Col gap='md'>
+              <Col gap='sm'>
+                <Typography as='span' weight='medium'>
+                  {accountId}
+                </Typography>
+                {fields.councilList.value.map((council: string) => (
+                  <Row key={council} align='center'>
+                    <Typography
+                      as='span'
+                      weight='medium'
+                      className={clsx({
+                        'text-blue-textDefault': fields.councilAddress.value === council,
+                      })}
+                    >
+                      {council}
+                    </Typography>
+                    <IconButton size='xxs' onClick={() => handleRemoveTypedCouncil(council)}>
+                      <Plus className='scale-100 translate-x-0 translate-y-0 skew-x-0 skew-y-0 rotate-45' />
+                    </IconButton>
+                  </Row>
+                ))}
+              </Col>
+              <Row gap='md' className='items-end'>
                 <Label
                   as='span'
-                  content={t('daoNew.councilListLabel')}
-                  error={fields.councilList.errorText()}
-                  className='basis-1/2 mobile:basis-full mobile:w-full'
+                  content={t('daoNew.councilAddressLabel')}
+                  error={fields.councilAddress.errorText()}
+                  className='w-full'
                 >
-                  <Col gap='sm'>
-                    <Typography as='span' weight='bold'>
-                      {accountId}
-                    </Typography>
-                    {fields.councilList.value.map((council: string) => (
-                      <Row key={council} align='center'>
-                        <Typography
-                          as='span'
-                          weight='bold'
-                          className={clsx({
-                            'text-blue-textDefault': fields.councilAddress.value === council,
-                          })}
-                        >
-                          {council}
-                        </Typography>
-                        <IconButton size='xxs' onClick={() => handleRemoveTypedCouncil(council)}>
-                          <Plus className='scale-100 translate-x-0 translate-y-0 skew-x-0 skew-y-0 rotate-45' />
-                        </IconButton>
-                      </Row>
-                    ))}
-                  </Col>
+                  <Row>
+                    <Input
+                      ref={councilAddressRef}
+                      name='councilAddress'
+                      value={fields.councilAddress.value}
+                      disabled={pending}
+                      placeholder={t('daoNew.councilAddressPlaceholder')}
+                      className='w-full'
+                      onChange={fields.councilAddress.onChange}
+                    />
+                    <IconButton
+                      onClick={handleAddTypedCouncil}
+                      disabled={!fields.councilAddress.value}
+                    >
+                      <Plus />
+                    </IconButton>
+                  </Row>
                 </Label>
-                <Row gap='md' className='items-end'>
-                  <Label
-                    required
-                    as='span'
-                    content={t('daoNew.councilAddressLabel')}
-                    error={fields.councilAddress.errorText()}
-                    className='w-full'
-                  >
-                    <Row>
-                      <Input
-                        ref={councilAddressRef}
-                        name='councilAddress'
-                        value={fields.councilAddress.value}
-                        disabled={pending}
-                        placeholder={t('daoNew.councilAddressPlaceholder')}
-                        className='w-full'
-                        onChange={fields.councilAddress.onChange}
-                      />
-                      <IconButton
-                        onClick={handleAddTypedCouncil}
-                        disabled={!fields.councilAddress.value}
-                      >
-                        <Plus />
-                      </IconButton>
-                    </Row>
-                  </Label>
-                </Row>
+              </Row>
+              <Col gap='md'>
+                <Button
+                  disabled={fields.councilList.value.length === 0}
+                  type='submit'
+                  variant='outlined'
+                >
+                  {t('daoNew.submitCouncils')}
+                </Button>
+                <Button type='submit' variant='soft' disabled={fields.councilList.value.length > 0}>
+                  {t('daoNew.skipCouncils')}
+                </Button>
               </Col>
-              <Button
-                disabled={fields.councilList.value.length === 0}
-                type='submit'
-                variant='outlined'
-              >
-                {t('daoNew.submitCouncils')}
-              </Button>
-              <Button type='submit' variant='soft' disabled={fields.councilList.value.length > 0}>
-                {t('daoNew.skipCouncils')}
-              </Button>
             </Col>
           </form>
         </Portlet>

@@ -3,8 +3,8 @@ import {useStore} from 'effector-react';
 import React, {useState} from 'react';
 
 import {$accountId} from '~/entities/wallet';
-import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
+import {IconButton} from '~/shared/ui/components/icon-button';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
@@ -42,12 +42,9 @@ export const AddCouncil = ({fields, t, pending}: any) => {
               onChange={fields.councilAddress.onChange}
             />
           </Label>
-          <Button
-            startIcon={<Plus className='w-6 h-6' />}
-            className='w-12 p-3 mb-1'
-            onClick={handleAddTypedCouncil}
-            disabled={wasAdded}
-          />
+          <IconButton onClick={handleAddTypedCouncil} disabled={wasAdded}>
+            <Plus />
+          </IconButton>
         </Row>
         <Label
           content={t('createForm.councilListLabel')}
