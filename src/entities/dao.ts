@@ -72,6 +72,12 @@ forward({
   to: updateAddressByNameFx,
 });
 
+const createCallbackUrl = (daoId: string) => {
+  const url = new URL(window.location.toString());
+  url.search = `?newDaoId=${daoId}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`;
+  return url.toString();
+};
+
 type CreateDaoFormFields = typeof createDaoForm['fields'];
 
 export const createDaoFx = attach({
@@ -85,7 +91,12 @@ export const createDaoFx = attach({
     }
 
     await sputnikFactoryDaoContract.create(
-      mapCreateOptions({...data, accountId, councilList: data.councilList}),
+      mapCreateOptions({
+        ...data,
+        accountId,
+        councilList: data.councilList,
+        callbackUrl: createCallbackUrl(data.address),
+      }),
     );
 
     // TODO: подумать как возвращать после редиректа с нира, потому что после редиректа
@@ -106,7 +117,10 @@ export const setDaoId = createEvent<string>();
 const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
   // todo: put ls key to the shared consts
   localStorage.setItem('currentDaoId', selectedDaoId);
-  if (window.location.pathname === ROUTES.dao.path) {
+  if (
+    window.location.pathname === ROUTES.dao.path ||
+    window.location.pathname === ROUTES.daoNew.path
+  ) {
     history.replace(ROUTES.treasury.path);
   }
   return selectedDaoId;
@@ -194,6 +208,36 @@ sample({
 sample({
   source: loadDao,
   target: loadDaoFx,
+});
+
+//  ------------ after create DAO ------------
+
+const redirectAfterCreateDaoFx = attach({
+  source: {
+    daoIds: $daoIds,
+  },
+  async effect({daoIds}) {
+    const searchParams = new URLSearchParams(history.location.search);
+    const newDaoId = searchParams.get('newDaoId') || '';
+
+    if (!daoIds.includes(newDaoId)) {
+      // TODO: Maybe show error that DAO not found
+      return '';
+    }
+
+    return newDaoId;
+  },
+});
+
+sample({
+  clock: loadDaosFx.doneData,
+  target: redirectAfterCreateDaoFx,
+});
+
+sample({
+  source: redirectAfterCreateDaoFx.doneData,
+  filter: (daoId) => Boolean(daoId),
+  target: setDaoId,
 });
 
 //  ------------ sputnikDaoContract ------------

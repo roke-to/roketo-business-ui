@@ -9,15 +9,18 @@ export const mapCreateOptions = ({
   displayName = address,
   accountId,
   councilList = [],
+  callbackUrl,
 }: {
   name: string;
   address: string;
   accountId: string;
   displayName?: string;
   councilList?: string[];
+  callbackUrl: string;
 }) => ({
   gas: nearApi.DEFAULT_FUNCTION_CALL_GAS, // 300 TGas
   amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
+  callbackUrl,
   args: {
     name,
     args: jsonToBase64({
