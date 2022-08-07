@@ -9,7 +9,7 @@ import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Portlet} from '~/shared/ui/components/portlet';
-import {RadioSelect} from '~/shared/ui/components/radio-select/radio-select';
+import {RadioSelect} from '~/shared/ui/components/radio-select';
 import {Typography} from '~/shared/ui/components/typography';
 
 enum View {

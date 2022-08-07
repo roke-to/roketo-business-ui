@@ -98,9 +98,6 @@ export const createDaoFx = attach({
         callbackUrl: createCallbackUrl(data.address),
       }),
     );
-
-    // TODO: подумать как возвращать после редиректа с нира, потому что после редиректа
-    // с нира нет информации о последнем созданном дао
   },
 });
 
