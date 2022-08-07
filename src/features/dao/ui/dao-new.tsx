@@ -25,9 +25,6 @@ enum FormView {
   ADD_COUNCILS = 'addCouncils',
 }
 
-// TODO: обрабатывать квери параметры ошибки ?errorCode=userRejected&errorMessage=User%2520rejected%2520transaction
-// когда возвращаемся из NEAR
-// TODO: обрабатывать успешный кейс создания DAO ?transactionHashes=E2ARyRfXqNCwUhhjBLWfbhMoGhtxiKRekMEEXJXjvwLj
 export const DaoNew = () => {
   const {t} = useTranslation('dao');
   const councilAddressRef = React.useRef<HTMLInputElement>(null);
@@ -55,14 +52,10 @@ export const DaoNew = () => {
     submit();
   };
 
-  console.log('!eachValid || pending', !eachValid || pending);
-  console.log('eachValid', eachValid);
-  console.log('fields', fields);
-
-  switch (formView) {
-    case FormView.DAO_SETUP:
-      return (
-        <Portlet gap='md' className='pb-12 mobile:pb-8'>
+  return (
+    <Portlet gap='md' className='pb-12 mobile:pb-8'>
+      {formView === FormView.DAO_SETUP && (
+        <>
           <Col gap='xs'>
             <Typography font='heading'>{t('daoNew.setupTitle')}</Typography>
             <Typography as='span'>{t('daoNew.setupSubTitle')}</Typography>
@@ -118,12 +111,10 @@ export const DaoNew = () => {
               {errorMessage}
             </Alert>
           )}
-        </Portlet>
-      );
-      break;
-    case FormView.ADD_COUNCILS:
-      return (
-        <Portlet gap='md' className='pb-12 mobile:pb-8'>
+        </>
+      )}
+      {formView === FormView.ADD_COUNCILS && (
+        <>
           <Col gap='xs'>
             <Typography font='heading'>{t('daoNew.addCouncilsTitle')}</Typography>
             <Typography as='span' weight='medium'>
@@ -193,10 +184,8 @@ export const DaoNew = () => {
               </Col>
             </Col>
           </form>
-        </Portlet>
-      );
-      break;
-    default:
-      return null;
-  }
+        </>
+      )}
+    </Portlet>
+  );
 };

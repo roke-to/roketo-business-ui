@@ -1,7 +1,9 @@
 import React from 'react';
 
+import {Button} from '~/shared/ui/components/button';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
-import {Typography} from '~/shared/ui/components/typography';
+
+import styles from './radio-select.module.css';
 
 export interface RadioSelectProps {
   options: Array<{label: string; value: string}>;
@@ -28,14 +30,9 @@ export const RadioSelect = ({
         <RadioGroupItem key={option.value} value={option.value} label={option.label} />
       ))}
       {visibleOptions.length !== options.length && options.length > maxVisibleCount ? (
-        <Typography
-          as='button'
-          font='muted'
-          className='ml-7 w-min whitespace-nowrap text-gray hover:text-blue-textDefault hover:cursor-pointer transition-colors'
-          onClick={() => setIsAllVisible(true)}
-        >
+        <Button variant='clean' className={styles.showAll} onClick={() => setIsAllVisible(true)}>
           {showAllText}
-        </Typography>
+        </Button>
       ) : null}
     </RadioGroup>
   );

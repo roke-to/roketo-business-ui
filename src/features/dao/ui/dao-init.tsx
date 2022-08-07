@@ -9,11 +9,10 @@ import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Portlet} from '~/shared/ui/components/portlet';
-import {RadioSelect} from '~/shared/ui/components/radio-select';
+import {RadioSelect} from '~/shared/ui/components/radio-select/radio-select';
 import {Typography} from '~/shared/ui/components/typography';
 
 enum View {
-  LOADING = 'loading',
   EMPTY = 'empty',
   LIST = 'list',
 }
@@ -34,13 +33,8 @@ export const DaoInit = () => {
   const daoOptions = daoIds.map((value) => ({label: value, value}));
 
   // view state mashine
-  let view = View.LOADING;
+  const view = hasDao ? View.LIST : View.EMPTY;
 
-  if (hasDao) {
-    view = View.LIST;
-  } else {
-    view = View.EMPTY;
-  }
   if (daosLoading) {
     return null;
   }
