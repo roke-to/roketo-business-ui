@@ -67,3 +67,5 @@ export const DropdownContent = React.forwardRef<HTMLUListElement, IDropdownConte
     </ul>
   ),
 );
+
+DropdownContent.displayName = 'DropdownContent';

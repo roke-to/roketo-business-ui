@@ -34,3 +34,5 @@ export const CheckableLabel: React.FC<ICheckableLabelProps> = ({
     </label>
   );
 };
+
+CheckableLabel.displayName = 'CheckableLabel';

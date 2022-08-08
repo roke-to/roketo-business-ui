@@ -55,3 +55,5 @@ export const CheckableRoot = React.forwardRef<HTMLInputElement, ICheckableRootPr
     </span>
   ),
 );
+
+CheckableRoot.displayName = 'CheckableRoot';

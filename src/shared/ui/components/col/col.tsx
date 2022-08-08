@@ -24,3 +24,5 @@ export const Col = React.forwardRef<HTMLDivElement, ColProps>(
     </div>
   ),
 );
+
+Col.displayName = 'Col';

@@ -20,3 +20,5 @@ export const Alert = React.forwardRef<HTMLElement, AlertProps>(
     </Tag>
   ),
 );
+
+Alert.displayName = 'Alert';

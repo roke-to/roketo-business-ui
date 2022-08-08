@@ -51,3 +51,5 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     );
   },
 );
+
+Typography.displayName = 'Typography';

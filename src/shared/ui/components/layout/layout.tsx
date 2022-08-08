@@ -47,3 +47,5 @@ export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
     </Tag>
   ),
 );
+
+Layout.displayName = 'Layout';

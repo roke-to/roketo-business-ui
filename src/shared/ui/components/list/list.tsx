@@ -17,3 +17,5 @@ export const List = React.forwardRef<HTMLUListElement, PropsWithChildren<ListPro
     </ul>
   ),
 );
+
+List.displayName = 'List';

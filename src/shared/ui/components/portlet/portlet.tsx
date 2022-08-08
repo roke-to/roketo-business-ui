@@ -33,3 +33,5 @@ export const Portlet = React.forwardRef<HTMLDivElement, PortletProps>(
     </div>
   ),
 );
+
+Portlet.displayName = 'Portlet';

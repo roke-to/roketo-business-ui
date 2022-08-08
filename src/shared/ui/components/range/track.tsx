@@ -30,3 +30,5 @@ export const Track = React.forwardRef<HTMLDivElement, TrackProps>(
     );
   },
 );
+
+Track.displayName = 'Track';
