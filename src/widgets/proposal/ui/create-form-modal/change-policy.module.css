@@ -14,6 +14,10 @@
   @apply items-start;
 }
 
+.addedCouncil {
+  color: theme('colors.blue.textDefault');
+}
+
 @media screen and (max-width: theme('screens.mobile')) {
   .quorum {
     @apply basis-full;

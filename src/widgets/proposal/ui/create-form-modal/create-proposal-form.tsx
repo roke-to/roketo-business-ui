@@ -13,8 +13,10 @@ import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-import {ChangePolicy} from './change-policy';
+import {AddCouncil} from './add-council';
+import {ChangeQuorum} from './change-quorum';
 import styles from './create-proposal-form.module.css';
+import {RemoveCouncil} from './remove-council';
 import {Transfer} from './transfer';
 
 const EmptyFormType = () => <Typography>Coming soon...</Typography>;
@@ -27,7 +29,9 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   transferNftParas: EmptyFormType,
   functionalCall: EmptyFormType,
   createStream: EmptyFormType,
-  changePolicy: ChangePolicy,
+  changeQuorum: ChangeQuorum,
+  addCouncil: AddCouncil,
+  removeCouncil: RemoveCouncil,
 };
 
 export interface CreateProposalFormProps<T extends AnyFormValues> {
