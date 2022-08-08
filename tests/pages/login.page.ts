@@ -1,12 +1,15 @@
 import {expect, Page} from '@playwright/test';
+
 import {createTestAccount} from '../shared/createTestAccount';
 import {findButtonByText} from '../utils/findButtonByText';
-import nearElements from './nearwallet.page.elements.json' 
-import elements from './login.page.elements.json'
+import elements from './login.page.elements.json';
+import nearElements from './nearwallet.page.elements.json';
 
 export class LoginPage {
   readonly page: Page;
+
   readonly nearElements = nearElements;
+
   readonly elements = elements;
 
   constructor(page: Page) {
@@ -18,7 +21,7 @@ export class LoginPage {
   }
 
   async checkUserLoggedIn() {
-    await expect(this.page).toHaveURL(this.elements.dashboardPageURL)
+    await expect(this.page).toHaveURL(this.elements.dashboardPageURL);
   }
 
   async chooseDao(daoid: string) {
@@ -45,7 +48,7 @@ export class LoginPage {
     await page.locator(this.nearElements.seedPhraseRecoveryInput).fill(seedPhrase);
 
     await page.locator(this.nearElements.seedPhraseRecoverySubmitButton).click();
-    await expect(page).toHaveURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
+    await page.waitForURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
 
     await page.locator(this.nearElements.commonSubmitButton).click();
 
