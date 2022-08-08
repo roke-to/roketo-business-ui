@@ -27,54 +27,53 @@ const Freelancer = ({fields, t, pending}: any) => (
       <Label
         required
         content='Name and Surname'
-        error={fields.target.errorText()}
+        error={fields.name.errorText()}
         className='basis-1/3'
       >
         <Input
-          name='target'
-          value={fields.target.value}
+          name='name'
+          value={fields.name.value}
           disabled={pending}
           placeholder='Jon Daw'
-          onChange={fields.target.onChange}
+          onChange={fields.name.onChange}
         />
       </Label>
-      <Label required content='Near login' error={fields.amount.errorText()} className='basis-1/3'>
+      <Label required content='Near login' error={fields.wallet.errorText()} className='basis-1/3'>
         <Input
-          name='amount'
-          value={fields.amount.value}
+          name='wallet'
+          value={fields.wallet.value}
           disabled={pending}
           placeholder='login.near'
-          onChange={fields.amount.onChange}
+          onChange={fields.wallet.onChange}
         />
       </Label>
-      <Label required content='Role' error={fields.token.errorText()} className='basis-1/3'>
-        <InputDropdown
-          name='token'
-          value={fields.token.value}
+      <Label required content='Role' error={fields.role.errorText()} className='basis-1/3'>
+        <Input
+          name='role'
+          value={fields.role.value}
           disabled={pending}
           placeholder='SMM Designer'
-          onChange={fields.token.onChange}
-          options={[{label: 'NEAR', value: 'near'}]}
+          onChange={fields.role.onChange}
         />
       </Label>
     </Row>
     <Row gap='md' className='justify-between'>
-      <Label required content='E-mail' error={fields.target.errorText()} className='basis-1/3'>
+      <Label required content='E-mail' error={fields.email.errorText()} className='basis-1/3'>
         <Input
-          name='target'
-          value={fields.target.value}
+          name='email'
+          value={fields.email.value}
           disabled={pending}
           placeholder='mail@mail.com'
-          onChange={fields.target.onChange}
+          onChange={fields.email.onChange}
         />
       </Label>
-      <Label required content='Amount' error={fields.amount.errorText()} className='basis-1/3'>
+      <Label required content='Amount' error={fields.salary.errorText()} className='basis-1/3'>
         <Input
-          name='amount'
-          value={fields.amount.value}
+          name='salary'
+          value={fields.salary.value}
           disabled={pending}
           placeholder='0.00'
-          onChange={fields.amount.onChange}
+          onChange={fields.salary.onChange}
         />
       </Label>
       <Label required content='Token' error={fields.token.errorText()} className='basis-1/3'>
@@ -89,13 +88,13 @@ const Freelancer = ({fields, t, pending}: any) => (
       </Label>
     </Row>
     <Row>
-      <Label content='Comment' error={fields.description.errorText()} className='w-full'>
+      <Label content='Comment' error={fields.comment.errorText()} className='w-full'>
         <Input
-          name='description'
-          value={fields.description.value}
+          name='comment'
+          value={fields.comment.value}
           disabled={pending}
           placeholder='You can type something to highlight the main terms'
-          onChange={fields.description.onChange}
+          onChange={fields.comment.onChange}
         />
       </Label>
     </Row>

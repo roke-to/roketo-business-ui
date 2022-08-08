@@ -5,5 +5,7 @@
 @media screen(laptop) {
   .card {
     min-height: 400px;
+    flex-grow: 1;
+    flex-basis: 30%;
   }
 }

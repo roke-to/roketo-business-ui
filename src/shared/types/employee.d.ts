@@ -7,5 +7,6 @@ export type Employee = {
   wallet: string;
   email: string;
   salary: string;
+  token: 'near';
   comment?: string;
 };
