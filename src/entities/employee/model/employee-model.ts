@@ -31,6 +31,16 @@ export const addEmployeeForm = createForm({
       init: '',
       rules: [validators.required],
     },
+    startDate: {
+      init: '',
+      rules: [validators.required],
+    },
+    period: {
+      init: '2 per month',
+    },
+    payoutType: {
+      init: 'Smooth',
+    },
     token: {
       init: 'near',
       rules: [validators.required],
