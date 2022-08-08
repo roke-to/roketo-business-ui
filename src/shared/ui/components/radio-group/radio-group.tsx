@@ -7,7 +7,7 @@ import styles from './radio-group.module.css';
 export type RadioGroupGap = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface IRadioGroupProps {
-  name: string;
+  name?: string;
   value?: string;
   onChange?: (value: string) => void;
   className?: string;
