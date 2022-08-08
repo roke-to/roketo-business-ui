@@ -58,7 +58,6 @@ export default {
         textDefault: '#3E65F2',
         sat_1: '#D6E6FF',
       },
-      bg: {},
     },
     borderRadius: {
       none: '0px',
@@ -71,7 +70,6 @@ export default {
       '3xl': '1.5rem',
       '4xl': '2rem',
       full: '9999px',
-      circle: '50%',
     },
     gap: ({theme}) => ({
       ...theme('spacing'),

@@ -1,5 +1,5 @@
 .root {
-  border-radius: theme('borderRadius.circle');
+  border-radius: theme('borderRadius.full');
   padding: 0;
 }
 
