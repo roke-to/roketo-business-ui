@@ -2,7 +2,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {theme} from '~/shared/config/theme';
-import {useMediaQuery} from '~/shared/hook/useMediaQuery';
+import {useMediaQuery} from '~/shared/hooks/useMediaQuery';
 import {Button} from '~/shared/ui/components/button';
 import {Modal, useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';

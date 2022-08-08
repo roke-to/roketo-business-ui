@@ -25,10 +25,14 @@ export default {
     },
     fontFamily: {
       // TODO: нужны ли тут остальные дефолтные шрифты
-      sans: ['"Nunito"', ...defaultTheme.fontFamily.sans],
+      sans: ['"Nunito Sans"', ...defaultTheme.fontFamily.sans],
       heading: ['"Nunito"', ...defaultTheme.fontFamily.sans],
       serif: defaultTheme.fontFamily.serif,
       mono: defaultTheme.fontFamily.mono,
+    },
+    fontSize: {
+      ...defaultTheme.fontSize,
+      heading: ['1.5rem', {lineHeight: '2rem', fontWeight: 600}],
     },
     colors: {
       inherit: 'inherit',
@@ -45,6 +49,7 @@ export default {
       red: {
         default: '#D80A1F',
         light: '#FCCFD2',
+        lightDefault: '#FEF0F1',
       },
       blue: {
         default: '#A0C2F8',

@@ -1,0 +1,12 @@
+.showAll {
+  @apply ml-7
+    p-0
+    h-min
+    w-min
+    whitespace-nowrap
+    font-normal
+    text-gray
+    hover:text-blue-textDefault
+    hover:cursor-pointer
+    transition-colors;
+}
