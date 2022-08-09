@@ -26,3 +26,5 @@ export const Row = React.forwardRef<HTMLDivElement, ColProps>(
     </div>
   ),
 );
+
+Row.displayName = 'Row';

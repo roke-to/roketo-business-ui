@@ -19,3 +19,5 @@ export const ListItem = React.forwardRef<HTMLLIElement, PropsWithChildren<ListIt
     </li>
   ),
 );
+
+ListItem.displayName = 'ListItem';

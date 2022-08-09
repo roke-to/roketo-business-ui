@@ -37,3 +37,5 @@ export const RadioGroup = React.forwardRef<HTMLDivElement, PropsWithChildren<IRa
     );
   },
 );
+
+RadioGroup.displayName = 'RadioGroup';

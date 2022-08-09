@@ -27,3 +27,5 @@ export const Tabs: React.FC<ITabsProps> = ({children, className, value, onChange
     </div>
   );
 };
+
+Tabs.displayName = 'Tabs';
