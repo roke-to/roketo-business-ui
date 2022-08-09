@@ -1,7 +1,16 @@
 # Roketo Business Architecture
 
-Basic file structure inherited from [Feature-Sliced Design](https://feature-sliced.design).
 It's a SPA builded by vite for better developer experience.
+
+## Feature Sliced Design
+
+Basic file structure inherited from [Feature-Sliced Design](https://feature-sliced.design).
+
+### Agreements
+
+- `src/shared/types` for the globally used types, in other cases the types should be as close as possible to the place of use
+- basic layers — `app, pages, shared` other layers are optional
+- widget is allowed to import from another widget
 
 ## Env
 
