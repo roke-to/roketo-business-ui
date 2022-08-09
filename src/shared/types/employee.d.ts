@@ -1,7 +1,3 @@
-/**
- * TODO: separate Contractor and Freelancer,
- * it have differences in handle with business logic
- */
 export type Employee = {
   id: string;
   status: 'Active' | 'Suspended' | 'Fired';
