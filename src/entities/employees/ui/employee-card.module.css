@@ -2,7 +2,7 @@
   margin: 0;
 }
 
-@media screen(laptop) {
+@media screen(desktop) {
   .card {
     min-height: 400px;
     flex-grow: 1;
