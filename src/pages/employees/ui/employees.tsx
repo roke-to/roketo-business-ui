@@ -33,10 +33,10 @@ export const EmployeesPage = () => {
   return (
     <PageLayout>
       <Row>
-        <Button onClick={addEmployeeModal.show}>{t('employeesPage.addEmployee.button')}</Button>
+        <Button onClick={addEmployeeModal.show}>{t('addEmployee.button')}</Button>
         <AddEmployeeModal
           isOpen={addEmployeeModal.isOpen}
-          title={t('employeesPage.addEmployee.modal.title')}
+          title={t('addEmployee.modal.title')}
           onCloseModal={addEmployeeModal.hide}
         />
       </Row>

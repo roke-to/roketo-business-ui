@@ -23,23 +23,23 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
   const labelSubRenders = useMemo(() => {
     const labeledFields = [
       {
-        content: t('employeeCard.labels.role'),
+        content: t('card.labels.role'),
         children: employee.role,
       },
       {
-        content: t('employeeCard.labels.wallet'),
+        content: t('card.labels.wallet'),
         children: employee.wallet,
       },
       {
-        content: t('employeeCard.labels.email'),
+        content: t('card.labels.email'),
         children: employee.email,
       },
       {
-        content: t('employeeCard.labels.salary'),
+        content: t('card.labels.salary'),
         children: `${employee.salary} (salary frequency)`,
       },
       {
-        content: t('employeeCard.labels.comment'),
+        content: t('card.labels.comment'),
         children: employee.comment,
       },
     ];
@@ -62,7 +62,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
         </Row>
         <Col gap='xs'>{labelSubRenders}</Col>
       </div>
-      <Button>{t('employeeCard.button')}</Button>
+      <Button>{t('card.button')}</Button>
     </Portlet>
   );
 };
