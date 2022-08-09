@@ -7,10 +7,10 @@ import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
-import {AddEmployeeModal} from '~/widgets/employee';
 import {PageLayout} from '~/widgets/page-layout';
 
 import * as employeesModel from '../model/employees-model';
+import {AddEmployeeModal} from './add-employee-modal';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
 import styles from './employees-page.module.css';
