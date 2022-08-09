@@ -21,7 +21,7 @@ export class LoginPage {
   }
 
   async checkUserLoggedIn() {
-    await expect(this.page).toHaveURL(this.elements.dashboardPageURL);
+    await expect(this.page).toHaveURL(this.elements.treasuryPageURL);
   }
 
   async chooseDao(daoid: string) {

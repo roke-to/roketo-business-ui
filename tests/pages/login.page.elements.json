@@ -1,7 +1,8 @@
 {
-    "chooseDaoURL": "/dao",
-    "dashboardPageURL": "/dashboard",
-    "loginURL": "/",
-    "buttonSelectDao": "button:has-text('Select DAO')",
-    "buttonNearWallet": "NEAR Wallet"
+  "chooseDaoURL": "/dao",
+  "dashboardPageURL": "/dashboard",
+  "treasuryPageURL": "/treasury",
+  "loginURL": "/",
+  "buttonSelectDao": "button:has-text('Select DAO')",
+  "buttonNearWallet": "NEAR Wallet"
 }

@@ -81,7 +81,7 @@
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@originjs/vite-plugin-commonjs": "^1.0.3",
-    "@playwright/test": "^1.24.0",
+    "@playwright/test": "^1.24.2",
     "@rollup/plugin-babel": "^5.3.1",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/jest": "^28.1.6",
@@ -99,6 +99,7 @@
     "autoprefixer": "^10.4.7",
     "babel-eslint": "^10.1.0",
     "cypress": "^9.5.4",
+    "dotenv": "^16.0.1",
     "eslint": "^7.10.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
@@ -128,6 +129,7 @@
     "typescript": "^4.6.2",
     "vite": "^2.9.9",
     "vite-plugin-svgr": "^2.1.0",
-    "webpack": "^5.73.0"
+    "webpack": "^5.73.0",
+    "yn": "4"
   }
 }

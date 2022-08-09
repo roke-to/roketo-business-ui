@@ -1,0 +1,100 @@
+{
+  "cookies": [
+    {
+      "name": "mp_9edede4b70de19f399736d5840872910_mixpanel",
+      "value": "%7B%22distinct_id%22%3A%20%221827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809%22%2C%22%24device_id%22%3A%20%221827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809%22%2C%22%24initial_referrer%22%3A%20%22http%3A%2F%2Flocalhost%3A3000%2F%22%2C%22%24initial_referring_domain%22%3A%20%22localhost%3A3000%22%2C%22timestamp%22%3A%20%22Mon%20Aug%2008%202022%2016%3A05%3A13%20GMT%2B0300%20(%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0%2C%20%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B2%D1%80%D0%B5%D0%BC%D1%8F)%22%2C%22%24referrer%22%3A%20%22http%3A%2F%2Flocalhost%3A3000%2F%22%2C%22network_id%22%3A%20%22testnet%22%7D",
+      "domain": ".near.org",
+      "path": "/",
+      "expires": 1691499942,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.2.448310291.1659963919",
+      "domain": ".near.org",
+      "path": "/",
+      "expires": 1694523919.082755,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.2.1584302987.1659963919",
+      "domain": ".near.org",
+      "path": "/",
+      "expires": 1660050319,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gat_IE%20Click%20seed%20phrase%20recovery%20button",
+      "value": "1",
+      "domain": ".near.org",
+      "path": "/",
+      "expires": 1659963979,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "near_app_wallet_auth_key",
+          "value": "{\"accountId\":\"newanatest.testnet\",\"allKeys\":[\"ed25519:HyqhZ98Vsn72DJtazGPQL7LWJ3JSzQxbV1Nd3xTkSNwD\"]}"
+        },
+        {
+          "name": "currentDaoId",
+          "value": "animatronic.testnet"
+        },
+        {
+          "name": "near-wallet-selector:selectedWalletId",
+          "value": "\"near-wallet\""
+        },
+        {
+          "name": "near-api-js:keystore:newanatest.testnet:testnet",
+          "value": "ed25519:5gATpkP3YedKrDX7gHeaVC1fhCd1DdQXvuvMppTffGiP3sqc1rwprXBv6k7sueQA9K5uRBCqFb8BCnkGeNJgRyH5"
+        },
+        {
+          "name": "near-wallet-selector:contract",
+          "value": "{\"contractId\":\"sputnikv2.testnet\",\"methodNames\":[]}"
+        }
+      ]
+    },
+    {
+      "origin": "https://wallet.testnet.near.org",
+      "localStorage": [
+        {
+          "name": "_4:wallet:accounts_v2",
+          "value": "{\"newanatest.testnet\":true}"
+        },
+        {
+          "name": "languageCode",
+          "value": "ru"
+        },
+        {
+          "name": "nearlib:keystore:newanatest.testnet:default",
+          "value": "ed25519:3Len1fogRcFLDAni4BLdsXtk9JbdgTdnfUEYu44JftFJdaffjVmCCsH1K6eSknYb8PaQKDhoJ1KtXpHWTnJAaxoM"
+        },
+        {
+          "name": "__mpq_9edede4b70de19f399736d5840872910_ev",
+          "value": "[{\"id\":\"wgtek7puavn34lh0\",\"flushAfter\":1659963950349,\"payload\":{\"event\":\"LOGIN start\",\"properties\":{\"$os\":\"Mac OS X\",\"$browser\":\"Chrome\",\"$referrer\":\"http://localhost:3000/\",\"$referring_domain\":\"localhost:3000\",\"$current_url\":\"https://wallet.testnet.near.org/login/?contract_id=sputnikv2.testnet&failure_url=http%253A%252F%252Flocalhost%253A3000%252F&public_key=ed25519%253A5bUBUxBwCp2wkfxm165N9XUEGpeXC8jWioxj97zuatV9&redirect_url=%252Flogin%252F&referrer=localhost&success_url=htt\",\"$browser_version\":104,\"$screen_height\":720,\"$screen_width\":1280,\"mp_lib\":\"web\",\"$lib_version\":\"2.42.0\",\"$insert_id\":\"be0kycqjxh3d43h8\",\"time\":1659963940.349,\"distinct_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$device_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$initial_referrer\":\"http://localhost:3000/\",\"$initial_referring_domain\":\"localhost:3000\",\"timestamp\":\"Mon Aug 08 2022 16:05:13 GMT+0300 (Москва, стандартное время)\",\"network_id\":\"testnet\",\"token\":\"9edede4b70de19f399736d5840872910\"}}},{\"id\":\"l5ow4aw7luuskekc\",\"flushAfter\":1659963952781,\"payload\":{\"event\":\"LOGIN finish\",\"properties\":{\"$os\":\"Mac OS X\",\"$browser\":\"Chrome\",\"$referrer\":\"http://localhost:3000/\",\"$referring_domain\":\"localhost:3000\",\"$current_url\":\"https://wallet.testnet.near.org/login/?contract_id=sputnikv2.testnet&failure_url=http%253A%252F%252Flocalhost%253A3000%252F&public_key=ed25519%253A5bUBUxBwCp2wkfxm165N9XUEGpeXC8jWioxj97zuatV9&redirect_url=%252Flogin%252F&referrer=localhost&success_url=htt\",\"$browser_version\":104,\"$screen_height\":720,\"$screen_width\":1280,\"mp_lib\":\"web\",\"$lib_version\":\"2.42.0\",\"$insert_id\":\"sswph22fxseqka7n\",\"time\":1659963942.781,\"distinct_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$device_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$initial_referrer\":\"http://localhost:3000/\",\"$initial_referring_domain\":\"localhost:3000\",\"timestamp\":\"Mon Aug 08 2022 16:05:13 GMT+0300 (Москва, стандартное время)\",\"network_id\":\"testnet\",\"token\":\"9edede4b70de19f399736d5840872910\"}}}]"
+        },
+        {
+          "name": "_4:wallet:active_account_id_v2",
+          "value": "newanatest.testnet"
+        },
+        {
+          "name": "wallet.account:newanatest.testnet:default:confirmed",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}
