@@ -4,8 +4,9 @@ import {createForm} from 'effector-forms';
 import {validators} from '~/shared/lib/validators';
 import {Employee} from '~/shared/types/employee';
 
-// TODO: add types
-export const addEmployeeForm = createForm({
+type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
+
+export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
     type: {
       init: 'Freelancer',
@@ -52,12 +53,9 @@ export const addEmployeeForm = createForm({
   validateOn: ['submit'],
 });
 
-export const addEmployeeFx = createEffect((data: Employee) => console.log({...data}));
+export const addEmployeeFx = createEffect((data: AddEmployeeFormFields) => console.log({...data}));
 
 sample({
-  // TODO: add types
-  // @ts-expect-error
   source: addEmployeeForm.formValidated,
-  fn: (sourceData) => ({...sourceData, status: 'Active'}),
   target: addEmployeeFx,
 });
