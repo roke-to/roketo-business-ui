@@ -1,7 +1,7 @@
-import {useForm} from 'effector-forms';
+import {ConnectedFields, useForm} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
-import {useTranslation} from 'react-i18next';
+import {TFunction, useTranslation} from 'react-i18next';
 
 import {employeeModel} from '~/entities/employee';
 import {$accountId} from '~/entities/wallet';
@@ -15,8 +15,13 @@ import {Typography} from '~/shared/ui/components/typography';
 
 const Nothing = () => null;
 
-// TODO: remove any, add types properly
-const Freelancer = ({fields, t, pending}: any) => (
+interface FormTypesProps {
+  fields: ConnectedFields<employeeModel.AddEmployeeFormFields>;
+  t: TFunction<'employees'>;
+  pending: boolean;
+}
+
+const Freelancer = ({fields, t, pending}: FormTypesProps) => (
   <>
     <Row gap='md' className='justify-between'>
       <Label
@@ -110,23 +115,21 @@ const Freelancer = ({fields, t, pending}: any) => (
     <Row>
       <Label
         content={t('addEmployee.form.labels.comment.label')}
-        error={fields.comment.errorText()}
+        error={fields.comment?.errorText()}
         className='w-full'
       >
         <Input
           name='comment'
-          value={fields.comment.value}
+          value={fields.comment?.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.comment.placeholder')}
-          onChange={fields.comment.onChange}
+          onChange={fields.comment?.onChange}
         />
       </Label>
     </Row>
   </>
 );
-
-// TODO: remove any, add types properly
-const Contractor = ({fields, t, pending}: any) => (
+const Contractor = ({fields, t, pending}: FormTypesProps) => (
   <>
     <Row gap='md' className='justify-between'>
       <Label
@@ -267,23 +270,22 @@ const Contractor = ({fields, t, pending}: any) => (
     <Row>
       <Label
         content={t('addEmployee.form.labels.comment.label')}
-        error={fields.comment.errorText()}
+        error={fields.comment?.errorText()}
         className='w-full'
       >
         <Input
           name='comment'
-          value={fields.comment.value}
+          value={fields.comment?.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.comment.placeholder')}
-          onChange={fields.comment.onChange}
+          onChange={fields.comment?.onChange}
         />
       </Label>
     </Row>
   </>
 );
 
-// TODO: remove any, add types properly
-const formTypes: Record<string, React.ComponentType<any>> = {
+const formTypes = {
   Freelancer,
   Contractor,
 };

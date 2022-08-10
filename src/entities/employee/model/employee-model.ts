@@ -4,7 +4,7 @@ import {createForm} from 'effector-forms';
 import {validators} from '~/shared/lib/validators';
 import {Employee} from '~/shared/types/employee';
 
-type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
+export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
 
 export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
