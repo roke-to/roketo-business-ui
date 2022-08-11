@@ -1,0 +1,34 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://wallet.testnet.near.org",
+      "localStorage": [
+        {
+          "name": "_4:wallet:accounts_v2",
+          "value": "{\"newanatest.testnet\":true}"
+        },
+        {
+          "name": "languageCode",
+          "value": "ru"
+        },
+        {
+          "name": "nearlib:keystore:newanatest.testnet:default",
+          "value": "ed25519:3Len1fogRcFLDAni4BLdsXtk9JbdgTdnfUEYu44JftFJdaffjVmCCsH1K6eSknYb8PaQKDhoJ1KtXpHWTnJAaxoM"
+        },
+        {
+          "name": "__mpq_9edede4b70de19f399736d5840872910_ev",
+          "value": "[{\"id\":\"wgtek7puavn34lh0\",\"flushAfter\":1659963950349,\"payload\":{\"event\":\"LOGIN start\",\"properties\":{\"$os\":\"Mac OS X\",\"$browser\":\"Chrome\",\"$referrer\":\"http://localhost:3000/\",\"$referring_domain\":\"localhost:3000\",\"$current_url\":\"https://wallet.testnet.near.org/login/?contract_id=sputnikv2.testnet&failure_url=http%253A%252F%252Flocalhost%253A3000%252F&public_key=ed25519%253A5bUBUxBwCp2wkfxm165N9XUEGpeXC8jWioxj97zuatV9&redirect_url=%252Flogin%252F&referrer=localhost&success_url=htt\",\"$browser_version\":104,\"$screen_height\":720,\"$screen_width\":1280,\"mp_lib\":\"web\",\"$lib_version\":\"2.42.0\",\"$insert_id\":\"be0kycqjxh3d43h8\",\"time\":1659963940.349,\"distinct_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$device_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$initial_referrer\":\"http://localhost:3000/\",\"$initial_referring_domain\":\"localhost:3000\",\"timestamp\":\"Mon Aug 08 2022 16:05:13 GMT+0300 (Москва, стандартное время)\",\"network_id\":\"testnet\",\"token\":\"9edede4b70de19f399736d5840872910\"}}},{\"id\":\"l5ow4aw7luuskekc\",\"flushAfter\":1659963952781,\"payload\":{\"event\":\"LOGIN finish\",\"properties\":{\"$os\":\"Mac OS X\",\"$browser\":\"Chrome\",\"$referrer\":\"http://localhost:3000/\",\"$referring_domain\":\"localhost:3000\",\"$current_url\":\"https://wallet.testnet.near.org/login/?contract_id=sputnikv2.testnet&failure_url=http%253A%252F%252Flocalhost%253A3000%252F&public_key=ed25519%253A5bUBUxBwCp2wkfxm165N9XUEGpeXC8jWioxj97zuatV9&redirect_url=%252Flogin%252F&referrer=localhost&success_url=htt\",\"$browser_version\":104,\"$screen_height\":720,\"$screen_width\":1280,\"mp_lib\":\"web\",\"$lib_version\":\"2.42.0\",\"$insert_id\":\"sswph22fxseqka7n\",\"time\":1659963942.781,\"distinct_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$device_id\":\"1827d8f355219a0-0543e200d03015-30796f07-e1000-1827d8f35531809\",\"$initial_referrer\":\"http://localhost:3000/\",\"$initial_referring_domain\":\"localhost:3000\",\"timestamp\":\"Mon Aug 08 2022 16:05:13 GMT+0300 (Москва, стандартное время)\",\"network_id\":\"testnet\",\"token\":\"9edede4b70de19f399736d5840872910\"}}}]"
+        },
+        {
+          "name": "_4:wallet:active_account_id_v2",
+          "value": "newanatest.testnet"
+        },
+        {
+          "name": "wallet.account:newanatest.testnet:default:confirmed",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}
