@@ -53,6 +53,6 @@ export class LoginPage {
     await page.locator(this.nearElements.commonSubmitButton).click();
 
     await page.locator(this.nearElements.commonSubmitButton).click();
-    await expect(this.page).toHaveURL(this.elements.chooseDaoURL);
+    await expect(this.page).toHaveURL(this.elements.chooseDaoURL, {timeout: 15000});
   }
 }
