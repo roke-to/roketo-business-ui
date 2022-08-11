@@ -9,6 +9,7 @@ jobs:
     runs-on:
       - self-hosted
       - Linux
+      - node
     steps:
       - uses: actions/checkout@v2
 
@@ -35,6 +36,7 @@ jobs:
     runs-on:
       - self-hosted
       - Linux
+      - node
     steps:
       - uses: actions/checkout@v2
 
