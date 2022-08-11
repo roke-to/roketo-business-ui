@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 
+import type {Employee} from '~/shared/types/employee';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Label} from '~/shared/ui/components/label';
@@ -9,7 +10,6 @@ import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-import type {Employee} from '../model/types';
 import styles from './employee-card.module.css';
 import {Status} from './status';
 
@@ -23,23 +23,23 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
   const labelSubRenders = useMemo(() => {
     const labeledFields = [
       {
-        content: t('employeeCard.labels.role'),
+        content: t('card.labels.role'),
         children: employee.role,
       },
       {
-        content: t('employeeCard.labels.wallet'),
+        content: t('card.labels.wallet'),
         children: employee.wallet,
       },
       {
-        content: t('employeeCard.labels.email'),
+        content: t('card.labels.email'),
         children: employee.email,
       },
       {
-        content: t('employeeCard.labels.salary'),
+        content: t('card.labels.salary'),
         children: `${employee.salary} (salary frequency)`,
       },
       {
-        content: t('employeeCard.labels.comment'),
+        content: t('card.labels.comment'),
         children: employee.comment,
       },
     ];
@@ -62,7 +62,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
         </Row>
         <Col gap='xs'>{labelSubRenders}</Col>
       </div>
-      <Button>{t('employeeCard.button')}</Button>
+      <Button>{t('card.button')}</Button>
     </Portlet>
   );
 };

@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: theme('gap.DEFAULT');
 
-  @media screen(laptop) {
+  @media screen(desktop) {
     &.card {
       flex-direction: row;
       flex-wrap: wrap;
