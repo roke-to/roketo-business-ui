@@ -32,45 +32,58 @@ sample({
   target: multiVoteFx,
 });
 
-const sendTransactionsFx = attach({
+export const sendTransactionsFx = attach({
   source: {
     accountId: $accountId,
   },
   async effect({accountId}) {
-    const {searchParams} = new URL(window.location.toString());
+    const searchParams = new URLSearchParams(window.location.search);
     const transactionHashes = searchParams.get('transactionHashes');
-    const errorCode = searchParams.get('errorCode') || undefined;
-    if (transactionHashes) {
-      const hashes = transactionHashes.split(',');
+    const errorCode = searchParams.get('errorCode');
+    const queryKeysToRemove = [];
 
-      return Promise.all(
-        hashes.map((hash) =>
-          astroApi.transactionControllerSuccess(accountId, {
-            transactionHashes: hash,
-          }),
-        ),
-      );
+    try {
+      if (transactionHashes) {
+        queryKeysToRemove.push('transactionHashes');
+
+        const hashes = transactionHashes.split(',');
+
+        await Promise.all(
+          hashes.map((hash) =>
+            astroApi.transactionControllerSuccess(accountId, {
+              transactionHashes: hash,
+            }),
+          ),
+        );
+      }
+
+      if (errorCode) {
+        queryKeysToRemove.push('errorCode', 'errorMessage');
+
+        await astroApi.transactionControllerSuccess(accountId, {
+          errorCode,
+        });
+      }
+    } catch {
+      // if it not sended or error,
+      // it will be updated from blockchain
     }
 
-    if (errorCode) {
-      return astroApi.transactionControllerSuccess(accountId, {
-        errorCode,
-      });
-    }
+    return queryKeysToRemove;
   },
 });
 
-const clearUrlFx = createEffect(() => {
-  const {pathname} = new URL(window.location.toString());
-  history.replace(pathname);
+const clearUrlFx = createEffect((queryKeysToRemove: string[]) => {
+  const url = new URL(window.location.toString());
+
+  queryKeysToRemove.forEach((key) => {
+    url.searchParams.delete(key);
+  });
+
+  history.replace(url);
 });
 
 sample({
-  clock: $accountId,
-  target: sendTransactionsFx,
-});
-
-sample({
-  clock: sendTransactionsFx.finally,
+  clock: sendTransactionsFx.doneData,
   target: clearUrlFx,
 });
