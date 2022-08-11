@@ -48,7 +48,7 @@ export class LoginPage {
     await page.locator(this.nearElements.seedPhraseRecoveryInput).fill(seedPhrase);
 
     await page.locator(this.nearElements.seedPhraseRecoverySubmitButton).click();
-    await page.waitForURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
+    await page.waitForURL(/https:\/\/wallet\.testnet\.near\.org\/login/, {timeout: 15000});
 
     await page.locator(this.nearElements.commonSubmitButton).click();
 
