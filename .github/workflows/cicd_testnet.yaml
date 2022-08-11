@@ -62,8 +62,6 @@ jobs:
           build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet
           push: true
           tags: ${{ env.DOCKER_TAGS }}
-          cache-from: type=registry,ref=gcr.io/main-project-354317/${{ matrix.app }}:latest
-          cache-to: type=inline
 
   publish:
     needs:
