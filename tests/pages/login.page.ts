@@ -1,6 +1,5 @@
 import {expect, Page} from '@playwright/test';
 
-import {createTestAccount} from '../shared/createTestAccount';
 import {findButtonByText} from '../utils/findButtonByText';
 import elements from './login.page.elements.json';
 import nearElements from './nearwallet.page.elements.json';
@@ -34,25 +33,8 @@ export class LoginPage {
   }
 
   async loginToNear(page: Page) {
-    await expect(page).toHaveURL(this.nearElements.startURL);
-
-    await page.locator(this.nearElements.recoverAccountButton).click();
-    await expect(page).toHaveURL(nearElements.recoverAccountURL);
-
-    await page.locator(this.nearElements.recoverAccountWithPassphraseButton).click();
-    await expect(page).toHaveURL(nearElements.recoverSeedPhraseURL);
-
-    await page.locator(this.nearElements.seedPhraseRecoveryInput).click();
-
-    const {seedPhrase} = await createTestAccount();
-    await page.locator(this.nearElements.seedPhraseRecoveryInput).fill(seedPhrase);
-
-    await page.locator(this.nearElements.seedPhraseRecoverySubmitButton).click();
-    await page.waitForURL(/https:\/\/wallet\.testnet\.near\.org\/login/, {timeout: 15000});
-
+    await expect(page).toHaveURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
     await page.locator(this.nearElements.commonSubmitButton).click();
-
     await page.locator(this.nearElements.commonSubmitButton).click();
-    await expect(this.page).toHaveURL(this.elements.chooseDaoURL, {timeout: 15000});
   }
 }

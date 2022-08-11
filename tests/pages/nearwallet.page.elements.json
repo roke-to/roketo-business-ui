@@ -1,10 +1,3 @@
 {
-    "startURL": "https://wallet.testnet.near.org/",
-    "recoverAccountURL": "https://wallet.testnet.near.org/recover-account",
-    "recoverSeedPhraseURL": "https://wallet.testnet.near.org/recover-seed-phrase",
-    "recoverAccountButton": "[data-test-id='homePageImportAccountButton']",
-    "commonSubmitButton": ".button-group button.blue",
-    "recoverAccountWithPassphraseButton": "[data-test-id='recoverAccountWithPassphraseButton']",
-    "seedPhraseRecoverySubmitButton": "[data-test-id='seedPhraseRecoverySubmitButton']",
-    "seedPhraseRecoveryInput": "[data-test-id='seedPhraseRecoveryInput']"
+  "commonSubmitButton": ".button-group button.blue"
 }
