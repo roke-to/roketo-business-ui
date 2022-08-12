@@ -6,7 +6,10 @@ on:
   pull_request:
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
+      - node
     steps:
       - uses: actions/checkout@v2
 
@@ -30,7 +33,10 @@ jobs:
         run: yarn check:unused:exports
   e2e:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
+      - node
     steps:
       - uses: actions/checkout@v2
 

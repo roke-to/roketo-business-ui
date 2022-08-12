@@ -1,9 +1,9 @@
 .heading {
-  @apply font-heading text-2xl font-bold leading-tight;
+  @apply font-heading text-heading;
 }
 
 .muted {
-  color: #8a96a8;
+  color: theme('colors.gray');
 }
 
 .positive {

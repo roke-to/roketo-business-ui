@@ -13,3 +13,5 @@ export const Icon = React.forwardRef<HTMLImageElement, IconProps>(
     <Tag {...props} ref={ref} className={clsx(styles.icon, className)} alt={alt} />
   ),
 );
+
+Icon.displayName = 'Icon';

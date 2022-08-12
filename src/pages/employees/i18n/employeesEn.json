@@ -1,0 +1,69 @@
+{
+  "card": {
+    "button": "Actions",
+    "labels": {
+      "role": "Role",
+      "wallet": "wallet address",
+      "email": "e-mail",
+      "salary": "Salary",
+      "comment": "Comment"
+    }
+  },
+  "addEmployee": {
+    "button": "Add new employee",
+    "modal": {
+      "title": "Add a new employee"
+    },
+    "form": {
+      "labels": {
+        "name": {
+          "label": "Name and Surname",
+          "placeholder": "Jon Daw"
+        },
+        "type": {
+          "label": "Employee type",
+          "placeholder": "Freelancer"
+        },
+        "wallet": {
+          "label": "Near login",
+          "placeholder": "login.near"
+        },
+        "role": {
+          "label": "Role",
+          "placeholder": "SMM Designer"
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "mail@mail.com"
+        },
+        "salary": {
+          "label": "Amount",
+          "placeholder": "0.00"
+        },
+        "token": {
+          "label": "Token",
+          "placeholder": "NEAR"
+        },
+        "startDate": {
+          "label": "Start date",
+          "placeholder": "31/12/2022 00:00"
+        },
+        "period": {
+          "label": "Invoice period",
+          "placeholder": "2 per month"
+        },
+        "payoutType": {
+          "label": "Payout type",
+          "placeholder": "Smooth"
+        },
+        "comment": {
+          "label": "Comment",
+          "placeholder": "You can type something to highlight the main terms"
+        }
+      },
+      "proposer": "Proposer",
+      "submit": "Add",
+      "abort": "Cancel"
+    }
+  }
+}

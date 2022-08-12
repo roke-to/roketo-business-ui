@@ -11,3 +11,5 @@ export interface ThumbProps extends Partial<IThumbProps> {
 export const Thumb = React.forwardRef<HTMLDivElement, ThumbProps>((props, ref) => (
   <div {...props} ref={ref} className={clsx(styles.thumb, props.className)} />
 ));
+
+Thumb.displayName = 'Thumb';

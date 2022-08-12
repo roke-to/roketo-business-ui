@@ -15,14 +15,16 @@ export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Row = React.forwardRef<HTMLDivElement, ColProps>(
   ({children, className, gap = 'md', align = '', justify = '', ...props}, ref) => (
-    // TODO: using `gap-${gap}` working only if it included in tailwind.config safelist
+    // TODO: using gap && `gap-${gap}` working only if it included in tailwind.config safelist
     // TODO: maybe make some helper like useTailwindProps
     <div
       {...props}
       ref={ref}
-      className={clsx(styles.row, styles[align], styles[justify], `gap-${gap}`, className)}
+      className={clsx(styles.row, styles[align], styles[justify], gap && `gap-${gap}`, className)}
     >
       {children}
     </div>
   ),
 );
+
+Row.displayName = 'Row';

@@ -1,7 +1,5 @@
-import {FormValues} from 'effector-forms';
-
-import type {ChangePolicyProposalFormFields} from '~/entities/governance';
 import {Dao} from '~/shared/api/astro';
+import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 import {mapAddCouncilOptions} from './map-add-council-options';
 
@@ -205,7 +203,7 @@ describe('Add council options', () => {
       description: 'add barsik.testnet',
       link: '',
       tgas: '150',
-    } as unknown as FormValues<ChangePolicyProposalFormFields>;
+    } as unknown as ChangePolicyProposalFormValues;
     expect(mapAddCouncilOptions(currentDao, formData)).toEqual({
       args: {
         proposal: {

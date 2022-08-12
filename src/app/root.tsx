@@ -1,9 +1,9 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import '~/app/initI18n';
 import {$appLoading} from '~/entities/app';
 import {Routing} from '~/pages';
-import '~/shared/config/initI18n';
 import '~/shared/ui/styles';
 
 export function Root() {

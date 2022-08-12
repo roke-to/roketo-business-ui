@@ -6,24 +6,29 @@ import styles from './track.module.css';
 
 export interface TrackProps extends Partial<ITrackProps> {
   value: number;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  className?: string;
+  scaleContainer?: string;
+  rightPartClassName?: string;
+  leftPartClassName?: string;
 }
 
 export const Track = React.forwardRef<HTMLDivElement, TrackProps>(
-  ({value: left, children}, ref) => {
+  (
+    {value: left, children, className, scaleContainer, rightPartClassName, leftPartClassName},
+    ref,
+  ) => {
     const right = 100 - left;
     return (
-      <div className={styles.scaleContainer} ref={ref}>
-        <div
-          style={{width: `${left}%`}}
-          className={clsx(styles.positive, {[styles.scaleFull]: left === 100})}
-        />
-        <div
-          style={{width: `${right}%`}}
-          className={clsx(styles.negative, {[styles.scaleFull]: right === 100})}
-        />
+      <div className={clsx(styles.root, className)} ref={ref}>
+        <div className={clsx(styles.scaleContainer, scaleContainer)}>
+          <div style={{width: `${left}%`}} className={clsx(styles.rightPart, rightPartClassName)} />
+          <div style={{width: `${right}%`}} className={clsx(styles.leftPart, leftPartClassName)} />
+        </div>
         {children}
       </div>
     );
   },
 );
+
+Track.displayName = 'Track';

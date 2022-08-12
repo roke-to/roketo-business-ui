@@ -4,7 +4,7 @@ import React from 'react';
 
 import {$sideBarState} from '~/entities/menu';
 import {theme} from '~/shared/config/theme';
-import {useMediaQuery} from '~/shared/hook/useMediaQuery';
+import {useMediaQuery} from '~/shared/hooks/useMediaQuery';
 import {Layout} from '~/shared/ui/components/layout';
 import {Header} from '~/widgets/header';
 import {Navigate} from '~/widgets/navigate';
@@ -29,10 +29,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
         gap={3}
         withContent
         withBackground={false}
-        className={clsx({[styles.mainContainer]: showSideBar})}
+        className={clsx({[styles.main]: showSideBar})}
       >
         <Header />
-        {children}
+        <div className={styles.content}>{children}</div>
       </Layout>
     </Layout>
   );

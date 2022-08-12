@@ -45,3 +45,5 @@ export const RadioGroupItem = React.forwardRef<HTMLInputElement, IRadioProps>(
     );
   },
 );
+
+RadioGroupItem.displayName = 'RadioGroupItem';

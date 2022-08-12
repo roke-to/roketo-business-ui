@@ -1,10 +1,5 @@
 import React from 'react';
 
-import {Treasury} from '~/features/treasury/ui/treasury';
 import {PageLayout} from '~/widgets/page-layout';
 
-export const DashboardPage = () => (
-  <PageLayout>
-    <Treasury />
-  </PageLayout>
-);
+export const DashboardPage = () => <PageLayout>Page in progress</PageLayout>;

@@ -1,0 +1,16 @@
+.proposalTypeLabel {
+  @apply basis-1/3;
+}
+.proposerLabel {
+  @apply basis-1/3;
+}
+
+@media screen(mobile) {
+  .proposalTypeLabel {
+    @apply basis-full;
+  }
+
+  .proposerLabel {
+    @apply hidden;
+  }
+}

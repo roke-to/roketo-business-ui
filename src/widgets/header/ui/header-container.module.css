@@ -1,12 +1,16 @@
 .header {
-  @apply flex flex-row justify-between mt-4 mb-16;
+  @apply flex flex-row justify-between py-4 mb-12;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, #fff 0%, #fff 90%, rgba(255, 255, 255, 0.5) 100%);
+  z-index: 100;
 }
 
 .burgerMenu {
   display: none;
 }
 
-@media screen and (max-width: theme('screens.tablet')) {
+@media screen(tablet) {
   .burgerMenu {
     display: flex;
   }

@@ -1,9 +1,13 @@
 .scene {
   @apply bg-gradient-to-r from-[#f8c9a0] to-[#a0c2f8]
+    py-4
+    mobile:py-8
+    px-4
     min-h-screen
     flex
     flex-col
     justify-center
+    items-center
     overflow-hidden;
 }
 
@@ -27,7 +31,7 @@
   padding-bottom: 3.25rem;
 }
 
-@media screen and (max-width: theme('screens.tablet')) {
+@media screen(tablet) {
   .content {
     padding-right: 1rem;
     padding-left: 1rem;

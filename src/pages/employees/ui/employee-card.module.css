@@ -1,0 +1,11 @@
+.card {
+  margin: 0;
+}
+
+@media screen(desktop) {
+  .card {
+    min-height: 400px;
+    flex-grow: 1;
+    flex-basis: 30%;
+  }
+}

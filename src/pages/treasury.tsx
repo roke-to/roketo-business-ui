@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Treasury} from '~/features/treasury/ui/treasury';
+import {Treasury} from '~/entities/treasury';
 import {PageLayout} from '~/widgets/page-layout';
 
 export const TreasuryPage = () => (

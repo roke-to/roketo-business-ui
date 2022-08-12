@@ -1,0 +1,45 @@
+.root {
+  min-width: 15rem;
+  border-left: 1px solid theme('colors.blue.sat_1');
+  margin-left: 1rem;
+  padding-left: 2.5rem;
+  gap: 1.25rem;
+}
+
+.quorumLine {
+  position: absolute;
+  top: -0.25rem;
+  right: 50%;
+  left: 50%;
+}
+
+.mobileShortText {
+  display: none;
+}
+
+@media screen(mobile) {
+  .root {
+    display: flex;
+    width: 100%;
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    gap: 1rem;
+  }
+
+  .controls {
+    margin-top: 0.5rem;
+  }
+
+  .votePeriodEnd {
+    display: none;
+  }
+
+  .mobileShortText {
+    display: flex;
+  }
+
+  .quorumLine {
+    top: -0.5rem;
+  }
+}

@@ -1,0 +1,48 @@
+.councilWidget {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.mobileDesktop {
+  display: none;
+}
+
+.scaleContainer {
+  border: 1px solid theme('colors.blue.default');
+  min-width: theme('spacing.20');
+}
+
+.rightPart {
+  background-color: theme('colors.blue.default');
+}
+
+.leftPart {
+  background-color: theme('colors.white');
+}
+
+@media screen(mobile) {
+  .councilWidget {
+    flex-direction: column;
+    box-shadow: theme('dropShadow.DEFAULT');
+    padding: theme('spacing.8');
+    border-radius: theme('borderRadius.3xl');
+  }
+
+  .textDesktop {
+    display: none;
+  }
+
+  .mobileDesktop {
+    display: flex;
+    margin-top: theme('spacing.3');
+  }
+
+  .scaleContainerRoot {
+    margin-top: theme('spacing.2');
+  }
+
+  .changePolicyButton {
+    margin-top: theme('spacing.6');
+  }
+}

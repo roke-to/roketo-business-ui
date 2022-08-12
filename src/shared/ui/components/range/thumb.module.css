@@ -1,9 +1,10 @@
 .thumb {
-  height: 1.75rem;
+  height: 1.5rem;
   border: 1px solid #2b313b;
+  top: 0;
 }
 
-@media screen and (max-width: theme('screens.mobile')) {
+@media screen(mobile) {
   .thumb {
     height: 2.5rem;
   }

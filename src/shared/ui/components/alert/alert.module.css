@@ -1,0 +1,15 @@
+.root {
+  padding: theme('gap.sm') theme('gap.md');
+  @apply text-xs;
+}
+
+/* variants */
+.info {
+  background-color: theme('colors.blue.light');
+  color: theme('colors.blue.textDefault');
+}
+
+.danger {
+  background-color: theme('colors.red.lightDefault');
+  color: theme('colors.red.default');
+}

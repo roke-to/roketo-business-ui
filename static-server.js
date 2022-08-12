@@ -7,6 +7,8 @@ const logger = require('pino-http')();
 const serveOptions = {
   public: './dist',
   renderSingle: true,
+  directoryListing: false,
+  rewrites: [{source: '*', destination: '/index.html'}],
 };
 
 const server = http.createServer((req, res) => {

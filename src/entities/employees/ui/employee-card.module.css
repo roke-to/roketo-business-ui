@@ -1,9 +1,0 @@
-.card {
-  margin: 0;
-}
-
-@media screen and (min-width: theme('screens.laptop')) {
-  .card {
-    min-height: 400px;
-  }
-}

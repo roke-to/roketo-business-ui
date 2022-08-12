@@ -12,8 +12,10 @@ export interface ListProps {
 
 export const List = React.forwardRef<HTMLUListElement, PropsWithChildren<ListProps>>(
   ({gap, className, children}, ref) => (
-    <ul ref={ref} className={clsx(styles.list, `gap-${gap}`, className)}>
+    <ul ref={ref} className={clsx(styles.list, gap && `gap-${gap}`, className)}>
       {children}
     </ul>
   ),
 );
+
+List.displayName = 'List';

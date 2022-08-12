@@ -104,4 +104,4 @@ export class SputnikFactoryDaoContract extends Contract {
   store!: ContractChangeFunction<never, Base58CryptoHash>;
 }
 
-export {mapCreateArgs} from './map-create-args';
+export {mapCreateOptions} from './map-create-args';

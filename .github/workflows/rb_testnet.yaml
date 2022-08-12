@@ -1,13 +1,13 @@
 name: Build and deploy
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
   
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on:
+      - self-hosted
+      - Linux
+      - node
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2.3.1

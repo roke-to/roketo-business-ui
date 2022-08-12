@@ -26,3 +26,5 @@ export const Tab: React.FC<ITabProps> = ({children, value, ...props}) => {
     </Button>
   );
 };
+
+Tab.displayName = 'Tab';
