@@ -2,13 +2,11 @@
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
-  min-width: 15rem;
+  min-width: 240px;
   height: 100vh;
 
-  padding-top: 7rem;
-  padding-bottom: 3.25rem;
+  padding-bottom: theme('gap.xl');
 
   background: theme('colors.white');
   box-shadow: theme('dropShadow.sideBar');
@@ -17,10 +15,17 @@
   visibility: hidden;
   transform: scale(1);
   transition: transform ease-in 0.15s, opacity 0.15s, visibility 0.15s;
+}
 
-  @media screen(tablet) {
-    padding-top: 6rem;
-  }
+.logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-left: theme('gap.md');
+
+  @apply text-heading font-heading text-orange;
+  /* TODO: remove 900 from index.html after normal logo will be */
+  font-weight: 900;
 }
 
 .isOpen {
@@ -29,7 +34,7 @@
 }
 
 .main {
-  margin-left: 15rem;
+  margin-left: 240px;
 }
 
 .content {
@@ -40,5 +45,15 @@
   /* same as at src/shared/ui/components/layout/layout.module.css .layout */
   transition: transform ease-in 0.15s, margin-left 0.15s;
   flex-direction: column;
-  gap: theme('spacing.3');
+  gap: theme('gap.lg');
+  padding-left: theme('gap.xl');
+  padding-right: theme('gap.xl');
+}
+
+@media screen(tablet) {
+  .content {
+    gap: theme('gap.md');
+    padding-left: theme('gap.md');
+    padding-right: theme('gap.md');
+  }
 }

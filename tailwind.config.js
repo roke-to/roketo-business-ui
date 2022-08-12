@@ -79,16 +79,16 @@ export default {
       DEFAULT: '1rem', // 16px
       lg: '1.5rem',
       xl: '2rem',
-      '2xl': '4rem',
-      '3xl': '5rem',
-      '4xl': '6rem',
-      '5xl': '7rem',
+      '2xl': '3rem', // 48px
+      '3xl': '4rem',
+      '4xl': '5rem',
+      '5xl': '6rem',
     }),
     screens: {
       mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
-      tablet: {min: '768px', max: '1023px'}, // => @media (min-width: 768px and max-width: 1023px) { ... }
-      laptop: {min: '1024px', max: '1279px'}, // => @media (min-width: 1024px and max-width: 1279px) { ... }
-      desktop: {min: '1280px'}, // => @media (min-width: 1280px and max-width: 1535px) { ... }
+      tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
+      laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
+      desktop: {min: '1280px'}, // => @media (min-width: 1280px) { ... }
     },
   },
 };

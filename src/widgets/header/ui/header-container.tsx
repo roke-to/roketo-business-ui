@@ -9,5 +9,7 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const HeaderContainer: React.FC<HeaderProps> = ({children}) => (
-  <Typography className={styles.header}>{children}</Typography>
+  <Typography as='div' className={styles.header}>
+    {children}
+  </Typography>
 );

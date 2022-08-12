@@ -12,7 +12,7 @@
   @apply h-5 w-5;
 }
 .xs {
-  @apply h-8 w-8;
+  @apply h-6 w-6;
 }
 .sm {
   @apply h-8 w-8;
@@ -29,7 +29,7 @@
   @apply w-3;
 }
 .xs svg {
-  @apply w-6;
+  @apply w-4;
 }
 .sm svg {
   @apply w-6;

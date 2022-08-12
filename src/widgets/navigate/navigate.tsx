@@ -24,7 +24,7 @@ export const Navigate = ({isMobileWidth}: {isMobileWidth: boolean}) => {
   const buttonVariant = isMobileWidth ? 'outlined' : 'clean';
 
   return (
-    <>
+    <nav className={styles.nav}>
       <List>
         {LINKS.map((linkName) => {
           const {title, path} = ROUTES[linkName];
@@ -54,6 +54,6 @@ export const Navigate = ({isMobileWidth}: {isMobileWidth: boolean}) => {
           {t('daoInit.logout')}
         </Button>
       </Col>
-    </>
+    </nav>
   );
 };

@@ -1,3 +1,10 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
 .bottomNavigate {
   padding: 0 1rem;
 }

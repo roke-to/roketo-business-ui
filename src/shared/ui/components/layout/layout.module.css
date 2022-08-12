@@ -26,14 +26,5 @@
 }
 
 .content {
-  padding-right: 5rem;
-  padding-left: 5rem;
-  padding-bottom: 3.25rem;
-}
-
-@media screen(tablet) {
-  .content {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
+  padding-bottom: theme('spacing.4');
 }

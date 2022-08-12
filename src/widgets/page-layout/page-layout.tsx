@@ -16,17 +16,18 @@ export interface IPageLayoutProps {}
 export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
   const sideBarState = useStore($sideBarState);
 
-  const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet})`);
+  const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet.max})`);
   const showSideBar = !isMobileWidth || sideBarState.isOpen;
 
   return (
     <Layout type='row' withBackground={false}>
-      <nav className={clsx(styles.sidebar, {[styles.isOpen]: showSideBar})}>
+      <div className={clsx(styles.sidebar, {[styles.isOpen]: showSideBar})}>
+        <div className={styles.logo}>RB</div>
         <Navigate isMobileWidth={isMobileWidth} />
-      </nav>
+      </div>
       <Layout
         as='main'
-        gap={3}
+        gap='2xl'
         withContent
         withBackground={false}
         className={clsx({[styles.main]: showSideBar})}
