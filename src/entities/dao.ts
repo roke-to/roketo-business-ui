@@ -73,9 +73,9 @@ forward({
   to: updateAddressByNameFx,
 });
 
-const createCallbackUrl = (daoId: string) => {
+const createCallbackUrl = (daoAddress: string, daoName: string) => {
   const url = new URL(window.location.toString());
-  url.search = `?newDaoId=${daoId}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`;
+  url.search = `?newDaoAddress=${daoAddress}&newDaoName=${encodeURIComponent(daoName)}`;
   return url.toString();
 };
 
@@ -96,7 +96,7 @@ export const createDaoFx = attach({
         ...data,
         accountId,
         councilList: data.councilList,
-        callbackUrl: createCallbackUrl(data.address),
+        callbackUrl: createCallbackUrl(data.address, data.name),
       }),
     );
   },
@@ -223,10 +223,21 @@ const redirectAfterCreateDaoFx = attach({
   },
   async effect({daoIds}) {
     const searchParams = new URLSearchParams(history.location.search);
-    const newDaoId = searchParams.get('newDaoId') || '';
+    const newDaoAddress = searchParams.get('newDaoAddress') || '';
+    const newDaoName = searchParams.get('newDaoName') || '';
+    const newDaoId = `${newDaoAddress}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`;
 
     if (!daoIds.includes(newDaoId)) {
-      // TODO: Maybe show error that DAO not found
+      createDaoForm.fields.name.onChange(newDaoName);
+      createDaoForm.fields.address.onChange(newDaoAddress);
+
+      const url = new URL(window.location.toString());
+
+      url.searchParams.delete('newDaoName');
+      url.searchParams.delete('newDaoAddress');
+
+      history.replace(url);
+
       return '';
     }
 

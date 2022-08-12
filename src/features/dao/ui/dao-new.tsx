@@ -6,6 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 import {createDaoForm, createDaoFx} from '~/entities/dao';
+import {sendTransactionsFx} from '~/entities/proposal/model/proposal';
 import {$accountId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {useQuery} from '~/shared/hooks/use-query';
@@ -32,7 +33,13 @@ export const DaoNew = () => {
   const pending = useStore(createDaoFx.pending);
   const [formView, setFormView] = React.useState(FormView.DAO_SETUP);
   const accountId = useStore($accountId);
-  const {errorMessage} = useQuery();
+  const query = useQuery();
+  // safe query to local state and after clear it from url
+  const [errorMessage] = React.useState(query.errorMessage);
+
+  React.useEffect(() => {
+    sendTransactionsFx();
+  }, []);
 
   const handleAddTypedCouncil = () => {
     const updatedCouncilList = [...fields.councilList.value, fields.councilAddress.value];
