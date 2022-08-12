@@ -1,6 +1,7 @@
 .thumb {
-  height: 1.75rem;
+  height: 1.5rem;
   border: 1px solid #2b313b;
+  top: 0;
 }
 
 @media screen(mobile) {
