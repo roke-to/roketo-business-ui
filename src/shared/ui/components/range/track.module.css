@@ -5,7 +5,7 @@
 
 .scaleContainer {
   display: flex;
-  height: 1rem;
+  height: 0.75rem;
   overflow: hidden;
   border-radius: 0.5rem;
 }
@@ -19,11 +19,8 @@
 }
 
 @media screen(mobile) {
-  .root {
-    height: 1.5rem;
-  }
-
   .scaleContainer {
+    height: 1.5rem;
     border-radius: 0.75rem;
   }
 }
