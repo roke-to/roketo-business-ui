@@ -62,3 +62,18 @@
     display: none;
   }
 }
+
+.viewLinkButtonCommon {
+  @apply h-10
+  my-2;
+}
+
+.viewLinkButton {
+  @apply p-0
+  my-0
+  h-min
+  w-min
+  whitespace-nowrap
+  font-normal
+  text-blue-textDefault;
+}

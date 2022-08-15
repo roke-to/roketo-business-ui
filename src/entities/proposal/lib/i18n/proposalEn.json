@@ -43,5 +43,6 @@
     "secondLine": "You can create a new proposal"
   },
   "emptySearchProposalList": "No proposals with current filters",
-  "createProposal": "Create proposal"
+  "createProposal": "Create proposal",
+  "viewLink": "View link"
 }

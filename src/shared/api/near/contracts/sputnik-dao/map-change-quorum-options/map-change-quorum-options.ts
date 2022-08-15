@@ -4,6 +4,7 @@ import {Dao} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
   COUNCIL,
+  DATA_SEPARATOR,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
 import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
@@ -34,7 +35,7 @@ export const mapChangeQuorumOptions = (
   return {
     args: {
       proposal: {
-        description: formData.description,
+        description: `${formData.description}${DATA_SEPARATOR}${formData.link}`,
         kind: {
           ChangePolicy: {
             policy: {

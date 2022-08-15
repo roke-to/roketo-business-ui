@@ -1,5 +1,7 @@
 import Decimal from 'decimal.js';
 
+import {DATA_SEPARATOR} from '~/shared/api/near/contracts/contract.constants';
+
 export type ProposalAction =
   | 'Finalize'
   | 'AddProposal'
@@ -343,8 +345,6 @@ export interface ContractRole {
   permissions: string[];
   vote_policy: Record<string, VotePolicyRequest> | {};
 }
-
-const DATA_SEPARATOR = '$$$$';
 
 // https://github.com/near-daos/astro-ui/blob/0bb743e91e2b2d32eb73eeb6d442313ddc5e836e/astro_2.0/features/CreateProposal/helpers/proposalObjectHelpers.ts
 // ts-unused-exports:disable-next-line

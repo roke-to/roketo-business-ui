@@ -1,15 +1,18 @@
 import clsx from 'clsx';
+import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
+import {$isMobileScreen} from '~/entities/screens';
 import {
   ProposalKindSwaggerDto as BaseProposalKindSwaggerDto,
   Proposal as ProposalType,
 } from '~/shared/api/astro';
 import {formatYoktoValue} from '~/shared/lib/currency';
+import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
 
@@ -44,8 +47,9 @@ export const Proposal = ({proposal}: ProposalProps) => {
   const {numberOfMembers} = dao;
 
   const {t} = useTranslation('proposal');
+  const isMobileScreen = useStore($isMobileScreen);
 
-  const [readableDescription] = description.split(ASTRO_DATA_SEPARATOR);
+  const [readableDescription, link] = description.split(ASTRO_DATA_SEPARATOR);
 
   const text = `${type} ${formatYoktoValue(amount)} NEAR ${t('from')} ${proposer} ${t(
     'to',
@@ -62,6 +66,21 @@ export const Proposal = ({proposal}: ProposalProps) => {
         <Typography as='span' isCapitalizeFirstLetter>
           {t('description')}: {readableDescription}
         </Typography>
+        {link && (
+          <Button
+            as='a'
+            // @ts-expect-error
+            href={link}
+            variant={isMobileScreen ? 'outlined' : 'clean'}
+            target='_blank'
+            rel='noopener noreferrer'
+            className={clsx(styles.viewLinkButtonCommon, {
+              [styles.viewLinkButton]: !isMobileScreen,
+            })}
+          >
+            {t('viewLink')}
+          </Button>
+        )}
         <StatusRow
           status={status}
           votes={votes}
