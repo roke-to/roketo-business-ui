@@ -3,6 +3,10 @@ import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
+import {
+  ATTACHED_DEPOSIT,
+  DEFAULT_FUNCTION_CALL_GAS_BN,
+} from '~/shared/api/near/contracts/contract.constants';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
@@ -247,8 +251,8 @@ export const createProposalFx = attach({
           },
         },
       },
-      gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
-      amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
+      gas: DEFAULT_FUNCTION_CALL_GAS_BN,
+      amount: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT), // attached deposit — bond 1e+23 0.1 NEAR,
     });
   },
 });

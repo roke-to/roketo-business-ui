@@ -1,6 +1,9 @@
 import * as nearApi from 'near-api-js';
 
-import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
+import {
+  COUNCIL,
+  DEFAULT_FUNCTION_CALL_GAS_BN,
+} from '~/shared/api/near/contracts/contract.constants';
 import {jsonToBase64} from '~/shared/lib/json-to-base64';
 
 export const mapCreateOptions = ({
@@ -18,7 +21,7 @@ export const mapCreateOptions = ({
   councilList?: string[];
   callbackUrl: string;
 }) => ({
-  gas: nearApi.DEFAULT_FUNCTION_CALL_GAS, // 300 TGas
+  gas: DEFAULT_FUNCTION_CALL_GAS_BN, // 300 TGas
   amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
   callbackUrl,
   args: {

@@ -1,3 +1,4 @@
+import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
@@ -7,6 +8,10 @@ import {
   mapChangeQuorumOptions,
   mapRemoveCouncilOptions,
 } from '~/shared/api/near';
+import {
+  ATTACHED_DEPOSIT,
+  DEFAULT_FUNCTION_CALL_GAS,
+} from '~/shared/api/near/contracts/contract.constants';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
@@ -132,16 +137,18 @@ const initChangePolicyProposalFormFx = attach({
 
     const quorum = getQuorumValueFromDao(currentDao);
 
+    console.log(' toNumber()', nearApi);
+
     return {
       type: 'changeQuorum',
       quorum,
       councilAddress: '.near',
       councilList: getCouncilListInitialState(currentDao.council, accountId),
-      amount: '1',
+      amount: ATTACHED_DEPOSIT,
       token: 'near',
       description: '',
       link: '',
-      tgas: '150',
+      tgas: `${DEFAULT_FUNCTION_CALL_GAS}`,
     };
   },
 });
@@ -168,7 +175,7 @@ export const changePolicyProposalForm = createForm({
       init: [] as string[],
     },
     amount: {
-      init: '1',
+      init: ATTACHED_DEPOSIT,
       rules: [validators.required],
     },
     token: {
@@ -183,7 +190,7 @@ export const changePolicyProposalForm = createForm({
       init: '',
     },
     tgas: {
-      init: '150',
+      init: `${DEFAULT_FUNCTION_CALL_GAS}`,
       rules: [validators.required],
     },
   },
