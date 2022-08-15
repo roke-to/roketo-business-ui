@@ -34,7 +34,7 @@ export const ChangeQuorum = ({fields, t, pending}: any) => (
         />
       </Label>
     </Row>
-    <Row>
+    <Row className='mobile:flex-col'>
       <Label
         content={t('createForm.linkLabel')}
         error={fields.link.errorText()}

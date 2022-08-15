@@ -30,7 +30,7 @@
   padding: theme('spacing.4') theme('spacing.8') theme('spacing.8') theme('spacing.8');
 
   @media screen(mobile) {
-    min-width: 774px;
+    min-width: 343px;
   }
 
   @media screen(mobile) {
