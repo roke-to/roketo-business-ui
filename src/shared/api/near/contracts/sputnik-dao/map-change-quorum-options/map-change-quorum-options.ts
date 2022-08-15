@@ -1,7 +1,11 @@
 import * as nearApi from 'near-api-js';
 
 import {Dao} from '~/shared/api/astro';
-import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
+import {
+  ATTACHED_DEPOSIT,
+  COUNCIL,
+  DEFAULT_FUNCTION_CALL_GAS_BN,
+} from '~/shared/api/near/contracts/contract.constants';
 import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 import {dataRoleToContractRole} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/data-role-to-contract-role';
 import {generateVotePolicyForEachProposalType} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/generate-vote-policy-for-each-proposal-type';
@@ -59,7 +63,7 @@ export const mapChangeQuorumOptions = (
         },
       },
     },
-    gas: nearApi.DEFAULT_FUNCTION_CALL_GAS,
-    amount: nearApi.utils.format.parseNearAmount('0.1'), // attachec deposit — bond 1e+23 0.1 NEAR,
+    gas: DEFAULT_FUNCTION_CALL_GAS_BN,
+    amount: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT), // attached deposit — bond 1e+23 0.1 NEAR,
   };
 };
