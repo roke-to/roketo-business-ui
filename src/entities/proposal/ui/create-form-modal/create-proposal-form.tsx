@@ -91,10 +91,10 @@ export function CreateProposalForm<T extends AnyFormValues>({
 
         <FormPartComponent fields={fields} t={t} pending={pending} />
 
-        <Row justify='between'>
+        <Row justify='between' className='mobile:flex-col'>
           <Col gap='xs'>
             <Typography>{t('createForm.charge')}</Typography>
-            <Row justify='between'>
+            <Row justify='between' className='mobile:flex-col'>
               {fields.amount.value && (
                 <Typography>
                   {fields.amount.value} {fields.token.value}
@@ -103,7 +103,7 @@ export function CreateProposalForm<T extends AnyFormValues>({
               {fields.tgas.value && <Typography>{fields.tgas.value} TGas</Typography>}
             </Row>
           </Col>
-          <Row>
+          <Row className='mobile:basis-auto'>
             <Button
               as={Link}
               // @ts-expect-error

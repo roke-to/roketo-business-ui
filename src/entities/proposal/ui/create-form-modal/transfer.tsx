@@ -7,7 +7,7 @@ import {Row} from '~/shared/ui/components/row';
 
 export const Transfer = ({fields, t, pending}: any) => (
   <>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createForm.targetLabel')}
@@ -67,7 +67,7 @@ export const Transfer = ({fields, t, pending}: any) => (
         />
       </Label>
     </Row>
-    <Row>
+    <Row className='mobile:flex-col'>
       <Label
         content={t('createForm.linkLabel')}
         error={fields.link.errorText()}
