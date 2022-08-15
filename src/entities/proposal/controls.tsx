@@ -57,6 +57,7 @@ export const Controls = ({
         variant='positive'
         active={yesVote}
         onClick={handleApproveVoteAction}
+        disabled={!canVote}
       />
       <Control
         text={voteNo}
@@ -64,6 +65,7 @@ export const Controls = ({
         variant='negative'
         active={noVote}
         onClick={handleRejectVoteAction}
+        disabled={!canVote}
       />
     </Row>
   );

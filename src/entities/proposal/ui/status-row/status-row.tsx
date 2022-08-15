@@ -31,6 +31,9 @@ export const StatusRow = ({
   /* это 💩, потому что votePeriodEnd типизируется в апи как number, а приходит string */
   const readableVotePeriodEnd = useCountdown(toMilliseconds(votePeriodEnd as unknown as string));
 
+  const isProgressStatusProposal =
+    status !== 'Approved' && status !== 'Failed' && status !== 'Rejected';
+
   const timeText =
     voteStatus === 'Expired' ? (
       <Typography as='span'>{t('timeExpired')}</Typography>
@@ -41,7 +44,7 @@ export const StatusRow = ({
       </>
     );
 
-  return canVote ? (
+  return isProgressStatusProposal ? (
     <Row gap={2} align='center'>
       {timeText}
       <Controls votes={votes} canVote={canVote} className={styles.canVoteViewControls} />

@@ -13,12 +13,14 @@ export const Control = ({
   variant,
   active,
   onClick,
+  disabled,
 }: {
   text: number | string;
   icon: React.ReactNode;
   variant: 'positive' | 'negative';
   active: boolean;
   onClick?(): void;
+  disabled?: boolean;
 }) => {
   const isViewMode = typeof onClick === 'undefined';
 
@@ -42,6 +44,7 @@ export const Control = ({
         gap={1}
         className={styles.mobileButton}
         onClick={onClick}
+        disabled={disabled}
       >
         <Typography as='span' color={variant} className={styles.text}>
           {text}
