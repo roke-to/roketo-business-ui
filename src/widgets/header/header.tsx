@@ -9,7 +9,7 @@ interface HeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const Header: React.FC<HeaderProps> = () => (
   <HeaderContainer>
     <BurgerMenu />
-    <DaoSwitcher />
+    <DaoSwitcher className='px-0' />
     <Notifications />
   </HeaderContainer>
 );

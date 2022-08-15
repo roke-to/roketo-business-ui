@@ -38,9 +38,3 @@
 .icon {
   color: theme('colors.blue.sat_1');
 }
-
-@media screen(mobile) {
-  .listItem {
-    height: 5rem;
-  }
-}

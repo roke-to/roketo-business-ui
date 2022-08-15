@@ -2,8 +2,6 @@
   display: flex;
   gap: 1rem;
   justify-content: space-between;
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
 }
 
 .filterGroup {
@@ -23,11 +21,6 @@
 }
 
 @media screen(mobile) {
-  .filtersContainer {
-    margin-top: 1.25rem;
-    margin-bottom: 0.25rem;
-  }
-
   .statusText {
     display: none;
   }

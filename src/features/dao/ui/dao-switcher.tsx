@@ -7,7 +7,7 @@ import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-con
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
 import {RadioGroupItem} from '~/shared/ui/components/radio-group';
 
-export const DaoSwitcher = () => {
+export const DaoSwitcher = ({className}: {className?: string}) => {
   const daoId = useStore($currentDaoId);
   const userDaos = useStore($daoIds);
 
@@ -16,7 +16,7 @@ export const DaoSwitcher = () => {
   };
 
   return (
-    <DropdownMenu label={daoId} size='xxs' variant='clean'>
+    <DropdownMenu label={daoId} size='xxs' variant='clean' className={className}>
       <DropdownContent selected={daoId} handleChange={handleChange} size='xxs' offset='xs'>
         {userDaos.map((id) => (
           <DropdownItem key={id}>
