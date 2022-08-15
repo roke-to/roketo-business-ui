@@ -1,8 +1,8 @@
+import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {theme} from '~/shared/config/theme';
-import {useMediaQuery} from '~/shared/hooks/useMediaQuery';
+import {$isMobileScreen} from '~/entities/screens';
 import {Button} from '~/shared/ui/components/button';
 import {Modal, useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
@@ -23,7 +23,7 @@ const TextEmptyProposalList = () => {
 
 export const EmptyProposalList = ({isDefaultFiltersValue}: {isDefaultFiltersValue?: boolean}) => {
   const {t} = useTranslation('proposal');
-  const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet})`);
+  const isMobileWidth = useStore($isMobileScreen);
   const createProposalModal = useModal();
 
   const text = isDefaultFiltersValue ? <TextEmptyProposalList /> : t('emptySearchProposalList');

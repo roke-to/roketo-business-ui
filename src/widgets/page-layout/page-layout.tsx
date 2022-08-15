@@ -3,8 +3,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {$sideBarState} from '~/entities/menu';
-import {theme} from '~/shared/config/theme';
-import {useMediaQuery} from '~/shared/hooks/useMediaQuery';
+import {$isMobileScreen} from '~/entities/screens';
 import {Layout} from '~/shared/ui/components/layout';
 import {Header} from '~/widgets/header';
 import {Navigate} from '~/widgets/navigate';
@@ -16,7 +15,7 @@ export interface IPageLayoutProps {}
 export const PageLayout: React.FC<IPageLayoutProps> = ({children}) => {
   const sideBarState = useStore($sideBarState);
 
-  const isMobileWidth = useMediaQuery(`(max-width: ${theme.screens.tablet.max})`);
+  const isMobileWidth = useStore($isMobileScreen);
   const showSideBar = !isMobileWidth || sideBarState.isOpen;
 
   return (

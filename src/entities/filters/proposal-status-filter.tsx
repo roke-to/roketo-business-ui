@@ -1,9 +1,9 @@
+import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {$isMobileScreen} from '~/entities/screens';
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
-import {theme} from '~/shared/config/theme';
-import {useMediaQuery} from '~/shared/hooks/useMediaQuery';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
@@ -32,7 +32,7 @@ export const ProposalStatusFilter = ({
   handleChangeProposalKind,
 }: ProposalStatusFilterProps) => {
   const {t} = useTranslation('proposalFilters');
-  const canShowModal = useMediaQuery(`(max-width: ${theme.screens.mobile})`);
+  const canShowModal = useStore($isMobileScreen);
 
   const proposalFiltersModal = useModal();
 
