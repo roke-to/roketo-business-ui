@@ -51,7 +51,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
     'to',
   )} ${receiverId}`;
 
-  const canVote = status !== 'Approved' && status !== 'Failed' && status !== 'Rejected';
+  const canVote = voteStatus !== 'Expired';
 
   return (
     <div className={clsx(styles.proposal, styles[status])}>
