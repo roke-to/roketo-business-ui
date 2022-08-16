@@ -4,6 +4,7 @@ export interface BaseChangePolicyProposalFormFields extends AnyFields {
   councilAddress: Field<string>;
   quorum: Field<number>;
   description: Field<string>;
+  link: Field<string>;
 }
 
 export type ChangePolicyProposalFormValues = FormValues<BaseChangePolicyProposalFormFields>;
