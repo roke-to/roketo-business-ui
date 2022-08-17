@@ -12,7 +12,7 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS,
 } from '~/shared/api/near/contracts/contract.constants';
-import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';

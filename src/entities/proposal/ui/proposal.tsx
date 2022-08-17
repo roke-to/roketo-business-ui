@@ -4,45 +4,24 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
+import {getReadableProposalName} from '~/entities/proposal/lib/get-readable-proposal-name';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
 import {$isMobileScreen} from '~/entities/screens';
-import {
-  ProposalKindSwaggerDto as BaseProposalKindSwaggerDto,
-  Proposal as ProposalType,
-} from '~/shared/api/astro';
-import {formatYoktoValue} from '~/shared/lib/currency';
+import {ImprovedProposalType} from '~/shared/types/proposal.types';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './proposal.module.css';
 
-interface ProposalKindSwaggerDto extends BaseProposalKindSwaggerDto {
-  amount?: string;
-}
-
-interface ImprovedProposalType extends ProposalType {
-  kind: ProposalKindSwaggerDto;
-}
-
 export interface ProposalProps extends React.HTMLAttributes<HTMLDivElement> {
   proposal: ImprovedProposalType;
 }
 
 export const Proposal = ({proposal}: ProposalProps) => {
-  const {
-    proposer,
-    description,
-    votePeriodEnd,
-    votes,
-    kind: {type, amount = '0', receiverId},
-    status,
-    dao,
-    updatedAt,
-    proposalId,
-    voteStatus,
-  } = proposal;
+  const {description, votePeriodEnd, votes, status, dao, updatedAt, proposalId, voteStatus} =
+    proposal;
 
   const {numberOfMembers} = dao;
 
@@ -51,9 +30,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
 
   const [readableDescription, link] = description.split(ASTRO_DATA_SEPARATOR);
 
-  const text = `${type} ${formatYoktoValue(amount)} NEAR ${t('from')} ${proposer} ${t(
-    'to',
-  )} ${receiverId}`;
+  const text = getReadableProposalName(proposal, t);
 
   const canVote = voteStatus !== 'Expired';
 
