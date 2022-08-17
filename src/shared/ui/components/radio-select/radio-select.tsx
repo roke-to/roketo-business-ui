@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button} from '~/shared/ui/components/button';
+import {PartVisibleList} from '~/shared/ui/components/part-visible-list/part-visible-list';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
 
 import styles from './radio-select.module.css';
@@ -14,6 +14,10 @@ export interface RadioSelectProps {
   showAllText: string;
 }
 
+const renderOptions = (option: {label: string; value: string}) => (
+  <RadioGroupItem key={option.value} value={option.value} label={option.label} />
+);
+
 export const RadioSelect = ({
   options,
   showAllText,
@@ -21,21 +25,14 @@ export const RadioSelect = ({
   value,
   onChange,
   maxVisibleCount = 5,
-}: RadioSelectProps) => {
-  const [isAllVisible, setIsAllVisible] = React.useState(false);
-
-  const visibleOptions = isAllVisible ? options : options.slice(0, maxVisibleCount);
-
-  return (
-    <RadioGroup name={name} value={value} onChange={onChange} gap={1}>
-      {visibleOptions.map((option) => (
-        <RadioGroupItem key={option.value} value={option.value} label={option.label} />
-      ))}
-      {visibleOptions.length !== options.length && options.length > maxVisibleCount ? (
-        <Button variant='clean' className={styles.showAll} onClick={() => setIsAllVisible(true)}>
-          {showAllText}
-        </Button>
-      ) : null}
-    </RadioGroup>
-  );
-};
+}: RadioSelectProps) => (
+  <RadioGroup name={name} value={value} onChange={onChange} gap={1}>
+    <PartVisibleList
+      options={options}
+      renderOptions={renderOptions}
+      showAllText={showAllText}
+      showAllClassName={styles.showAll}
+      maxVisibleCount={maxVisibleCount}
+    />
+  </RadioGroup>
+);

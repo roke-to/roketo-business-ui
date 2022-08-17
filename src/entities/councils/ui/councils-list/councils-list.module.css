@@ -1,0 +1,20 @@
+.root {
+  min-width: 320px;
+  border-right: 1px solid #a6c8ff;
+}
+
+.viewAll {
+  @apply p-0
+  h-min
+  w-min
+  whitespace-nowrap
+  font-normal
+  text-blue-textDefault
+  hover:cursor-pointer;
+}
+
+@media screen(mobile) {
+  .root {
+    border-right: 1px solid transparent;
+  }
+}

@@ -1,24 +1,37 @@
 import {useStore} from 'effector-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {$currentDao} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
+import {PartVisibleList} from '~/shared/ui/components/part-visible-list/part-visible-list';
 import {Typography} from '~/shared/ui/components/typography';
 
+import styles from './councils-list.module.css';
+
+const renderOptions = (councilAccountId: string) => (
+  <Typography as='span' font='sm' key={councilAccountId}>
+    {councilAccountId}
+  </Typography>
+);
+
 export const CouncilsList = () => {
+  const {t} = useTranslation('councils');
   const currentDao = useStore($currentDao);
 
   return (
-    <Col gap={1}>
+    <Col gap={1} className={styles.root}>
       <Typography as='span' weight='bold'>
-        Councils
+        {t('councils')}
       </Typography>
       <Col gap={2}>
-        {currentDao?.council.map((councilAccountId) => (
-          <Typography as='span' font='sm' key={councilAccountId}>
-            {councilAccountId}
-          </Typography>
-        ))}
+        <PartVisibleList
+          options={currentDao?.council || []}
+          renderOptions={renderOptions}
+          showAllText={t('viewAll')}
+          maxVisibleCount={2}
+          showAllClassName={styles.viewAll}
+        />
       </Col>
     </Col>
   );

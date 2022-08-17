@@ -1,5 +1,6 @@
 {
   "councils": "Councils",
   "quorum": "Quorum",
-  "changePolicy": "Change policy"
+  "changePolicy": "Change policy",
+  "viewAll": "view all"
 }
