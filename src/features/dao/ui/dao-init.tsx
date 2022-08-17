@@ -1,7 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 import {$daoIds, $daosLoading, setCurrentDaoId} from '~/entities/dao';
 import {$accountId, logoutClicked} from '~/entities/wallet';
@@ -23,10 +23,16 @@ export const DaoInit = () => {
   const accountId = useStore($accountId);
   const daosLoading = useStore($daosLoading);
   const [selectedDao, setSelectedDao] = React.useState('');
+  const history = useHistory();
 
-  const handleSelectDao = React.useCallback(() => {
-    setCurrentDaoId(selectedDao);
-  }, [selectedDao]);
+  const handleSelectDao = React.useCallback(
+    () => {
+      setCurrentDaoId(selectedDao);
+      history.replace(ROUTES.treasury.path);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- history always same
+    [selectedDao],
+  );
 
   const hasDao = daoIds.length > 0;
 

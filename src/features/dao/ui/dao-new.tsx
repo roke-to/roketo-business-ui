@@ -59,6 +59,12 @@ export const DaoNew = () => {
     submit();
   };
 
+  // Don't showing the form, if it possible
+  // to redirect to newly created DAO (redirectAfterCreateDaoFx)
+  if (query.newDaoAddress) {
+    return null;
+  }
+
   return (
     <Portlet gap='md' className='pb-12 mobile:pb-8'>
       {formView === FormView.DAO_SETUP && (
