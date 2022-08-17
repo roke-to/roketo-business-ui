@@ -1,7 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
-import {$currentDaoId, $daoIds, setDaoId} from '~/entities/dao';
+import {$currentDaoId, $daoIds, setCurrentDaoId} from '~/entities/dao';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
@@ -12,7 +12,7 @@ export const DaoSwitcher = ({className}: {className?: string}) => {
   const userDaos = useStore($daoIds);
 
   const handleChange = (index: number) => {
-    setDaoId(userDaos[index]);
+    setCurrentDaoId(userDaos[index]);
   };
 
   return (

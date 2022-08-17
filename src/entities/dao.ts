@@ -109,23 +109,40 @@ forward({
 
 //  ------------ current DAO ------------
 
-export const $currentDaoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
+export const $currentDaoId = createStore('');
 
-export const setDaoId = createEvent<string>();
-const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
-  // todo: put ls key to the shared consts
-  localStorage.setItem('currentDaoId', selectedDaoId);
-  if (
-    window.location.pathname === ROUTES.dao.path ||
-    window.location.pathname === ROUTES.daoNew.path
-  ) {
-    history.replace(ROUTES.treasury.path);
-  }
-  return selectedDaoId;
+export const setCurrentDaoId = createEvent<string>();
+
+const getLocalStorageDaoKey = (accountId: string) => `app:${accountId}:dao`;
+
+const saveCurrentDaoInLsFx = attach({
+  source: {
+    accountId: $accountId,
+  },
+  effect({accountId}, selectedDaoId: string) {
+    localStorage.setItem(getLocalStorageDaoKey(accountId), selectedDaoId);
+    // todo: remove after some time, when all users relogin
+    localStorage.removeItem('currentDaoId');
+    if (
+      window.location.pathname === ROUTES.dao.path ||
+      window.location.pathname === ROUTES.daoNew.path
+    ) {
+      history.replace(ROUTES.treasury.path);
+    }
+    return selectedDaoId;
+  },
+});
+
+// Load initial state after near initialzed
+sample({
+  clock: initNearInstanceFx.doneData,
+  fn: ({accountId}: NearInstance) =>
+    (accountId && localStorage.getItem(getLocalStorageDaoKey(accountId))) || '',
+  target: $currentDaoId,
 });
 
 sample({
-  source: setDaoId,
+  source: setCurrentDaoId,
   target: saveCurrentDaoInLsFx,
 });
 
@@ -247,7 +264,7 @@ sample({
 sample({
   source: redirectAfterCreateDaoFx.doneData,
   filter: (daoId) => Boolean(daoId),
-  target: setDaoId,
+  target: setCurrentDaoId,
 });
 
 //  ------------ sputnikDaoContract ------------
@@ -270,7 +287,7 @@ sample({
 });
 
 sample({
-  clock: setDaoId,
+  clock: setCurrentDaoId,
   target: initSputnikDaoContractFx,
 });
 
