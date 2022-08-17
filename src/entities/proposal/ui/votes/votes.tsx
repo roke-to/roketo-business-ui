@@ -8,7 +8,7 @@ import {multiVote} from '~/entities/proposal/model/proposal';
 import {Dao, Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
-import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {Col} from '~/shared/ui/components/col';
 import {Thumb, Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';

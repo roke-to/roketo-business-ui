@@ -44,5 +44,8 @@
   },
   "emptySearchProposalList": "No proposals with current filters",
   "createProposal": "Create proposal",
-  "viewLink": "View link"
+  "viewLink": "View link",
+  "addMemberToRoleText": "propose to add",
+  "removeMemberFromRoleText": "propose to remove",
+  "changeQuorumText": "propose to change quorum to"
 }

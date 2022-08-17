@@ -11,7 +11,7 @@ import {
 } from '~/shared/api/near';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
-import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value-from-dao';
+import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {history} from '~/shared/lib/router';
 import {validators} from '~/shared/lib/validators';
 
