@@ -50,6 +50,7 @@ export const Navigate = ({isMobileWidth}: {isMobileWidth: boolean}) => {
           width='full'
           onClick={() => logoutClicked()}
           className={styles.logoutButton}
+          data-qa='logout'
         >
           {t('daoInit.logout')}
         </Button>
