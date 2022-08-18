@@ -5,7 +5,7 @@ import yn from 'yn';
 import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
 
-const dotenvFiles = [`.env.local`, '.env'];
+const dotenvFiles = ['.env.local', '.env'];
 
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
@@ -14,18 +14,13 @@ dotenvFiles.forEach((dotenvFile) => {
 });
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
   testDir: './tests',
+  testMatch: '**/*.e2e.ts',
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 5 * 60 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -125,8 +120,9 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: 'yarn start',
     port: 3000,
+    reuseExistingServer: true,
   },
 };
-// ts-unused-exports:disable-next-line
 
+// ts-unused-exports:disable-next-line
 export default config;

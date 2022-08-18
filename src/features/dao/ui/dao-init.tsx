@@ -35,6 +35,8 @@ export const DaoInit = () => {
   // view state mashine
   const view = hasDao ? View.LIST : View.EMPTY;
 
+  const [hasDaoTitleLeft, hasDaoTitleRight] = t('daoInit.hasDaoSubtitle').split('$accountId');
+
   if (daosLoading) {
     return null;
   }
@@ -44,8 +46,14 @@ export const DaoInit = () => {
       {view === View.LIST && (
         <Col gap='lg'>
           <Col gap='xs'>
-            <Typography font='heading'>{t('daoInit.hasDAOTitle')}</Typography>
-            <Typography as='span'>{t('daoInit.hasDAOSubTitle')}</Typography>
+            <Typography font='heading'>{t('daoInit.hasDaoTitle')}</Typography>
+            <Typography as='span'>
+              {hasDaoTitleLeft}
+              <Typography as='span' data-qa='account'>
+                {accountId}
+              </Typography>
+              {hasDaoTitleRight}
+            </Typography>
           </Col>
           <Col gap='xl'>
             <RadioSelect
@@ -62,9 +70,11 @@ export const DaoInit = () => {
       )}
       {view === View.EMPTY && (
         <Col>
-          <Typography>{t('daoInit.hasNotDAOTitle')}</Typography>
-          <Typography as='span'>{t('daoInit.hasNotDAOSubTitle')}</Typography>
-          <Typography as='span'>{accountId}</Typography>
+          <Typography>{t('daoInit.emptyDaoTitle')}</Typography>
+          <Typography as='span'>{t('daoInit.emptyDaoSubtitle')}</Typography>
+          <Typography as='span' data-qa='account'>
+            {accountId}
+          </Typography>
         </Col>
       )}
       <Col>
@@ -72,8 +82,8 @@ export const DaoInit = () => {
         <Button as={Link} to={ROUTES.daoNew.path} variant='outlined'>
           {t('daoInit.createDao')}
         </Button>
-        <Button variant='outlined' onClick={() => logoutClicked()}>
-          {t('daoInit.logout')} ({accountId})
+        <Button variant='outlined' data-qa='logout' onClick={() => logoutClicked()}>
+          {t('daoInit.logout')}
         </Button>
       </Col>
     </Portlet>

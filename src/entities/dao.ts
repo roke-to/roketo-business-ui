@@ -134,15 +134,9 @@ sample({
   target: $currentDaoId,
 });
 
-const SOME_DAOS_WITH_SOME_DATA_FOR_DEV = [
-  'animatronic.testnet', // a lot of proposals
-];
-
 // user DAOs loading
 const $daos = createStore<AccountDaoResponse[]>([]);
-export const $daoIds = $daos.map((arr) =>
-  arr.map(({id}) => id).concat(SOME_DAOS_WITH_SOME_DATA_FOR_DEV),
-);
+export const $daoIds = $daos.map((arr) => arr.map(({id}) => id));
 
 const loadDaosFx = attach({
   source: {

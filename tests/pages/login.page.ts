@@ -1,15 +1,17 @@
 import {expect, Page} from '@playwright/test';
 
-import {findButtonByText} from '../utils/findButtonByText';
-import elements from './login.page.elements.json';
-import nearElements from './nearwallet.page.elements.json';
-
 export class LoginPage {
   readonly page: Page;
 
-  readonly nearElements = nearElements;
-
-  readonly elements = elements;
+  readonly elements = {
+    chooseDaoURL: '/dao',
+    dashboardPageURL: '/dashboard',
+    treasuryPageURL: '/treasury',
+    loginURL: '/',
+    buttonSelectDao: 'button:has-text("Select DAO")',
+    buttonNearWallet: 'button:has-text("NEAR Wallet")',
+    accountId: '[data-qa="account"]',
+  };
 
   constructor(page: Page) {
     this.page = page;
@@ -19,22 +21,21 @@ export class LoginPage {
     await this.page.goto(this.elements.loginURL);
   }
 
-  async checkUserLoggedIn() {
-    await expect(this.page).toHaveURL(this.elements.treasuryPageURL);
+  async checkUserLoggedIn(accountId: string) {
+    await this.page.waitForURL(this.elements.chooseDaoURL);
+    await expect(this.page.locator(this.elements.accountId)).toHaveText(accountId);
   }
 
-  async chooseDao(daoid: string) {
-    await this.page.locator('span', {hasText: daoid}).click();
+  async checkUserLoggedOut() {
+    await expect(this.page).toHaveURL(this.elements.loginURL);
+  }
+
+  async chooseDao(daoId: string) {
+    await this.page.locator('button', {hasText: daoId}).click();
     await this.page.locator(this.elements.buttonSelectDao).click();
   }
 
   async chooseNearWallet() {
-    await findButtonByText(this.page, this.elements.buttonNearWallet).first().click();
-  }
-
-  async loginToNear(page: Page) {
-    await expect(page).toHaveURL(/https:\/\/wallet\.testnet\.near\.org\/login/);
-    await page.locator(this.nearElements.commonSubmitButton).click();
-    await page.locator(this.nearElements.commonSubmitButton).click();
+    await this.page.locator(this.elements.buttonNearWallet).first().click();
   }
 }
