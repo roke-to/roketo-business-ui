@@ -1,0 +1,8 @@
+.root {
+  width: 50px;
+  height: 50px;
+}
+
+.innerCircle {
+  fill: theme('colors.white');
+}

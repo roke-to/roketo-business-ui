@@ -1,4 +1,3 @@
-import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
@@ -136,8 +135,6 @@ const initChangePolicyProposalFormFx = attach({
     }
 
     const quorum = getQuorumValueFromDao(currentDao);
-
-    console.log(' toNumber()', nearApi);
 
     return {
       type: 'changeQuorum',
