@@ -17,3 +17,8 @@
 .disabled {
   opacity: 0.5;
 }
+
+.text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
