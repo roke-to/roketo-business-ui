@@ -2,6 +2,7 @@ import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
+import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
@@ -21,8 +22,6 @@ import {$accountId} from '../../wallet';
 // ------------ proposals ------------
 
 export const $treasuryProposals = createStore<Proposal[]>([]);
-
-export const loadTreasuryProposals = createEvent();
 
 export const $treasuryProposalLoading = createStore(true);
 
@@ -120,7 +119,7 @@ const loadTreasuryProposalsFx = attach({
 });
 
 sample({
-  source: loadTreasuryProposals,
+  source: sendTransactionsFx.doneData,
   target: loadTreasuryProposalsFx,
 });
 sample({
