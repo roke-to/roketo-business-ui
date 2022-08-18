@@ -9,7 +9,7 @@ export type InputVariant = 'outlined';
 export type InputSize = 'md';
 
 // Prefer extends, but override with Omit<..., 'size'> is clumsy
-type InputProps = Merge<
+export type InputProps = Merge<
   React.InputHTMLAttributes<HTMLInputElement>,
   {
     className?: string;
@@ -18,7 +18,7 @@ type InputProps = Merge<
     variant?: InputVariant;
     size?: InputSize;
     error?: boolean;
-    onChange?: (value: string, event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (value: string, event?: React.ChangeEvent<HTMLInputElement>) => void;
   }
 >;
 

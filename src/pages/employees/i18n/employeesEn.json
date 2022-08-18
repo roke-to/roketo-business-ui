@@ -46,7 +46,7 @@
         },
         "startDate": {
           "label": "Start date",
-          "placeholder": "31/12/2022 00:00"
+          "placeholder": "31/12/2022"
         },
         "period": {
           "label": "Invoice period",

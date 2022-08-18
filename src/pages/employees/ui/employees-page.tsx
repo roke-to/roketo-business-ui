@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
+import {Col} from '~/shared/ui/components/col';
+import {Datepicker} from '~/shared/ui/components/datepicker';
 import {Label} from '~/shared/ui/components/label';
 import {Layout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
@@ -18,7 +20,6 @@ import styles from './employees-page.module.css';
 type ViewType = 'card' | 'list';
 
 export const EmployeesPage = () => {
-  // TODO extract i18n for page from entity
   const {t} = useTranslation('employees');
   const addEmployeeModal = useModal();
 
@@ -31,6 +32,12 @@ export const EmployeesPage = () => {
   const [viewType, setViewType] = useState<ViewType>('card');
   const handleViewTypeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setViewType(e.target.value as ViewType);
+
+  const [datepickerValue, setDatepickerValue] = useState<string>('');
+  const onChangeDatepickerValue = (value: string) => {
+    console.log(value);
+    setDatepickerValue(value);
+  };
 
   return (
     <Layout>
