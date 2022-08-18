@@ -23,8 +23,11 @@ export const getPieSliceData = (settings: {
   // line to first edge
   d += `L${firstCircumferenceX},${firstCircumferenceY} `;
   // arc
+  // @see https://svgwg.org/svg2-draft/paths.html#PathDataEllipticalArcCommands
   // Radius X, Radius Y, X Axis Rotation, Large Arc Flag, Sweep Flag, End X, End Y
-  d += `A${settings.radius},${settings.radius} 0 0,1 ${secondCircumferenceX},${secondCircumferenceY} `;
+  d += `A${settings.radius},${settings.radius} 0 ${
+    settings.sweepAngleRadians <= Math.PI ? 0 : 1
+  },1 ${secondCircumferenceX},${secondCircumferenceY} `;
   // close path
   d += 'Z';
 

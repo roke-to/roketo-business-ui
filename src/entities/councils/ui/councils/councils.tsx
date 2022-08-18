@@ -31,11 +31,11 @@ export const Councils = () => {
           parts={[
             {
               value: quorumPercent,
-              className: styles.leftPart,
+              className: styles.positive,
             },
             {
               value: 100 - quorumPercent,
-              className: styles.rightPart,
+              className: styles.negative,
             },
           ]}
           className={styles.pieChart}

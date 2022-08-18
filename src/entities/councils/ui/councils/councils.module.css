@@ -17,11 +17,11 @@
   height: 72px;
 }
 
-.rightPart {
+.positive {
   fill: theme('colors.green.light');
 }
 
-.leftPart {
+.negative {
   fill: theme('colors.red.light');
 }
 

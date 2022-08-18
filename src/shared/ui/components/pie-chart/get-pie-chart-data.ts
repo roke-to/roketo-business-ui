@@ -10,7 +10,7 @@ export const getPieChartData = (
   const total = data.reduce((totalValue, {value: b}) => totalValue + b, 0);
   const radiansPerUnit = (2 * Math.PI) / total;
 
-  let startAngleRadians = Math.PI / 2;
+  let startAngleRadians = -Math.PI / 2;
   let sweepAngleRadians = null;
 
   return data.map(({value, ...props}) => {
