@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {$currentDaoQuorumValue, loadDao, loadDaos} from '~/entities/dao';
+import {theme} from '~/shared/config/theme';
 import {Col} from '~/shared/ui/components/col';
 import {PieChart} from '~/shared/ui/components/pie-chart/pie-chart';
 import {Portlet} from '~/shared/ui/components/portlet';
@@ -34,11 +35,11 @@ export const Councils = () => {
           parts={[
             {
               value: quorumPercent,
-              className: styles.positive,
+              fill: theme.colors.green.light,
             },
             {
               value: 100 - quorumPercent,
-              className: styles.negative,
+              fill: theme.colors.red.light,
             },
           ]}
           className={styles.pieChart}

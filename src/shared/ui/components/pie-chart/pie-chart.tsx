@@ -16,8 +16,12 @@ const DEFAULT_PIE_CHART_OPTIONS = {
   innerRadius: 30,
 };
 
+interface PartProps extends React.SVGAttributes<SVGPathElement> {
+  value: number;
+}
+
 export interface PieChartProps {
-  parts: {value: number; className?: string}[];
+  parts: PartProps[];
   centreX?: number;
   centreY?: number;
   radius?: number;
@@ -34,8 +38,8 @@ export const PieChart = ({
   className,
 }: PieChartProps) => (
   <svg className={clsx(styles.root, className)} {...DEFAULT_SVG_OPTIONS}>
-    {getPieChartData({centreX, centreY, radius}, parts).map(({d, className: pathClassName}) => (
-      <path d={d} className={pathClassName} />
+    {getPieChartData({centreX, centreY, radius}, parts).map(({...props}) => (
+      <path key={props.d} {...props} />
     ))}
 
     <circle cx={centreX} cy={centreY} r={innerRadius} className={styles.innerCircle} />
