@@ -26,8 +26,20 @@ export const Councils = () => {
     <div className={styles.councilWidget}>
       <CouncilsList />
 
-      <Row gap={0}>
-        <PieChart parts={[50]} className={styles.pieChart} />
+      <Row gap={3}>
+        <PieChart
+          parts={[
+            {
+              value: quorumPercent,
+              className: styles.leftPart,
+            },
+            {
+              value: 100 - quorumPercent,
+              className: styles.rightPart,
+            },
+          ]}
+          className={styles.pieChart}
+        />
 
         <Col gap={0}>
           <Typography as='span' font='xs' weight='bold' className={styles.textDesktop}>

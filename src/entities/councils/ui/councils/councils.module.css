@@ -13,6 +13,16 @@
 }
 
 .pieChart {
+  width: 72px;
+  height: 72px;
+}
+
+.rightPart {
+  fill: theme('colors.green.light');
+}
+
+.leftPart {
+  fill: theme('colors.red.light');
 }
 
 .scaleContainer {
