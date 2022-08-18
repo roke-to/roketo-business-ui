@@ -6,6 +6,7 @@ import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {$currentDaoQuorumValue, loadDao, loadDaos} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
 import {PieChart} from '~/shared/ui/components/pie-chart/pie-chart';
+import {Portlet} from '~/shared/ui/components/portlet';
 import {Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
@@ -24,7 +25,7 @@ export const Councils = () => {
   }, []);
 
   return (
-    <div className={styles.councilWidget}>
+    <Portlet className={styles.councilWidget}>
       <CouncilsList />
 
       <Row gap={3}>
@@ -62,6 +63,6 @@ export const Councils = () => {
       </Row>
 
       <ChangePolicyButton />
-    </div>
+    </Portlet>
   );
 };

@@ -1,11 +1,9 @@
 .councilWidget {
-  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  box-shadow: theme('dropShadow.DEFAULT');
-  padding: theme('spacing.8');
-  border-radius: theme('borderRadius.3xl');
-  margin-bottom: theme('spacing.6');
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
 }
 
 .mobileDesktop {
