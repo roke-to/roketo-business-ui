@@ -59,4 +59,8 @@
   .changePolicyButton {
     margin-top: theme('spacing.6');
   }
+
+  .verticalLine {
+    display: none;
+  }
 }

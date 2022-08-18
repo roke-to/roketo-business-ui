@@ -20,7 +20,7 @@ export const CouncilsList = () => {
   const currentDao = useStore($currentDao);
 
   return (
-    <Col gap={1} className={styles.root}>
+    <Col gap={1}>
       <Typography as='span' weight='bold'>
         {t('councils')}
       </Typography>

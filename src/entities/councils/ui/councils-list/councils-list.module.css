@@ -1,6 +1,5 @@
 .root {
   min-width: 320px;
-  border-right: 1px solid #a6c8ff;
 }
 
 .viewAll {
@@ -11,10 +10,4 @@
   font-normal
   text-blue-textDefault
   hover:cursor-pointer;
-}
-
-@media screen(mobile) {
-  .root {
-    border-right: 1px solid transparent;
-  }
 }
