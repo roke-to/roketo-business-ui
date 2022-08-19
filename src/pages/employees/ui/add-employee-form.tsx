@@ -7,6 +7,7 @@ import {employeeModel} from '~/entities/employee';
 import {$accountId} from '~/entities/wallet';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
+import {Datepicker} from '~/shared/ui/components/datepicker';
 import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
@@ -227,8 +228,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         error={fields.startDate.errorText()}
         className='basis-1/3'
       >
-        {/* TODO: add datepicker (RB-99) */}
-        <Input
+        <Datepicker
           name='startDate'
           value={fields.startDate.value}
           disabled={pending}
