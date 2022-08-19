@@ -9,15 +9,11 @@ import {jsonToBase64} from '~/shared/lib/json-to-base64';
 export const mapCreateOptions = ({
   name,
   address,
-  displayName = address,
-  accountId,
   councilList = [],
   callbackUrl,
 }: {
   name: string;
   address: string;
-  accountId: string;
-  displayName?: string;
   councilList?: string[];
   callbackUrl: string;
 }) => ({
@@ -25,7 +21,7 @@ export const mapCreateOptions = ({
   amount: nearApi.utils.format.parseNearAmount('6'), // 6 NEAR
   callbackUrl,
   args: {
-    name,
+    name: address,
     args: jsonToBase64({
       purpose: '',
       bond: '100000000000000000000000',
@@ -36,7 +32,7 @@ export const mapCreateOptions = ({
           {
             name: COUNCIL,
             slug: COUNCIL,
-            kind: {Group: [accountId, ...councilList]},
+            kind: {Group: councilList},
             permissions: [
               '*:Finalize',
               'policy:AddProposal',
@@ -124,7 +120,7 @@ export const mapCreateOptions = ({
           links: [],
           flagCover: '',
           flagLogo: '',
-          displayName,
+          displayName: name,
           legal: {legalStatus: '', legalLink: ''},
         }),
       },

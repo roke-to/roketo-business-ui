@@ -7,7 +7,6 @@ describe('Create DAO options', () => {
         name: 'test',
         address: 'test',
         councilList: ['test'],
-        accountId: 'test',
         callbackUrl: 'test',
       }),
     ).toEqual({

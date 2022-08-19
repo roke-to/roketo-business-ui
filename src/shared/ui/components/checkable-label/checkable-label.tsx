@@ -9,6 +9,7 @@ export type CheckableLabelPosition = 'left' | 'right';
 
 export interface ICheckableLabelProps {
   label?: IContent;
+  title?: string;
   labelPosition?: CheckableLabelPosition;
   disabled?: boolean;
   className?: string;
@@ -17,16 +18,17 @@ export interface ICheckableLabelProps {
 export const CheckableLabel: React.FC<ICheckableLabelProps> = ({
   children,
   label,
+  title = typeof label === 'string' ? label : undefined,
   labelPosition = 'left',
   className,
   disabled,
 }) => {
-  const textClasses = clsx({
+  const textClasses = clsx(styles.text, {
     [styles.disabled]: disabled,
   });
 
   return (
-    <label className={clsx(styles.root, styles[labelPosition], className)}>
+    <label className={clsx(styles.root, styles[labelPosition], className)} title={title}>
       {children}
       <span className={textClasses} key='text'>
         {label}

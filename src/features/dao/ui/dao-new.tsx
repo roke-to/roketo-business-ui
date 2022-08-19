@@ -5,7 +5,7 @@ import React, {FormEventHandler} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
-import {createDaoForm, createDaoFx} from '~/entities/dao';
+import {$isCouncilExists, $isNewDaoExists, createDaoForm, createDaoFx} from '~/entities/dao';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {$accountId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
@@ -33,6 +33,8 @@ export const DaoNew = () => {
   const pending = useStore(createDaoFx.pending);
   const [formView, setFormView] = React.useState(FormView.DAO_SETUP);
   const accountId = useStore($accountId);
+  const isNewDaoExists = useStore($isNewDaoExists);
+  const isCouncilExists = useStore($isCouncilExists);
   const query = useQuery();
   // safe query to local state and after clear it from url
   const [errorMessage] = React.useState(query.errorMessage);
@@ -59,6 +61,24 @@ export const DaoNew = () => {
     submit();
   };
 
+  let councilAddressError = fields.councilAddress.errorText();
+
+  if (fields.councilAddress.value && !isCouncilExists) {
+    councilAddressError = t('daoNew.accountNotExists');
+  }
+  if (
+    fields.councilAddress.value === accountId ||
+    fields.councilList.value.includes(fields.councilAddress.value)
+  ) {
+    councilAddressError = t('daoNew.councilAdded');
+  }
+
+  // Don't showing the form, if it possible
+  // to redirect to newly created DAO (redirectAfterCreateDaoFx)
+  if (query.newDaoAddress) {
+    return null;
+  }
+
   return (
     <Portlet gap='md' className='pb-12 mobile:pb-8'>
       {formView === FormView.DAO_SETUP && (
@@ -77,12 +97,13 @@ export const DaoNew = () => {
                     disabled={pending}
                     placeholder={t('daoNew.namePlaceholder')}
                     onChange={fields.name.onChange}
+                    error={!!fields.name.errorText()}
                   />
                 </Label>
                 <Label
                   required
                   content={t('daoNew.addressLabel')}
-                  error={fields.address.errorText()}
+                  error={isNewDaoExists ? t('daoNew.accountExists') : fields.address.errorText()}
                 >
                   <Input
                     name='daoAddress'
@@ -91,12 +112,19 @@ export const DaoNew = () => {
                     disabled={pending}
                     placeholder={t('daoNew.addressPlaceholder')}
                     onChange={fields.address.onChange}
+                    error={isNewDaoExists ? true : !!fields.address.errorText()}
                   />
                 </Label>
               </Col>
               <Col>
                 <Button
-                  disabled={!eachValid || pending || !fields.name.value || !fields.address.value}
+                  disabled={
+                    !eachValid ||
+                    pending ||
+                    !fields.name.value ||
+                    !fields.address.value ||
+                    isNewDaoExists
+                  }
                   variant='outlined'
                   onClick={() => setFormView(FormView.ADD_COUNCILS)}
                 >
@@ -155,8 +183,8 @@ export const DaoNew = () => {
                 <Label
                   as='span'
                   content={t('daoNew.councilAddressLabel')}
-                  error={fields.councilAddress.errorText()}
                   className='w-full'
+                  error={councilAddressError}
                 >
                   <Row>
                     <Input
@@ -167,10 +195,11 @@ export const DaoNew = () => {
                       placeholder={t('daoNew.councilAddressPlaceholder')}
                       className='w-full'
                       onChange={fields.councilAddress.onChange}
+                      error={Boolean(councilAddressError)}
                     />
                     <IconButton
                       onClick={handleAddTypedCouncil}
-                      disabled={!fields.councilAddress.value}
+                      disabled={Boolean(councilAddressError) || !fields.councilAddress.value}
                     >
                       <Plus />
                     </IconButton>

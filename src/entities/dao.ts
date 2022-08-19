@@ -9,6 +9,7 @@ import {
   SputnikDaoContract,
   SputnikFactoryDaoContract,
 } from '~/shared/api/near';
+import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
@@ -36,7 +37,7 @@ sample({
   target: $sputnikFactoryDaoContract,
 });
 
-//  ------------ createDao ------------
+//  ------------ New DAO ------------
 
 export const createDaoForm = createForm({
   fields: {
@@ -46,7 +47,6 @@ export const createDaoForm = createForm({
     },
     address: {
       init: '',
-      // TODO: async validate address of contract
       rules: [validators.required],
     },
     councilAddress: {
@@ -56,13 +56,13 @@ export const createDaoForm = createForm({
       init: [] as string[],
     },
   },
-  validateOn: ['submit'],
+  validateOn: ['change'],
 });
 
 const updateAddressByNameFx = attach({
   source: createDaoForm.fields.address.$value,
   effect(prevAddress, name: string) {
-    const addressFromName = decamelize(name, {separator: '-'});
+    const addressFromName = decamelize(name, {separator: '-'}).replace(/\s+/g, '-');
     // TODO: ensure address doesn't manually changed
     createDaoForm.fields.address.onChange(addressFromName);
   },
@@ -71,6 +71,34 @@ const updateAddressByNameFx = attach({
 forward({
   from: createDaoForm.fields.name.onChange,
   to: updateAddressByNameFx,
+});
+
+export const $isNewDaoExists = createStore(false);
+const isAccountExistsFx = createEffect(async (accountId: string) =>
+  isAccountExist(`${accountId}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`),
+);
+
+forward({
+  from: createDaoForm.fields.address.$value,
+  to: isAccountExistsFx,
+});
+
+forward({
+  from: isAccountExistsFx.doneData,
+  to: $isNewDaoExists,
+});
+
+export const $isCouncilExists = createStore(true);
+const isCouncilExistsFx = createEffect(async (accountId: string) => isAccountExist(accountId));
+
+forward({
+  from: createDaoForm.fields.councilAddress.$value,
+  to: isCouncilExistsFx,
+});
+
+forward({
+  from: isCouncilExistsFx.doneData,
+  to: $isCouncilExists,
 });
 
 const createCallbackUrl = (daoAddress: string, daoName: string) => {
@@ -86,17 +114,20 @@ export const createDaoFx = attach({
     sputnikFactoryDaoContract: $sputnikFactoryDaoContract,
     accountId: $accountId,
   },
-  async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateDaoFormFields>) {
+  async effect(
+    {sputnikFactoryDaoContract, accountId},
+    {name, address, councilList}: FormValues<CreateDaoFormFields>,
+  ) {
     if (!sputnikFactoryDaoContract) {
       throw new Error('SputnikFactoryDaoContract is not initialized');
     }
 
     await sputnikFactoryDaoContract.create(
       mapCreateOptions({
-        ...data,
-        accountId,
-        councilList: data.councilList,
-        callbackUrl: createCallbackUrl(data.address, data.name),
+        name,
+        address,
+        councilList: [accountId, ...councilList],
+        callbackUrl: createCallbackUrl(address, name),
       }),
     );
   },
@@ -107,30 +138,40 @@ forward({
   to: createDaoFx,
 });
 
-//  ------------ current DAO ------------
+//  ------------ Current DAO ------------
 
-export const $currentDaoId = createStore<string>(localStorage.getItem('currentDaoId') || '');
+export const $currentDaoId = createStore('');
 
-export const setDaoId = createEvent<string>();
-const saveCurrentDaoInLsFx = createEffect((selectedDaoId: string) => {
-  // todo: put ls key to the shared consts
-  localStorage.setItem('currentDaoId', selectedDaoId);
-  if (
-    window.location.pathname === ROUTES.dao.path ||
-    window.location.pathname === ROUTES.daoNew.path
-  ) {
-    history.replace(ROUTES.treasury.path);
-  }
-  return selectedDaoId;
+export const setCurrentDaoId = createEvent<string>();
+
+const getLocalStorageDaoKey = (accountId: string) => `app:${accountId}:dao`;
+
+const saveCurrentDaoInLsFx = attach({
+  source: {
+    accountId: $accountId,
+  },
+  effect({accountId}, selectedDaoId: string) {
+    localStorage.setItem(getLocalStorageDaoKey(accountId), selectedDaoId);
+    // TODO: Remove after some time, when all users would relogined
+    localStorage.removeItem('currentDaoId');
+  },
+});
+
+// Load initial state after near initialzed
+sample({
+  clock: initNearInstanceFx.doneData,
+  fn: ({accountId}: NearInstance) =>
+    (accountId && localStorage.getItem(getLocalStorageDaoKey(accountId))) || '',
+  target: $currentDaoId,
 });
 
 sample({
-  source: setDaoId,
+  source: setCurrentDaoId,
   target: saveCurrentDaoInLsFx,
 });
 
 sample({
-  source: saveCurrentDaoInLsFx.doneData,
+  source: setCurrentDaoId,
   target: $currentDaoId,
 });
 
@@ -211,17 +252,21 @@ sample({
 
 //  ------------ after create DAO ------------
 
-const redirectAfterCreateDaoFx = attach({
+const checkErrorAfterCreateDaoFx = attach({
   source: {
     daoIds: $daoIds,
   },
-  async effect({daoIds}) {
+  async effect() {
     const searchParams = new URLSearchParams(history.location.search);
     const newDaoAddress = searchParams.get('newDaoAddress') || '';
     const newDaoName = searchParams.get('newDaoName') || '';
-    const newDaoId = `${newDaoAddress}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`;
+    const errorCode = searchParams.get('errorCode');
+    const newDaoId = newDaoAddress
+      ? `${newDaoAddress}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`
+      : '';
 
-    if (!daoIds.includes(newDaoId)) {
+    // Fill form back on error
+    if (newDaoAddress && errorCode) {
       createDaoForm.fields.name.onChange(newDaoName);
       createDaoForm.fields.address.onChange(newDaoAddress);
 
@@ -239,15 +284,19 @@ const redirectAfterCreateDaoFx = attach({
   },
 });
 
-sample({
-  clock: loadDaosFx.doneData,
-  target: redirectAfterCreateDaoFx,
+const redirectAfterCreateDaoFx = createEffect(() => {
+  history.replace(ROUTES.treasury.path);
 });
 
 sample({
-  source: redirectAfterCreateDaoFx.doneData,
+  clock: loadDaosFx.doneData,
+  target: checkErrorAfterCreateDaoFx,
+});
+
+sample({
+  source: checkErrorAfterCreateDaoFx.doneData,
   filter: (daoId) => Boolean(daoId),
-  target: setDaoId,
+  target: [setCurrentDaoId, redirectAfterCreateDaoFx],
 });
 
 //  ------------ sputnikDaoContract ------------
@@ -270,7 +319,7 @@ sample({
 });
 
 sample({
-  clock: setDaoId,
+  clock: setCurrentDaoId,
   target: initSputnikDaoContractFx,
 });
 
