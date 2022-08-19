@@ -1,6 +1,5 @@
 import {useStore} from 'effector-react';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
 import {ProposalsFilters} from '~/entities/filters/proposals-filters';
 import {sendTransactionsFx} from '~/entities/transactions';
@@ -15,23 +14,18 @@ import {
   changeTreasuryProposalSortOrder,
   loadTokenBalances,
 } from '~/entities/treasury/model/treasury';
-import {CreateProposalTransferFormModal} from '~/entities/treasury/ui/create-proposal-transfer-form-modal';
+import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-proposal-transfer-button';
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
-import {Button} from '~/shared/ui/components/button';
 import {Chip} from '~/shared/ui/components/chip/Chip';
-import {useModal} from '~/shared/ui/components/modal';
 import {Typography} from '~/shared/ui/components/typography';
 
 export const Treasury = () => {
-  const {t} = useTranslation('proposal');
   const tokenBalances = useStore($tokenBalances);
   const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
   const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
   const isLoading = useStore($treasuryProposalLoading);
   const treasuryProposalSortOrder = useStore($treasuryProposalSortOrder);
-
-  const createProposalModal = useModal();
 
   React.useEffect(() => {
     loadTokenBalances();
@@ -81,14 +75,7 @@ export const Treasury = () => {
             })}
           </div>
         </div>
-        <Button variant='soft' onClick={createProposalModal.show}>
-          {t('createProposal')}
-        </Button>
-        <CreateProposalTransferFormModal
-          isOpen={createProposalModal.isOpen}
-          title={t('createProposal')}
-          onCloseModal={createProposalModal.hide}
-        />
+        <CreateProposalTransferButton />
       </div>
       <ProposalsFilters
         isLoading={isLoading}
