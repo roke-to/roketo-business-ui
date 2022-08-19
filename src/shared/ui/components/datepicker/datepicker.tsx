@@ -1,14 +1,15 @@
 import clsx from 'clsx';
 import {format, isValid, parse} from 'date-fns';
-import React from 'react';
+import React, {useState} from 'react';
 import {DayPicker} from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import {usePopper} from 'react-popper';
 
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Input, InputProps} from '~/shared/ui/components/input';
 import {ReactComponent as CalendarIcon} from '~/shared/ui/icons/calendar.svg';
 
-import {Popover} from '@headlessui/react';
+import {Popover, Transition} from '@headlessui/react';
 
 import styles from './datepicker.module.css';
 
@@ -29,26 +30,53 @@ export const Datepicker: React.FC<Props> = ({className, value, onChange, ...prop
     }
   };
 
+  // todo: не знаю почему, но если юзать useRef, поппер начинает глючить при ините
+  // из-за этого пришлось отключить TS при прокидывании рефов
+  const [referenceElement, setReferenceElement] = useState();
+  const [popperElement, setPopperElement] = useState();
+  const {styles: popperStyles, attributes: popperAttributes} = usePopper(
+    referenceElement,
+    popperElement,
+  );
+
   return (
-    <Popover>
-      <Popover.Panel>
-        <DayPicker mode='single' selected={selected} onSelect={handleDateSelect} weekStartsOn={1} />
-      </Popover.Panel>
+    <Popover className={clsx(styles.wrapper)}>
+      <Input
+        className={clsx(styles.input, className)}
+        value={value}
+        onChange={onChange}
+        {...props}
+      />
+      {/* @ts-ignore */}
+      <Popover.Button as='div' className={clsx(styles.icon)} ref={setReferenceElement}>
+        <IconButton variant='clean' size='sm'>
+          <CalendarIcon />
+        </IconButton>
+      </Popover.Button>
 
-      <div className={clsx(styles.wrapper)}>
-        <Input
-          className={clsx(styles.input, className)}
-          value={value}
-          onChange={onChange}
-          {...props}
-        />
-
-        <Popover.Button className={clsx(styles.icon)}>
-          <IconButton variant='clean' size='sm'>
-            <CalendarIcon />
-          </IconButton>
-        </Popover.Button>
-      </div>
+      <Transition
+        enter='transition duration-200 ease-out'
+        enterFrom='transform scale-95 opacity-0'
+        enterTo='transform scale-100 opacity-100'
+        leave='transition duration-200 ease-out'
+        leaveFrom='transform scale-100 opacity-100'
+        leaveTo='transform scale-95 opacity-0'
+      >
+        <Popover.Panel
+          // @ts-ignore
+          ref={setPopperElement}
+          className={clsx(styles.panel)}
+          style={popperStyles.popper}
+          {...popperAttributes.popper}
+        >
+          <DayPicker
+            mode='single'
+            selected={selected}
+            onSelect={handleDateSelect}
+            weekStartsOn={1}
+          />
+        </Popover.Panel>
+      </Transition>
     </Popover>
   );
 };

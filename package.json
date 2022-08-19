@@ -64,6 +64,7 @@
     "react-dom": "^16.13.1",
     "react-i18next": "^11.17.4",
     "react-modal": "^3.14.4",
+    "react-popper": "^2.3.0",
     "react-range": "^1.8.14",
     "react-router-dom": "^5.2.0",
     "serve": "^13.0.2",
