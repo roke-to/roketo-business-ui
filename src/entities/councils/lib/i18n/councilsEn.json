@@ -2,5 +2,6 @@
   "councils": "Councils",
   "quorum": "Quorum",
   "changePolicy": "Change policy",
-  "viewAll": "view all"
+  "viewAll": "view all",
+  "viewLess": "view less"
 }

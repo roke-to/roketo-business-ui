@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {PartVisibleList} from '~/shared/ui/components/part-visible-list/part-visible-list';
+import {PartVisibleList} from '~/shared/ui/components/part-visible-list';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
 
 import styles from './radio-select.module.css';
@@ -12,6 +12,7 @@ export interface RadioSelectProps {
   onChange?: (value: string) => void;
   maxVisibleCount?: number;
   showAllText: string;
+  showLessText: string;
 }
 
 const renderOptions = (option: {label: string; value: string}) => (
@@ -21,6 +22,7 @@ const renderOptions = (option: {label: string; value: string}) => (
 export const RadioSelect = ({
   options,
   showAllText,
+  showLessText,
   name,
   value,
   onChange,
@@ -31,7 +33,8 @@ export const RadioSelect = ({
       options={options}
       renderOptions={renderOptions}
       showAllText={showAllText}
-      showAllClassName={styles.showAll}
+      showLessText={showLessText}
+      showMoreClassName={styles.showAll}
       maxVisibleCount={maxVisibleCount}
     />
   </RadioGroup>

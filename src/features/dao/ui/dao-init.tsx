@@ -67,6 +67,7 @@ export const DaoInit = () => {
               value={selectedDao}
               onChange={setSelectedDao}
               showAllText={t('daoInit.showAll')}
+              showLessText={t('daoInit.showLess')}
             />
             <Button onClick={handleSelectDao} disabled={!selectedDao} variant='soft'>
               {t('daoInit.selectDao')}
