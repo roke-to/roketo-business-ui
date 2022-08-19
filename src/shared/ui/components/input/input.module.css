@@ -61,13 +61,10 @@
   }
 }
 
-/* sizes */
-
-.md {
-  padding: theme('gap.3') theme('gap.4');
-}
-
+/* should be last for overrides */
 .error {
+  box-shadow: 0px 0px 0px 1px #d80a1f inset;
+
   &:hover {
     box-shadow: 0px 0px 0px 1px #d80a1f inset;
   }
@@ -77,4 +74,10 @@
   &:focus-within {
     box-shadow: 0px 0px 0px 1px #d80a1f inset, 0px 0px 0px 2px #fde7ee;
   }
+}
+
+/* sizes */
+
+.md {
+  padding: theme('gap.3') theme('gap.4');
 }

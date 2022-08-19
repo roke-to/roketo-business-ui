@@ -32,9 +32,9 @@ export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
         {content}
       </Typography>
       {children}
-      <Typography as='span' className={styles.error}>
-        {error}
-      </Typography>
+      <div className={styles.errorContainer}>
+        <span className={styles.error}>{error}</span>
+      </div>
     </Tag>
   ),
 );

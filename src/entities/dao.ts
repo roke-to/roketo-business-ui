@@ -9,6 +9,7 @@ import {
   SputnikDaoContract,
   SputnikFactoryDaoContract,
 } from '~/shared/api/near';
+import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
@@ -36,7 +37,7 @@ sample({
   target: $sputnikFactoryDaoContract,
 });
 
-//  ------------ createDao ------------
+//  ------------ New DAO ------------
 
 export const createDaoForm = createForm({
   fields: {
@@ -46,7 +47,6 @@ export const createDaoForm = createForm({
     },
     address: {
       init: '',
-      // TODO: async validate address of contract
       rules: [validators.required],
     },
     councilAddress: {
@@ -56,7 +56,7 @@ export const createDaoForm = createForm({
       init: [] as string[],
     },
   },
-  validateOn: ['submit'],
+  validateOn: ['change'],
 });
 
 const updateAddressByNameFx = attach({
@@ -73,6 +73,34 @@ forward({
   to: updateAddressByNameFx,
 });
 
+export const $isNewDaoExists = createStore(false);
+const isAccountExistsFx = createEffect(async (accountId: string) =>
+  isAccountExist(`${accountId}.${env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME}`),
+);
+
+forward({
+  from: createDaoForm.fields.address.$value,
+  to: isAccountExistsFx,
+});
+
+forward({
+  from: isAccountExistsFx.doneData,
+  to: $isNewDaoExists,
+});
+
+export const $isCouncilExists = createStore(true);
+const isCouncilExistsFx = createEffect(async (accountId: string) => isAccountExist(accountId));
+
+forward({
+  from: createDaoForm.fields.councilAddress.$value,
+  to: isCouncilExistsFx,
+});
+
+forward({
+  from: isCouncilExistsFx.doneData,
+  to: $isCouncilExists,
+});
+
 const createCallbackUrl = (daoAddress: string, daoName: string) => {
   const url = new URL(window.location.toString());
   url.search = `?newDaoAddress=${daoAddress}&newDaoName=${encodeURIComponent(daoName)}`;
@@ -86,18 +114,20 @@ export const createDaoFx = attach({
     sputnikFactoryDaoContract: $sputnikFactoryDaoContract,
     accountId: $accountId,
   },
-  async effect({sputnikFactoryDaoContract, accountId}, data: FormValues<CreateDaoFormFields>) {
+  async effect(
+    {sputnikFactoryDaoContract, accountId},
+    {name, address, councilList}: FormValues<CreateDaoFormFields>,
+  ) {
     if (!sputnikFactoryDaoContract) {
       throw new Error('SputnikFactoryDaoContract is not initialized');
     }
 
     await sputnikFactoryDaoContract.create(
       mapCreateOptions({
-        name: data.name,
-        address: data.address,
-        accountId,
-        councilList: data.councilList,
-        callbackUrl: createCallbackUrl(data.address, data.name),
+        name,
+        address,
+        councilList: [accountId, ...councilList],
+        callbackUrl: createCallbackUrl(address, name),
       }),
     );
   },
@@ -108,7 +138,7 @@ forward({
   to: createDaoFx,
 });
 
-//  ------------ current DAO ------------
+//  ------------ Current DAO ------------
 
 export const $currentDaoId = createStore('');
 

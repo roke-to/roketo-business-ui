@@ -9,13 +9,11 @@ import {jsonToBase64} from '~/shared/lib/json-to-base64';
 export const mapCreateOptions = ({
   name,
   address,
-  accountId,
   councilList = [],
   callbackUrl,
 }: {
   name: string;
   address: string;
-  accountId: string;
   councilList?: string[];
   callbackUrl: string;
 }) => ({
@@ -34,7 +32,7 @@ export const mapCreateOptions = ({
           {
             name: COUNCIL,
             slug: COUNCIL,
-            kind: {Group: [accountId, ...councilList]},
+            kind: {Group: councilList},
             permissions: [
               '*:Finalize',
               'policy:AddProposal',

@@ -2,13 +2,16 @@
   display: flex;
   flex-direction: column;
 
-  /* .content + * + * = error */
-  .content + * + * {
-    margin-top: theme('gap.1');
+  .errorContainer {
+    position: relative;
   }
 
   .error {
+    @apply text-xs font-medium;
+
+    position: absolute;
     color: #d80a1f;
+    line-height: 1.25;
   }
 }
 
@@ -26,8 +29,7 @@
   .error {
     font-size: theme('fontSize.xs');
   }
-  /* .content + * = input */
-  .content + * {
-    margin-top: theme('gap.1');
+  .content {
+    margin-bottom: theme('gap.1');
   }
 }
