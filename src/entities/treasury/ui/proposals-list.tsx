@@ -8,22 +8,28 @@ import {
   $treasurySelectedProposalKind,
   $treasurySelectedProposalStatus,
 } from '~/entities/treasury/model/treasury';
+import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-proposal-transfer-button';
 
 export const ProposalsList = () => {
-  const treasuryProposal = useStore($treasuryProposals);
+  const treasuryProposals = useStore($treasuryProposals);
   const treasurySelectedProposalKind = useStore($treasurySelectedProposalKind);
   const treasurySelectedProposalStatus = useStore($treasurySelectedProposalStatus);
 
-  if (treasuryProposal.length === 0) {
+  if (treasuryProposals.length === 0) {
     const isDefaultFiltersValue =
       treasurySelectedProposalKind === 'Transfer' && treasurySelectedProposalStatus === 'all';
 
-    return <EmptyProposalList isDefaultFiltersValue={isDefaultFiltersValue} />;
+    return (
+      <EmptyProposalList
+        isDefaultFiltersValue={isDefaultFiltersValue}
+        createProposalComponent={<CreateProposalTransferButton />}
+      />
+    );
   }
 
   return (
     <>
-      {treasuryProposal.map((proposal) => (
+      {treasuryProposals.map((proposal) => (
         <Proposal key={proposal.id} proposal={proposal} />
       ))}
     </>

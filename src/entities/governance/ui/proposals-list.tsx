@@ -1,6 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {ChangePolicyButton} from '~/entities/councils/ui/councils/change-policy-button';
 import {$governanceProposals, $governanceSelectedProposalStatus} from '~/entities/governance/model';
 import {Proposal} from '~/entities/proposal';
 import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
@@ -12,7 +13,12 @@ export const ProposalsList = () => {
   if (governanceProposals.length === 0) {
     const isDefaultFiltersValue = governanceSelectedProposalStatus === 'all';
 
-    return <EmptyProposalList isDefaultFiltersValue={isDefaultFiltersValue} />;
+    return (
+      <EmptyProposalList
+        isDefaultFiltersValue={isDefaultFiltersValue}
+        createProposalComponent={<ChangePolicyButton />}
+      />
+    );
   }
 
   return (
