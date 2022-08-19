@@ -7,28 +7,44 @@ export interface PartVisibleListProps<T> {
   renderOptions(props: T): JSX.Element;
   maxVisibleCount?: number;
   showAllText: string;
-  showAllClassName?: string;
+  showLessText: string;
+  showMoreClassName?: string;
 }
 
 export function PartVisibleList<T>({
   options,
   renderOptions,
   showAllText,
+  showLessText,
   maxVisibleCount = 5,
-  showAllClassName,
+  showMoreClassName,
 }: PartVisibleListProps<T>) {
   const [isAllVisible, setIsAllVisible] = React.useState(false);
 
   const visibleOptions = isAllVisible ? options : options.slice(0, maxVisibleCount);
 
+  const hasMoreOptionsButton = options.length > maxVisibleCount;
+
+  const showAll = !isAllVisible && hasMoreOptionsButton;
+  const showLess = isAllVisible && hasMoreOptionsButton;
+
   return (
     <>
       {visibleOptions.map((option) => renderOptions(option))}
-      {visibleOptions.length !== options.length && options.length > maxVisibleCount ? (
-        <Button variant='clean' className={showAllClassName} onClick={() => setIsAllVisible(true)}>
+      {showAll && (
+        <Button variant='clean' className={showMoreClassName} onClick={() => setIsAllVisible(true)}>
           {showAllText}
         </Button>
-      ) : null}
+      )}
+      {showLess && (
+        <Button
+          variant='clean'
+          className={showMoreClassName}
+          onClick={() => setIsAllVisible(false)}
+        >
+          {showLessText}
+        </Button>
+      )}
     </>
   );
 }

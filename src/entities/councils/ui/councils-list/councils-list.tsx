@@ -4,7 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import {$currentDao} from '~/entities/dao';
 import {Col} from '~/shared/ui/components/col';
-import {PartVisibleList} from '~/shared/ui/components/part-visible-list/part-visible-list';
+import {PartVisibleList} from '~/shared/ui/components/part-visible-list';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './councils-list.module.css';
@@ -29,8 +29,9 @@ export const CouncilsList = () => {
           options={currentDao?.council || []}
           renderOptions={renderOptions}
           showAllText={t('viewAll')}
+          showLessText={t('viewLess')}
           maxVisibleCount={2}
-          showAllClassName={styles.viewAll}
+          showMoreClassName={styles.viewAll}
         />
       </Col>
     </Col>

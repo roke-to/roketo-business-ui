@@ -8,7 +8,8 @@
     "logout": "Logout",
     "createDao": "Create DAO",
     "selectDao": "Select DAO",
-    "showAll": "show all"
+    "showAll": "show all",
+    "showLess": "show less"
   },
   "daoNew": {
     "setupTitle": "New DAO setup",
