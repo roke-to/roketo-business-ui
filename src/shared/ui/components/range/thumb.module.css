@@ -3,9 +3,3 @@
   border: 1px solid #2b313b;
   top: 0;
 }
-
-@media screen(mobile) {
-  .thumb {
-    height: 2.5rem;
-  }
-}

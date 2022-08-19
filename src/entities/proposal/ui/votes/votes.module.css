@@ -38,8 +38,4 @@
   .mobileShortText {
     display: flex;
   }
-
-  .quorumLine {
-    top: -0.5rem;
-  }
 }
