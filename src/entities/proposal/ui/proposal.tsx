@@ -32,8 +32,6 @@ export const Proposal = ({proposal}: ProposalProps) => {
 
   const text = getReadableProposalName(proposal, t);
 
-  const canVote = voteStatus !== 'Expired';
-
   return (
     <div className={clsx(styles.proposal, styles[status])}>
       <Col className={styles.info}>
@@ -61,7 +59,6 @@ export const Proposal = ({proposal}: ProposalProps) => {
         <StatusRow
           status={status}
           votes={votes}
-          canVote={canVote}
           votePeriodEnd={votePeriodEnd}
           updatedAt={updatedAt}
           voteStatus={voteStatus}
@@ -72,7 +69,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
         dao={dao}
         status={status}
         votes={votes}
-        canVote={canVote}
+        voteStatus={voteStatus}
         updatedAt={updatedAt}
         numberOfMembers={numberOfMembers}
         className={styles.votes}
