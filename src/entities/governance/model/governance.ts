@@ -1,7 +1,7 @@
-import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm, FormValues} from 'effector-forms';
 
+import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {
   mapAddCouncilOptions,
@@ -24,8 +24,6 @@ import {$currentDao, $currentDaoId, $sputnikDaoContract} from '../../dao';
 import {$accountId} from '../../wallet';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
-
-export const loadGovernanceProposals = createEvent();
 
 export const $governanceProposalLoading = createStore(true);
 //  ------------ proposals filter by status ------------
@@ -83,7 +81,7 @@ const loadGovernanceProposalsFx = attach({
 });
 
 sample({
-  source: loadGovernanceProposals,
+  source: sendTransactionsFx.doneData,
   target: loadGovernanceProposalsFx,
 });
 
@@ -136,8 +134,6 @@ const initChangePolicyProposalFormFx = attach({
     }
 
     const quorum = getQuorumValueFromDao(currentDao);
-
-    console.log(' toNumber()', nearApi);
 
     return {
       type: 'changeQuorum',

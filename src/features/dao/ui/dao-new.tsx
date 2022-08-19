@@ -6,7 +6,7 @@ import {useTranslation} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 import {$isCouncilExists, $isNewDaoExists, createDaoForm, createDaoFx} from '~/entities/dao';
-import {sendTransactionsFx} from '~/entities/proposal/model/proposal';
+import {sendTransactionsFx} from '~/entities/transactions';
 import {$accountId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {useQuery} from '~/shared/hooks/use-query';

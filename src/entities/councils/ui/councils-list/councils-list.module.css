@@ -1,0 +1,13 @@
+.root {
+  min-width: 320px;
+}
+
+.viewAll {
+  @apply p-0
+  h-min
+  w-min
+  whitespace-nowrap
+  font-normal
+  text-blue-textDefault
+  hover:cursor-pointer;
+}
