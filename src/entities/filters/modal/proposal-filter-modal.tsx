@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalKind, ProposalStatuses} from '~/entities/treasury/model/constants';
+import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 import {Divider} from '~/shared/ui/components/divider';
@@ -16,11 +16,13 @@ export interface ProposalFilterModalProps {
   selectedProposalStatus: ProposalStatus;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
+  setKindProposal: ProposalKindFilterType[];
   handleChangeProposalStatus(status: ProposalStatus): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalFilterModal = ({
+  setKindProposal,
   selectedProposalStatus,
   selectedProposalKind,
   isLoading,
@@ -48,11 +50,11 @@ export const ProposalFilterModal = ({
       </Row>
       <RadioGroup
         name='treasuryProposalKind'
-        value={selectedProposalStatus}
-        onChange={onChangeProposalStatus}
+        value={selectedProposalKind}
+        onChange={onChangeProposalKind}
         gap={0}
       >
-        {ProposalKind.map((kind) => (
+        {setKindProposal.map((kind) => (
           <RadioGroupItem key={kind} value={kind} label={kind} />
         ))}
       </RadioGroup>
@@ -61,8 +63,8 @@ export const ProposalFilterModal = ({
           <Divider />
           <RadioGroup
             name='treasuryProposalStatus'
-            value={selectedProposalKind}
-            onChange={onChangeProposalKind}
+            value={selectedProposalStatus}
+            onChange={onChangeProposalStatus}
             gap={0}
           >
             {ProposalStatuses.map((status) => (

@@ -20,11 +20,13 @@ export interface ProposalStatusFilterProps {
   selectedProposalStatus: ProposalStatus;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
+  setKindProposal: ProposalKindFilterType[];
   handleChangeProposalStatus(status: ProposalStatus): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalStatusFilter = ({
+  setKindProposal,
   isLoading,
   selectedProposalStatus,
   selectedProposalKind,
@@ -64,6 +66,7 @@ export const ProposalStatusFilter = ({
         className={styles.modal}
       >
         <ProposalFilterModal
+          setKindProposal={setKindProposal}
           isLoading={isLoading}
           selectedProposalStatus={selectedProposalStatus}
           selectedProposalKind={selectedProposalKind}

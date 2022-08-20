@@ -17,3 +17,17 @@ export const ProposalKind: ProposalKindFilterType[] = [
   'BountyDone',
   'Vote',
 ];
+
+export const ProposalKindForTreasury: ProposalKindFilterType[] = [
+  'Any',
+  'FunctionCall',
+  'Transfer',
+];
+
+export const ProposalKindForGovernance: ProposalKindFilterType[] = [
+  'Any',
+  'ChangeConfig',
+  'ChangePolicy',
+  'AddMemberToRole',
+  'RemoveMemberFromRole',
+];

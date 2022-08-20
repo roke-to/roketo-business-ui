@@ -13,8 +13,10 @@ import {
   DEFAULT_FUNCTION_CALL_GAS,
 } from '~/shared/api/near/contracts/contract.constants';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
+import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
 
@@ -37,6 +39,14 @@ export const $governanceSelectedProposalStatus = createStore<ProposalStatus>('al
 
 //  /------------ proposals filter by status ------------
 
+//  ------------ proposals filter by kind ------------
+export const changeGovernanceProposalSelectedKind = createEvent<ProposalKindFilterType>();
+
+export const $governanceSelectedProposalKind = createStore<ProposalKindFilterType>(
+  'ChangePolicy',
+).on(changeGovernanceProposalSelectedKind, (_, proposalKind) => proposalKind);
+//  /------------ proposals filter by kind ------------
+
 //  ------------ proposals sort by createAt  ------------
 export const changeGovernanceProposalSortOrder = createEvent<ProposalSortOrderType>();
 
@@ -51,23 +61,24 @@ const loadGovernanceProposalsFx = attach({
     accountId: $accountId,
     sort: $governanceProposalSortOrder,
     status: $governanceSelectedProposalStatus,
+    kind: $governanceSelectedProposalKind,
   },
-  async effect({daoId, accountId, sort, status}) {
-    const search: SFields | SConditionAND = {
-      $and: [
-        {daoId: {$eq: daoId}},
-        {
-          $or: [
-            {kind: {$cont: 'ChangeConfig'}},
-            {kind: {$cont: 'ChangePolicy'}},
-            {kind: {$cont: 'AddMemberToRole'}},
-            {kind: {$cont: 'RemoveMemberFromRole'}},
-          ],
-        },
+  async effect({daoId, accountId, sort, status, kind}) {
+    const defaultKindFilterQuery: SFields | SConditionAND = {
+      $or: [
+        {kind: {$cont: 'ChangeConfig'}},
+        {kind: {$cont: 'ChangePolicy'}},
+        {kind: {$cont: 'AddMemberToRole'}},
+        {kind: {$cont: 'RemoveMemberFromRole'}},
       ],
     };
 
+    const search: SFields | SConditionAND = {
+      $and: [{daoId: {$eq: daoId}}],
+    };
+
     addStatusProposalQuery(search, status);
+    addKindProposalQuery(search, kind, defaultKindFilterQuery);
 
     const query = {
       s: JSON.stringify(search),
@@ -103,6 +114,11 @@ sample({
 
 sample({
   clock: changeGovernanceProposalSortOrder,
+  target: loadGovernanceProposalsFx,
+});
+
+sample({
+  clock: changeGovernanceProposalSelectedKind,
   target: loadGovernanceProposalsFx,
 });
 

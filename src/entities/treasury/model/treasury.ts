@@ -8,6 +8,7 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
+import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {validators} from '~/shared/lib/validators';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
@@ -65,6 +66,10 @@ const loadTreasuryProposalsFx = attach({
     sort: $treasuryProposalSortOrder,
   },
   async effect({daoId, accountId, status, kind, sort}) {
+    const defaultKindFilterQuery: SFields | SConditionAND = {
+      $or: [{kind: {$cont: 'Transfer'}}, {kind: {$cont: 'FunctionCall'}}],
+    };
+
     const search: SFields | SConditionAND = {
       $and: [
         {
@@ -77,34 +82,7 @@ const loadTreasuryProposalsFx = attach({
 
     addStatusProposalQuery(search, status);
 
-    switch (kind) {
-      case 'Transfer':
-        search.$and?.push({
-          kind: {
-            $cont: 'Transfer',
-          },
-        });
-        break;
-      case 'ChangeConfig':
-      case 'ChangePolicy':
-      case 'AddMemberToRole':
-      case 'RemoveMemberFromRole':
-      case 'FunctionCall':
-      case 'UpgradeSelf':
-      case 'SetStakingContract':
-      case 'AddBounty':
-      case 'BountyDone':
-      case 'Vote':
-        search.$and?.push({
-          kind: {
-            $cont: kind,
-          },
-        });
-        break;
-      case 'Any':
-      default:
-        break;
-    }
+    addKindProposalQuery(search, kind, defaultKindFilterQuery);
 
     const query = {
       s: JSON.stringify(search),

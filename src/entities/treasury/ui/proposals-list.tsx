@@ -17,7 +17,7 @@ export const ProposalsList = () => {
 
   if (treasuryProposals.length === 0) {
     const isDefaultFiltersValue =
-      treasurySelectedProposalKind === 'Transfer' && treasurySelectedProposalStatus === 'all';
+      treasurySelectedProposalKind === 'Any' && treasurySelectedProposalStatus === 'all';
 
     return (
       <EmptyProposalList
