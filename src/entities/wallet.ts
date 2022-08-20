@@ -1,4 +1,5 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {keyStores} from 'near-api-js';
 import {Get} from 'type-fest';
 
 import {
@@ -90,10 +91,12 @@ const loginViaWalletFx = createEffect(async (module: ModuleState) => {
   }
 });
 
+export const $keyStore = createStore(new keyStores.BrowserLocalStorageKeyStore());
+
 export const initNearInstanceFx = attach({
-  source: $walletSelectorState,
-  async effect({selectedWalletId}) {
-    return createNearInstance(selectedWalletId as WalletId);
+  source: {walletSelectorState: $walletSelectorState, keyStore: $keyStore},
+  async effect({walletSelectorState: {selectedWalletId}, keyStore}) {
+    return createNearInstance(keyStore, selectedWalletId as WalletId);
   },
 });
 
