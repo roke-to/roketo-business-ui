@@ -38,16 +38,21 @@
     display: none;
   }
 
-  .scaleContainer {
-    display: flex;
+  .quorumContainer {
+    width: 100%;
   }
 
   .scaleContainerRoot {
     margin-top: theme('spacing.2');
   }
 
+  .scaleContainer {
+    display: flex;
+    height: theme('spacing.3');
+  }
+
   .changePolicyButton {
-    margin-top: theme('spacing.6');
+    margin-top: theme('spacing.2');
   }
 
   .verticalLine {

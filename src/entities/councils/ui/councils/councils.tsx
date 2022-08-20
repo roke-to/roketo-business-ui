@@ -45,7 +45,7 @@ export const Councils = () => {
           className={styles.pieChart}
         />
 
-        <Col gap={0}>
+        <Col gap={0} className={styles.quorumContainer}>
           <Typography as='span' font='xs' weight='bold' className={styles.textDesktop}>
             {t('quorum')}
           </Typography>
