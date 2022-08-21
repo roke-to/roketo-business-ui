@@ -3,7 +3,6 @@ import React from 'react';
 
 import '~/app/initI18n';
 import {$appLoading} from '~/entities/app';
-import {$sideBarState, setSideBarState} from '~/entities/menu';
 import {$isMobileScreen} from '~/entities/screens';
 import {$accountId, logoutClicked} from '~/entities/wallet';
 import {DaoSwitcher} from '~/features/dao/ui/dao-switcher';
@@ -44,15 +43,15 @@ const navItems = [
 ];
 
 export function Root() {
+  const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const isLoading = useStore($appLoading);
-  const {isOpen: isSidebarOpen} = useStore($sideBarState);
   const accountId = useStore($accountId);
   const isMobile = useStore($isMobileScreen);
   const showSideBar = !isMobile || isSidebarOpen;
 
   const handleSidebarToggle = React.useCallback(
-    () => setSideBarState({isOpen: !isSidebarOpen}),
-    [isSidebarOpen],
+    () => setSidebarOpen((prevSidebarOpen) => !prevSidebarOpen),
+    [],
   );
 
   // TODO: TBD кажется тут нужен спиннер ибо при ините есть белый экран заметный глазом
