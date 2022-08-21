@@ -1,7 +1,7 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
-import {keyStores} from 'near-api-js';
 import {Get} from 'type-fest';
 
+import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
 import {
   createNearInstance,
   createWalletSelectorInstance,
@@ -91,8 +91,6 @@ const loginViaWalletFx = createEffect(async (module: ModuleState) => {
   }
 });
 
-export const $keyStore = createStore(new keyStores.BrowserLocalStorageKeyStore());
-
 export const initNearInstanceFx = attach({
   source: {walletSelectorState: $walletSelectorState, keyStore: $keyStore},
   async effect({walletSelectorState: {selectedWalletId}, keyStore}) {
@@ -115,6 +113,12 @@ sample({
 sample({
   clock: initNearInstanceFx.doneData,
   target: $near,
+});
+
+sample({
+  clock: initNearInstanceFx.doneData,
+  filter: (near) => Boolean(near.accountId),
+  target: authenticationRbApiFx,
 });
 
 // Logout logic

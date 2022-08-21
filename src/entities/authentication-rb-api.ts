@@ -1,17 +1,22 @@
-import {attach, sample} from 'effector';
+import {attach, createStore, sample} from 'effector';
 import {keyStores} from 'near-api-js';
 
-import {$accountId, $keyStore, $near, createWalletSelectorInstanceFx} from '~/entities/wallet';
+import {NearInstance} from '~/shared/api/near';
 import {rbApi} from '~/shared/api/rb';
 import {getSignature} from '~/shared/lib/get-signature';
 
+export const $keyStore = createStore(new keyStores.BrowserLocalStorageKeyStore());
+export const $authenticationHeaders = createStore<Record<string, string> | null>(null);
+
 export const authenticationRbApiFx = attach({
   source: {
-    accountId: $accountId,
-    near: $near,
     keyStore: $keyStore,
   },
-  async effect({accountId, keyStore, near}) {
+  async effect({keyStore}: {keyStore: keyStores.BrowserLocalStorageKeyStore}, near: NearInstance) {
+    if (!near) {
+      throw Error('WHERE NEAR ?');
+    }
+    const {accountId} = near;
     const publicKey = await getPublicKey(accountId, keyStore, near?.near.config);
     const signature = await getSignatureFromKeyStores(accountId, keyStore, near?.near.config);
 
@@ -21,7 +26,9 @@ export const authenticationRbApiFx = attach({
       'X-Authorization': `Bearer ${buff.toString('base64')}`,
     };
 
-    return rbApi.authentication.authenticationControllerLogIn({headers});
+    return rbApi.authentication
+      .authenticationControllerLogIn({headers})
+      .then((response) => response.json());
   },
 });
 
@@ -66,7 +73,6 @@ async function getSignatureFromKeyStores(
 }
 
 sample({
-  clock: createWalletSelectorInstanceFx.doneData,
-  fn: () => null,
-  target: authenticationRbApiFx,
+  source: authenticationRbApiFx.doneData,
+  target: $authenticationHeaders,
 });

@@ -1,10 +1,10 @@
 import {attach, createEvent, createStore, sample} from 'effector';
 
+import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/dao';
 import {rbApi} from '~/shared/api/rb';
+import {ROUTES} from '~/shared/config/routes';
 import type {Employee} from '~/shared/types/employee';
-
-import employeesMock from '../api/employee.mock.json';
 
 export const pageLoaded = createEvent<void>();
 export const $employees = createStore<Employee[]>([]);
@@ -12,22 +12,29 @@ export const $employees = createStore<Employee[]>([]);
 const loadEmployeesFx = attach({
   source: {
     daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
   },
-  async effect() {
-    return rbApi.dao.daoControllerFindAllEmployees('vote4science-community.sputnikv2.testnet', {
-      headers: {'Access-Control-Allow-Origin': '*'},
-    });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async effect({daoId, authenticationHeaders}) {
+    return rbApi.dao
+      .daoControllerFindAllEmployees('vote4science-community.sputnikv2.testnet', {
+        headers: {...authenticationHeaders},
+      })
+      .then((response) => response.json());
   },
 });
 sample({
-  source: pageLoaded,
+  clock: pageLoaded,
+  source: $authenticationHeaders,
+  filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
+  target: loadEmployeesFx,
+});
+sample({
+  source: $authenticationHeaders,
+  filter: () => window && window.location.pathname.includes(ROUTES.employees.path),
   target: loadEmployeesFx,
 });
 sample({
   source: loadEmployeesFx.doneData,
-  fn: (response) => {
-    console.log(response.data);
-    return employeesMock as Employee[];
-  },
   target: $employees,
 });
