@@ -1,5 +1,5 @@
 import {DaoNew} from '~/features/dao/ui/dao-new';
-import {PageLayout} from '~/widgets/layout';
+import {PageLayout} from '~/shared/ui/components/layout';
 
 export const DaoNewPage = () => (
   <PageLayout type='intro'>

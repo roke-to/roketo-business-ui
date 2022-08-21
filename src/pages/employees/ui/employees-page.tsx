@@ -5,9 +5,9 @@ import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
+import {PageLayout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
-import {PageLayout} from '~/widgets/layout';
 
 import * as employeesModel from '../model/employees-model';
 import {AddEmployeeModal} from './add-employee-modal';

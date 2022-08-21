@@ -10,10 +10,10 @@ import {DaoSwitcher} from '~/features/dao/ui/dao-switcher';
 import {Notifications} from '~/features/notifications/ui';
 import {Routing} from '~/pages';
 import {ROUTES} from '~/shared/config/routes';
+import {LayoutProvider} from '~/shared/ui/components/layout';
 import {Navigate} from '~/shared/ui/components/navigate';
 import {ReactComponent as NavigateIcon} from '~/shared/ui/icons/dashboard_ico.svg';
 import '~/shared/ui/styles';
-import {LayoutProvider} from '~/widgets/layout';
 
 const navItems = [
   {
