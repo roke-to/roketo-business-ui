@@ -1,3 +1,3 @@
-import {PageLayout} from '~/widgets/page-layout';
+import {PageLayout} from '~/widgets/layout';
 
 export const StreamsPage = () => <PageLayout>StreamsPage</PageLayout>;

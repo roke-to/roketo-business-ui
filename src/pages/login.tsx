@@ -1,8 +1,8 @@
 import {LoginPortlet} from '~/features/auth';
-import {Layout} from '~/shared/ui/components/layout';
+import {PageLayout} from '~/widgets/layout';
 
 export const LoginPage = () => (
-  <Layout>
+  <PageLayout type='intro'>
     <LoginPortlet />
-  </Layout>
+  </PageLayout>
 );

@@ -1,0 +1,12 @@
+.scene {
+  @apply bg-gradient-to-r from-[#f8c9a0] to-[#a0c2f8]
+    py-4
+    mobile:py-8
+    px-4
+    min-h-screen
+    flex
+    flex-col
+    justify-center
+    items-center
+    overflow-hidden;
+}

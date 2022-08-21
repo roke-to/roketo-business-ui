@@ -1,3 +1,11 @@
+.root {
+  display: flex;
+  width: 100%;
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+
+  @apply flex-col;
+}
+
 .sidebar {
   position: fixed;
   display: flex;
@@ -34,6 +42,14 @@
 }
 
 .main {
+  display: flex;
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+  padding-bottom: theme('spacing.4');
+
+  @apply flex-col gap-2xl;
+}
+
+.isSidebarOpen {
   margin-left: 240px;
 }
 
@@ -55,5 +71,32 @@
     gap: theme('gap.md');
     padding-left: theme('gap.md');
     padding-right: theme('gap.md');
+  }
+}
+
+.header {
+  @apply flex flex-row justify-between items-center mx-auto;
+  height: 56px;
+  background: linear-gradient(180deg, #fff 0%, #fff 90%, rgba(255, 255, 255, 0.5) 100%);
+  z-index: 100;
+  width: 100%;
+  max-width: 880px;
+
+  padding-left: theme('gap.xl');
+  padding-right: theme('gap.xl');
+}
+
+.burgerMenu {
+  display: none;
+}
+
+@media screen(tablet) {
+  .header {
+    padding-left: theme('gap.md');
+    padding-right: theme('gap.md');
+  }
+
+  .burgerMenu {
+    display: flex;
   }
 }
