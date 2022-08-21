@@ -16,3 +16,5 @@ const {Provider} = LayoutContext;
 export const LayoutProvider: React.FC<ILayoutTypeProps> = ({children, ...props}) => (
   <Provider value={props}>{children}</Provider>
 );
+
+LayoutProvider.displayName = 'LayoutProvider';

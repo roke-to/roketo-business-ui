@@ -35,3 +35,5 @@ export const MainLayout: React.FC<ILayoutTypeProps> = ({
     </main>
   </div>
 );
+
+MainLayout.displayName = 'MainLayout';

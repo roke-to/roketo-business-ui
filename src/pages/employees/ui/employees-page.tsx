@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
-import {PageLayout} from '~/shared/ui/components/layout';
+import {Layout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
 
@@ -33,7 +33,7 @@ export const EmployeesPage = () => {
     setViewType(e.target.value as ViewType);
 
   return (
-    <PageLayout>
+    <Layout>
       <Row>
         <Button onClick={addEmployeeModal.show}>{t('addEmployee.button')}</Button>
         <AddEmployeeModal
@@ -74,6 +74,6 @@ export const EmployeesPage = () => {
           return <EmployeeListItem employee={employee} key={employee.id} />;
         })}
       </div>
-    </PageLayout>
+    </Layout>
   );
 };
