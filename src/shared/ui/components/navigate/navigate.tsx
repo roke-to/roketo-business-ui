@@ -16,18 +16,18 @@ export interface NavItem {
 }
 
 export interface INavigateProps {
-  isMobileWidth: boolean;
+  isMobile: boolean;
   accountId: string;
   navItems: Array<NavItem>;
   onLogout: () => void;
 }
 
-export const Navigate = ({isMobileWidth, accountId, navItems, onLogout}: INavigateProps) => {
+export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigateProps) => {
   const {t} = useTranslation('dao');
   const location = useLocation();
 
-  const gapInBottom = isMobileWidth ? 4 : 1;
-  const buttonVariant = isMobileWidth ? 'outlined' : 'clean';
+  const gapInBottom = isMobile ? 4 : 1;
+  const buttonVariant = isMobile ? 'outlined' : 'clean';
 
   return (
     <nav className={styles.nav}>
