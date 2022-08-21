@@ -8,7 +8,7 @@ const Nothing = () => null;
 export const LayoutContext = React.createContext<ILayoutTypeProps>({
   isSidebarOpen: false,
   onSidebarToggle: () => {},
-  navigation: <Nothing />,
+  sidebarContent: <Nothing />,
   mainHeaderContent: <Nothing />,
 });
 

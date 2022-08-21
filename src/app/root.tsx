@@ -11,32 +11,36 @@ import {Routing} from '~/pages';
 import {ROUTES} from '~/shared/config/routes';
 import {LayoutProvider} from '~/shared/ui/components/layout';
 import {Navigate} from '~/shared/ui/components/navigate';
-import {ReactComponent as NavigateIcon} from '~/shared/ui/icons/dashboard_ico.svg';
+import {ReactComponent as DashboardIcon} from '~/shared/ui/icons/nav/dashboard.svg';
+import {ReactComponent as EmployeeIcon} from '~/shared/ui/icons/nav/employee.svg';
+import {ReactComponent as SettingsIcon} from '~/shared/ui/icons/nav/settings.svg';
+import {ReactComponent as StreamIcon} from '~/shared/ui/icons/nav/stream.svg';
+import {ReactComponent as TreasuryIcon} from '~/shared/ui/icons/nav/treasury.svg';
 import '~/shared/ui/styles';
 
 const navItems = [
   {
-    icon: NavigateIcon,
+    icon: DashboardIcon,
     title: 'Dashboard',
     path: ROUTES.dashboard.path,
   },
   {
-    icon: NavigateIcon,
+    icon: TreasuryIcon,
     title: 'Treasury',
     path: ROUTES.treasury.path,
   },
   {
-    icon: NavigateIcon,
+    icon: SettingsIcon,
     title: 'Governance',
     path: ROUTES.governance.path,
   },
   {
-    icon: NavigateIcon,
+    icon: EmployeeIcon,
     title: 'Employees',
     path: ROUTES.employees.path,
   },
   {
-    icon: NavigateIcon,
+    icon: StreamIcon,
     title: 'Streams',
     path: ROUTES.streams.path,
   },
@@ -63,7 +67,7 @@ export function Root() {
     <LayoutProvider
       isSidebarOpen={showSideBar}
       onSidebarToggle={handleSidebarToggle}
-      navigation={
+      sidebarContent={
         <Navigate
           accountId={accountId}
           isMobile={isMobile}

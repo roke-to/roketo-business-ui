@@ -2,24 +2,27 @@ import clsx from 'clsx';
 import React from 'react';
 
 import {IconButton} from '~/shared/ui/components/icon-button';
-import {ReactComponent as Menu} from '~/shared/ui/icons/menu.svg';
+import {ReactComponent as MenuIcon} from '~/shared/ui/icons/menu.svg';
+import {ReactComponent as LogoIcon} from '~/shared/ui/icons/wallet/near-wallet.svg';
 
 import {ILayoutTypeProps} from './base';
 import styles from './main.module.css';
 
 export const MainLayout: React.FC<ILayoutTypeProps> = ({
   children,
-  navigation,
+  sidebarContent,
   mainHeaderContent,
   isSidebarOpen,
   onSidebarToggle,
 }) => (
-  <div className={styles.root}>
-    <aside className={clsx(styles.sidebar, {[styles.isOpen]: isSidebarOpen})}>
-      <div className={styles.logo}>RB</div>
-      {navigation}
+  <div className={clsx(styles.root, {[styles.isSidebarOpen]: isSidebarOpen})}>
+    <aside className={styles.sidebar}>
+      <div className={styles.logo}>
+        <LogoIcon />
+      </div>
+      <div className={styles.sidebarContent}>{sidebarContent}</div>
     </aside>
-    <main className={clsx(styles.main, {[styles.isSidebarOpen]: isSidebarOpen})}>
+    <main className={styles.main}>
       <div className={styles.header}>
         <IconButton
           variant='clean'
@@ -27,7 +30,7 @@ export const MainLayout: React.FC<ILayoutTypeProps> = ({
           className={styles.burgerMenu}
           onClick={onSidebarToggle}
         >
-          <Menu />
+          <MenuIcon />
         </IconButton>
         {mainHeaderContent}
       </div>

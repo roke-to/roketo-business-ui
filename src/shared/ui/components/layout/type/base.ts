@@ -2,6 +2,6 @@
 export interface ILayoutTypeProps {
   isSidebarOpen: boolean;
   onSidebarToggle: () => void;
-  navigation: React.ReactNode;
+  sidebarContent: React.ReactNode;
   mainHeaderContent: React.ReactNode;
 }
