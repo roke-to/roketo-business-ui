@@ -4,6 +4,7 @@ import {ILayoutTypeProps} from './type/base';
 
 const Nothing = () => null;
 
+// ts-unused-exports:disable-next-line
 export const LayoutContext = React.createContext<ILayoutTypeProps>({
   isSidebarOpen: false,
   onSidebarToggle: () => {},
