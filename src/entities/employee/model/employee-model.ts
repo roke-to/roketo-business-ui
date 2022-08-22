@@ -16,7 +16,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
       init: '',
       rules: [validators.required],
     },
-    wallet: {
+    nearLogin: {
       init: '',
       rules: [validators.required],
     },

@@ -18,7 +18,7 @@ export const EmployeeListItem: React.FC<Props> = ({employee}) => (
     <Status status={employee.status} type={employee.type} />
     <Typography className='w-1/5'>{employee.name}</Typography>
     <Typography className='w-1/5'>{employee.role}</Typography>
-    <Typography className='w-1/5'>{employee.wallet}</Typography>
+    <Typography className='w-1/5'>{employee.nearLogin}</Typography>
     <Typography className='w-1/5'>{employee.salary}</Typography>
     <Button>...</Button>
   </Row>

@@ -1,15 +1,36 @@
-import {createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, createEvent, createStore, sample} from 'effector';
 
+import {$authenticationHeaders} from '~/entities/authentication-rb-api';
+import {$currentDaoId} from '~/entities/dao';
+import {rbApi} from '~/shared/api/rb';
+import {ROUTES} from '~/shared/config/routes';
 import type {Employee} from '~/shared/types/employee';
-
-import employeesMock from '../api/employee.mock.json';
 
 export const pageLoaded = createEvent<void>();
 export const $employees = createStore<Employee[]>([]);
 
-const loadEmployeesFx = createEffect(() => employeesMock as Employee[]);
+const loadEmployeesFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, authenticationHeaders}) {
+    return rbApi.dao
+      .daoControllerFindAllEmployees(daoId, {
+        headers: {...authenticationHeaders},
+      })
+      .then((response) => response.json());
+  },
+});
 sample({
-  source: pageLoaded,
+  clock: pageLoaded,
+  source: $authenticationHeaders,
+  filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
+  target: loadEmployeesFx,
+});
+sample({
+  source: $authenticationHeaders,
+  filter: () => window && window.location.pathname.includes(ROUTES.employees.path),
   target: loadEmployeesFx,
 });
 sample({
