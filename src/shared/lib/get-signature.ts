@@ -1,13 +1,4 @@
 import {KeyPair} from 'near-api-js';
-import {FinalExecutionOutcome} from 'near-api-js/lib/providers';
-
-export type FinalExecutionError = {
-  error: {
-    kind: {
-      ExecutionError: string;
-    };
-  };
-};
 
 export const getSignature = async (keyPair: KeyPair): Promise<string | null> => {
   const publicKey = keyPair.getPublicKey();
@@ -27,9 +18,3 @@ export const getSignature = async (keyPair: KeyPair): Promise<string | null> => 
 
   return signatureBase64;
 };
-
-export function isError(
-  _params: FinalExecutionOutcome[] | FinalExecutionError,
-): _params is FinalExecutionError {
-  return (_params as FinalExecutionError)?.error?.kind !== undefined;
-}
