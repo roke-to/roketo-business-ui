@@ -40,16 +40,16 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.wallet.label')}
-        error={fields.wallet.errorText()}
+        content={t('addEmployee.form.labels.nearLogin.label')}
+        error={fields.nearLogin.errorText()}
         className='basis-1/3'
       >
         <Input
-          name='wallet'
-          value={fields.wallet.value}
+          name='nearLogin'
+          value={fields.nearLogin.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.wallet.placeholder')}
-          onChange={fields.wallet.onChange}
+          placeholder={t('addEmployee.form.labels.nearLogin.placeholder')}
+          onChange={fields.nearLogin.onChange}
         />
       </Label>
       <Label
@@ -134,16 +134,16 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.wallet.label')}
-        error={fields.wallet.errorText()}
+        content={t('addEmployee.form.labels.nearLogin.label')}
+        error={fields.nearLogin.errorText()}
         className='basis-1/3'
       >
         <Input
-          name='wallet'
-          value={fields.wallet.value}
+          name='nearLogin'
+          value={fields.nearLogin.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.wallet.placeholder')}
-          onChange={fields.wallet.onChange}
+          placeholder={t('addEmployee.form.labels.nearLogin.placeholder')}
+          onChange={fields.nearLogin.onChange}
         />
       </Label>
       <Label

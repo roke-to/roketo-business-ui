@@ -28,7 +28,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
       },
       {
         content: t('card.labels.wallet'),
-        children: employee.wallet,
+        children: employee.nearLogin,
       },
       {
         content: t('card.labels.email'),

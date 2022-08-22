@@ -14,10 +14,9 @@ const loadEmployeesFx = attach({
     daoId: $currentDaoId,
     authenticationHeaders: $authenticationHeaders,
   },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async effect({daoId, authenticationHeaders}) {
     return rbApi.dao
-      .daoControllerFindAllEmployees('vote4science-community.sputnikv2.testnet', {
+      .daoControllerFindAllEmployees(daoId, {
         headers: {...authenticationHeaders},
       })
       .then((response) => response.json());

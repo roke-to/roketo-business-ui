@@ -24,7 +24,7 @@
           "label": "Employee type",
           "placeholder": "Freelancer"
         },
-        "wallet": {
+        "nearLogin": {
           "label": "Near login",
           "placeholder": "login.near"
         },
