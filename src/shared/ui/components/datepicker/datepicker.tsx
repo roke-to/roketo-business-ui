@@ -16,15 +16,22 @@ import styles from './datepicker.module.css';
 interface Props extends InputProps {
   value: string;
   onChange: (value: string) => void;
+  formatString?: string;
 }
 
-export const Datepicker: React.FC<Props> = ({className, value, onChange, ...props}) => {
-  const date = parse(value, 'dd/MM/yyyy', new Date());
+export const Datepicker: React.FC<Props> = ({
+  className,
+  value,
+  onChange,
+  formatString = 'dd/MM/yyyy',
+  ...props
+}) => {
+  const date = parse(value, formatString, new Date());
   const selected = isValid(date) ? date : undefined;
 
   const handleDateSelect = (newDate: Date | undefined) => {
     if (newDate) {
-      onChange(format(newDate, 'dd/MM/yyyy'));
+      onChange(format(newDate, formatString));
     } else {
       onChange('');
     }
