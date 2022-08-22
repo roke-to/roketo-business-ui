@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import {format, isValid, parse} from 'date-fns';
-import React, {useState} from 'react';
+import React from 'react';
 import {DayPicker} from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import {usePopper} from 'react-popper';
@@ -30,13 +30,11 @@ export const Datepicker: React.FC<Props> = ({className, value, onChange, ...prop
     }
   };
 
-  // todo: не знаю почему, но если юзать useRef, поппер начинает глючить при ините
-  // из-за этого пришлось отключить TS при прокидывании рефов
-  const [referenceElement, setReferenceElement] = useState();
-  const [popperElement, setPopperElement] = useState();
+  const refPopoverButton = React.createRef<HTMLDivElement>();
+  const refPopoverPanel = React.createRef<HTMLDivElement>();
   const {styles: popperStyles, attributes: popperAttributes} = usePopper(
-    referenceElement,
-    popperElement,
+    refPopoverButton.current,
+    refPopoverPanel.current,
   );
 
   return (
@@ -47,8 +45,7 @@ export const Datepicker: React.FC<Props> = ({className, value, onChange, ...prop
         onChange={onChange}
         {...props}
       />
-      {/* @ts-ignore */}
-      <Popover.Button as='div' className={clsx(styles.icon)} ref={setReferenceElement}>
+      <Popover.Button as='div' className={clsx(styles.icon)} ref={refPopoverButton}>
         <IconButton variant='clean' size='sm'>
           <CalendarIcon />
         </IconButton>
@@ -63,8 +60,7 @@ export const Datepicker: React.FC<Props> = ({className, value, onChange, ...prop
         leaveTo='transform scale-95 opacity-0'
       >
         <Popover.Panel
-          // @ts-ignore
-          ref={setPopperElement}
+          ref={refPopoverPanel}
           className={clsx(styles.panel)}
           style={popperStyles.popper}
           {...popperAttributes.popper}

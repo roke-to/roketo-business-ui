@@ -17,4 +17,7 @@
 
 .panel {
   background-color: theme('colors.white');
+  box-shadow: theme('dropShadow.DEFAULT');
+  border-radius: theme('borderRadius.3xl');
+  z-index: 1;
 }
