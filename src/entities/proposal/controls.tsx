@@ -3,6 +3,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {getVotesStatistic} from '~/entities/proposal/lib/getVotesStatistic';
+import {isActiveVoteStatusProposal} from '~/entities/proposal/lib/is-active-vote-status-proposal';
 import styles from '~/entities/proposal/ui/votes/votes.module.css';
 import {$accountId} from '~/entities/wallet';
 import {Proposal} from '~/shared/api/astro';
@@ -14,12 +15,12 @@ import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 
 export const Controls = ({
   votes,
-  canVote,
+  voteStatus,
   className,
   handleVoteAction,
 }: {
   votes: Proposal['votes'];
-  canVote: boolean;
+  voteStatus: Proposal['voteStatus'];
   className?: string;
   handleVoteAction?(vote: VoteAction): void;
 }) => {
@@ -39,14 +40,17 @@ export const Controls = ({
     ? undefined
     : () => handleVoteAction(VoteAction.VoteReject);
 
+  const isActiveProposal = isActiveVoteStatusProposal(voteStatus);
+  const disabled = !isActiveProposal || Boolean(votesStatistic[accountId]);
+
   return (
     <Row
       justify='start'
       gap={4}
       className={clsx(
         {
-          [styles.controls]: canVote && !isViewMode,
-          [styles.votePeriodEnd]: !canVote && !isViewMode,
+          [styles.controls]: isActiveProposal && !isViewMode,
+          [styles.votePeriodEnd]: !isActiveProposal && !isViewMode,
         },
         className,
       )}
@@ -55,17 +59,17 @@ export const Controls = ({
         text={voteYes}
         icon={Plus}
         variant='positive'
-        active={yesVote}
+        hasActiveVote={yesVote}
         onClick={handleApproveVoteAction}
-        disabled={!canVote}
+        disabled={disabled}
       />
       <Control
         text={voteNo}
         icon={Minus}
         variant='negative'
-        active={noVote}
+        hasActiveVote={noVote}
         onClick={handleRejectVoteAction}
-        disabled={!canVote}
+        disabled={disabled}
       />
     </Row>
   );

@@ -15,14 +15,12 @@ import styles from '../proposal.module.css';
 export const StatusRow = ({
   status,
   votes,
-  canVote,
   votePeriodEnd,
   updatedAt,
   voteStatus,
 }: {
   status: Proposal['status'];
   votes: Proposal['votes'];
-  canVote: boolean;
   votePeriodEnd: number;
   updatedAt: string;
   voteStatus: Proposal['voteStatus'];
@@ -47,7 +45,7 @@ export const StatusRow = ({
   return isProgressStatusProposal ? (
     <Row gap={2} align='center'>
       {timeText}
-      <Controls votes={votes} canVote={canVote} className={styles.canVoteViewControls} />
+      <Controls votes={votes} voteStatus={voteStatus} className={styles.canVoteViewControls} />
     </Row>
   ) : (
     <Row gap={2} align='center' className={styles.voteStatusBar}>
@@ -58,7 +56,7 @@ export const StatusRow = ({
       >
         {status} {formatISODate(updatedAt, 'dd MMMM yyyy')}
       </Typography>
-      <Controls votes={votes} canVote={canVote} />
+      <Controls votes={votes} voteStatus={voteStatus} />
     </Row>
   );
 };

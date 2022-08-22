@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 
 import {Controls} from '~/entities/proposal/controls';
 import {getVotesStatistic, isPositiveStatus} from '~/entities/proposal/lib';
+import {isActiveVoteStatusProposal} from '~/entities/proposal/lib/is-active-vote-status-proposal';
 import {multiVote} from '~/entities/proposal/model/proposal';
 import {Dao, Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
@@ -22,7 +23,8 @@ export const Votes = ({
   status,
   votes,
   numberOfMembers,
-  canVote,
+
+  voteStatus,
   updatedAt,
   className,
 }: {
@@ -31,7 +33,7 @@ export const Votes = ({
   status: Proposal['status'];
   votes: Proposal['votes'];
   numberOfMembers: number;
-  canVote: boolean;
+  voteStatus: Proposal['voteStatus'];
   updatedAt: string;
   className: string;
 }) => {
@@ -51,6 +53,8 @@ export const Votes = ({
 
   const quorum = getQuorumValueFromDao(dao);
 
+  const isActiveProposal = isActiveVoteStatusProposal(voteStatus);
+
   return (
     <Col className={clsx(styles.root, className)}>
       <Col gap={0}>
@@ -58,19 +62,19 @@ export const Votes = ({
           {t('quorum')} {quorum}%
         </Typography>
         <Row gap={0}>
-          {!canVote && (
+          {!isActiveProposal && (
             <Typography as='span' color='positive' className={styles.mobileShortText}>
               {status} {formatISODate(updatedAt, 'dd MMMM yyyy')}&nbsp;—&nbsp;
             </Typography>
           )}
-          {canVote && (
+          {isActiveProposal && (
             <Typography as='span' color='positive' isCapitalizeFirstLetter>
               {t('approved')}&nbsp;
             </Typography>
           )}
           <Typography
             as='span'
-            color={canVote || isPositiveStatus(status) ? 'positive' : 'negative'}
+            color={isActiveProposal || isPositiveStatus(status) ? 'positive' : 'negative'}
           >
             {voteYes} {t('of')} {numberOfMembers} ({floorPositivePercent}%)
           </Typography>
@@ -80,7 +84,7 @@ export const Votes = ({
         </Track>
       </Col>
 
-      <Controls votes={votes} canVote={canVote} handleVoteAction={handleVoteAction} />
+      <Controls votes={votes} voteStatus={voteStatus} handleVoteAction={handleVoteAction} />
     </Col>
   );
 };
