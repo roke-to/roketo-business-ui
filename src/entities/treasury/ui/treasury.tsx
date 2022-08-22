@@ -3,6 +3,7 @@ import React from 'react';
 
 import {ProposalsFilters} from '~/entities/filters/proposals-filters';
 import {sendTransactionsFx} from '~/entities/transactions';
+import {ProposalKindForTreasury} from '~/entities/treasury/model/constants';
 import {
   $tokenBalances,
   $treasuryProposalLoading,
@@ -78,6 +79,7 @@ export const Treasury = () => {
         <CreateProposalTransferButton />
       </div>
       <ProposalsFilters
+        setKindProposal={ProposalKindForTreasury}
         isLoading={isLoading}
         selectedProposalStatus={treasurySelectedProposalStatus}
         selectedProposalKind={treasurySelectedProposalKind}

@@ -1,7 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalKind} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
@@ -12,20 +11,22 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './filter.module.css';
 
 export interface ProposalKindFilterProps {
+  setKindProposal: ProposalKindFilterType[];
   selectedProposalKind: ProposalKindFilterType;
   handleChangeProposalKind(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalKindFilter = ({
+  setKindProposal,
   selectedProposalKind,
   handleChangeProposalKind,
 }: ProposalKindFilterProps) => {
   const {t} = useTranslation('proposalFilters');
 
-  const selected = ProposalKind.findIndex((kind) => kind === selectedProposalKind);
+  const selected = setKindProposal.findIndex((kind) => kind === selectedProposalKind);
 
   const handleChange = (index: number) => {
-    handleChangeProposalKind(ProposalKind[index]);
+    handleChangeProposalKind(setKindProposal[index]);
   };
 
   return (
@@ -35,7 +36,7 @@ export const ProposalKindFilter = ({
       </Typography>
       <DropdownMenu label={selectedProposalKind} variant='soft'>
         <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
-          {ProposalKind.map((kind) => (
+          {setKindProposal.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>
           ))}
         </DropdownContent>
