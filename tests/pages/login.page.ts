@@ -38,4 +38,25 @@ export class LoginPage {
   async chooseNearWallet() {
     await this.page.locator(this.elements.buttonNearWallet).first().click();
   }
+
+  async chooseCreateNewDao() {
+    await this.page.locator('//a[contains(@href,"/dao/new")]').click();
+  }
+
+  async fillNewDaoData() {
+    const randomDaoName = Math.random().toString(36).substring(10);
+    const randomDaoAddress = Math.random().toString(36).substring(10);
+
+    await this.page.locator('//input[@name="daoName"]').fill(randomDaoName);
+    // await expect(this.page.locator('input[name="daoAddress"]')).toHaveValue(${randomDaoName})
+    await this.page.locator('//input[@name="daoAddress"]').fill(randomDaoAddress);
+  }
+
+  async clickCreateDao() {
+    await this.page.locator('button', {hasText: 'Create DAO'}).click();
+  }
+
+  async clickAddCouncilsLater() {
+    await this.page.locator('button', {hasText: 'Add later'}).click();
+  }
 }
