@@ -1,3 +1,3 @@
-import {PageLayout} from '~/widgets/page-layout';
+import {Layout} from '~/shared/ui/components/layout';
 
-export const StreamsPage = () => <PageLayout>StreamsPage</PageLayout>;
+export const StreamsPage = () => <Layout>StreamsPage</Layout>;

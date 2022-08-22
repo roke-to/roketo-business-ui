@@ -1,51 +1,24 @@
-import clsx from 'clsx';
 import React from 'react';
 
-import styles from './layout.module.css';
+import {LayoutContext} from './provider';
+import {IntroLayout, MainLayout} from './type';
 
-export type SceneGap = 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
+const layoutTypes = {
+  intro: IntroLayout,
+  main: MainLayout,
+};
 
-export interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-  as?: any;
-  gap?: SceneGap | number;
-  type?: 'row' | 'column';
-  withContent?: boolean;
-  withBackground?: boolean;
+export type LayoutType = keyof typeof layoutTypes;
+
+export interface ILayoutProps {
+  type?: LayoutType;
 }
 
-const DEFAULT_TAG = 'div';
+export const Layout: React.FC<ILayoutProps> = ({children, type = 'main'}) => {
+  const layoutProps = React.useContext(LayoutContext);
+  const LayoutComponent = layoutTypes[type];
 
-export const Layout = React.forwardRef<HTMLDivElement, LayoutProps>(
-  (
-    {
-      as: Tag = DEFAULT_TAG,
-      gap,
-      type = 'column',
-      withBackground = true,
-      withContent,
-      children,
-      className,
-      ...props
-    },
-    ref,
-  ) => (
-    <Tag
-      ref={ref}
-      className={clsx(
-        gap && `gap-${gap}`,
-        styles[type],
-        {
-          [styles.scene]: withBackground,
-          [styles.layout]: !withBackground,
-          [styles.content]: withContent,
-        },
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </Tag>
-  ),
-);
+  return <LayoutComponent {...layoutProps}>{children}</LayoutComponent>;
+};
 
 Layout.displayName = 'Layout';
