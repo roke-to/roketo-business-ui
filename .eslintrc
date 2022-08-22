@@ -56,20 +56,6 @@
         ]
       },
       "rules": {
-        "class-methods-use-this": "warn",
-        "consistent-return": "warn",
-        "import/no-default-export": "warn",
-        "import/no-extraneous-dependencies": "warn",
-        "import/prefer-default-export": "off",
-        "jsx-a11y/label-has-associated-control": "warn",
-        "no-nested-ternary": "warn",
-        "no-underscore-dangle": "warn",
-        "react/function-component-definition": "off",
-        "react/jsx-props-no-spreading": "warn",
-        "react/no-unescaped-entities": "warn",
-        "react/prop-types": "warn",
-        "react/react-in-jsx-scope": "off",
-        "react/require-default-props": "off",
         "@typescript-eslint/no-use-before-define": [
           "error",
           {
@@ -83,14 +69,28 @@
             "message": "${file.type} is not allowed to import ${dependency.type}",
             "rules": [
               {"from": "app", "allow": ["pages", "widgets", "features", "entities", "shared"]},
-              {"from": "pages", "allow": ["widgets", "features", "entities", "shared"]},
-              {"from": "widgets", "allow": ["widgets", "features", "entities", "shared"]},
-              {"from": "features", "allow": ["entities", "shared"]},
               {"from": "entities", "allow": ["entities", "shared"]},
-              {"from": "shared", "allow": ["shared"]}
+              {"from": "features", "allow": ["entities", "shared"]},
+              {"from": "pages", "allow": ["widgets", "features", "entities", "shared"]},
+              {"from": "shared", "allow": ["shared"]},
+              {"from": "widgets", "allow": ["widgets", "features", "entities", "shared"]}
             ]
           }
-        ]
+        ],
+        "class-methods-use-this": "warn",
+        "consistent-return": "warn",
+        "import/no-default-export": "warn",
+        "import/no-extraneous-dependencies": "warn",
+        "import/prefer-default-export": "off",
+        "jsx-a11y/label-has-associated-control": "warn",
+        "no-nested-ternary": "warn",
+        "no-underscore-dangle": "warn",
+        "react/function-component-definition": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/no-unescaped-entities": "warn",
+        "react/prop-types": "warn",
+        "react/react-in-jsx-scope": "off",
+        "react/require-default-props": "off"
       }
     },
     {

@@ -18,7 +18,6 @@ import styles from './employees-page.module.css';
 type ViewType = 'card' | 'list';
 
 export const EmployeesPage = () => {
-  // TODO extract i18n for page from entity
   const {t} = useTranslation('employees');
   const addEmployeeModal = useModal();
 
