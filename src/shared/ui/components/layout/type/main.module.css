@@ -70,7 +70,7 @@
 
 @media screen(mobile) {
   .main {
-    min-width: 100%;
+    min-width: 320px;
   }
 }
 
@@ -80,6 +80,14 @@
 
 .root.isSidebarOpen .main {
   margin-left: 240px;
+}
+
+@media screen(mobile) {
+  .root.isSidebarOpen .main {
+    margin-left: 0;
+    transform: translateX(240px);
+    width: calc(100% - 240px);
+  }
 }
 
 .content {
