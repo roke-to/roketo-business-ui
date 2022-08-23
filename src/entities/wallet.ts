@@ -29,7 +29,7 @@ const setWalletSelectorState = createEvent<WalletSelectorState>();
 
 let walletSelectorStoreSubscription: ReturnType<Get<WalletSelector, 'store.observable.subscribe'>>;
 
-export const createWalletSelectorInstanceFx = createEffect(async () => {
+const createWalletSelectorInstanceFx = createEffect(async () => {
   const walletSelector = await createWalletSelectorInstance();
 
   if (!walletSelectorStoreSubscription) {

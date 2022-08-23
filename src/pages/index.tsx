@@ -38,7 +38,7 @@ export function Routing() {
           path={ROUTES.dao.path}
           redirect={<Redirect to={ROUTES.root.path} />}
         >
-          {!daoId ? <DaoPage /> : <Redirect to={ROUTES.employees.path} />}
+          {!daoId ? <DaoPage /> : <Redirect to={ROUTES.dashboard.path} />}
         </PrivateRoute>
 
         <PrivateRoute

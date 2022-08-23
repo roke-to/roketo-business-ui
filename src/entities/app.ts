@@ -1,6 +1,6 @@
 import {createEvent, createStore, sample} from 'effector';
 
-import {createWalletSelectorInstanceFx, initWallet} from './wallet';
+import {initNearInstanceFx, initWallet} from './wallet';
 
 // TODO: remove
 export const $appLoading = createStore(true);
@@ -12,7 +12,8 @@ sample({
   target: initWallet,
 });
 sample({
-  clock: createWalletSelectorInstanceFx.doneData,
+  // nearInstance intiated after walletSelector
+  clock: initNearInstanceFx.doneData,
   fn: () => false,
   target: $appLoading,
 });
