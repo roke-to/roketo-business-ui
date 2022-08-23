@@ -3,7 +3,6 @@ import {useStore} from 'effector-react';
 import React from 'react';
 
 import {getVotesStatistic} from '~/entities/proposal/lib/getVotesStatistic';
-import {isActiveVoteStatusProposal} from '~/entities/proposal/lib/is-active-vote-status-proposal';
 import styles from '~/entities/proposal/ui/votes/votes.module.css';
 import {$accountId} from '~/entities/wallet';
 import {Proposal} from '~/shared/api/astro';
@@ -14,13 +13,13 @@ import {ReactComponent as Minus} from '~/shared/ui/icons/minus.svg';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 
 export const Controls = ({
+  isVotable,
   votes,
-  voteStatus,
   className,
   handleVoteAction,
 }: {
+  isVotable: boolean;
   votes: Proposal['votes'];
-  voteStatus: Proposal['voteStatus'];
   className?: string;
   handleVoteAction?(vote: VoteAction): void;
 }) => {
@@ -40,8 +39,7 @@ export const Controls = ({
     ? undefined
     : () => handleVoteAction(VoteAction.VoteReject);
 
-  const isActiveProposal = isActiveVoteStatusProposal(voteStatus);
-  const disabled = !isActiveProposal || Boolean(votesStatistic[accountId]);
+  const disabled = !isVotable || Boolean(votesStatistic[accountId]);
 
   return (
     <Row
@@ -49,8 +47,8 @@ export const Controls = ({
       gap={4}
       className={clsx(
         {
-          [styles.controls]: isActiveProposal && !isViewMode,
-          [styles.votePeriodEnd]: !isActiveProposal && !isViewMode,
+          [styles.controls]: isVotable && !isViewMode,
+          [styles.votePeriodEnd]: !isVotable && !isViewMode,
         },
         className,
       )}

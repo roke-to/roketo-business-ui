@@ -3,8 +3,7 @@ import React, {useCallback} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Controls} from '~/entities/proposal/controls';
-import {getVotesStatistic, isPositiveStatus} from '~/entities/proposal/lib';
-import {isActiveVoteStatusProposal} from '~/entities/proposal/lib/is-active-vote-status-proposal';
+import {getVotesStatistic} from '~/entities/proposal/lib';
 import {multiVote} from '~/entities/proposal/model/proposal';
 import {Dao, Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
@@ -23,8 +22,7 @@ export const Votes = ({
   status,
   votes,
   numberOfMembers,
-
-  voteStatus,
+  isVotable,
   updatedAt,
   className,
 }: {
@@ -33,7 +31,7 @@ export const Votes = ({
   status: Proposal['status'];
   votes: Proposal['votes'];
   numberOfMembers: number;
-  voteStatus: Proposal['voteStatus'];
+  isVotable: boolean;
   updatedAt: string;
   className: string;
 }) => {
@@ -53,7 +51,7 @@ export const Votes = ({
 
   const quorum = getQuorumValueFromDao(dao);
 
-  const isActiveProposal = isActiveVoteStatusProposal(voteStatus);
+  const isPositiveStatusProposal = status === 'InProgress' || status === 'Approved';
 
   return (
     <Col className={clsx(styles.root, className)}>
@@ -62,20 +60,17 @@ export const Votes = ({
           {t('quorum')} {quorum}%
         </Typography>
         <Row gap={0}>
-          {!isActiveProposal && (
-            <Typography as='span' color='positive' className={styles.mobileShortText}>
+          {!isPositiveStatusProposal && (
+            <Typography as='span' color='negative' className={styles.mobileShortText}>
               {status} {formatISODate(updatedAt, 'dd MMMM yyyy')}&nbsp;—&nbsp;
             </Typography>
           )}
-          {isActiveProposal && (
+          {isPositiveStatusProposal && (
             <Typography as='span' color='positive' isCapitalizeFirstLetter>
-              {t('approved')}&nbsp;
+              {t(status)}&nbsp;
             </Typography>
           )}
-          <Typography
-            as='span'
-            color={isActiveProposal || isPositiveStatus(status) ? 'positive' : 'negative'}
-          >
+          <Typography as='span' color={isPositiveStatusProposal ? 'positive' : 'negative'}>
             {voteYes} {t('of')} {numberOfMembers} ({floorPositivePercent}%)
           </Typography>
         </Row>
@@ -84,7 +79,7 @@ export const Votes = ({
         </Track>
       </Col>
 
-      <Controls votes={votes} voteStatus={voteStatus} handleVoteAction={handleVoteAction} />
+      <Controls isVotable={isVotable} votes={votes} handleVoteAction={handleVoteAction} />
     </Col>
   );
 };

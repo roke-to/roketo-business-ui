@@ -4,7 +4,8 @@
   "of": "of",
   "description": "Description",
   "quorum": "Quorum",
-  "approved": "Approved",
+  "Approved": "Approved",
+  "InProgress": "In progress",
   "timeExpired": "Time expired",
   "createForm": {
     "proposalTypeLabel": "Proposal type",
