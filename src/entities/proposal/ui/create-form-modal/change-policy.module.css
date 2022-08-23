@@ -1,5 +1,6 @@
 .quorum {
-  @apply basis-1/2;
+  @apply basis-1/2
+  pb-1;
 }
 
 .councilAddressLabel {
