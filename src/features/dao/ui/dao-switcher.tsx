@@ -16,7 +16,13 @@ export const DaoSwitcher = ({className}: {className?: string}) => {
   };
 
   return (
-    <DropdownMenu label={daoId} size='xxs' variant='clean' className={className}>
+    <DropdownMenu
+      label={daoId}
+      data-qa='daoDropdownMenu'
+      size='xxs'
+      variant='clean'
+      className={className}
+    >
       <DropdownContent selected={daoId} handleChange={handleChange} size='xxs' offset='xs'>
         {userDaos.map((id) => (
           <DropdownItem key={id}>
