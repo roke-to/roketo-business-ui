@@ -49,5 +49,5 @@
   "removeMemberFromRoleText": "propose to remove",
   "changeQuorumText": "propose to change quorum to",
   "showMore": "More options",
-  "lessMore": "Less options"
+  "showLess": "Less options"
 }

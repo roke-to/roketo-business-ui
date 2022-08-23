@@ -93,7 +93,7 @@ export function CreateProposalForm<T extends AnyFormValues>({
 
         <FormPartComponent fields={fields} t={t} pending={pending} />
 
-        <ShowMore showMoreText={t('showMore')} showLessText='lessMore'>
+        <ShowMore showMoreText={t('showMore')} showLessText={t('showLess')}>
           <Row className='mobile:flex-col'>
             <Label
               content={t('createForm.linkLabel')}
