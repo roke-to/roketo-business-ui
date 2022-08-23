@@ -19,7 +19,9 @@ import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-propos
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
+import {Portlet} from '~/shared/ui/components/portlet';
 import {Typography} from '~/shared/ui/components/typography';
+import {VerticalLine} from '~/shared/ui/components/vertical-line';
 
 export const Treasury = () => {
   const tokenBalances = useStore($tokenBalances);
@@ -45,13 +47,18 @@ export const Treasury = () => {
 
   return (
     <>
-      <div className='flex justify-between align-center'>
-        <div className='flex flex-col gap-2'>
+      <Portlet
+        type='row'
+        justify='between'
+        className='align-center pt-6 mobile:py-8 mobile:flex-col mobile:gap-lg'
+        width='full'
+      >
+        <div className='flex grow flex-col gap-2'>
           <div className='flex flex-col'>
             <Typography as='span' weight='bold' color='muted' font='xs'>
               Total value FT
             </Typography>
-            <Typography as='span' weight='bold' font='2xl'>
+            <Typography as='span' weight='bold' font='heading'>
               {formatCurrency(totalBalance)} USD
             </Typography>
           </div>
@@ -76,8 +83,9 @@ export const Treasury = () => {
             })}
           </div>
         </div>
+        <VerticalLine />
         <CreateProposalTransferButton />
-      </div>
+      </Portlet>
       <ProposalsFilters
         setKindProposal={ProposalKindForTreasury}
         isLoading={isLoading}
