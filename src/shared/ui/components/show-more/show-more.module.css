@@ -1,0 +1,13 @@
+.line {
+  @apply flex
+  h-0
+  items-center
+  justify-center
+  border
+  border-blue-default;
+}
+
+.button {
+  @apply text-xs
+  font-normal;
+}

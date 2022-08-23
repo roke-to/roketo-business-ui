@@ -8,9 +8,11 @@ import {$accountId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
+import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
+import {ShowMore} from '~/shared/ui/components/show-more';
 import {Typography} from '~/shared/ui/components/typography';
 
 import {AddCouncil} from './add-council';
@@ -90,6 +92,40 @@ export function CreateProposalForm<T extends AnyFormValues>({
         </Row>
 
         <FormPartComponent fields={fields} t={t} pending={pending} />
+
+        <ShowMore showMoreText={t('showMore')} showLessText={t('showLess')}>
+          <Row className='mobile:flex-col'>
+            <Label
+              content={t('createForm.linkLabel')}
+              error={fields.link.errorText()}
+              className='basis-1/3'
+            >
+              <Input
+                name='link'
+                value={fields.link.value}
+                disabled={pending}
+                placeholder={t('createForm.linkPlaceholder')}
+                // @ts-expect-error
+                onChange={fields.link.onChange}
+              />
+            </Label>
+            <Label
+              required
+              content={t('createForm.tgasLabel')}
+              error={fields.tgas.errorText()}
+              className='basis-1/3'
+            >
+              <Input
+                name='tgas'
+                value={fields.tgas.value}
+                disabled={pending}
+                placeholder={t('createForm.tgasPlaceholder')}
+                // @ts-expect-error
+                onChange={fields.tgas.onChange}
+              />
+            </Label>
+          </Row>
+        </ShowMore>
 
         <Row justify='between' className='mobile:flex-col'>
           <Col gap='xs'>
