@@ -47,5 +47,7 @@
   "viewLink": "View link",
   "addMemberToRoleText": "propose to add",
   "removeMemberFromRoleText": "propose to remove",
-  "changeQuorumText": "propose to change quorum to"
+  "changeQuorumText": "propose to change quorum to",
+  "showMore": "More options",
+  "lessMore": "Less options"
 }

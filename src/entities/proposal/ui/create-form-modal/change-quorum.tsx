@@ -34,34 +34,5 @@ export const ChangeQuorum = ({fields, t, pending}: any) => (
         />
       </Label>
     </Row>
-    <Row className='mobile:flex-col'>
-      <Label
-        content={t('createForm.linkLabel')}
-        error={fields.link.errorText()}
-        className='basis-1/3'
-      >
-        <Input
-          name='link'
-          value={fields.link.value}
-          disabled={pending}
-          placeholder={t('createForm.linkPlaceholder')}
-          onChange={fields.link.onChange}
-        />
-      </Label>
-      <Label
-        required
-        content={t('createForm.tgasLabel')}
-        error={fields.tgas.errorText()}
-        className='basis-1/3'
-      >
-        <Input
-          name='tgas'
-          value={fields.tgas.value}
-          disabled={pending}
-          placeholder={t('createForm.tgasPlaceholder')}
-          onChange={fields.tgas.onChange}
-        />
-      </Label>
-    </Row>
   </>
 );
