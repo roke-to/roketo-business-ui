@@ -5,6 +5,7 @@ import {useTranslation} from 'react-i18next';
 
 import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
 import {getReadableProposalName} from '~/entities/proposal/lib/get-readable-proposal-name';
+import {isVotableProposal} from '~/entities/proposal/lib/is-votable-proposal';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
 import {$isMobileScreen} from '~/entities/screens';
@@ -31,6 +32,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
   const [readableDescription, link] = description.split(ASTRO_DATA_SEPARATOR);
 
   const text = getReadableProposalName(proposal, t);
+  const isVotable = isVotableProposal(proposal);
 
   return (
     <div className={clsx(styles.proposal, styles[status])}>
@@ -58,10 +60,11 @@ export const Proposal = ({proposal}: ProposalProps) => {
         )}
         <StatusRow
           status={status}
+          voteStatus={voteStatus}
           votes={votes}
           votePeriodEnd={votePeriodEnd}
           updatedAt={updatedAt}
-          voteStatus={voteStatus}
+          isVotable={isVotable}
         />
       </Col>
       <Votes
@@ -69,7 +72,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
         dao={dao}
         status={status}
         votes={votes}
-        voteStatus={voteStatus}
+        isVotable={isVotable}
         updatedAt={updatedAt}
         numberOfMembers={numberOfMembers}
         className={styles.votes}
