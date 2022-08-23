@@ -19,9 +19,9 @@ import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-propos
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
+import {Line} from '~/shared/ui/components/line';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Typography} from '~/shared/ui/components/typography';
-import {VerticalLine} from '~/shared/ui/components/vertical-line';
 
 export const Treasury = () => {
   const tokenBalances = useStore($tokenBalances);
@@ -83,7 +83,7 @@ export const Treasury = () => {
             })}
           </div>
         </div>
-        <VerticalLine />
+        <Line />
         <CreateProposalTransferButton />
       </Portlet>
       <ProposalsFilters
