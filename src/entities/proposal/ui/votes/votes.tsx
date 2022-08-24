@@ -75,7 +75,10 @@ export const Votes = ({
           </Typography>
         </Row>
         <Track value={positivePercent}>
-          <Thumb className={styles.quorumLine} />
+          <Thumb
+            className={styles.quorumLine}
+            style={{right: `${100 - quorum}%`, left: `${quorum}%`}}
+          />
         </Track>
       </Col>
 

@@ -3,6 +3,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+import {$currentDao} from '~/entities/dao';
 import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
 import {getReadableProposalName} from '~/entities/proposal/lib/get-readable-proposal-name';
 import {isVotableProposal} from '~/entities/proposal/lib/is-votable-proposal';
@@ -21,10 +22,8 @@ export interface ProposalProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Proposal = ({proposal}: ProposalProps) => {
-  const {description, votePeriodEnd, votes, status, dao, updatedAt, proposalId, voteStatus} =
-    proposal;
-
-  const {numberOfMembers} = dao;
+  const dao = useStore($currentDao);
+  const {description, votePeriodEnd, votes, status, updatedAt, proposalId, voteStatus} = proposal;
 
   const {t} = useTranslation('proposal');
   const isMobileScreen = useStore($isMobileScreen);
@@ -33,6 +32,10 @@ export const Proposal = ({proposal}: ProposalProps) => {
 
   const text = getReadableProposalName(proposal, t);
   const isVotable = isVotableProposal(proposal);
+
+  if (!dao) {
+    return null;
+  }
 
   return (
     <div className={clsx(styles.proposal, styles[status])}>
@@ -74,7 +77,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
         votes={votes}
         isVotable={isVotable}
         updatedAt={updatedAt}
-        numberOfMembers={numberOfMembers}
+        numberOfMembers={dao.numberOfMembers}
         className={styles.votes}
       />
     </div>
