@@ -18,6 +18,7 @@ import styles from './create-proposal-form.module.css';
 import {AddCouncil} from './type/add-council';
 import {IFormPartProps} from './type/base';
 import {ChangeQuorum} from './type/change-quorum';
+import {FunctionCall} from './type/function-call';
 import {RemoveCouncil} from './type/remove-council';
 import {Transfer} from './type/transfer';
 
@@ -29,7 +30,7 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   transfer: Transfer,
   transferNftMintbase: EmptyFormType,
   transferNftParas: EmptyFormType,
-  functionalCall: EmptyFormType,
+  functionCall: FunctionCall,
   createStream: EmptyFormType,
   changeQuorum: ChangeQuorum,
   addCouncil: AddCouncil,
@@ -62,6 +63,7 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
   const accountId = useStore($accountId);
 
   const handleSubmit: FormEventHandler = (e) => {
+    console.log('handleSubmit', e);
     e.preventDefault();
     submit();
   };

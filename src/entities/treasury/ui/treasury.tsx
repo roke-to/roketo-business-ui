@@ -15,7 +15,7 @@ import {
   changeTreasuryProposalSortOrder,
   loadTokenBalances,
 } from '~/entities/treasury/model/treasury';
-import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-proposal-transfer-button';
+import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
@@ -84,7 +84,7 @@ export const Treasury = () => {
           </div>
         </div>
         <Line />
-        <CreateProposalTransferButton />
+        <CreateTreasuryProposalButton />
       </Portlet>
       <ProposalsFilters
         setKindProposal={ProposalKindForTreasury}

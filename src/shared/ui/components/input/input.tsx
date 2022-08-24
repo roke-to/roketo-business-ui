@@ -18,6 +18,7 @@ export type InputProps = Merge<
     variant?: InputVariant;
     size?: InputSize;
     error?: boolean;
+    multiline?: boolean;
     onChange?: (value: string, event?: React.ChangeEvent<HTMLInputElement>) => void;
   }
 >;

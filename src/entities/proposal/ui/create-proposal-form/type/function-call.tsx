@@ -8,7 +8,7 @@ import {Row} from '~/shared/ui/components/row';
 
 import {IFormPartProps} from './base';
 
-export const Transfer = ({
+export const FunctionCall = ({
   fields,
   t,
   pending,
@@ -17,32 +17,48 @@ export const Transfer = ({
     <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
-        content={t('createForm.targetLabel')}
-        error={fields.targetAccountId.errorText()}
+        content={t('createForm.contractAddressLabel')}
+        error={fields.contractAddress.errorText()}
         className='basis-1/3'
       >
         <Input
-          name='target'
-          value={fields.targetAccountId.value}
+          name='contractAddress'
+          value={fields.contractAddress.value}
           disabled={pending}
-          placeholder={t('createForm.targetPlaceholder')}
-          onChange={fields.targetAccountId.onChange}
+          placeholder={t('createForm.contractAddressPlaceholder')}
+          onChange={fields.contractAddress.onChange}
         />
       </Label>
       <Label
         required
-        content={t('createForm.amountLabel')}
-        error={fields.amount.errorText()}
+        content={t('createForm.contractMethodLabel')}
+        error={fields.contractMethod.errorText()}
         className='basis-1/3'
       >
         <Input
-          name='amount'
-          value={fields.amount.value}
+          name='contractMethod'
+          value={fields.contractMethod.value}
           disabled={pending}
-          placeholder={t('createForm.amountPlaceholder')}
-          onChange={fields.amount.onChange}
+          placeholder={t('createForm.contractMethodPlaceholder')}
+          onChange={fields.contractMethod.onChange}
         />
       </Label>
+      <Label
+        required
+        content={t('createForm.depositLabel')}
+        error={fields.deposit.errorText()}
+        className='basis-1/3'
+      >
+        <Input
+          name='deposit'
+          value={fields.deposit.value}
+          disabled={pending}
+          placeholder={t('createForm.depositPlaceholder')}
+          onChange={fields.deposit.onChange}
+        />
+      </Label>
+    </Row>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createForm.tokenLabel')}
@@ -56,6 +72,17 @@ export const Transfer = ({
           placeholder={t('createForm.tokenPlaceholder')}
           onChange={fields.token.onChange}
           options={[{label: 'NEAR', value: 'near'}]}
+        />
+      </Label>
+    </Row>
+    <Row>
+      <Label content={t('createForm.jsonLabel')} error={fields.json.errorText()} className='w-full'>
+        <Input
+          name='json'
+          value={fields.json.value}
+          disabled={pending}
+          placeholder={t('createForm.jsonPlaceholder')}
+          onChange={fields.json.onChange}
         />
       </Label>
     </Row>

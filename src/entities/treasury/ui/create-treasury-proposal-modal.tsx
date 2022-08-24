@@ -4,13 +4,16 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {CreateProposalForm} from '~/entities/proposal/ui/create-proposal-form/create-proposal-form';
-import {createProposalFx, createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
+import {
+  createTreasuryProposalForm,
+  createTreasuryProposalFx,
+} from '~/entities/treasury/model/treasury';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 
-export const CreateProposalTransferFormModal = (modalProps: ModalProps) => {
+export const CreateTreasuryProposalModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');
   const {fields, submit, eachValid} = useForm(createTreasuryProposalForm);
-  const pending = useStore(createProposalFx.pending);
+  const pending = useStore(createTreasuryProposalFx.pending);
 
   const formOptions = React.useMemo(
     () => [
@@ -18,17 +21,18 @@ export const CreateProposalTransferFormModal = (modalProps: ModalProps) => {
         value: 'transfer',
         label: t(`createForm.transfer`),
       },
+      // TODO: uncomment when NFT will implemented
+      // {
+      //   value: 'transferNftMintbase',
+      //   label: t(`createForm.transferNftMintbase`),
+      // },
+      // {
+      //   value: 'transferNftParas',
+      //   label: t(`createForm.transferNftParas`),
+      // },
       {
-        value: 'transferNftMintbase',
-        label: t(`createForm.transferNftMintbase`),
-      },
-      {
-        value: 'transferNftParas',
-        label: t(`createForm.transferNftParas`),
-      },
-      {
-        value: 'functionalCall',
-        label: t(`createForm.functionalCall`),
+        value: 'functionCall',
+        label: t(`createForm.functionCall`),
       },
     ],
     [t],

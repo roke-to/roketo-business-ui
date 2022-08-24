@@ -8,7 +8,7 @@ import {
   $treasurySelectedProposalKind,
   $treasurySelectedProposalStatus,
 } from '~/entities/treasury/model/treasury';
-import {CreateProposalTransferButton} from '~/entities/treasury/ui/create-proposal-transfer-button';
+import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
 
 export const ProposalsList = () => {
   const treasuryProposals = useStore($treasuryProposals);
@@ -22,7 +22,7 @@ export const ProposalsList = () => {
     return (
       <EmptyProposalList
         isDefaultFiltersValue={isDefaultFiltersValue}
-        createProposalComponent={<CreateProposalTransferButton />}
+        createProposalComponent={<CreateTreasuryProposalButton />}
       />
     );
   }
