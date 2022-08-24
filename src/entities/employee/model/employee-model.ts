@@ -1,7 +1,7 @@
 import {createEffect, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
-import {validators} from '~/shared/lib/validators';
+import {validators} from '~/shared/lib/form/validators';
 import {Employee} from '~/shared/types/employee';
 
 export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;

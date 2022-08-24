@@ -12,9 +12,9 @@ import {
 import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
+import {validators} from '~/shared/lib/form/validators';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {history} from '~/shared/lib/router';
-import {validators} from '~/shared/lib/validators';
 
 import {$accountId, $near, initNearInstanceFx} from './wallet';
 

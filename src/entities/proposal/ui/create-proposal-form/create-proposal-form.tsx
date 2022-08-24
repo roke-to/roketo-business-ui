@@ -1,7 +1,6 @@
-import {AnyFormValues, ConnectedFields} from 'effector-forms';
+import {Form} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
-import {TFunction} from 'react-i18next';
 import {Link} from 'react-router-dom';
 
 import {$accountId} from '~/entities/wallet';
@@ -15,11 +14,12 @@ import {Row} from '~/shared/ui/components/row';
 import {ShowMore} from '~/shared/ui/components/show-more';
 import {Typography} from '~/shared/ui/components/typography';
 
-import {AddCouncil} from './add-council';
-import {ChangeQuorum} from './change-quorum';
 import styles from './create-proposal-form.module.css';
-import {RemoveCouncil} from './remove-council';
-import {Transfer} from './transfer';
+import {AddCouncil} from './type/add-council';
+import {IFormPartProps} from './type/base';
+import {ChangeQuorum} from './type/change-quorum';
+import {RemoveCouncil} from './type/remove-council';
+import {Transfer} from './type/transfer';
 
 const EmptyFormType = () => <Typography>Coming soon...</Typography>;
 
@@ -36,23 +36,29 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   removeCouncil: RemoveCouncil,
 };
 
-export interface CreateProposalFormProps<T extends AnyFormValues> {
-  fields: ConnectedFields<T>;
+type CommonFormValues = {
+  type: string;
+  link: string;
+  tgas: string;
+  amount: string;
+  token: string;
+};
+
+export interface CreateProposalFormProps<F extends Form<CommonFormValues>>
+  extends IFormPartProps<F> {
   submit(p: void): void;
   eachValid: boolean;
-  pending: boolean;
-  t: TFunction<'proposal'>;
-  formOptions: {value: string; label: string}[];
+  formOptions: Array<{value: string; label: string}>;
 }
 
-export function CreateProposalForm<T extends AnyFormValues>({
+export function CreateProposalForm<F extends Form<CommonFormValues>>({
   fields,
   submit,
   eachValid,
   pending,
   t,
   formOptions,
-}: CreateProposalFormProps<T>) {
+}: CreateProposalFormProps<F>) {
   const accountId = useStore($accountId);
 
   const handleSubmit: FormEventHandler = (e) => {
@@ -105,7 +111,6 @@ export function CreateProposalForm<T extends AnyFormValues>({
                 value={fields.link.value}
                 disabled={pending}
                 placeholder={t('createForm.linkPlaceholder')}
-                // @ts-expect-error
                 onChange={fields.link.onChange}
               />
             </Label>
@@ -120,7 +125,6 @@ export function CreateProposalForm<T extends AnyFormValues>({
                 value={fields.tgas.value}
                 disabled={pending}
                 placeholder={t('createForm.tgasPlaceholder')}
-                // @ts-expect-error
                 onChange={fields.tgas.onChange}
               />
             </Label>

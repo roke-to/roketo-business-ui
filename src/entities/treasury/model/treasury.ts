@@ -1,6 +1,6 @@
 import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
-import {createForm, FormValues} from 'effector-forms';
+import {createForm} from 'effector-forms';
 
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
@@ -8,9 +8,10 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
+import {ValuesOfForm} from '~/shared/lib/form';
+import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
-import {validators} from '~/shared/lib/validators';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatus} from '~/shared/types/proposal-status';
@@ -172,7 +173,7 @@ sample({
 
 //  ------------ proposals create  ------------
 
-export const createProposalForm = createForm({
+export const createTreasuryProposalForm = createForm({
   fields: {
     type: {
       init: 'transfer',
@@ -204,13 +205,11 @@ export const createProposalForm = createForm({
   validateOn: ['submit'],
 });
 
-type CreateProposalFormFields = typeof createProposalForm['fields'];
-
 export const createProposalFx = attach({
   source: {
     sputnikDaoContract: $sputnikDaoContract,
   },
-  async effect({sputnikDaoContract}, data: FormValues<CreateProposalFormFields>) {
+  async effect({sputnikDaoContract}, data: ValuesOfForm<typeof createTreasuryProposalForm>) {
     if (!sputnikDaoContract) {
       throw new Error('SputnikDaoContract is not initialized');
     }
@@ -235,6 +234,6 @@ export const createProposalFx = attach({
 });
 
 forward({
-  from: createProposalForm.formValidated,
+  from: createTreasuryProposalForm.formValidated,
   to: createProposalFx,
 });

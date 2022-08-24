@@ -1,11 +1,18 @@
 import React from 'react';
 
+import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 
-export const Transfer = ({fields, t, pending}: any) => (
+import {IFormPartProps} from './base';
+
+export const Transfer = ({
+  fields,
+  t,
+  pending,
+}: IFormPartProps<typeof createTreasuryProposalForm>) => (
   <>
     <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
