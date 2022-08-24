@@ -36,6 +36,7 @@
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
     "councilAddressPlaceholder": "Addcouncilname.near",
+    "requiredRemoveCouncilAddress": "You should choose one of councils for action",
     "councilListLabel": "Council list",
     "quorum": "Quorum"
   },

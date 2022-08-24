@@ -181,7 +181,7 @@ export const changePolicyProposalForm = createForm({
     },
     councilAddress: {
       init: '',
-      rules: [validators.requiredCouncilAddress],
+      rules: [validators.required],
     },
     councilList: {
       init: [] as string[],

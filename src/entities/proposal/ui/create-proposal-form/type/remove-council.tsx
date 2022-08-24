@@ -31,7 +31,9 @@ export const RemoveCouncil = ({
         <Label
           required
           content={t('createForm.councilListLabel')}
-          error={fields.councilAddress.errorText()}
+          error={fields.councilAddress.errorText({
+            required: t('createForm.requiredRemoveCouncilAddress'),
+          })}
           className={styles.councilListLabel}
         >
           <Col gap='sm'>
