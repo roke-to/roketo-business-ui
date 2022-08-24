@@ -5,12 +5,15 @@ export class LoginPage {
 
   readonly elements = {
     chooseDaoURL: '/dao',
+
     dashboardPageURL: '/dashboard',
     treasuryPageURL: '/treasury',
     loginURL: '/',
     buttonSelectDao: 'button:has-text("Select DAO")',
     buttonNearWallet: 'button:has-text("NEAR Wallet")',
     accountId: '[data-qa="account"]',
+    daoSwitcher: '[data-qa="daoDropdownMenu"]',
+    choosenDao: '//button[contains(@data-qa,"daoDropdownMenu")]//div',
   };
 
   constructor(page: Page) {
@@ -43,10 +46,7 @@ export class LoginPage {
     await this.page.locator('//a[contains(@href,"/dao/new")]').click();
   }
 
-  async fillNewDaoData() {
-    const randomDaoName = Math.random().toString(36).substring(10);
-    const randomDaoAddress = Math.random().toString(36).substring(10);
-
+  async fillNewDaoData(randomDaoName: string, randomDaoAddress: string) {
     await this.page.locator('//input[@name="daoName"]').fill(randomDaoName);
     // await expect(this.page.locator('input[name="daoAddress"]')).toHaveValue(${randomDaoName})
     await this.page.locator('//input[@name="daoAddress"]').fill(randomDaoAddress);
@@ -58,5 +58,12 @@ export class LoginPage {
 
   async clickAddCouncilsLater() {
     await this.page.locator('button', {hasText: 'Add later'}).click();
+  }
+
+  async checkDaoExists(randomDaoAddress: string) {
+    await this.page.waitForURL(this.elements.treasuryPageURL);
+    await expect(this.page.locator(this.elements.choosenDao)).toHaveText(
+      `${randomDaoAddress}.sputnikv2.testnet`,
+    );
   }
 }
