@@ -1,10 +1,12 @@
 import {test} from '../fixtures/near-authenticated';
 import {NearWallet} from '../page-objects/near-wallet';
 import {LoginPage} from '../pages/login.page';
+import {NewDaoPage} from '../pages/newDao.page';
 
 test('createDao', async ({page, accountId}) => {
   const loginPage = new LoginPage(page);
   const nearWallet = new NearWallet(page);
+  const newDaoPage = new NewDaoPage(page);
   const daoName = Math.random().toString(36).substring(10);
   const daoAddress = Math.random().toString(36).substring(10);
 
@@ -16,14 +18,14 @@ test('createDao', async ({page, accountId}) => {
   await nearWallet.submitButton();
   await loginPage.checkUserLoggedIn(accountId);
 
-  await loginPage.chooseCreateNewDao();
-  await loginPage.fillNewDaoData(daoName, daoAddress);
-  await loginPage.clickCreateDao();
+  await newDaoPage.chooseCreateNewDao();
+  await newDaoPage.fillNewDaoData(daoName, daoAddress);
+  await newDaoPage.clickCreateDao();
   // TODO add council to dao
-  await loginPage.clickAddCouncilsLater();
+  await newDaoPage.clickAddCouncilsLater();
 
   await nearWallet.checkIsRedirectedToNear();
   await nearWallet.submitButton();
 
-  await loginPage.checkDaoExists(daoAddress);
+  await newDaoPage.checkDaoExists(daoAddress);
 });
