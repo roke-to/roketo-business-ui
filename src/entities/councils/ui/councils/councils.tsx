@@ -6,12 +6,12 @@ import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {$currentDaoQuorumValue, loadDao, loadDaos} from '~/entities/dao';
 import {theme} from '~/shared/config/theme';
 import {Col} from '~/shared/ui/components/col';
+import {Line} from '~/shared/ui/components/line';
 import {PieChart} from '~/shared/ui/components/pie-chart/pie-chart';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Track} from '~/shared/ui/components/range';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
-import {VerticalLine} from '~/shared/ui/components/vertical-line';
 
 import {ChangePolicyButton} from './change-policy-button';
 import styles from './councils.module.css';
@@ -30,7 +30,7 @@ export const Councils = () => {
       <CouncilsList />
 
       <Row gap={3}>
-        <VerticalLine className={styles.verticalLine} />
+        <Line className={styles.verticalLine} />
         <PieChart
           parts={[
             {
