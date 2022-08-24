@@ -9,6 +9,15 @@ const required: Rule<string> = {
   }),
 };
 
+const requiredCouncilAddress: Rule<string> = {
+  name: 'requiredCouncilAddress',
+  validator: (value: string) => ({
+    isValid: Boolean(value),
+    errorText: t('validators:requiredCouncilAddress'),
+  }),
+};
+
 export const validators = {
   required,
+  requiredCouncilAddress,
 };

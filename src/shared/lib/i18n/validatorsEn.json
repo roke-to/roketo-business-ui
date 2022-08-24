@@ -1,3 +1,4 @@
 {
-  "required": "Required"
+  "required": "Required",
+  "requiredCouncilAddress": "You should choose one of councils for action"
 }

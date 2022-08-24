@@ -154,7 +154,7 @@ const initChangePolicyProposalFormFx = attach({
     return {
       type: 'changeQuorum',
       quorum,
-      councilAddress: '.near',
+      councilAddress: '',
       councilList: getCouncilListInitialState(currentDao.council, accountId),
       amount: ATTACHED_DEPOSIT,
       token: 'near',
@@ -180,8 +180,8 @@ export const changePolicyProposalForm = createForm({
       init: 0 as number,
     },
     councilAddress: {
-      init: '.near',
-      rules: [validators.required],
+      init: '',
+      rules: [validators.requiredCouncilAddress],
     },
     councilList: {
       init: [] as string[],
