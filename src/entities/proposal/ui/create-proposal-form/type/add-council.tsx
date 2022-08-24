@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useState} from 'react';
 
+import {changePolicyProposalForm} from '~/entities/governance/model';
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
@@ -11,9 +12,14 @@ import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
 
+import {IFormPartProps} from './base';
 import styles from './change-policy.module.css';
 
-export const AddCouncil = ({fields, t, pending}: any) => {
+export const AddCouncil = ({
+  fields,
+  t,
+  pending,
+}: IFormPartProps<typeof changePolicyProposalForm>) => {
   const [wasAdded, setWasAdded] = useState(false);
   const accountId = useStore($accountId);
 

@@ -1,6 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
+import {changePolicyProposalForm} from '~/entities/governance/model';
 import {CouncilControl} from '~/entities/proposal/ui/council-control';
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
@@ -9,9 +10,14 @@ import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
+import {IFormPartProps} from './base';
 import styles from './change-policy.module.css';
 
-export const RemoveCouncil = ({fields, t, pending}: any) => {
+export const RemoveCouncil = ({
+  fields,
+  t,
+  pending,
+}: IFormPartProps<typeof changePolicyProposalForm>) => {
   const accountId = useStore($accountId);
 
   const handleClick = (council: string) => {

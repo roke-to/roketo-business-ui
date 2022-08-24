@@ -3,13 +3,13 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {CreateProposalForm} from '~/entities/proposal/ui/create-form-modal/create-proposal-form';
-import {createProposalForm, createProposalFx} from '~/entities/treasury/model/treasury';
+import {CreateProposalForm} from '~/entities/proposal/ui/create-proposal-form/create-proposal-form';
+import {createProposalFx, createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 
 export const CreateProposalTransferFormModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');
-  const {fields, submit, eachValid} = useForm(createProposalForm);
+  const {fields, submit, eachValid} = useForm(createTreasuryProposalForm);
   const pending = useStore(createProposalFx.pending);
 
   const formOptions = React.useMemo(
