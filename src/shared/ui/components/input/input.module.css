@@ -1,6 +1,5 @@
 .input {
   position: relative;
-  display: block;
 
   display: flex;
   min-width: 80px;
@@ -9,7 +8,6 @@
   align-items: center;
   border: none;
 
-  border: none;
   background-color: transparent;
   border-radius: 8px;
 
@@ -21,6 +19,9 @@
   resize: vertical;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  appearance: none;
+  -webkit-appearance: none;
 
   &::placeholder {
     color: #a7b0be;

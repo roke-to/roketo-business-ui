@@ -42,9 +42,10 @@ export const $governanceSelectedProposalStatus = createStore<ProposalStatusFilte
 //  ------------ proposals filter by kind ------------
 export const changeGovernanceProposalSelectedKind = createEvent<ProposalKindFilterType>();
 
-export const $governanceSelectedProposalKind = createStore<ProposalKindFilterType>(
-  'ChangePolicy',
-).on(changeGovernanceProposalSelectedKind, (_, proposalKind) => proposalKind);
+export const $governanceSelectedProposalKind = createStore<ProposalKindFilterType>('Any').on(
+  changeGovernanceProposalSelectedKind,
+  (_, proposalKind) => proposalKind,
+);
 //  /------------ proposals filter by kind ------------
 
 //  ------------ proposals sort by createAt  ------------

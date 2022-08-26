@@ -9,7 +9,23 @@ import {Row} from '~/shared/ui/components/row';
 import {IFormPartProps} from './base';
 import styles from './change-policy.module.css';
 
-const adaptQuorumValue = (value: string) => Number(value.replace('%', ''));
+const adaptQuorumValue = (rawValue: string) => {
+  const value = Number(rawValue.replace('%', ''));
+
+  if (Number.isNaN(value)) {
+    return 0;
+  }
+
+  if (value < 0) {
+    return 0;
+  }
+
+  if (value > 100) {
+    return 100;
+  }
+
+  return value;
+};
 
 export const ChangeQuorum = ({
   fields,
