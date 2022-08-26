@@ -5,7 +5,7 @@ import {$isMobileScreen} from '~/entities/screens';
 import {ProposalKind} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import styles from './filter.module.css';
 import {ProposalDateSort} from './proposal-date-sort';
@@ -13,12 +13,12 @@ import {ProposalKindFilter} from './proposal-kind-filter';
 import {ProposalStatusFilter} from './proposal-status-filter';
 
 export interface ProposalsFiltersProps {
-  selectedProposalStatus: ProposalStatus;
+  selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
   proposalSortOrder: ProposalSortOrderType;
   isLoading: boolean;
   setKindProposal?: ProposalKindFilterType[];
-  handleChangeProposalStatus(status: ProposalStatus): void;
+  handleChangeProposalStatus(status: ProposalStatusFilterType): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
   handleChangeProposalSortOrder(sortType: ProposalSortOrderType): void;
 }

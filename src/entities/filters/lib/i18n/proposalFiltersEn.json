@@ -3,7 +3,9 @@
     "all": "All proposals",
     "active": "Active",
     "approved": "Approved",
-    "failed": "Failed"
+    "failed": "Failed",
+    "rejected": "Rejected",
+    "expired": "Expired"
   },
   "status": "Status",
   "type": "Type",

@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {Divider} from '~/shared/ui/components/divider';
 import {Loading} from '~/shared/ui/components/loading';
 import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
@@ -13,11 +13,11 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './proposals-date-sort-modal.module.css';
 
 export interface ProposalFilterModalProps {
-  selectedProposalStatus: ProposalStatus;
+  selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
   setKindProposal: ProposalKindFilterType[];
-  handleChangeProposalStatus(status: ProposalStatus): void;
+  handleChangeProposalStatus(status: ProposalStatusFilterType): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
 }
 
@@ -32,7 +32,7 @@ export const ProposalFilterModal = ({
   const {t} = useTranslation('proposalFilters');
 
   const onChangeProposalStatus = (status: string) => {
-    handleChangeProposalStatus(status as ProposalStatus);
+    handleChangeProposalStatus(status as ProposalStatusFilterType);
   };
   const onChangeProposalKind = (kind: string) => {
     handleChangeProposalKind?.(kind as ProposalKindFilterType);
