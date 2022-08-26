@@ -18,7 +18,7 @@ import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-pr
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
@@ -30,9 +30,9 @@ export const $governanceProposals = createStore<Proposal[]>([]);
 export const $governanceProposalLoading = createStore(true);
 //  ------------ proposals filter by status ------------
 
-export const changeGovernanceProposalSelectedStatus = createEvent<ProposalStatus>();
+export const changeGovernanceProposalSelectedStatus = createEvent<ProposalStatusFilterType>();
 
-export const $governanceSelectedProposalStatus = createStore<ProposalStatus>('all').on(
+export const $governanceSelectedProposalStatus = createStore<ProposalStatusFilterType>('all').on(
   changeGovernanceProposalSelectedStatus,
   (_, status) => status,
 );

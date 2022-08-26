@@ -14,7 +14,7 @@ import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-pr
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
@@ -31,9 +31,9 @@ export const $treasuryProposalLoading = createStore(true);
 
 //  ------------ proposals filter by status ------------
 
-export const changeTreasuryProposalSelectedStatus = createEvent<ProposalStatus>();
+export const changeTreasuryProposalSelectedStatus = createEvent<ProposalStatusFilterType>();
 
-export const $treasurySelectedProposalStatus = createStore<ProposalStatus>('all').on(
+export const $treasurySelectedProposalStatus = createStore<ProposalStatusFilterType>('all').on(
   changeTreasuryProposalSelectedStatus,
   (_, status) => status,
 );
@@ -43,7 +43,7 @@ export const $treasurySelectedProposalStatus = createStore<ProposalStatus>('all'
 //  ------------ proposals filter by kind ------------
 export const changeTreasuryProposalSelectedKind = createEvent<ProposalKindFilterType>();
 
-export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>('Transfer').on(
+export const $treasurySelectedProposalKind = createStore<ProposalKindFilterType>('Any').on(
   changeTreasuryProposalSelectedKind,
   (_, proposalKind) => proposalKind,
 );
