@@ -8,16 +8,18 @@ export const addStatusProposalQuery = (
 ): void => {
   switch (status) {
     case 'active':
-      search.$and?.push({
-        status: {
-          $eq: 'InProgress',
+      search.$and?.concat([
+        {
+          status: {
+            $eq: 'InProgress',
+          },
         },
-      });
-      search.$and?.push({
-        voteStatus: {
-          $eq: 'Active',
+        {
+          voteStatus: {
+            $eq: 'Active',
+          },
         },
-      });
+      ]);
       break;
     case 'approved':
       search.$and?.push({
