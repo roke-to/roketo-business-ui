@@ -42,6 +42,7 @@
 .header {
   display: flex;
   margin-bottom: theme('spacing.6');
+  margin-right: theme('spacing.8');
 }
 
 .close {
@@ -51,8 +52,10 @@
 }
 
 .contentClose {
+  position: absolute;
   display: block;
-  margin-left: auto;
+  left: auto;
+  right: theme('spacing.8');
 
   width: 24px;
   height: 24px;
