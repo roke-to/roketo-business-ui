@@ -57,7 +57,7 @@ export const Controls = ({
         text={voteYes}
         icon={Plus}
         variant='positive'
-        hasActiveVote={yesVote}
+        highlight={yesVote || !votesStatistic[accountId]}
         onClick={handleApproveVoteAction}
         disabled={disabled}
       />
@@ -65,7 +65,7 @@ export const Controls = ({
         text={voteNo}
         icon={Minus}
         variant='negative'
-        hasActiveVote={noVote}
+        highlight={noVote || !votesStatistic[accountId]}
         onClick={handleRejectVoteAction}
         disabled={disabled}
       />
