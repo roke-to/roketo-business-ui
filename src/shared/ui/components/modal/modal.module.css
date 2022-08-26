@@ -56,6 +56,7 @@
   display: block;
   left: auto;
   right: theme('spacing.8');
+  top: theme('spacing.4');
 
   width: 24px;
   height: 24px;
