@@ -11,7 +11,7 @@ import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './employee-card.module.css';
-import {Status} from './status';
+import {EmployeeStatus} from './employee-status';
 
 type Props = {
   employee: Employee;
@@ -58,7 +58,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
       <div>
         <Row align='center' gap='sm' className='mb-2'>
           <Typography>{employee.name}</Typography>
-          <Status status={employee.status} type={employee.type} />
+          <EmployeeStatus status={employee.status} type={employee.type} />
         </Row>
         <Col gap='xs'>{labelSubRenders}</Col>
       </div>

@@ -7,7 +7,7 @@ import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './employee-list-item.module.css';
-import {Status} from './status';
+import {EmployeeStatus} from './employee-status';
 
 interface Props {
   employee: Employee;
@@ -15,7 +15,7 @@ interface Props {
 
 export const EmployeeListItem: React.FC<Props> = ({employee}) => (
   <Row justify='between' align='center' className={clsx(styles.wrapper)}>
-    <Status status={employee.status} type={employee.type} />
+    <EmployeeStatus status={employee.status} type={employee.type} />
     <Typography className='w-1/5'>{employee.name}</Typography>
     <Typography className='w-1/5'>{employee.role}</Typography>
     <Typography className='w-1/5'>{employee.nearLogin}</Typography>
