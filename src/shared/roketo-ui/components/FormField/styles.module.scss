@@ -1,0 +1,52 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > :not(:last-child) {
+    margin-bottom: 6px;
+  }
+}
+
+.labelContainer {
+  display: flex;
+  width: 100%;
+}
+
+.label {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+
+  position: relative;
+}
+
+.divider {
+  flex: 1;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: theme('colors.roketo.bluishGrey');
+}
+
+.error {
+  color: theme('colors.roketo.danger');
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.required {
+  &:after {
+    content: '*';
+
+    position: absolute;
+    top: 0;
+    right: -10px;
+
+    color: theme('colors.roketo.danger');
+  }
+}

@@ -1,0 +1,162 @@
+.relative {
+  position: relative;
+}
+
+.controlButton {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  font-size: 16px;
+  width: 200px;
+  border-radius: 24px;
+  font-weight: 500;
+  justify-content: center;
+
+  > svg {
+    margin-right: 8px;
+  }
+}
+
+.statusPadded {
+  padding-right: 17px;
+}
+
+.button {
+  padding: 9px 20px;
+}
+
+.modalContent {
+  padding: 24px;
+  max-width: 480px;
+  width: 95vw;
+  border-radius: 24px;
+  background-color: white;
+  color: theme('colors.roketo.lightBlack');
+  outline: none;
+
+  & .controlButton {
+    width: -webkit-fill-available;
+    width: stretch;
+  }
+}
+
+.modalOverlay {
+  pointer-events: auto;
+  user-select: text;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  padding: 15vh 0 10vh;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+
+  &::before {
+    content: '╳';
+    color: white;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 48px;
+    right: 6vw;
+    top: 5vh;
+    display: block;
+    position: absolute;
+  }
+}
+
+.modalHeader {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.modalButtons {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+
+  > button:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.modalButton {
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 20px;
+}
+
+.modalSecondary {
+  color: theme('colors.blue.textDefault');
+  border: 2px solid theme('colors.blue.textDefault');
+}
+
+.modalWarning {
+  color: white;
+  background-color: theme('colors.roketo.orange');
+}
+
+.modalDanger {
+  color: white;
+  background-color: theme('colors.roketo.danger');
+}
+
+.controlsMenu {
+  padding: 14px;
+  min-width: unset;
+  position: absolute;
+  border-radius: 24px;
+  margin-top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropdownOpener {
+  height: 32px;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
+.notAllowed {
+  background-color: theme('colors.roketo.tertiary');
+  color: theme('colors.roketo.lightBlack');
+  cursor: not-allowed;
+}
+
+.start,
+.active {
+  background-color: #eefff4;
+  color: #1eba52;
+}
+
+.pause {
+  background: #fff7f0;
+  color: theme('colors.roketo.orange');
+}
+
+.stop {
+  background-color: theme('colors.roketo.lightRed');
+  color: theme('colors.roketo.danger');
+}
+
+.streamListControlsMenu {
+  padding: 14px;
+  min-width: unset;
+  position: absolute;
+  border-radius: 24px;
+  margin-top: 6px;
+  transform: translateX(-80%);
+}
+
+.menuDivider:first-child {
+  display: none;
+}

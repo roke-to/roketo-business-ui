@@ -1,0 +1,43 @@
+.root {
+  cursor: pointer;
+
+  transition: background-color 100ms;
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  padding: 10px 18px;
+  border-radius: 12px;
+}
+
+.primary {
+  background-color: theme('colors.roketo.lightBlue');
+  color: theme('colors.blue.textDefault');
+
+  padding: 8px 12px;
+  border-radius: 6px;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.action {
+  background-color: theme('colors.blue.textDefault');
+  border: 2px solid theme('colors.blue.textDefault');
+
+  color: theme('colors.white');
+}
+
+.simple {
+  background-color: theme('colors.white');
+  border: 2px solid theme('colors.blue.textDefault');
+
+  color: theme('colors.blue.textDefault');
+}
+
+.secondary {
+  background-color: theme('colors.roketo.tertiary');
+  color: theme('colors.roketo.lightBlack');
+}

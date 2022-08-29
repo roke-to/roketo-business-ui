@@ -1,0 +1,35 @@
+.root {
+  display: flex;
+  align-items: flex-start;
+
+  & > :not(:last-child) {
+    margin-right: 12px;
+  }
+}
+
+.description {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: theme('colors.roketo.lightBlack');
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+
+  border: 1px solid theme('colors.roketo.grey');
+  background-color: theme('colors.white');
+
+  outline: 1px solid transparent;
+}
+
+.error {
+  border-color: theme('colors.roketo.danger');
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

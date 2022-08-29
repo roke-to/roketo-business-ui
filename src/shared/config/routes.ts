@@ -29,6 +29,13 @@ export const ROUTES = typedRoutes({
   streams: {
     path: '/streams',
   },
+  stream: {
+    path: '/streams/:id',
+  },
 });
 
 export type RouteKey = keyof typeof ROUTES;
+
+export function getStreamLink(streamId: string | undefined) {
+  return `${window.location.origin}${ROUTES.streams.path}/${streamId}`;
+}

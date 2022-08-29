@@ -1,0 +1,16 @@
+.formfield {
+  position: relative;
+}
+
+.textLimitCounter {
+  position: absolute;
+
+  top: 100%;
+  right: 0;
+
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: theme('colors.roketo.bluishGrey');
+}
