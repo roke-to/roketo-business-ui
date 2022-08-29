@@ -52,7 +52,7 @@
     "history": "^4.9.0",
     "i18next": "^21.8.12",
     "lodash.isempty": "^4.4.0",
-    "near-api-js": "0.45.1",
+    "near-api-js": "^1.0.0",
     "numbro": "^2.3.5",
     "patronum": "^1.8.2",
     "pino-http": "^8.2.0",
