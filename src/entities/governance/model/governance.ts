@@ -1,5 +1,6 @@
 import {attach, createEvent, createStore, sample} from 'effector';
-import {createForm} from 'effector-forms';
+import {createForm, Rule} from 'effector-forms';
+import {t} from 'i18next';
 
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, Proposal} from '~/shared/api/astro';
@@ -171,6 +172,21 @@ sample({
   target: initChangePolicyProposalFormFx,
 });
 
+const requiredCouncilAddress: Rule<string> = {
+  name: 'requiredCouncilAddress',
+  validator: (value: string, form) => {
+    if (form.type !== 'changeQuorum') {
+      return {
+        isValid: Boolean(value),
+        errorText: t('validators:required'),
+      };
+    }
+    return {
+      isValid: true,
+    };
+  },
+};
+
 export const changePolicyProposalForm = createForm({
   fields: {
     type: {
@@ -182,7 +198,7 @@ export const changePolicyProposalForm = createForm({
     },
     councilAddress: {
       init: '',
-      rules: [validators.required],
+      rules: [requiredCouncilAddress],
     },
     councilList: {
       init: [] as string[],
