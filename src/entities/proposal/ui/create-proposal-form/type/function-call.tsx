@@ -76,8 +76,13 @@ export const FunctionCall = ({
       </Label>
     </Row>
     <Row>
-      <Label content={t('createForm.jsonLabel')} error={fields.json.errorText()} className='w-full'>
+      <Label
+        content={t('createForm.jsonLabel')}
+        error={fields.json.errorText()}
+        className='w-full font-mono'
+      >
         <Input
+          multiline
           name='json'
           value={fields.json.value}
           disabled={pending}
