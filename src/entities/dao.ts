@@ -43,11 +43,11 @@ export const createDaoForm = createForm({
   fields: {
     name: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     address: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     councilAddress: {
       init: '',

@@ -174,31 +174,31 @@ export const createTreasuryProposalForm = createForm({
   fields: {
     type: {
       init: 'transfer',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'transfer'})],
     },
     targetAccountId: {
       init: '',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'transfer'})],
     },
     amount: {
       init: '',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'transfer'})],
     },
     token: {
       init: 'near',
-      // rules: [validators.required],
+      rules: [validators.required()],
     },
     contractAddress: {
       init: '',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'functionCall'})],
     },
     contractMethod: {
       init: '',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'functionCall'})],
     },
     json: {
       init: '',
-      // rules: [validators.required],
+      rules: [validators.required({if: (form) => form.type === 'functionCall'})],
     },
     deposit: {
       init: '0',
@@ -211,7 +211,7 @@ export const createTreasuryProposalForm = createForm({
     },
     tgas: {
       init: '150',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
   },
   validateOn: ['submit'],
