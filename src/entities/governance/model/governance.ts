@@ -1,6 +1,5 @@
 import {attach, createEvent, createStore, sample} from 'effector';
-import {createForm, Rule} from 'effector-forms';
-import {t} from 'i18next';
+import {createForm} from 'effector-forms';
 
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, Proposal} from '~/shared/api/astro';
@@ -172,55 +171,40 @@ sample({
   target: initChangePolicyProposalFormFx,
 });
 
-const requiredCouncilAddress: Rule<string> = {
-  name: 'requiredCouncilAddress',
-  validator: (value: string, form) => {
-    if (form.type !== 'changeQuorum') {
-      return {
-        isValid: Boolean(value),
-        errorText: t('validators:required'),
-      };
-    }
-    return {
-      isValid: true,
-    };
-  },
-};
-
 export const changePolicyProposalForm = createForm({
   fields: {
     type: {
       init: 'changeQuorum',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     quorum: {
       init: 0 as number,
     },
     councilAddress: {
       init: '',
-      rules: [requiredCouncilAddress],
+      rules: [validators.required({if: (form) => form.type !== 'changeQuorum'})],
     },
     councilList: {
       init: [] as string[],
     },
     amount: {
       init: ATTACHED_DEPOSIT,
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     token: {
       init: 'near',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     description: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     link: {
       init: '',
     },
     tgas: {
       init: `${DEFAULT_FUNCTION_CALL_GAS}`,
-      rules: [validators.required],
+      rules: [validators.required()],
     },
   },
   validateOn: ['submit'],
