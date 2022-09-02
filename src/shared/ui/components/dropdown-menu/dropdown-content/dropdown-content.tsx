@@ -62,7 +62,7 @@ export const DropdownContent = React.forwardRef<HTMLUListElement, IDropdownConte
             onClick: () => handleChange(id),
           });
         }
-        return null;
+        return child;
       })}
     </ul>
   ),

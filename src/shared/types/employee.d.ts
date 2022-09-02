@@ -4,7 +4,7 @@ export type Employee = {
   type: 'Contractor' | 'Freelancer';
   name: string;
   role: string;
-  wallet: string;
+  nearLogin: string;
   email: string;
   salary: string;
   startDate: string;

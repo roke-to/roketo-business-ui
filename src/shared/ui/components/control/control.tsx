@@ -11,14 +11,14 @@ export const Control = ({
   text,
   icon: Icon,
   variant,
-  hasActiveVote,
+  highlight,
   onClick,
   disabled,
 }: {
   text: number | string;
   icon: React.ReactNode;
   variant: 'positive' | 'negative';
-  hasActiveVote: boolean;
+  highlight: boolean;
   onClick?(): void;
   disabled?: boolean;
 }) => {
@@ -38,7 +38,7 @@ export const Control = ({
       <Button
         as={isViewMode ? 'div' : 'button'}
         size='xs'
-        variant={hasActiveVote ? 'plain' : variant}
+        variant={highlight ? variant : 'plain'}
         /* @ts-expect-error */
         startIcon={<Icon className={iconClassName} />}
         gap={1}

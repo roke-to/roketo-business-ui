@@ -1,7 +1,7 @@
 import {createEffect, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
-import {validators} from '~/shared/lib/validators';
+import {validators} from '~/shared/lib/form/validators';
 import {Employee} from '~/shared/types/employee';
 
 export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
@@ -10,31 +10,31 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
     type: {
       init: 'Freelancer',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     name: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
-    wallet: {
+    nearLogin: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     role: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     email: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     salary: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     startDate: {
       init: '',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     period: {
       init: '2 per month',
@@ -44,7 +44,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
     },
     token: {
       init: 'near',
-      rules: [validators.required],
+      rules: [validators.required()],
     },
     comment: {
       init: '',

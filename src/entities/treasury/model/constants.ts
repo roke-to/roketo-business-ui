@@ -1,7 +1,14 @@
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
-export const ProposalStatuses: ProposalStatus[] = ['all', 'active', 'approved', 'failed'];
+export const ProposalStatuses: ProposalStatusFilterType[] = [
+  'all',
+  'active',
+  'approved',
+  'failed',
+  'rejected',
+  'expired',
+];
 export const ProposalKind: ProposalKindFilterType[] = [
   'Any',
   'ChangeConfig',
@@ -26,7 +33,6 @@ export const ProposalKindForTreasury: ProposalKindFilterType[] = [
 
 export const ProposalKindForGovernance: ProposalKindFilterType[] = [
   'Any',
-  'ChangeConfig',
   'ChangePolicy',
   'AddMemberToRole',
   'RemoveMemberFromRole',

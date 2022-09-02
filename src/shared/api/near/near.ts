@@ -21,7 +21,10 @@ export interface NearInstance {
 
 // TODO: It should be removed after wallet-selector allow acess to wallet.account
 // Near is used to get access to account object. Because wallet-selector doesn't expose it
-export const createNearInstance = async (walletId?: WalletId | null): Promise<NearInstance> => {
+export const createNearInstance = async (
+  keyStore: keyStores.BrowserLocalStorageKeyStore,
+  walletId?: WalletId | null,
+): Promise<NearInstance> => {
   let near: Near;
 
   switch (walletId) {
@@ -30,7 +33,7 @@ export const createNearInstance = async (walletId?: WalletId | null): Promise<Ne
       break;
     default:
       near = await connect({
-        keyStore: new keyStores.BrowserLocalStorageKeyStore(),
+        keyStore,
         walletUrl: env.WALLET_URL,
         ...getNetworkPreset(env.NEAR_NETWORK_ID),
         headers: {},

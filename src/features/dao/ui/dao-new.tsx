@@ -3,12 +3,10 @@ import {useForm} from 'effector-forms';
 import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Link} from 'react-router-dom';
 
 import {$isCouncilExists, $isNewDaoExists, createDaoForm, createDaoFx} from '~/entities/dao';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {$accountId} from '~/entities/wallet';
-import {ROUTES} from '~/shared/config/routes';
 import {useQuery} from '~/shared/hooks/use-query';
 import {Alert} from '~/shared/ui/components/alert';
 import {Button} from '~/shared/ui/components/button';
@@ -16,7 +14,6 @@ import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Input} from '~/shared/ui/components/input';
 import {Label} from '~/shared/ui/components/label';
-import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
@@ -80,7 +77,7 @@ export const DaoNew = () => {
   }
 
   return (
-    <Portlet gap='md' className='pb-12 mobile:pb-8'>
+    <>
       {formView === FormView.DAO_SETUP && (
         <>
           <Col gap='xs'>
@@ -130,12 +127,7 @@ export const DaoNew = () => {
                 >
                   {t('daoNew.submitDaoName')}
                 </Button>
-                <Button
-                  as={Link}
-                  // @ts-expect-error
-                  to={ROUTES.dao.path}
-                  variant='soft'
-                >
+                <Button variant='soft' onClick={() => createDaoForm.reset()}>
                   {t('daoNew.back')}
                 </Button>
               </Col>
@@ -222,6 +214,6 @@ export const DaoNew = () => {
           </form>
         </>
       )}
-    </Portlet>
+    </>
   );
 };

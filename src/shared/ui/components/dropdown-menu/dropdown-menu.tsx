@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Button, ButtonSize, ButtonVariant} from '~/shared/ui/components/button';
+import {IgnoreItems} from '~/shared/ui/components/dropdown/overlay';
 import {ReactComponent as ArrowDown} from '~/shared/ui/icons/arrow-down.svg';
 
 import {Dropdown} from '../dropdown/dropdown';
@@ -12,12 +13,16 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLButtonElemen
   label: string | null;
   size?: DropdownMenuRootElementSize;
   variant?: ButtonVariant;
+  getIgnoreItems?: () => IgnoreItems[];
   children: React.ReactElement;
   onClick?(): void;
 }
 
 export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProps>(
-  ({label, size = 'md', variant = 'plain', onClick, className, children, ...props}, ref) => (
+  (
+    {label, size = 'md', variant = 'plain', onClick, getIgnoreItems, className, children, ...props},
+    ref,
+  ) => (
     <Dropdown
       onClick={onClick}
       target={
@@ -28,6 +33,7 @@ export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProp
           </div>
         </Button>
       }
+      getIgnoreItems={getIgnoreItems}
     >
       {children}
     </Dropdown>

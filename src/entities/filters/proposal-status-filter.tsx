@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {$isMobileScreen} from '~/entities/screens';
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
-import {ProposalStatus} from '~/shared/types/proposal-status';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
@@ -17,11 +17,11 @@ import styles from './filter.module.css';
 import {ProposalFilterModal} from './modal/proposal-filter-modal';
 
 export interface ProposalStatusFilterProps {
-  selectedProposalStatus: ProposalStatus;
+  selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
   setKindProposal: ProposalKindFilterType[];
-  handleChangeProposalStatus(status: ProposalStatus): void;
+  handleChangeProposalStatus(status: ProposalStatusFilterType): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
 }
 

@@ -4,7 +4,8 @@
   "of": "of",
   "description": "Description",
   "quorum": "Quorum",
-  "approved": "Approved",
+  "Approved": "Approved",
+  "InProgress": "In progress",
   "timeExpired": "Time expired",
   "createForm": {
     "proposalTypeLabel": "Proposal type",
@@ -17,12 +18,20 @@
     "tokenPlaceholder": "",
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "You can type something to highlight the main terms",
+    "contractAddressLabel": "Contract address",
+    "contractAddressPlaceholder": "contract.near",
+    "contractMethodLabel": "Contract method",
+    "contractMethodPlaceholder": "some_method",
+    "depositLabel": "Deposit",
+    "depositPlaceholder": "0",
+    "jsonLabel": "JSON",
+    "jsonPlaceholder": "{}",
     "submit": "Propose",
     "cancel": "Cancel",
     "transfer": "Transfer",
     "transferNftMintbase": "Transfer NFT Mintbase",
     "transferNftParas": "Transfer NFT Paras",
-    "functionalCall": "Functional call",
+    "functionCall": "Functional call",
     "createStream": "Create a stream",
     "changePolicy": "Change policy",
     "changeQuorum": "Change quorum",
@@ -35,6 +44,7 @@
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
     "councilAddressPlaceholder": "Addcouncilname.near",
+    "requiredRemoveCouncilAddress": "You should choose one of councils for action",
     "councilListLabel": "Council list",
     "quorum": "Quorum"
   },
@@ -47,5 +57,7 @@
   "viewLink": "View link",
   "addMemberToRoleText": "propose to add",
   "removeMemberFromRoleText": "propose to remove",
-  "changeQuorumText": "propose to change quorum to"
+  "changeQuorumText": "propose to change quorum to",
+  "showMore": "More options",
+  "showLess": "Less options"
 }

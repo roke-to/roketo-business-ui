@@ -1,0 +1,23 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  right: 0.5rem;
+}
+
+.panel {
+  background-color: theme('colors.white');
+  box-shadow: theme('dropShadow.DEFAULT');
+  border-radius: theme('borderRadius.3xl');
+  z-index: 1;
+}

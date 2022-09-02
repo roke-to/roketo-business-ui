@@ -5,9 +5,9 @@ import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
 import {Label} from '~/shared/ui/components/label';
+import {Layout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
-import {PageLayout} from '~/widgets/page-layout';
 
 import * as employeesModel from '../model/employees-model';
 import {AddEmployeeModal} from './add-employee-modal';
@@ -18,7 +18,6 @@ import styles from './employees-page.module.css';
 type ViewType = 'card' | 'list';
 
 export const EmployeesPage = () => {
-  // TODO extract i18n for page from entity
   const {t} = useTranslation('employees');
   const addEmployeeModal = useModal();
 
@@ -33,7 +32,7 @@ export const EmployeesPage = () => {
     setViewType(e.target.value as ViewType);
 
   return (
-    <PageLayout>
+    <Layout>
       <Row>
         <Button onClick={addEmployeeModal.show}>{t('addEmployee.button')}</Button>
         <AddEmployeeModal
@@ -74,6 +73,6 @@ export const EmployeesPage = () => {
           return <EmployeeListItem employee={employee} key={employee.id} />;
         })}
       </div>
-    </PageLayout>
+    </Layout>
   );
 };

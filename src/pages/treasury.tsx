@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {Treasury} from '~/entities/treasury';
-import {PageLayout} from '~/widgets/page-layout';
+import {Layout} from '~/shared/ui/components/layout';
 
 export const TreasuryPage = () => (
-  <PageLayout>
+  <Layout>
     <Treasury />
-  </PageLayout>
+  </Layout>
 );

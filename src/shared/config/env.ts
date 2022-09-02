@@ -7,6 +7,7 @@ type EnvType = {
   ASTRO_API: string;
   SPUTNIK_FACTORY_DAO_CONTRACT_NAME: string;
   BASE_PUBLIC_PATH: string;
+  RB_API: string;
 };
 
 export const env: EnvType = {
@@ -18,4 +19,5 @@ export const env: EnvType = {
   ASTRO_API: import.meta.env.VITE_ASTRO_API,
   SPUTNIK_FACTORY_DAO_CONTRACT_NAME: import.meta.env.VITE_SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
   BASE_PUBLIC_PATH: import.meta.env.VITE_BASE_PUBLIC_PATH,
+  RB_API: import.meta.env.VITE_RB_API,
 };

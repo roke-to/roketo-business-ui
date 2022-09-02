@@ -29,34 +29,39 @@ const renderOverlay = (props: React.ComponentPropsWithRef<'div'>, children: Reac
   </div>
 );
 
-export const Modal = ({title, children, isOpen = true, onCloseModal, className}: ModalProps) => (
-  <ReactModal
-    isOpen={isOpen}
-    onRequestClose={onCloseModal}
-    overlayElement={renderOverlay}
-    className={clsx(styles.content, className)}
-    closeTimeoutMS={TRANSITION_DURATION_MS}
-    bodyOpenClassName={styles.bodyWithModal}
-    overlayClassName={{
-      base: styles.overlay,
-      afterOpen: styles.overlayAfterOpen,
-      beforeClose: styles.overlayBeforeClose,
-    }}
-  >
-    <header className={styles.header}>
+export const Modal = React.forwardRef<ReactModal, ModalProps>(
+  ({title, children, isOpen = true, onCloseModal, className}, ref) => (
+    <ReactModal
+      isOpen={isOpen}
+      onRequestClose={onCloseModal}
+      overlayElement={renderOverlay}
+      className={clsx(styles.content, className)}
+      closeTimeoutMS={TRANSITION_DURATION_MS}
+      bodyOpenClassName={styles.bodyWithModal}
+      overlayClassName={{
+        base: styles.overlay,
+        afterOpen: styles.overlayAfterOpen,
+        beforeClose: styles.overlayBeforeClose,
+      }}
+      ref={ref}
+    >
       {title && (
-        <Typography as='h2' font='heading' className={styles.title}>
-          {title}
-        </Typography>
+        <header className={styles.header}>
+          <Typography as='h2' font='heading' className={styles.title}>
+            {title}
+          </Typography>
+        </header>
       )}
       <Close className={styles.contentClose} onClick={onCloseModal} />
-    </header>
-    {children}
-  </ReactModal>
+      {children}
+    </ReactModal>
+  ),
 );
 
-export const useModal = (defaulOpen = false) => {
-  const [isOpen, setIsOpen] = React.useState(defaulOpen);
+Modal.displayName = 'Modal';
+
+export const useModal = (defaultOpen = false) => {
+  const [isOpen, setIsOpen] = React.useState(defaultOpen);
 
   const {show, hide} = React.useMemo(
     () => ({

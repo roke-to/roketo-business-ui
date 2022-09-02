@@ -1,0 +1,139 @@
+.root {
+  display: flex;
+  width: 100%;
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+
+  @apply flex-col;
+}
+
+@media screen(mobile) {
+  .root {
+    overflow-x: hidden;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+
+  min-width: 240px;
+  height: 100vh;
+
+  background: theme('colors.white');
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1);
+  transition: transform ease-in 0.15s, opacity 0.15s, visibility 0.15s;
+}
+
+.root.isSidebarOpen .sidebar {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sidebarContent {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: theme('gap.2xl');
+  padding-bottom: theme('gap.xl');
+}
+
+.logo {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding-left: theme('gap.md');
+
+  @apply text-heading font-heading text-orange;
+  /* TODO: remove 900 from index.html after normal logo will be */
+  font-weight: 900;
+
+  & svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.main {
+  display: flex;
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+  padding-bottom: theme('spacing.4');
+  z-index: 100;
+  min-height: 100vh;
+
+  box-shadow: theme('dropShadow.layout');
+  @apply flex-col gap-2xl;
+}
+
+@media screen(mobile) {
+  .main {
+    min-width: 320px;
+  }
+}
+
+@media screen(mobile) {
+  overflow-x: hidden;
+}
+
+.root.isSidebarOpen .main {
+  margin-left: 240px;
+}
+
+@media screen(mobile) {
+  .root.isSidebarOpen .main {
+    margin-left: 0;
+    transform: translateX(240px);
+    width: calc(100% - 240px);
+  }
+}
+
+.content {
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  /* same as at src/shared/ui/components/layout/layout.module.css .layout */
+  transition: transform ease-in 0.15s, margin-left 0.15s;
+  flex-direction: column;
+  gap: theme('gap.lg');
+  padding-left: theme('gap.xl');
+  padding-right: theme('gap.xl');
+}
+
+@media screen(tablet) {
+  .content {
+    gap: theme('gap.md');
+    padding-left: theme('gap.md');
+    padding-right: theme('gap.md');
+  }
+}
+
+.header {
+  @apply flex flex-row justify-between items-center mx-auto;
+  height: 56px;
+  background: linear-gradient(180deg, #fff 0%, #fff 90%, rgba(255, 255, 255, 0.5) 100%);
+  z-index: 100;
+  width: 100%;
+  max-width: 880px;
+
+  padding-left: theme('gap.xl');
+  padding-right: theme('gap.xl');
+}
+
+.burgerMenu {
+  display: none;
+}
+
+@media screen(tablet) {
+  .header {
+    padding-left: theme('gap.md');
+    padding-right: theme('gap.md');
+  }
+
+  .burgerMenu {
+    display: flex;
+  }
+}

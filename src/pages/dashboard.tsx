@@ -1,5 +1,5 @@
 import React from 'react';
 
-import {PageLayout} from '~/widgets/page-layout';
+import {Layout} from '~/shared/ui/components/layout';
 
-export const DashboardPage = () => <PageLayout>Page in progress</PageLayout>;
+export const DashboardPage = () => <Layout>Page in progress</Layout>;
