@@ -43,9 +43,11 @@ export const Proposal = ({proposal}: ProposalProps) => {
         <Typography as='span' weight='bold'>
           {text}
         </Typography>
-        <Typography as='span' isCapitalizeFirstLetter>
-          {t('description')}: {readableDescription}
-        </Typography>
+        {readableDescription && (
+          <Typography as='span' isCapitalizeFirstLetter>
+            {t('description')}: {readableDescription}
+          </Typography>
+        )}
         {link && (
           <Button
             as='a'
