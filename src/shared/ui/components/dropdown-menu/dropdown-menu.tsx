@@ -9,7 +9,7 @@ import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuRootElementSize = ButtonSize;
 
-export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DropdownMenuProps extends React.HTMLAttributes<HTMLButtonElement> {
   label: string | null;
   size?: DropdownMenuRootElementSize;
   variant?: ButtonVariant;
@@ -18,13 +18,15 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLDivElement> 
   onClick?(): void;
 }
 
-export const DropdownMenu = React.forwardRef<HTMLDivElement, DropdownMenuProps>(
-  ({label, size = 'md', variant = 'plain', onClick, getIgnoreItems, className, children}, ref) => (
+export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProps>(
+  (
+    {label, size = 'md', variant = 'plain', onClick, getIgnoreItems, className, children, ...props},
+    ref,
+  ) => (
     <Dropdown
-      ref={ref}
       onClick={onClick}
       target={
-        <Button variant={variant} size={size} className={className}>
+        <Button variant={variant} size={size} className={className} {...props} ref={ref}>
           <div className={styles.menuLabel}>
             {label}
             <ArrowDown className={styles.icon} />

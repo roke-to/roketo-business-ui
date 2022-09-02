@@ -37,6 +37,7 @@ export const DaoSwitcher = ({className}: {className?: string}) => {
   return (
     <DropdownMenu
       label={daoId}
+      data-qa='daoDropdownMenu'
       size='xxs'
       variant='clean'
       getIgnoreItems={getIgnoreItems}

@@ -6,7 +6,6 @@ export class LoginPage {
   readonly elements = {
     chooseDaoURL: '/dao',
     dashboardPageURL: '/dashboard',
-    treasuryPageURL: '/treasury',
     loginURL: '/',
     buttonSelectDao: 'button:has-text("Select DAO")',
     buttonNearWallet: 'button:has-text("NEAR Wallet")',

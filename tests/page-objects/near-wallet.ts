@@ -5,7 +5,7 @@ export class NearWallet {
 
   readonly elements = {
     commonSubmitButton: '.button-group button.blue',
-    urlRegExp: /https:\/\/wallet\.testnet\.near\.org\/login/,
+    urlRegExp: /https:\/\/wallet\.testnet\.near\.org\//,
   };
 
   constructor(page: Page) {
@@ -16,7 +16,7 @@ export class NearWallet {
     await this.page.locator(this.elements.commonSubmitButton).click();
   }
 
-  async connectToNear() {
+  async submitButton() {
     await this.page.locator(this.elements.commonSubmitButton).click();
   }
 
