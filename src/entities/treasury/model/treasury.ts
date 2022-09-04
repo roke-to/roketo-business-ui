@@ -185,7 +185,7 @@ export const createTreasuryProposalForm = createForm({
       rules: [validators.required({if: (form) => form.type === 'transfer'})],
     },
     token: {
-      init: 'near',
+      init: 'NEAR',
       rules: [validators.required()],
     },
     contractAddress: {

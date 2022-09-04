@@ -5,10 +5,16 @@ import {useTranslation} from 'react-i18next';
 
 import {changePolicyProposalForm, changePolicyProposalFx} from '~/entities/governance/model';
 import {CreateProposalForm} from '~/entities/proposal/ui/create-proposal-form';
+import {$tokenBalances} from '~/entities/treasury/model/treasury';
+import {$accountId} from '~/entities/wallet';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 
 export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');
+  const accountId = useStore($accountId);
+  const tokenBalances = useStore($tokenBalances);
+  const {fields, submit, eachValid} = useForm(changePolicyProposalForm);
+  const pending = useStore(changePolicyProposalFx.pending);
 
   const formOptions = React.useMemo(
     () => [
@@ -28,13 +34,12 @@ export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
     [t],
   );
 
-  const {fields, submit, eachValid} = useForm(changePolicyProposalForm);
-  const pending = useStore(changePolicyProposalFx.pending);
-
   return (
     <Modal {...modalProps}>
       <CreateProposalForm
         t={t}
+        accountId={accountId}
+        tokenBalances={tokenBalances}
         fields={fields}
         submit={submit}
         eachValid={eachValid}

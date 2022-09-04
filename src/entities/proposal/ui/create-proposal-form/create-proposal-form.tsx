@@ -1,9 +1,8 @@
 import {Form} from 'effector-forms';
-import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {Link} from 'react-router-dom';
 
-import {$accountId} from '~/entities/wallet';
+import {Token} from '~/shared/api/astro';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
@@ -16,7 +15,7 @@ import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './create-proposal-form.module.css';
 import {AddCouncil} from './type/add-council';
-import {IFormPartProps} from './type/base';
+import {IFormBaseProps, IFormPartProps} from './type/base';
 import {ChangeQuorum} from './type/change-quorum';
 import {FunctionCall} from './type/function-call';
 import {RemoveCouncil} from './type/remove-council';
@@ -26,7 +25,7 @@ const EmptyFormType = () => <Typography>Coming soon...</Typography>;
 
 const Nothing = () => null;
 
-const formTypes: Record<string, React.ComponentType<any>> = {
+const formTypes: Record<string, React.ComponentType<IFormPartProps>> = {
   transfer: Transfer,
   transferNftMintbase: EmptyFormType,
   transferNftParas: EmptyFormType,
@@ -37,8 +36,10 @@ const formTypes: Record<string, React.ComponentType<any>> = {
   removeCouncil: RemoveCouncil,
 };
 
+type FormTypeKey = keyof typeof formTypes;
+
 type CommonFormValues = {
-  type: string;
+  type: FormTypeKey;
   link: string;
   tgas: string;
   amount: string;
@@ -46,13 +47,17 @@ type CommonFormValues = {
 };
 
 export interface CreateProposalFormProps<F extends Form<CommonFormValues>>
-  extends IFormPartProps<F> {
+  extends IFormBaseProps<F> {
+  accountId: string;
   submit(p: void): void;
   eachValid: boolean;
   formOptions: Array<{value: string; label: string}>;
+  tokenBalances: Array<Token>;
 }
 
 export function CreateProposalForm<F extends Form<CommonFormValues>>({
+  accountId,
+  tokenBalances,
   fields,
   submit,
   eachValid,
@@ -60,15 +65,17 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
   t,
   formOptions,
 }: CreateProposalFormProps<F>) {
-  const accountId = useStore($accountId);
-
   const handleSubmit: FormEventHandler = (e) => {
-    console.log('handleSubmit', e);
     e.preventDefault();
     submit();
   };
 
   const FormPartComponent = formTypes[fields.type.value] || Nothing;
+
+  const tokenOptions = tokenBalances.map((token) => ({
+    value: token.symbol,
+    label: token.symbol,
+  }));
 
   return (
     <form onSubmit={handleSubmit}>
@@ -99,7 +106,7 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
           </Label>
         </Row>
 
-        <FormPartComponent fields={fields} t={t} pending={pending} />
+        <FormPartComponent fields={fields} t={t} pending={pending} tokenOptions={tokenOptions} />
 
         <ShowMore showMoreText={t('showMore')} showLessText={t('showLess')}>
           <Row className='mobile:flex-col'>

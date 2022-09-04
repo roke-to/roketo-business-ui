@@ -12,6 +12,7 @@ export const FunctionCall = ({
   fields,
   t,
   pending,
+  tokenOptions,
 }: IFormPartProps<typeof createTreasuryProposalForm>) => (
   <>
     <Row gap='md' className='justify-between mobile:flex-col'>
@@ -71,7 +72,7 @@ export const FunctionCall = ({
           disabled={pending}
           placeholder={t('createForm.tokenPlaceholder')}
           onChange={fields.token.onChange}
-          options={[{label: 'NEAR', value: 'near'}]}
+          options={tokenOptions}
         />
       </Label>
     </Row>

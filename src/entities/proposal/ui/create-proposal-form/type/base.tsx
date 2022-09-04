@@ -4,8 +4,12 @@ import {Get} from 'type-fest';
 
 import {ValuesOfForm} from '~/shared/lib/form';
 
-export interface IFormPartProps<F extends Form<any>> {
+export interface IFormBaseProps<F extends Form<any> = Form<any>> {
   fields: Get<Result<ValuesOfForm<F>>, 'fields'>;
   pending: boolean;
   t: TFunction<'proposal'>;
+}
+
+export interface IFormPartProps<F extends Form<any> = Form<any>> extends IFormBaseProps<F> {
+  tokenOptions: Array<{value: string; label: string}>;
 }
