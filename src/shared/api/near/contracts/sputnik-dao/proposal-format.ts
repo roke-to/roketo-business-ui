@@ -1,6 +1,6 @@
 import {ProposalVariant} from './proposal.types';
 
-export const DATA_SEPARATOR = '$$$$';
+const DATA_SEPARATOR = '$$$$';
 
 // if absent should be empty string
 interface DescriptionProperties {

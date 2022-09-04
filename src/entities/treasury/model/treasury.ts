@@ -252,6 +252,8 @@ export const createTreasuryProposalFx = attach({
 
     switch (data.type) {
       case 'transfer': {
+        // collect transactions for safe transfer
+        // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
         const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [];
         // reserve storage in contract of token
         if (token.id !== 'NEAR') {
