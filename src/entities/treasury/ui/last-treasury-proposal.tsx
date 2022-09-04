@@ -7,5 +7,9 @@ import {$treasuryProposals} from '~/entities/treasury/model/treasury';
 export const LastTreasuryProposal = () => {
   const [lastProposal] = useStore($treasuryProposals);
 
+  if (!lastProposal) {
+    return null;
+  }
+
   return <Proposal proposal={lastProposal} />;
 };
