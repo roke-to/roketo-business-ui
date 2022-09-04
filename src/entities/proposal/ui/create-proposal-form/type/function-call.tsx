@@ -72,7 +72,7 @@ export const FunctionCall = ({
           disabled={pending}
           placeholder={t('createForm.tokenPlaceholder')}
           onChange={fields.token.onChange}
-          options={tokenOptions}
+          options={tokenOptions.filter((token) => token.value === 'NEAR')}
         />
       </Label>
     </Row>
