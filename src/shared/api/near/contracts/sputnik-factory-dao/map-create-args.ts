@@ -4,7 +4,7 @@ import {
   COUNCIL,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
-import {jsonToBase64} from '~/shared/lib/json-to-base64';
+import {jsonToBase64} from '~/shared/lib/base64';
 
 export const mapCreateOptions = ({
   name,

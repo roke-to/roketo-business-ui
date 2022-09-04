@@ -1,4 +1,4 @@
-import type {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal';
+import type {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal.types';
 
 // @see https://github.com/near-daos/astro-ui/blob/6b64dccc00582e9070ee176c1fc16e33f40392b3/types/proposal.ts#L26
 const ProposalType = {

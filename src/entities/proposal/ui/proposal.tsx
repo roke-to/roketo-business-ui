@@ -4,12 +4,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$currentDao} from '~/entities/dao';
-import {ASTRO_DATA_SEPARATOR} from '~/entities/proposal/lib';
 import {getReadableProposalName} from '~/entities/proposal/lib/get-readable-proposal-name';
 import {isVotableProposal} from '~/entities/proposal/lib/is-votable-proposal';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
 import {$isMobileScreen} from '~/entities/screens';
+import {decodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
@@ -23,12 +23,20 @@ export interface ProposalProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Proposal = ({proposal}: ProposalProps) => {
   const dao = useStore($currentDao);
-  const {description, votePeriodEnd, votes, status, updatedAt, proposalId, voteStatus} = proposal;
+  const {
+    description: rawDescription,
+    votePeriodEnd,
+    votes,
+    status,
+    updatedAt,
+    proposalId,
+    voteStatus,
+  } = proposal;
 
   const {t} = useTranslation('proposal');
   const isMobileScreen = useStore($isMobileScreen);
 
-  const [readableDescription, link] = description.split(ASTRO_DATA_SEPARATOR);
+  const {description, link} = decodeDescription(rawDescription);
 
   const text = getReadableProposalName(proposal, t);
   const isVotable = isVotableProposal(proposal);
@@ -43,9 +51,11 @@ export const Proposal = ({proposal}: ProposalProps) => {
         <Typography as='span' weight='bold'>
           {text}
         </Typography>
-        <Typography as='span' isCapitalizeFirstLetter>
-          {t('description')}: {readableDescription}
-        </Typography>
+        {description && (
+          <Typography as='span' isCapitalizeFirstLetter>
+            {t('description')}: {description}
+          </Typography>
+        )}
         {link && (
           <Button
             as='a'

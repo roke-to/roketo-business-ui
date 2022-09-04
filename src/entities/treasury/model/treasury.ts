@@ -234,6 +234,7 @@ export const createTreasuryProposalFx = attach({
             token: 'wrap.testnet',
             amount: '1', // 1 NEAR
             targetAccountId: data.targetAccountId,
+            link: data.link,
           }),
         );
       case 'functionCall':
@@ -244,6 +245,7 @@ export const createTreasuryProposalFx = attach({
             contractAddress: data.contractAddress,
             contractMethod: data.contractMethod,
             json: data.json,
+            link: data.link,
           }),
         );
       default:

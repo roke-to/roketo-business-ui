@@ -1,5 +1,4 @@
 import {Dao} from '~/shared/api/astro';
-import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 import {mapChangeQuorumOptions} from './map-change-quorum-options';
 
@@ -236,8 +235,8 @@ describe('Change quorum options', () => {
       description: 'change 10$$$$$$$$ProposeUpdateGroup',
       link: '',
       tgas: '150',
-    } as unknown as ChangePolicyProposalFormValues;
-    expect(mapChangeQuorumOptions(currentDao, formData)).toEqual({
+    };
+    expect(mapChangeQuorumOptions(currentDao, formData)).toMatchObject({
       args: {
         proposal: {
           description: 'change 10$$$$$$$$ProposeUpdateGroup',
@@ -396,7 +395,7 @@ describe('Change quorum options', () => {
         length: 2,
         negative: 0,
         red: null,
-        words: [56090624, 447034],
+        words: [24035328, 4470348],
       },
       amount: '100000000000000000000000',
     });

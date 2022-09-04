@@ -4,16 +4,20 @@ import {Dao} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
   COUNCIL,
-  DATA_SEPARATOR,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
-import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 import {dataRoleToContractRole} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/data-role-to-contract-role';
 import {generateVotePolicyForEachProposalType} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/generate-vote-policy-for-each-proposal-type';
 
+import {encodeDescription} from '../proposal-format';
+
 export const mapChangeQuorumOptions = (
   currentDao: Dao,
-  formData: ChangePolicyProposalFormValues,
+  formData: {
+    description: string;
+    link: string;
+    quorum: number;
+  },
 ) => {
   const {
     policy: {
@@ -35,7 +39,10 @@ export const mapChangeQuorumOptions = (
   return {
     args: {
       proposal: {
-        description: `${formData.description}${DATA_SEPARATOR}${formData.link}`,
+        description: encodeDescription({
+          description: formData.description,
+          link: formData.link,
+        }),
         kind: {
           ChangePolicy: {
             policy: {
