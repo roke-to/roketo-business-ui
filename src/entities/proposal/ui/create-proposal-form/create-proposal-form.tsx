@@ -73,7 +73,7 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
   const FormPartComponent = formTypes[fields.type.value] || Nothing;
 
   const tokenOptions = tokenBalances.map((token) => ({
-    value: token.symbol,
+    value: token.id,
     label: token.symbol,
   }));
 

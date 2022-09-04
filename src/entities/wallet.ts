@@ -13,14 +13,16 @@ import {env} from '~/shared/config/env';
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
 
 // createWalletSelectorInstance is async and it could be null until intialized
-const $walletSelector = createStore<WalletSelector | null>(null);
+export const $walletSelector = createStore<WalletSelector | null>(null);
 export const $walletSelectorState = createStore<WalletSelectorState>({
   contract: null,
   modules: [],
   accounts: [],
   selectedWalletId: null,
 });
-export const $near = createStore<NearInstance | null>(null);
+export const $nearInstance = createStore<NearInstance | null>(null);
+export const $account = $nearInstance.map((nearInstance) => nearInstance?.account || null);
+export const $wallet = $nearInstance.map((nearInstance) => nearInstance?.wallet || null);
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();
@@ -112,7 +114,7 @@ sample({
 });
 sample({
   clock: initNearInstanceFx.doneData,
-  target: $near,
+  target: $nearInstance,
 });
 
 sample({

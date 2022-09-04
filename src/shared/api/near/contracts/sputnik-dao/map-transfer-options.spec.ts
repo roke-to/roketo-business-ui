@@ -6,6 +6,7 @@ describe('mapTransferOptions', () => {
       description: 'description',
       targetAccountId: 'target.near',
       token: 'near',
+      tokenDecimals: 24,
       amount: '123',
       link: 'link',
     });

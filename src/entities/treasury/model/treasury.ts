@@ -1,8 +1,14 @@
+import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {Get} from 'type-fest';
 
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
+import {
+  ATTACHED_DEPOSIT,
+  DEFAULT_FUNCTION_CALL_GAS_BN,
+} from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
 import {ValuesOfForm} from '~/shared/lib/form';
@@ -13,10 +19,11 @@ import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
+import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
 import {$currentDaoId, $sputnikDaoContract} from '../../dao';
-import {$accountId} from '../../wallet';
+import {$accountId, $walletSelector} from '../../wallet';
 
 // ------------ proposals ------------
 
@@ -219,24 +226,76 @@ export const createTreasuryProposalForm = createForm({
 
 export const createTreasuryProposalFx = attach({
   source: {
+    currentDaoId: $currentDaoId,
+    walletSelector: $walletSelector,
     sputnikDaoContract: $sputnikDaoContract,
+    tokenBalances: $tokenBalances,
   },
-  async effect({sputnikDaoContract}, data: ValuesOfForm<typeof createTreasuryProposalForm>) {
+  async effect(
+    {sputnikDaoContract, currentDaoId, walletSelector, tokenBalances},
+    data: ValuesOfForm<typeof createTreasuryProposalForm>,
+  ) {
     if (!sputnikDaoContract) {
       throw new Error('SputnikDaoContract is not initialized');
     }
+    if (!walletSelector) {
+      throw new Error('walletSelector is not initialized');
+    }
+
+    const token = tokenBalances.find((t) => t.id === data.token);
+
+    if (!token) {
+      throw new Error(`Token ${data.token} not found`);
+    }
+
+    const wallet = await walletSelector.wallet();
 
     switch (data.type) {
-      case 'transfer':
-        return sputnikDaoContract.add_proposal(
-          mapTransferOptions({
-            description: data.description,
-            token: 'wrap.testnet',
-            amount: '1', // 1 NEAR
-            targetAccountId: data.targetAccountId,
-            link: data.link,
-          }),
-        );
+      case 'transfer': {
+        const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [];
+        // reserve storage in contract of token
+        if (token.id !== 'NEAR') {
+          transactions.push({
+            receiverId: token.id,
+            actions: [
+              {
+                type: 'FunctionCall',
+                params: {
+                  methodName: 'storage_deposit',
+                  args: {
+                    account_id: data.targetAccountId,
+                    registration_only: true,
+                  },
+                  gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+                  // minimal deposit is 0.1 NEAR
+                  deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!,
+                },
+              },
+            ],
+          });
+        }
+
+        transactions.push({
+          receiverId: currentDaoId,
+          actions: [
+            {
+              type: 'FunctionCall',
+              params: mapTransferOptions({
+                description: data.description,
+                token: token.id === 'NEAR' ? '' : token.id,
+                amount: data.amount,
+                tokenDecimals: token.decimals,
+                targetAccountId: data.targetAccountId,
+                link: data.link,
+              }),
+            },
+          ],
+        });
+
+        return wallet.signAndSendTransactions({
+          transactions,
+        });
+      }
       case 'functionCall':
         return sputnikDaoContract.add_proposal(
           mapFunctionCallOptions({

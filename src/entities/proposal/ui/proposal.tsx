@@ -9,6 +9,7 @@ import {isVotableProposal} from '~/entities/proposal/lib/is-votable-proposal';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
 import {$isMobileScreen} from '~/entities/screens';
+import {$tokenBalances} from '~/entities/treasury/model/treasury';
 import {decodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
 import {Button} from '~/shared/ui/components/button';
@@ -35,10 +36,11 @@ export const Proposal = ({proposal}: ProposalProps) => {
 
   const {t} = useTranslation('proposal');
   const isMobileScreen = useStore($isMobileScreen);
+  const tokenBalances = useStore($tokenBalances);
 
   const {description, link} = decodeDescription(rawDescription);
 
-  const text = getReadableProposalName(proposal, t);
+  const text = getReadableProposalName(proposal, t, tokenBalances);
   const isVotable = isVotableProposal(proposal);
 
   if (!dao) {
