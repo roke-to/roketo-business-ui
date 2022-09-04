@@ -4,7 +4,7 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$currentDao} from '~/entities/dao';
-import {getReadableProposalName} from '~/entities/proposal/lib/get-readable-proposal-name';
+import {getReadableProposalTitle} from '~/entities/proposal/lib/get-readable-proposal-title';
 import {isVotableProposal} from '~/entities/proposal/lib/is-votable-proposal';
 import {StatusRow} from '~/entities/proposal/ui/status-row';
 import {Votes} from '~/entities/proposal/ui/votes';
@@ -40,7 +40,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
 
   const {description, link} = decodeDescription(rawDescription);
 
-  const text = getReadableProposalName(proposal, t, tokenBalances);
+  const title = getReadableProposalTitle(proposal, t, tokenBalances);
   const isVotable = isVotableProposal(proposal);
 
   if (!dao) {
@@ -51,7 +51,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
     <div className={clsx(styles.proposal, styles[status])}>
       <Col className={styles.info}>
         <Typography as='span' weight='bold'>
-          {text}
+          {title}
         </Typography>
         {description && (
           <Typography as='span' isCapitalizeFirstLetter>

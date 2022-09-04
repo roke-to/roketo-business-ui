@@ -71,7 +71,11 @@ export const Votes = ({
             </Typography>
           )}
           <Typography as='span' color={isPositiveStatusProposal ? 'positive' : 'negative'}>
-            {voteYes} {t('of')} {numberOfMembers} ({floorPositivePercent}%)
+            {t('progressStatus', {
+              yes: voteYes,
+              total: numberOfMembers,
+              percent: floorPositivePercent,
+            })}
           </Typography>
         </Row>
         <Track value={positivePercent}>
