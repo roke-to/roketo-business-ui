@@ -12,7 +12,7 @@ import {
 
 const serverConfig = {baseServer: new ServerConfiguration(env.WEB_API_URL, {})};
 
-export class TokenProvider {
+class TokenProvider {
   constructor(private readonly accountId: string, private readonly near: NearInstance) {}
 
   private initialized: boolean = false;

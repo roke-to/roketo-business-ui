@@ -16,21 +16,6 @@ export function areObjectsDifferent<T>(a: T, b: T) {
   return Object.keys(a).some((key) => a[key] !== b[key]);
 }
 
-export function getChangedFields<F extends Record<string, unknown>, T extends F>(
-  fields: F,
-  source: T,
-): Partial<F> {
-  const changedFields: Partial<F> = {...fields};
-
-  Object.keys(changedFields).forEach((key: keyof typeof changedFields) => {
-    if (changedFields[key] === source[key]) {
-      delete changedFields[key];
-    }
-  });
-
-  return changedFields;
-}
-
 /** comparison with sorting taken into account */
 export function areArraysDifferent<T>(a: T[], b: T[]) {
   if (a === b) return false;
