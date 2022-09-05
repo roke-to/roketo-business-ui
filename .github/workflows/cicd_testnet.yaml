@@ -61,6 +61,11 @@ jobs:
             echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet' >> $GITHUB_ENV
           fi >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
+          if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
+            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=mainnet' >> $GITHUB_ENV
+          else
+            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet' >> $GITHUB_ENV
+          fi
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
