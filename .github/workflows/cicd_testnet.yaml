@@ -34,7 +34,7 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF:-${GITHUB_REF#refs/heads/}})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME:-${GITHUB_REF#refs/heads/}})"
         id: extract_branch
       - name: Set docker tags
         env:
@@ -96,7 +96,7 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF:-${GITHUB_REF#refs/heads/}})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME:-${GITHUB_REF#refs/heads/}})"
         id: extract_branch
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
