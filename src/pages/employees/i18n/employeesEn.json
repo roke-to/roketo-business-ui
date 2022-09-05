@@ -65,5 +65,16 @@
       "submit": "Add",
       "abort": "Cancel"
     }
+  },
+  "filters": {
+    "status": {
+      "title": "Status",
+      "values": {
+        "all": "All employees",
+        "Active": "Active",
+        "Suspended": "Suspended",
+        "Fired": "Fired"
+      }
+    }
   }
 }

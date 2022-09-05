@@ -14,6 +14,7 @@ import {AddEmployeeModal} from './add-employee-modal';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
 import styles from './employees-page.module.css';
+import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
 
@@ -22,6 +23,7 @@ export const EmployeesPage = () => {
   const addEmployeeModal = useModal();
 
   const employees = useStore(employeesModel.$employees);
+  const selectedStatus = useStore(employeesModel.$statusFilter);
 
   useEffect(() => {
     employeesModel.pageLoaded();
@@ -41,8 +43,20 @@ export const EmployeesPage = () => {
           onCloseModal={addEmployeeModal.hide}
         />
       </Row>
+
       <Row justify='between'>
-        <div>filters</div>
+        <Row align='center' gap='sm'>
+          <Filter
+            title={t('filters.status.title')}
+            selected={selectedStatus}
+            options={employeesModel.statusFilterOptions}
+            dropdownLabel={t(`filters.status.values.${selectedStatus}`)}
+            // TODO useTranslation ругается на попытку обратиться по этому пути стрингой
+            // @ts-expect-error
+            generateDropdownItem={(status) => t(`filters.status.values.${status}`)}
+            handleChange={employeesModel.statusFilterChanged}
+          />
+        </Row>
         <Row>
           <Label content='Card view'>
             <input
