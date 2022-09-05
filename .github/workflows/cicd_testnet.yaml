@@ -110,7 +110,7 @@ jobs:
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
           source: "docker-compose.yaml"
-          target: "~/tmp/"${{ matrix.app }}"/"
+          target: "~/tmp/"
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
@@ -136,7 +136,7 @@ jobs:
               export APP_HOSTNAME=$APP_NAME.germes.roke.to
             fi
             mkdir -p ~/services/$APP_HOSTNAME/
-            mv ~/tmp/$APP/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
+            mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
