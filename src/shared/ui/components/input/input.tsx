@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import autosize from 'autosize';
 import clsx from 'clsx';
 import React from 'react';
@@ -68,7 +69,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }, []);
 
     return (
-      // @ts-expect-error
+      // @ts-expect-error problems with typing refs
       <Tag
         {...props}
         ref={handleRef}

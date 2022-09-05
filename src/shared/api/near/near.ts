@@ -13,6 +13,8 @@ import {TransactionMediator} from '~/shared/api/types';
 import {env} from '~/shared/config/env';
 
 import {
+  InjectedWallet,
+  ModuleState,
   Action as SelectorAction,
   setupWalletSelector,
   Wallet,
@@ -171,3 +173,7 @@ export const createWalletSelectorInstance = async () =>
       }),
     ],
   });
+
+export const isModuleTypeInjected = (
+  module: Pick<ModuleState, 'id' | 'type' | 'metadata'>,
+): module is InjectedWallet => module.type === 'injected';

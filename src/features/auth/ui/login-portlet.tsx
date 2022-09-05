@@ -3,8 +3,9 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
-import {resolveWalletIcon, WalletIconType} from '~/shared/api/near';
+import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
 import {Button} from '~/shared/ui/components/button';
+import {ButtonNativeLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Icon} from '~/shared/ui/components/icon';
 import {Portlet} from '~/shared/ui/components/portlet';
@@ -28,17 +29,15 @@ export const LoginPortlet = () => {
       </Col>
       <Col>
         {modules.map((module: ModuleState) => {
-          // @ts-expect-error
-          const {name, description, iconUrl, available, downloadUrl} = module.metadata;
+          const {name, description, iconUrl, available} = module.metadata;
           const selected = module.id === selectedWalletId;
           const WalletIcon = resolveWalletIcon(iconUrl as WalletIconType);
 
-          if (!available) {
+          if (!available && isModuleTypeInjected(module)) {
             return (
-              <Button
+              <ButtonNativeLink
                 as='a'
-                // @ts-expect-error
-                href={downloadUrl}
+                href={module.metadata.downloadUrl}
                 target='_blank'
                 key={module.id}
                 variant='soft'
@@ -46,7 +45,7 @@ export const LoginPortlet = () => {
                 title={description || ''}
               >
                 {name}
-              </Button>
+              </ButtonNativeLink>
             );
           }
 

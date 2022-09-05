@@ -1,12 +1,13 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 import {$daoIds, $daosLoading} from '~/entities/dao';
 import {$accountId, logoutClicked, setCurrentDaoId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
+import {ButtonLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {RadioSelect} from '~/shared/ui/components/radio-select';
@@ -85,10 +86,9 @@ export const DaoInit = () => {
         </Col>
       )}
       <Col>
-        {/* @ts-expect-error */}
-        <Button as={Link} to={ROUTES.daoNew.path} variant='outlined'>
+        <ButtonLink to={ROUTES.daoNew.path} variant='outlined'>
           {t('daoInit.createDao')}
-        </Button>
+        </ButtonLink>
         <Button variant='outlined' data-qa='logout' onClick={() => logoutClicked()}>
           {t('daoInit.logout')}
         </Button>

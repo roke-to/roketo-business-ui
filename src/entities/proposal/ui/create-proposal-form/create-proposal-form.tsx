@@ -1,10 +1,10 @@
 import {Form} from 'effector-forms';
 import React, {FormEventHandler} from 'react';
-import {Link} from 'react-router-dom';
 
 import {Token} from '~/shared/api/astro';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
+import {ButtonLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
@@ -153,14 +153,9 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
             </Row>
           </Col>
           <Row className='mobile:basis-auto'>
-            <Button
-              as={Link}
-              // @ts-expect-error
-              to={ROUTES.dao.path}
-              variant='outlined'
-            >
+            <ButtonLink to={ROUTES.dao.path} variant='outlined'>
               {t('createForm.cancel')}
-            </Button>
+            </ButtonLink>
             <Button disabled={!eachValid || pending} type='submit' variant='soft'>
               {t('createForm.submit')}
             </Button>

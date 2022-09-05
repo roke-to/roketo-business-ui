@@ -4,7 +4,7 @@ import React from 'react';
 import styles from './col.module.css';
 
 type ColAlign = 'left' | 'right' | 'center';
-type ColGap = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type ColGap = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
 
 export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   align?: ColAlign;
