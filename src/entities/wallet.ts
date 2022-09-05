@@ -33,7 +33,7 @@ import type {
 } from '@roketo/sdk/dist/types';
 
 // createWalletSelectorInstance is async and it could be null until intialized
-const $walletSelector = createStore<WalletSelector | null>(null);
+export const $walletSelector = createStore<WalletSelector | null>(null);
 export const $walletSelectorState = createStore<WalletSelectorState>({
   contract: null,
   modules: [],
@@ -41,6 +41,7 @@ export const $walletSelectorState = createStore<WalletSelectorState>({
   selectedWalletId: null,
 });
 export const $near = createStore<NearInstance | null>(null);
+export const $account = $near.map((nearInstance) => nearInstance?.account || null);
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();

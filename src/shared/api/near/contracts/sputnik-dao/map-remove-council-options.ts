@@ -4,18 +4,26 @@ import {Dao} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
   COUNCIL,
-  DATA_SEPARATOR,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
-import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
+
+import {encodeDescription} from './proposal-format';
 
 export const mapRemoveCouncilOptions = (
   currentDao: Dao,
-  formData: ChangePolicyProposalFormValues,
+  formData: {
+    description: string;
+    link: string;
+    councilAddress: string;
+  },
 ) => ({
   args: {
     proposal: {
-      description: `${formData.description}${DATA_SEPARATOR}${formData.link}`,
+      description: encodeDescription({
+        description: formData.description,
+        link: formData.link,
+        variant: 'ProposeRemoveMember',
+      }),
       kind: {
         RemoveMemberFromRole: {
           member_id: formData.councilAddress,

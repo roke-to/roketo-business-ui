@@ -16,7 +16,7 @@ import {validators} from '~/shared/lib/form/validators';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {history} from '~/shared/lib/router';
 
-import {$accountId, $currentDaoId, $near, initNearInstanceFx, setCurrentDaoId} from './wallet';
+import {$account, $accountId, $currentDaoId, initNearInstanceFx, setCurrentDaoId} from './wallet';
 
 // ------------ sputnikFactoryDaoContract ------------
 
@@ -302,10 +302,10 @@ export const $sputnikDaoContract = createStore<SputnikDaoContract | null>(null);
 const initSputnikDaoContractFx = attach({
   source: {
     currentDaoId: $currentDaoId,
-    near: $near,
+    account: $account,
   },
-  effect({currentDaoId, near}) {
-    return currentDaoId && near ? new SputnikDaoContract(near.account, currentDaoId) : null;
+  effect({currentDaoId, account}) {
+    return currentDaoId && account ? new SputnikDaoContract(account, currentDaoId) : null;
   },
 });
 

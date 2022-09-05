@@ -1,7 +1,3 @@
-import Decimal from 'decimal.js';
-
-import {DATA_SEPARATOR} from '~/shared/api/near/contracts/contract.constants';
-
 export type ProposalAction =
   | 'Finalize'
   | 'AddProposal'
@@ -176,7 +172,7 @@ export type Token = {
 
 export type Tokens = Record<string, Token>;
 
-enum ProposalVariant {
+export enum ProposalVariant {
   ProposeTransfer = 'ProposeTransfer',
   ProposeCreateBounty = 'ProposeCreateBounty',
   ProposeDoneBounty = 'ProposeDoneBounty',
@@ -344,32 +340,4 @@ export interface ContractRole {
   kind: 'Everyone' | {Group: string[] | null} | {Member: string};
   permissions: string[];
   vote_policy: Record<string, VotePolicyRequest> | {};
-}
-
-// https://github.com/near-daos/astro-ui/blob/0bb743e91e2b2d32eb73eeb6d442313ddc5e836e/astro_2.0/features/CreateProposal/helpers/proposalObjectHelpers.ts
-// ts-unused-exports:disable-next-line
-export async function getTransferProposal(
-  dao: DAO,
-  data: CreateTransferInput,
-  tokens: Tokens,
-): Promise<CreateProposalParams> {
-  const {token: dToken, details, externalUrl, target, amount} = data;
-
-  const token = Object.values(tokens).find((item) => item.symbol === dToken);
-
-  if (!token) {
-    throw new Error('No tokens data found');
-  }
-
-  return {
-    daoId: dao.id,
-    description: `${details}${DATA_SEPARATOR}${externalUrl}`,
-    kind: 'Transfer',
-    bond: dao.policy.proposalBond,
-    data: {
-      token_id: token?.tokenId,
-      receiver_id: target.trim(),
-      amount: new Decimal(amount).mul(new Decimal(10).pow(token.decimals)).toString(),
-    },
-  };
 }

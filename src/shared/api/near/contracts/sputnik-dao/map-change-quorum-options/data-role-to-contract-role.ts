@@ -6,7 +6,7 @@ import type {
   DaoRole,
   DefaultVotePolicy,
   VotePolicyRequest,
-} from '~/shared/api/near/contracts/sputnik-dao/proposal';
+} from '~/shared/api/near/contracts/sputnik-dao/proposal.types';
 
 function formatVotePolicy(value: DefaultVotePolicy) {
   return {

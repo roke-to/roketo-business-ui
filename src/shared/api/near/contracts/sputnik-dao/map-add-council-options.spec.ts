@@ -1,5 +1,4 @@
 import {Dao} from '~/shared/api/astro';
-import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 import {mapAddCouncilOptions} from './map-add-council-options';
 
@@ -203,11 +202,11 @@ describe('Add council options', () => {
       description: 'add barsik.testnet',
       link: '',
       tgas: '150',
-    } as unknown as ChangePolicyProposalFormValues;
-    expect(mapAddCouncilOptions(currentDao, formData)).toEqual({
+    };
+    expect(mapAddCouncilOptions(currentDao, formData)).toMatchObject({
       args: {
         proposal: {
-          description: 'add barsik.testnet',
+          description: 'add barsik.testnet$$$$ProposeAddMember',
           kind: {
             AddMemberToRole: {
               member_id: 'barsik.testnet',
@@ -220,7 +219,7 @@ describe('Add council options', () => {
         length: 2,
         negative: 0,
         red: null,
-        words: [56090624, 447034],
+        words: [24035328, 4470348],
       },
       amount: '100000000000000000000000',
     });

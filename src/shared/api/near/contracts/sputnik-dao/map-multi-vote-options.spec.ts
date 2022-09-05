@@ -1,4 +1,4 @@
-import {VoteAction} from '~/shared/api/near';
+import {VoteAction} from '~/shared/api/near/contracts/sputnik-dao/contract';
 
 import {mapMultiVoteOptions} from './map-multi-vote-options';
 
@@ -7,7 +7,7 @@ describe('Multi vote ', () => {
     const proposalId = 17;
     const action = VoteAction.VoteReject;
 
-    expect(mapMultiVoteOptions(proposalId, action)).toEqual({
+    expect(mapMultiVoteOptions(proposalId, action)).toMatchObject({
       args: {
         id: proposalId,
         action,
@@ -16,7 +16,7 @@ describe('Multi vote ', () => {
         length: 2,
         negative: 0,
         red: null,
-        words: [56090624, 447034],
+        words: [24035328, 4470348],
       },
     });
   });

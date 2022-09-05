@@ -1,5 +1,4 @@
 import {Dao} from '~/shared/api/astro';
-import type {ChangePolicyProposalFormValues} from '~/shared/api/near/contracts/incoming-options.types';
 
 import {mapRemoveCouncilOptions} from './map-remove-council-options';
 
@@ -203,11 +202,11 @@ describe('Remove council options', () => {
       description: 'remove extg2.testnet',
       link: '',
       tgas: '150',
-    } as unknown as ChangePolicyProposalFormValues;
-    expect(mapRemoveCouncilOptions(currentDao, formData)).toEqual({
+    };
+    expect(mapRemoveCouncilOptions(currentDao, formData)).toMatchObject({
       args: {
         proposal: {
-          description: 'remove extg2.testnet',
+          description: 'remove extg2.testnet$$$$ProposeRemoveMember',
           kind: {
             RemoveMemberFromRole: {
               member_id: 'extg2.testnet',
@@ -220,7 +219,7 @@ describe('Remove council options', () => {
         length: 2,
         negative: 0,
         red: null,
-        words: [56090624, 447034],
+        words: [24035328, 4470348],
       },
       amount: '100000000000000000000000',
     });

@@ -1,12 +1,18 @@
 {
-  "from": "from",
-  "to": "to",
-  "of": "of",
   "description": "Description",
   "quorum": "Quorum",
   "Approved": "Approved",
   "InProgress": "In progress",
   "timeExpired": "Time expired",
+  "progressStatus": "{{yes}} of {{total}} ({{percent}}%)",
+  "readableTitle": {
+    "Transfer": "{{proposer}} proposes to transfer {{value}} to {{receiver}}",
+    "FunctionCall": "{{proposer}} proposes to call {{methods}} on contract {{contract}}",
+    "AddMemberToRole": "{{proposer}} proposes to add {{member}} to {{role}}",
+    "RemoveMemberFromRole": "{{proposer}} proposes to remove {{member}}",
+    "ChangePolicy": "{{proposer}} proposes to change quorum to {{quorum}}",
+    "Unknown": "Unknown proposal type"
+  },
   "createForm": {
     "proposalTypeLabel": "Proposal type",
     "proposerLabel": "Proposer",
@@ -55,9 +61,6 @@
   "emptySearchProposalList": "No proposals with current filters",
   "createProposal": "Create proposal",
   "viewLink": "View link",
-  "addMemberToRoleText": "propose to add",
-  "removeMemberFromRoleText": "propose to remove",
-  "changeQuorumText": "propose to change quorum to",
   "showMore": "More options",
   "showLess": "Less options"
 }

@@ -6,13 +6,15 @@ describe('mapTransferOptions', () => {
       description: 'description',
       targetAccountId: 'target.near',
       token: 'near',
+      tokenDecimals: 24,
       amount: '123',
+      link: 'link',
     });
 
     expect(options).toMatchObject({
       args: {
         proposal: {
-          description: 'description',
+          description: 'description$$$$link$$$$ProposeTransfer',
           kind: {
             Transfer: {
               token_id: 'near',

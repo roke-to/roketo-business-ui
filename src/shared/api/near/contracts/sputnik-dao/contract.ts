@@ -1,7 +1,7 @@
 import {Account, Contract} from 'near-api-js';
 
 import {ContractChangeFunction} from '../contract.types';
-import {CreateProposalKind} from './proposal';
+import {CreateProposalKind} from './proposal.types';
 
 export type ProposalInput = {
   // Description of this proposal.
