@@ -13,6 +13,7 @@ import {
   $priceOracle,
   $roketoWallet,
   $tokens,
+  $walletSelector,
 } from '~/entities/wallet';
 import {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {
@@ -39,7 +40,6 @@ import {
   calculateCliffEndTimestamp,
   calculateCliffPercent,
   calculateTimeLeft,
-  createStream,
   formatTimeLeft,
   getStreamDirection,
   getStreamProgress,
@@ -53,6 +53,7 @@ import {sorts, statusOptions} from './constants';
 import {
   collectTotalFinancialAmountInfo,
   countTotalUSDWithdrawal,
+  createStreamProposal,
   getDirectionFilter,
   getStatusFilter,
   getTextFilter,
@@ -102,20 +103,25 @@ export const changeStreamSort = createEvent<StreamSort>();
 export const $streamSort = createStore<StreamSort>(sorts.mostRecent);
 
 export const handleCreateStreamFx = createProtectedEffect({
-  source: combine($roketoWallet, $near, $currentDaoId, (roketo, near, currentDaoId) =>
-    !!roketo && !!near && !!currentDaoId ? {roketo, near, currentDaoId} : null,
+  source: combine(
+    $roketoWallet,
+    $near,
+    $currentDaoId,
+    $walletSelector,
+    (roketo, near, currentDaoId, walletSelector) =>
+      !!roketo && !!near && !!currentDaoId && !!walletSelector
+        ? {roketo, near, currentDaoId, walletSelector}
+        : null,
   ),
-  async fn(
-    {roketo: {tokens, transactionMediator}, near: {login}, currentDaoId},
-    values: FormValues,
-  ) {
+  async fn({roketo: {tokens}, near: {login}, currentDaoId, walletSelector}, values: FormValues) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const {receiver, delayed, comment, deposit, duration, token, isLocked, cliffDateTime, color} =
       values;
     const {roketoMeta, tokenContract, meta} = tokens[token];
     const tokensPerSec = getTokensPerSecondCount(meta, deposit, duration);
+
     const creator = () =>
-      createStream({
+      createStreamProposal({
         deposit: toYocto(meta.decimals, deposit),
         comment,
         receiverId: receiver,
@@ -129,12 +135,13 @@ export const handleCreateStreamFx = createProtectedEffect({
           ? Math.floor((cliffDateTime.getTime() - Date.now()) / 1000)
           : undefined,
         color: color === 'none' ? null : colorDescriptions[color].color,
-        transactionMediator,
         accountId: currentDaoId,
         tokenContract,
         roketoContractName: env.ROKETO_CONTRACT_NAME,
         financeContractName: env.ROKETO_FINANCE_CONTRACT_NAME,
         wNearId: env.WNEAR_ID,
+        walletSelector,
+        currentDaoId,
       });
     try {
       await creator();
