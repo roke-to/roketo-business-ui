@@ -28,11 +28,12 @@ export interface Dao {
 
 export interface RelationDaoToEmployee {
   id: number;
-  type: object;
-  status: string;
+  type: 'Contractor' | 'Freelancer';
+  status: 'Active' | 'Suspended' | 'Fired';
   position: string;
   comment: string;
   salary: number;
+  token: string;
   startDate: string;
   payPeriod: number;
   deadline: string;
@@ -44,13 +45,28 @@ export interface RelationDaoToEmployee {
   dao: Dao;
 }
 
+export interface EmployeeResponseDto {
+  id: number;
+  status: 'Active' | 'Suspended' | 'Fired';
+  type: 'Contractor' | 'Freelancer';
+  name: string;
+  position: string;
+  nearLogin: string;
+  email: string;
+  salary: number;
+  startDate: string;
+  payPeriod: number;
+  token: string;
+  comment?: string;
+}
+
 export interface CreateEmployeeDto {
   daoId: string;
   name: string;
   nearLogin: string;
   email: string;
-  type: object;
-  status?: string;
+  type: 'Contractor' | 'Freelancer';
+  status?: 'Active' | 'Suspended' | 'Fired';
   position?: string;
   comment?: string;
   amount: number;
@@ -65,8 +81,8 @@ export interface UpdateEmployeeDto {
   name: string;
   nearLogin: string;
   email: string;
-  type: object;
-  status?: string;
+  type: 'Contractor' | 'Freelancer';
+  status?: 'Active' | 'Suspended' | 'Fired';
   position?: string;
   comment?: string;
   amount: number;
@@ -369,12 +385,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerFindAllEmployees
      * @request GET:/dao/{daoId}/employees
-     * @response `200` `void`
+     * @response `200` `(EmployeeResponseDto)[]` List of Employee
      */
-    daoControllerFindAllEmployees: (daoId: string, params: RequestParams = {}) =>
-      this.request<Employee[], void>({
+    daoControllerFindAllEmployees: (
+      daoId: string,
+      query?: {status?: 'Active' | 'Suspended' | 'Fired'; type?: 'Contractor' | 'Freelancer'},
+      params: RequestParams = {},
+    ) =>
+      this.request<EmployeeResponseDto[], any>({
         path: `/dao/${daoId}/employees`,
         method: 'GET',
+        query: query,
+        format: 'json',
         ...params,
       }),
 
@@ -383,18 +405,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerCreateEmployee
      * @request POST:/dao/{daoId}/employees
-     * @response `201` `void`
+     * @response `201` `(RelationDaoToEmployee)[]`
      */
     daoControllerCreateEmployee: (
       daoId: string,
       data: CreateEmployeeDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<RelationDaoToEmployee[], any>({
         path: `/dao/${daoId}/employees`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
@@ -424,16 +447,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerFindOneEmployeeByDao
      * @request GET:/dao/{daoId}/employees/{employeeId}
-     * @response `200` `void`
+     * @response `200` `(EmployeeResponseDto)[]`
      */
     daoControllerFindOneEmployeeByDao: (
       daoId: string,
       employeeId: string,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<EmployeeResponseDto[], any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'GET',
+        format: 'json',
         ...params,
       }),
 

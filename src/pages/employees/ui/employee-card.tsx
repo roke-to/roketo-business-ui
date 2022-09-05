@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import type {Employee} from '~/shared/types/employee';
+import type {EmployeeResponseDto} from '~/shared/api/rb';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Label} from '~/shared/ui/components/label';
@@ -14,7 +14,7 @@ import styles from './employee-card.module.css';
 import {EmployeeStatus} from './employee-status';
 
 type Props = {
-  employee: Employee;
+  employee: EmployeeResponseDto;
 };
 
 export const EmployeeCard: React.FC<Props> = ({employee}) => {
@@ -24,7 +24,7 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
     const labeledFields = [
       {
         content: t('card.labels.role'),
-        children: employee.role,
+        children: employee.position,
       },
       {
         content: t('card.labels.wallet'),
