@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+
+  gap: 20px;
+}
+
+.durationInput {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.input {
+  margin-bottom: 6px;
+}
+
+.label {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: theme('colors.roketo.bluishGrey');
+}
+
+/* Extra small - xs */
+@media (max-width: 767px) {
+  .wrapper {
+    gap: 5px;
+  }
+}

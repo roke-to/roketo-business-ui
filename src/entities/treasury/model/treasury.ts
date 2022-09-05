@@ -22,8 +22,8 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$currentDaoId, $sputnikDaoContract} from '../../dao';
-import {$accountId, $walletSelector} from '../../wallet';
+import {$sputnikDaoContract} from '../../dao';
+import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
 // ------------ proposals ------------
 

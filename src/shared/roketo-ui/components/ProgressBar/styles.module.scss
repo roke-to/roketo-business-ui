@@ -1,0 +1,80 @@
+.progressBar {
+  --bar-border: #a7b0be;
+  --withdrawn-color: #a7b0be;
+  --streamed-color: #f0f0f0;
+
+  &[data-direction='in'] {
+    --bar-border: #a0c2f8;
+    --withdrawn-color: #a0c2f8;
+    --streamed-color: #e1edff;
+  }
+  &[data-direction='out'] {
+    --bar-border: #f8c9a0;
+    --withdrawn-color: #f8c9a0;
+    --streamed-color: #ffefe0;
+  }
+
+  width: 100%;
+  height: var(--progress-bar-height, 12px);
+  position: relative;
+}
+
+.barCut {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: var(--progress-bar-height, 12px);
+  border: 1px solid var(--bar-border);
+  overflow: hidden;
+  background-color: #fdfdfd;
+}
+
+.streamed {
+  background-color: var(--streamed-color);
+  width: calc(var(--streamed-percents) * 1%);
+}
+
+.progress {
+  position: absolute;
+
+  height: 100%;
+
+  transition: width 2s;
+
+  top: 0;
+  left: 0;
+}
+
+.withdrawn {
+  background-color: var(--withdrawn-color);
+  width: calc(var(--withdrawn-percents) * 1%);
+  cursor: help;
+}
+
+.cliffMarkContainer {
+  left: calc(var(--cliff-percent) * 1%);
+  position: absolute;
+  height: var(--cliff-bar-height, max(calc(var(--progress-bar-height, 12px) / 4), 4px));
+  &:nth-last-child(2) {
+    top: 2px;
+    transform: translate(-50%, -100%);
+    --cliff-border-radius: 2px 2px 0 0;
+  }
+  &:nth-last-child(1) {
+    top: var(--progress-bar-height, 12px);
+    transform: translate(-50%, 0);
+    --cliff-border-radius: 0 0 2px 2px;
+  }
+}
+
+.cliffMark {
+  background-color: var(--bar-border);
+
+  height: calc(100% - 2px);
+  width: 2px;
+  border-radius: var(--cliff-border-radius);
+}
+
+.cliffMarkBig {
+  width: 4px;
+}

@@ -1,0 +1,19 @@
+.input {
+  width: 100%;
+
+  outline: 1px solid transparent;
+
+  border: 1px solid theme('colors.roketo.grey');
+  padding: 12px;
+  border-radius: 8px;
+  background-color: theme('colors.white');
+
+  color: theme('colors.roketo.lightBlack');
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.error {
+  border-color: theme('colors.roketo.danger');
+}

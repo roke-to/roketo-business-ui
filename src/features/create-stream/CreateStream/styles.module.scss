@@ -1,0 +1,173 @@
+.root {
+  display: flex;
+
+  min-width: 1000px;
+
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 24px;
+
+  margin-bottom: 25px;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense;
+  gap: 24px;
+}
+
+.receiver,
+.token,
+.color {
+  grid-column: auto / span 2;
+}
+
+.deposit,
+.cliff {
+  grid-column: auto / span 3;
+}
+
+.comment,
+.duration {
+  grid-column: 1 / -1;
+}
+
+.meaningfulSpeed {
+  grid-column: 1 / -1;
+
+  color: theme('colors.roketo.bluishGrey');
+
+  text-align: center;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.delayed,
+.isLocked {
+  grid-column: auto / span 3;
+}
+
+.submitError {
+  display: flex;
+
+  align-items: center;
+
+  span {
+    color: theme('colors.roketo.danger');
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+
+    margin-left: 8px;
+  }
+}
+
+.actionButtonsWrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 20px;
+}
+
+.feeDisclaimer {
+  grid-column: 1 / -1;
+  color: theme('colors.roketo.bluishGrey');
+
+  text-align: center;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+
+  &Row {
+    justify-content: flex-start;
+  }
+}
+
+/* Laptop */
+@media (max-width: 1199px) {
+  .root {
+    min-width: auto;
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) and (min-width: 768px) {
+  .receiver,
+  .token {
+    grid-column-end: span 3;
+  }
+  .color {
+    grid-column: 3 / span 1;
+  }
+  .deposit {
+    grid-column-end: span 2;
+  }
+  .cliff {
+    grid-column-end: span 3;
+  }
+}
+@media (max-width: 991px) {
+  .form {
+    gap: 16px;
+  }
+  .actionButtonsWrapper {
+    justify-content: center;
+  }
+}
+
+/* Phone, landscape */
+@media (max-width: 767px) and (min-width: 576px) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .deposit {
+    grid-column-end: span 1;
+  }
+  .color {
+    grid-column: 2 / span 1;
+  }
+  .cliff,
+  .isLocked,
+  .delayed {
+    grid-column-end: span 2;
+  }
+}
+@media (max-width: 767px) {
+  .form {
+    gap: 12px;
+  }
+}
+
+/* Phone, portrait */
+@media (max-width: 575px) {
+  .form {
+    grid-template-columns: 1fr;
+  }
+  .formBlock {
+    grid-column-end: span 1;
+  }
+}
+
+.subDescription {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: theme('colors.roketo.bluishGrey');
+}

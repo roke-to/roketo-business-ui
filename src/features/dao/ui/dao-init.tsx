@@ -3,8 +3,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useHistory} from 'react-router-dom';
 
-import {$daoIds, $daosLoading, setCurrentDaoId} from '~/entities/dao';
-import {$accountId, logoutClicked} from '~/entities/wallet';
+import {$daoIds, $daosLoading} from '~/entities/dao';
+import {$accountId, logoutClicked, setCurrentDaoId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';

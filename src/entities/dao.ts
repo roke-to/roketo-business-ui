@@ -16,7 +16,7 @@ import {validators} from '~/shared/lib/form/validators';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {history} from '~/shared/lib/router';
 
-import {$account, $accountId, initNearInstanceFx} from './wallet';
+import {$account, $accountId, $currentDaoId, initNearInstanceFx, setCurrentDaoId} from './wallet';
 
 // ------------ sputnikFactoryDaoContract ------------
 
@@ -139,10 +139,6 @@ forward({
 });
 
 //  ------------ Current DAO ------------
-
-export const $currentDaoId = createStore('');
-
-export const setCurrentDaoId = createEvent<string>();
 
 const getLocalStorageDaoKey = (accountId: string) => `app:${accountId}:dao`;
 

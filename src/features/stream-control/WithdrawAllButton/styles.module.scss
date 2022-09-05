@@ -1,0 +1,58 @@
+.root {
+  display: flex;
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+.description {
+  color: theme('colors.roketo.bluishGrey');
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.preparedTokensWrapper {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.preparedToken {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 10px;
+
+  background-color: transparent;
+
+  border: 1px solid theme('colors.roketo.grey');
+  border-radius: 8px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+
+  gap: 5px;
+}
+
+.amount {
+  color: theme('colors.roketo.lightBlack');
+}
+
+.symbol {
+  text-transform: capitalize;
+  color: theme('colors.roketo.grey');
+}
+
+.notAllowed {
+  cursor: not-allowed;
+}

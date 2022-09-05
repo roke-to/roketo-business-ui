@@ -1,7 +1,7 @@
 import {attach, createEvent, createStore, sample} from 'effector';
 
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
-import {$currentDaoId} from '~/entities/dao';
+import {$currentDaoId} from '~/entities/wallet';
 import {rbApi} from '~/shared/api/rb';
 import {ROUTES} from '~/shared/config/routes';
 import type {Employee} from '~/shared/types/employee';

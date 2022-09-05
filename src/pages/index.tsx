@@ -2,8 +2,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {Redirect, Route, Router, Switch} from 'react-router-dom';
 
-import {$currentDaoId} from '~/entities/dao';
-import {$isSignedIn} from '~/entities/wallet';
+import {$currentDaoId, $isSignedIn} from '~/entities/wallet';
 import {DaoPage} from '~/pages/dao';
 import {DaoNewPage} from '~/pages/dao-new';
 import {DashboardPage} from '~/pages/dashboard';
@@ -11,6 +10,7 @@ import {EmployeesPage} from '~/pages/employees';
 import {GovernancePage} from '~/pages/governance';
 import {LoginPage} from '~/pages/login';
 import {NotFoundPage} from '~/pages/not-found';
+import {StreamPage} from '~/pages/stream';
 import {StreamsPage} from '~/pages/streams';
 import {TreasuryPage} from '~/pages/treasury';
 import {ROUTES} from '~/shared/config/routes';
@@ -93,6 +93,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <StreamsPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.stream.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <StreamPage />
         </PrivateRoute>
 
         <Route render={NotFoundPage} />
