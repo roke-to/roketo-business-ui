@@ -34,12 +34,8 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         id: extract_branch
-      - name: Set env
-        shell: bash
-        run: echo "##[set-output name=env;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
-        id: set_env
       - name: Set docker tags
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
@@ -100,7 +96,7 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:-${GITHUB_REF#refs/heads/}})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         id: extract_branch
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
@@ -138,9 +134,11 @@ jobs:
             mkdir -p ~/services/$APP_HOSTNAME/
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
+            sed -i 's/frontbizui/$APP_NAME/g' docker-compose.yaml
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
-            curl -X POST -H 'Content-type: application/json' --data '{"text": "'$text'" }' "https://hooks.slack.com/services/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"
+            echo $text
+            curl -X POST -H 'Content-type: application/json' --data '\{"text": "$text" \}' "https://hooks.slack.com/services/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"
           host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
