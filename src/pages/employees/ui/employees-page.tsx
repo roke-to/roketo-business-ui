@@ -24,6 +24,7 @@ export const EmployeesPage = () => {
 
   const employees = useStore(employeesModel.$employees);
   const selectedStatus = useStore(employeesModel.$statusFilter);
+  const selectedType = useStore(employeesModel.$typeFilter);
 
   useEffect(() => {
     employeesModel.pageLoaded();
@@ -55,6 +56,17 @@ export const EmployeesPage = () => {
             // @ts-expect-error
             generateDropdownItem={(status) => t(`filters.status.values.${status}`)}
             handleChange={employeesModel.statusFilterChanged}
+          />
+
+          <Filter
+            title={t('filters.type.title')}
+            selected={selectedType}
+            options={employeesModel.typeFilterOptions}
+            dropdownLabel={t(`filters.type.values.${selectedType}`)}
+            // TODO useTranslation ругается на попытку обратиться по этому пути стрингой
+            // @ts-expect-error
+            generateDropdownItem={(status) => t(`filters.type.values.${status}`)}
+            handleChange={employeesModel.typeFilterChanged}
           />
         </Row>
         <Row>

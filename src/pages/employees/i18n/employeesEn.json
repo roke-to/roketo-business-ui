@@ -75,6 +75,14 @@
         "Suspended": "Suspended",
         "Fired": "Fired"
       }
+    },
+    "type": {
+      "title": "Type",
+      "values": {
+        "all": "Any type",
+        "Contractor": "Contractor",
+        "Freelancer": "Freelancer"
+      }
     }
   }
 }

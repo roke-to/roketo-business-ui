@@ -16,17 +16,29 @@ export const statusFilterOptions: StatusFilter[] = ['all', 'Active', 'Suspended'
 export const statusFilterChanged = createEvent<number>();
 $statusFilter.on(statusFilterChanged, (_, index) => statusFilterOptions[index]);
 
+type TypeFilter = 'all' | EmployeeResponseDto['type'];
+export const $typeFilter = createStore<TypeFilter>('all');
+export const typeFilterOptions: TypeFilter[] = ['all', 'Freelancer', 'Contractor'];
+
+export const typeFilterChanged = createEvent<number>();
+$typeFilter.on(typeFilterChanged, (_, index) => typeFilterOptions[index]);
+
 const loadEmployeesFx = attach({
   source: {
     daoId: $currentDaoId,
     authenticationHeaders: $authenticationHeaders,
     statusFilter: $statusFilter,
+    typeFilter: $typeFilter,
   },
-  async effect({daoId, authenticationHeaders, statusFilter}) {
-    const query: {status?: EmployeeResponseDto['status']} = {};
+  async effect({daoId, authenticationHeaders, statusFilter, typeFilter}) {
+    const query: {status?: EmployeeResponseDto['status']; type?: EmployeeResponseDto['type']} = {};
 
     if (statusFilter !== 'all') {
       query.status = statusFilter;
+    }
+
+    if (typeFilter !== 'all') {
+      query.type = typeFilter;
     }
 
     return rbApi.dao
@@ -38,7 +50,7 @@ const loadEmployeesFx = attach({
 });
 sample({
   source: $authenticationHeaders,
-  clock: [pageLoaded, $statusFilter],
+  clock: [pageLoaded, $statusFilter, $typeFilter],
   filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
   target: loadEmployeesFx,
 });
