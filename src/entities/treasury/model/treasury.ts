@@ -15,8 +15,8 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$currentDaoId, $sputnikDaoContract} from '../../dao';
-import {$accountId} from '../../wallet';
+import {$sputnikDaoContract} from '../../dao';
+import {$accountId, $currentDaoId} from '../../wallet';
 
 // ------------ proposals ------------
 

@@ -70,6 +70,23 @@ export default {
         textDefault: '#3E65F2',
         sat_1: '#D6E6FF',
       },
+      roketo: {
+        white: '#ffffff',
+        blue: '#3e65f2',
+        lightBlue: '#f1f6fe',
+        purple: '#5a45fb',
+        backgroundSecondary: '#f1f2f4',
+        orange: '#ff8c19',
+
+        lightBlack: '#2b313b',
+        lightGrey: '#e6e8ea',
+        bluishGrey: '#626f84',
+        grey: '#a7b0be',
+        tertiary: '#e2e5e9',
+
+        danger: '#d80a1f',
+        lightRed: '#fef0f1',
+      },
     },
     borderRadius: {
       none: '0px',

@@ -1,4 +1,5 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {ConnectedWalletAccount} from 'near-api-js';
 import {Get} from 'type-fest';
 
 import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
@@ -8,9 +9,28 @@ import {
   NearInstance,
   WalletId,
 } from '~/shared/api/near';
+import {initPriceOracle, PriceOracle} from '~/shared/api/price-oracle';
+import {
+  apiConfig,
+  tokenProvider as roketoTokenProvider,
+  usersApiClient as roketoUsersApiClient,
+} from '~/shared/api/roketo-client';
 import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
+import {
+  createRichContracts,
+  getIncomingStreams,
+  getOutgoingStreams,
+  initApiControl,
+} from '@roketo/sdk';
+import type {
+  ApiControl,
+  NearAuth,
+  RichToken,
+  RoketoStream,
+  TransactionMediator,
+} from '@roketo/sdk/dist/types';
 
 // createWalletSelectorInstance is async and it could be null until intialized
 const $walletSelector = createStore<WalletSelector | null>(null);
@@ -74,7 +94,7 @@ const loginViaWalletFx = createEffect(async (module: ModuleState) => {
     }
 
     await wallet.signIn({
-      contractId: env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
+      contractId: env.ROKETO_CONTRACT_NAME,
     });
   } catch (err) {
     const {name} = module.metadata;
@@ -92,9 +112,13 @@ const loginViaWalletFx = createEffect(async (module: ModuleState) => {
 });
 
 export const initNearInstanceFx = attach({
-  source: {walletSelectorState: $walletSelectorState, keyStore: $keyStore},
-  async effect({walletSelectorState: {selectedWalletId}, keyStore}) {
-    return createNearInstance(keyStore, selectedWalletId as WalletId);
+  source: {
+    walletSelectorState: $walletSelectorState,
+    keyStore: $keyStore,
+    walletSelector: $walletSelector,
+  },
+  async effect({walletSelectorState: {selectedWalletId}, keyStore, walletSelector}) {
+    return createNearInstance(keyStore, walletSelector, selectedWalletId as WalletId);
   },
 });
 
@@ -158,3 +182,231 @@ sample({
   clock: logoutClicked,
   target: logoutFromWalletFx,
 });
+
+// STREAMS ------------------------------------------------------------------------------- /
+
+export const $currentDaoId = createStore('');
+export const setCurrentDaoId = createEvent<string>();
+
+export const lastCreatedStreamUpdated = createEvent<string>();
+
+export const $roketoWallet = createStore<null | ApiControl>(null);
+export const $tokens = createStore<Record<string, RichToken>>({});
+export const $listedTokens = createStore<Record<string, RichToken>>({});
+export const $priceOracle = createStore<PriceOracle>({
+  getPriceInUsd: () => '0',
+});
+export const $accountStreams = createStore<{
+  inputs: RoketoStream[];
+  outputs: RoketoStream[];
+  streamsLoaded: boolean;
+}>({
+  inputs: [],
+  outputs: [],
+  streamsLoaded: false,
+});
+
+const createRoketoWalletFx = createEffect(
+  ({
+    account,
+    transactionMediator,
+  }: {
+    account: ConnectedWalletAccount;
+    transactionMediator: TransactionMediator;
+  }) =>
+    initApiControl({account, transactionMediator, roketoContractName: env.ROKETO_CONTRACT_NAME}),
+);
+
+const createPriceOracleFx = createEffect((account: ConnectedWalletAccount) =>
+  initPriceOracle({account}),
+);
+
+const requestAccountStreamsFx = attach({
+  source: {
+    currentDaoId: $currentDaoId,
+  },
+  effect: async (
+    {currentDaoId}: {currentDaoId: string},
+    {contract}: Pick<ApiControl, 'contract'>,
+  ) => {
+    const [inputs, outputs] = await Promise.all([
+      getIncomingStreams({from: 0, limit: 500, accountId: currentDaoId, contract}),
+      getOutgoingStreams({from: 0, limit: 500, accountId: currentDaoId, contract}),
+    ]);
+    return {inputs, outputs};
+  },
+});
+
+const requestUnknownTokensFx = createEffect(
+  async ({
+    tokenNames,
+    roketo,
+    nearAuth,
+  }: {
+    tokenNames: string[];
+    roketo: ApiControl | null;
+    nearAuth: NearAuth | null;
+  }) => {
+    if (!roketo || !nearAuth) return {};
+    const requestResults = await Promise.all(
+      tokenNames.map(async (tokenName) => {
+        const [contract] = await roketo.contract.get_token({token_account_id: tokenName});
+        return [tokenName, contract] as const;
+      }),
+    );
+    const additionalTokens = await createRichContracts({
+      tokensInfo: requestResults,
+      account: nearAuth.account,
+    });
+    return additionalTokens;
+  },
+);
+
+const streamsRevalidationTimerFx = createEffect(
+  () =>
+    new Promise<void>((rs) => {
+      setTimeout(rs, 30000);
+    }),
+);
+
+const initRoketoClientFx = createEffect((near: NearInstance) => {
+  const tokenProviderInstance = roketoTokenProvider(near.accountId, near);
+  const apiConfigInstance = apiConfig(tokenProviderInstance);
+  return {
+    tokenProvider: tokenProviderInstance,
+    apiConfig: apiConfig(tokenProviderInstance),
+    usersApiClient: roketoUsersApiClient(apiConfigInstance),
+    accountId: near.accountId,
+  };
+});
+/**
+ * when last_created_stream is changed or revalidation timer ends
+ * read roketo wallet
+ * check whether it exists
+ * extract Roketo object from it
+ * and start requesting account streams with it
+ * */
+sample({
+  clock: [lastCreatedStreamUpdated, streamsRevalidationTimerFx.doneData],
+  source: $roketoWallet,
+  filter: Boolean,
+  fn: ({accountId, contract}) => ({accountId, contract}),
+  target: requestAccountStreamsFx,
+});
+/**
+ * when account streams successfully requested
+ * save them to store $accountStreams
+ */
+sample({
+  clock: requestAccountStreamsFx.doneData,
+  fn: ({inputs, outputs}) => ({
+    inputs,
+    outputs,
+    streamsLoaded: true,
+  }),
+  target: $accountStreams,
+});
+sample({
+  clock: initNearInstanceFx.doneData,
+  filter: (near) => Boolean(near.accountId),
+  target: initRoketoClientFx,
+});
+
+sample({
+  clock: initNearInstanceFx.doneData,
+  fn: ({account, transactionMediator}) => ({account, transactionMediator}),
+  target: [createRoketoWalletFx],
+});
+
+sample({
+  clock: $roketoWallet,
+  filter: Boolean,
+  fn: (wallet) => wallet.roketoAccount.last_created_stream,
+  target: lastCreatedStreamUpdated,
+});
+
+/**
+ * when last_created_stream is changed or revalidation timer ends
+ * read roketo wallet
+ * check whether it exists
+ * extract Roketo object from it
+ * and start requesting account streams with it
+ * */
+sample({
+  clock: [lastCreatedStreamUpdated, streamsRevalidationTimerFx.doneData, setCurrentDaoId],
+  source: $roketoWallet,
+  filter: Boolean,
+  fn: ({accountId, contract}) => ({accountId, contract}),
+  target: requestAccountStreamsFx,
+});
+
+sample({
+  clock: createRoketoWalletFx.doneData,
+  target: $roketoWallet,
+});
+
+sample({
+  clock: createRoketoWalletFx.doneData,
+  target: [$tokens, $listedTokens],
+  fn: ({tokens}) => tokens,
+});
+sample({
+  clock: initNearInstanceFx.doneData,
+  fn: ({account}) => account,
+  target: [createPriceOracleFx],
+});
+/**
+ * when price oracle is initialized allow app to consume it from $priceOracle store
+ */
+sample({
+  clock: createPriceOracleFx.doneData,
+  target: $priceOracle,
+});
+
+sample({
+  clock: $accountStreams,
+  source: {
+    tokens: $tokens,
+    roketo: $roketoWallet,
+    near: $near,
+  },
+  target: requestUnknownTokensFx,
+  fn({tokens, roketo, near}, streams) {
+    const allStreams = [...streams.inputs, ...streams.outputs];
+    const streamsTokens = [...new Set(allStreams.map((stream) => stream.token_account_id))];
+    const unknownTokens = streamsTokens.filter((token) => !(token in tokens));
+    return {
+      tokenNames: unknownTokens,
+      roketo,
+      nearAuth: near
+        ? {
+            balance: near.balance,
+            account: near.account,
+            signedIn: !!near.accountId,
+            accountId: near.accountId,
+            login: near.login,
+            logout: near.logout,
+            transactionMediator: near.transactionMediator,
+          }
+        : null,
+    };
+  },
+});
+
+sample({
+  clock: requestUnknownTokensFx.doneData,
+  source: $tokens,
+  target: $tokens,
+  fn(tokens, additionalTokens) {
+    if (Object.keys(additionalTokens).length === 0) return tokens;
+    return {
+      ...tokens,
+      ...additionalTokens,
+    };
+  },
+});
+
+$roketoWallet.reset([logoutFromWalletFx.done]);
+$tokens.reset([logoutFromWalletFx.done]);
+$priceOracle.reset([logoutFromWalletFx.done]);
+$accountStreams.reset([logoutFromWalletFx.done]);

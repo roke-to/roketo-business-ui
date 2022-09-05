@@ -1,0 +1,35 @@
+.textarea {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+
+  outline: 1px solid transparent;
+
+  border: 1px solid theme('colors.roketo.grey');
+  padding: 12px;
+  border-radius: 8px;
+  background-color: theme('colors.white');
+
+  color: theme('colors.roketo.lightBlack');
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  &::after {
+    content: attr(data-current-character-count number);
+
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: theme('colors.roketo.bluishGrey');
+  }
+}
+
+.error {
+  border-color: theme('colors.roketo.danger');
+}

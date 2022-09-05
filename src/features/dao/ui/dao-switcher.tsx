@@ -3,7 +3,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import ReactModal from 'react-modal';
 
-import {$currentDaoId, $daoIds, setCurrentDaoId} from '~/entities/dao';
+import {$daoIds} from '~/entities/dao';
+import {$currentDaoId, setCurrentDaoId} from '~/entities/wallet';
 import {DaoNewModal} from '~/features/dao/ui/dao-new-modal';
 import {Button} from '~/shared/ui/components/button';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';

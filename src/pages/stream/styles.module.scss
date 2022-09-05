@@ -1,0 +1,318 @@
+.wrapper {
+  border-bottom: 1px solid theme('colors.roketo.lightGrey');
+  background-color: theme('colors.white');
+}
+
+.root {
+  color: theme('colors.roketo.lightBlack');
+
+  flex-grow: 1;
+  padding: 28px 0;
+
+  & > :not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+.centeredFlex {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.streamsLink {
+  padding: 15px;
+  margin: -15px 0 -15px -15px;
+}
+
+.breadbrumb {
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.id {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.stream {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns:
+    [progress-column] 416px
+    repeat(1, 6fr);
+  gap: 20px;
+  max-width: calc(100vw - 32px);
+  grid-auto-flow: column dense;
+}
+
+.blockBody {
+  color: #2b313b;
+  font-weight: 600;
+}
+
+.blockLarge {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 50vw;
+  & > .blockTitle {
+    line-height: 16px;
+    font-weight: 500;
+  }
+  & > .blockBody {
+    font-size: 18px;
+    line-height: 24px;
+    align-self: start;
+  }
+}
+
+.blockSmall {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  & > .blockTitle {
+    line-height: 14px;
+    font-weight: 400;
+  }
+  & > .blockBody {
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+
+.progressBlock {
+  grid-column: progress-column;
+  grid-row: 1 / span 3;
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-auto-columns: 1fr 1fr;
+
+  & > .blockTitle {
+    grid-column: 1 / span 2;
+  }
+}
+
+.availableBlock {
+  grid-column: 3;
+}
+
+.withdrawnBlock {
+  grid-column: 3;
+}
+
+.remainingBlock {
+  grid-column: 4 / span 2;
+}
+
+.speedBlock {
+  grid-column: 4 / span 2;
+}
+
+.cliffBlock {
+  grid-column: 6;
+}
+
+.colorBlock {
+  grid-column: 6;
+  --size: 24;
+}
+
+.commentBlock {
+  grid-column: 3 / span 4;
+}
+
+.linkBlock {
+  grid-column: 3 / span 4;
+}
+
+.senderBlock {
+  grid-column: 3 / span 2;
+}
+
+.receiverBlock {
+  grid-column: 5 / span 2;
+}
+
+.commentText {
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.blockTitle {
+  color: theme('colors.roketo.bluishGrey');
+  font-size: 14px;
+}
+
+.closeBadge {
+  margin-bottom: 6px;
+}
+
+.numericProgress {
+  @extend .centeredFlex;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 36px;
+  grid-column: 1 / span 2;
+}
+
+.progressBar {
+  grid-column: 1 / span 2;
+  --progress-bar-height: 16px;
+}
+
+.tokenName {
+  color: #8a96a8;
+}
+
+.progressInUSD {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #8a96a8;
+  grid-column: 1 / span 2;
+}
+
+.addFundsButton {
+  grid-column: 1;
+}
+
+.withdrawButton {
+  grid-column: 1;
+}
+
+.streamControls {
+  grid-column: var(--controls-column);
+}
+
+.button {
+  height: 48px;
+  padding: 12px 20px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  width: -webkit-fill-available;
+  width: stretch;
+  justify-content: center;
+}
+
+.buttonPrimary {
+  color: #496ef3;
+  border-color: #f0f6ff;
+  background: #f0f6ff;
+}
+
+.copyTitle {
+  display: flex;
+  align-items: center;
+}
+
+.copyButton {
+  width: 24px;
+  height: 24px;
+  color: theme('colors.blue.textDefault');
+  background-color: theme('colors.roketo.lightBlue');
+  border-radius: 4px;
+  margin-left: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linkIcon {
+  height: 16px;
+  width: 8px;
+}
+
+.link {
+  user-select: all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: -webkit-fill-available;
+  width: stretch;
+  max-width: 30vh;
+}
+
+/* Tablet, phone */
+@media (max-width: 991px) {
+  .stream {
+    gap: 16px;
+  }
+  .stream {
+    grid-template-columns:
+      [progress-column] 350px
+      repeat(1, 6fr);
+  }
+
+  .blockLarge {
+    & > .blockBody {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+  .numericProgress {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  .colorBlock {
+    --size: 20;
+  }
+}
+
+/* Phone */
+@media (max-width: 767px) {
+  .blockLarge {
+    max-width: unset;
+  }
+  .stream {
+    grid-template-columns: 1fr 1fr;
+  }
+  .progressBlock {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+    padding: 24px 24px 32px;
+    box-shadow: 0px 5px 20px rgba(87, 140, 219, 0.25);
+    border-radius: 24px;
+  }
+  .streamControls {
+    margin-top: 24px;
+  }
+  .availableBlock {
+    grid-column: 1 / span 1;
+  }
+  .withdrawnBlock {
+    grid-column: 1 / span 1;
+  }
+  .remainingBlock {
+    grid-column: 2 / span 1;
+  }
+  .speedBlock {
+    grid-column: 2 / span 1;
+  }
+  .cliffBlock {
+    grid-column: 1 / span 1;
+  }
+  .colorBlock {
+    grid-column: 2 / span 2;
+  }
+  .commentBlock {
+    grid-column: 1 / span 2;
+  }
+  .linkBlock {
+    grid-column: 1 / span 2;
+  }
+  .senderBlock {
+    grid-column: 1 / span 2;
+  }
+  .receiverBlock {
+    grid-column: 1 / span 2;
+  }
+}
+
+@media (pointer: coarse) {
+  .copyButton {
+    width: 36px;
+    height: 36px;
+  }
+}

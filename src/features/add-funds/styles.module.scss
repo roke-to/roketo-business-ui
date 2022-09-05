@@ -1,0 +1,87 @@
+.modalContent {
+  padding: 24px;
+  max-width: 480px;
+  width: 95vw;
+  border-radius: 8px;
+  background-color: white;
+  color: theme('colors.roketo.lightBlack');
+}
+
+.modalOverlay {
+  pointer-events: auto;
+  user-select: text;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  padding: 5vh 0;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  z-index: 1000;
+}
+
+.modalHeader {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.modalButtons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+
+  > button:not(:last-child) {
+    margin-right: 16px;
+  }
+}
+
+.modalButton {
+  height: 48px;
+  border-radius: 8px;
+  padding: 0 20px;
+}
+
+.modalButton[disabled] {
+  background-color: theme('colors.roketo.lightGrey');
+  border-color: theme('colors.roketo.lightGrey');
+  cursor: not-allowed;
+}
+
+.modalSecondary {
+  color: theme('colors.blue.textDefault');
+  border: 2px solid theme('colors.blue.textDefault');
+}
+
+.caption {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  visibility: hidden;
+
+  &.visible {
+    visibility: visible;
+  }
+}
+
+.label {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: theme('colors.roketo.bluishGrey');
+
+  &.bold {
+    font-weight: 600;
+    color: unset;
+  }
+
+  &.red {
+    color: theme('colors.roketo.danger');
+  }
+}

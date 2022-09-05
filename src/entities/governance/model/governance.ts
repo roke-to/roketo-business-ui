@@ -22,8 +22,8 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$currentDao, $currentDaoId, $sputnikDaoContract} from '../../dao';
-import {$accountId} from '../../wallet';
+import {$currentDao, $sputnikDaoContract} from '../../dao';
+import {$accountId, $currentDaoId} from '../../wallet';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
 
