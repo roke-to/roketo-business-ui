@@ -134,7 +134,7 @@ jobs:
             mkdir -p ~/services/$APP_HOSTNAME/
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
-            sed -i 's/frontbizui/$APP_NAME/g' docker-compose.yaml
+            sed -i "s/frontbizui/$APP_NAME/g" docker-compose.yaml
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
             echo $text
