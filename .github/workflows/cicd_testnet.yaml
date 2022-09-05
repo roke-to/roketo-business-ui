@@ -68,7 +68,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          build-args: ${{ env.BUILD_ARG_VITE_NEAR_NETWORK_ID }}
+          build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=${{ env.BUILD_ARG_VITE_NEAR_NETWORK_ID }}
           push: true
           tags: ${{ env.DOCKER_TAGS }}
 
@@ -138,6 +138,8 @@ jobs:
               export APP_HOSTNAME=$APP_NAME.germes.roke.to
             fi
             docker-compose up -d
+            export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
+            curl -X POST -H 'Content-type: application/json' --data '{"text": "'$text'" }' "https://hooks.slack.com/services/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"
           host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
