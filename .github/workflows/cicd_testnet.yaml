@@ -107,7 +107,7 @@ jobs:
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
           source: "docker-compose.yaml"
-          target: "~/services/"+${{ matrix.app }}+"/"+${{ steps.extract_branch.outputs.branch }}
+          target: "~/services/temp/bizui/"
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
@@ -121,7 +121,8 @@ jobs:
             export APP=${{env.APP}}
             export SHORT_SHA=${{env.SHORT_SHA}}
             export GIT_BRANCH=${{env.GIT_BRANCH}}
-            cd "~/services/"+$APP+"/"+$GIT_BRANCH
+            cd "~/services/"$APP"/"$GIT_BRANCH
+            mv ~/services/temp/bizui/docker-compose.yaml "~/services/"$APP"/"$GIT_BRANCH
             if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
               export APP_NAME=$APP
               export APP_TAG=main-$SHORT_SHA
