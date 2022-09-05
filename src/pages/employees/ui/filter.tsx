@@ -3,6 +3,7 @@ import React from 'react';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
+import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 interface Props {
@@ -22,7 +23,7 @@ export const Filter: React.FC<Props> = ({
   generateDropdownItem,
   handleChange,
 }) => (
-  <>
+  <Row align='center' gap='sm'>
     <Typography as='span' color='muted'>
       {title}:
     </Typography>
@@ -57,5 +58,5 @@ export const Filter: React.FC<Props> = ({
               handleChangeProposalKind={handleChangeProposalKind}
             />
           </Modal> */}
-  </>
+  </Row>
 );

@@ -84,5 +84,12 @@
         "Freelancer": "Freelancer"
       }
     }
+  },
+  "sort": {
+    "title": "Sort",
+    "values": {
+      "name": "Name",
+      "id": "Last added"
+    }
   }
 }

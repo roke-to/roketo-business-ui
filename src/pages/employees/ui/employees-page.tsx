@@ -4,10 +4,12 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
-import {Label} from '~/shared/ui/components/label';
+import {IconButton} from '~/shared/ui/components/icon-button';
 import {Layout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
+import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
+import {ReactComponent as ListViewIcon} from '~/shared/ui/icons/employees/list.svg';
 
 import * as employeesModel from '../model/employees-model';
 import {AddEmployeeModal} from './add-employee-modal';
@@ -25,14 +27,14 @@ export const EmployeesPage = () => {
   const employees = useStore(employeesModel.$employees);
   const selectedStatus = useStore(employeesModel.$statusFilter);
   const selectedType = useStore(employeesModel.$typeFilter);
+  const selectedSort = useStore(employeesModel.$sort);
 
   useEffect(() => {
     employeesModel.pageLoaded();
   }, []);
 
   const [viewType, setViewType] = useState<ViewType>('card');
-  const handleViewTypeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setViewType(e.target.value as ViewType);
+  const handleViewTypeChange = (payload: ViewType) => setViewType(payload);
 
   return (
     <Layout>
@@ -45,8 +47,8 @@ export const EmployeesPage = () => {
         />
       </Row>
 
-      <Row justify='between'>
-        <Row align='center' gap='sm'>
+      <Row justify='between' align='center'>
+        <Row align='center'>
           <Filter
             title={t('filters.status.title')}
             selected={selectedStatus}
@@ -65,29 +67,36 @@ export const EmployeesPage = () => {
             dropdownLabel={t(`filters.type.values.${selectedType}`)}
             // TODO useTranslation ругается на попытку обратиться по этому пути стрингой
             // @ts-expect-error
-            generateDropdownItem={(status) => t(`filters.type.values.${status}`)}
+            generateDropdownItem={(type) => t(`filters.type.values.${type}`)}
             handleChange={employeesModel.typeFilterChanged}
           />
         </Row>
-        <Row>
-          <Label content='Card view'>
-            <input
-              type='radio'
-              name='viewType'
-              value='card'
-              checked={viewType === 'card'}
-              onChange={handleViewTypeChange}
+        <Row align='center' gap='sm'>
+          <Filter
+            title={t('sort.title')}
+            selected={selectedSort}
+            options={employeesModel.sortOptions}
+            dropdownLabel={t(`sort.values.${selectedSort}`)}
+            // TODO useTranslation ругается на попытку обратиться по этому пути стрингой
+            // @ts-expect-error
+            generateDropdownItem={(sort) => t(`sort.values.${sort}`)}
+            handleChange={employeesModel.sortChanged}
+          />
+
+          <IconButton variant='clean' size='sm' onClick={() => handleViewTypeChange('card')}>
+            <CardViewIcon
+              className={clsx(styles.viewTypeIcon, {
+                [styles.active]: viewType === 'card',
+              })}
             />
-          </Label>
-          <Label content='List view'>
-            <input
-              type='radio'
-              name='viewType'
-              value='list'
-              checked={viewType === 'list'}
-              onChange={handleViewTypeChange}
+          </IconButton>
+          <IconButton variant='clean' size='sm' onClick={() => handleViewTypeChange('list')}>
+            <ListViewIcon
+              className={clsx(styles.viewTypeIcon, {
+                [styles.active]: viewType === 'list',
+              })}
             />
-          </Label>
+          </IconButton>
         </Row>
       </Row>
       <div className={clsx(styles.wrapper, styles[viewType])}>

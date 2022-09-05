@@ -389,7 +389,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     daoControllerFindAllEmployees: (
       daoId: string,
-      query?: {status?: 'Active' | 'Suspended' | 'Fired'; type?: 'Contractor' | 'Freelancer'},
+      query?: {
+        direction?: 'ASC' | 'DESC';
+        sort?: 'name' | 'id';
+        status?: 'Active' | 'Suspended' | 'Fired';
+        type?: 'Contractor' | 'Freelancer';
+      },
       params: RequestParams = {},
     ) =>
       this.request<EmployeeResponseDto[], any>({
