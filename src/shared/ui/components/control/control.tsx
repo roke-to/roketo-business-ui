@@ -16,7 +16,7 @@ export const Control = ({
   disabled,
 }: {
   text: number | string;
-  icon: React.ReactNode;
+  icon: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   variant: 'positive' | 'negative';
   highlight: boolean;
   onClick?(): void;
@@ -39,7 +39,6 @@ export const Control = ({
         as={isViewMode ? 'div' : 'button'}
         size='xs'
         variant={highlight ? variant : 'plain'}
-        /* @ts-expect-error */
         startIcon={<Icon className={iconClassName} />}
         gap={1}
         className={styles.mobileButton}

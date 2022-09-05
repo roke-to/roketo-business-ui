@@ -2,6 +2,7 @@ import i18n, {ResourceLanguage} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
 import councilsEn from '../entities/councils/lib/i18n/councilsEn.json';
+import dashboardEn from '../entities/dashboard/lib/i18n/dashboardEn.json';
 import proposalFiltersEn from '../entities/filters/lib/i18n/proposalFiltersEn.json';
 import proposalEn from '../entities/proposal/lib/i18n/proposalEn.json';
 import treasuryEn from '../entities/treasury/lib/i18n/treasuryEn.json';
@@ -20,6 +21,7 @@ const resources: Record<Locale, ResourceLanguage> = {
     validators: validatorsEn,
     proposal: proposalEn,
     councils: councilsEn,
+    dashboard: dashboardEn,
     employees: employeesEn,
     proposalFilters: proposalFiltersEn,
   },
@@ -35,6 +37,7 @@ declare module 'react-i18next' {
       validators: typeof validatorsEn;
       proposal: typeof proposalEn;
       councils: typeof councilsEn;
+      dashboard: typeof dashboardEn;
       employees: typeof employeesEn;
       proposalFilters: typeof proposalFiltersEn;
     };

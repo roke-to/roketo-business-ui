@@ -16,7 +16,11 @@ import {Typography} from '~/shared/ui/components/typography';
 import {ChangePolicyButton} from './change-policy-button';
 import styles from './councils.module.css';
 
-export const Councils = () => {
+interface CouncilsProps {
+  variant?: 'default' | 'dashboard';
+}
+
+export const Councils = ({variant = 'default'}: CouncilsProps) => {
   const {t} = useTranslation('councils');
   const quorumPercent = useStore($currentDaoQuorumValue);
 
@@ -63,7 +67,7 @@ export const Councils = () => {
         </Col>
       </Row>
 
-      <ChangePolicyButton />
+      {variant === 'default' && <ChangePolicyButton />}
     </Portlet>
   );
 };

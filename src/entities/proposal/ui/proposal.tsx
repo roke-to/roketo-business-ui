@@ -12,7 +12,7 @@ import {$isMobileScreen} from '~/entities/screens';
 import {$tokenBalances} from '~/entities/treasury/model/treasury';
 import {decodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
-import {Button} from '~/shared/ui/components/button';
+import {ButtonNativeLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Typography} from '~/shared/ui/components/typography';
 
@@ -59,9 +59,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
           </Typography>
         )}
         {link && (
-          <Button
-            as='a'
-            // @ts-expect-error
+          <ButtonNativeLink
             href={link}
             variant={isMobileScreen ? 'outlined' : 'clean'}
             target='_blank'
@@ -71,7 +69,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
             })}
           >
             {t('viewLink')}
-          </Button>
+          </ButtonNativeLink>
         )}
         <StatusRow
           status={status}
