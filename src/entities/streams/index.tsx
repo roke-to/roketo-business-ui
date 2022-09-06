@@ -1,17 +1,13 @@
 import clsx from 'clsx';
 import {useStore} from 'effector-react';
-import {useCallback, useState} from 'react';
 
-import {CreateStream} from '~/features/create-stream/CreateStream';
-import {WithdrawAllButton} from '~/features/stream-control/WithdrawAllButton';
+import {WithdrawAllButton} from '~/entities/stream-control/WithdrawAllButton';
 import {STREAM_DIRECTION, StreamDirection} from '~/shared/api/roketo/constants';
 import {testIds} from '~/shared/constants';
-import {Button} from '~/shared/roketo-ui/components/Button';
 import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
-import {Modal} from '~/shared/roketo-ui/Modal';
-import {Layout} from '~/shared/ui/components/layout';
 import {Row} from '~/shared/ui/components/row';
 
+import {CreateStreamProposalButton} from './create-stream-proposal-button';
 import {$financialStatus, handleCreateStreamFx} from './model';
 import {StreamFilters} from './StreamFilters';
 import {StreamsList} from './StreamsList';
@@ -55,13 +51,7 @@ const FinancialInfo = ({
   </div>
 );
 
-const StreamsPageContent = () => {
-  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const toggleModal = useCallback(
-    () => setIsModalOpened(!isModalOpened),
-    [setIsModalOpened, isModalOpened],
-  );
-
+export const StreamsPageContent = () => {
   const submitting = useStore(handleCreateStreamFx.pending);
 
   const {outcomeAmountInfo, incomeAmountInfo, availableForWithdrawal} = useStore($financialStatus);
@@ -87,22 +77,7 @@ const StreamsPageContent = () => {
             direction={STREAM_DIRECTION.IN}
             className={styles.receivingCard}
           />
-          <Button
-            className={clsx(styles.button, styles.createStreamButton)}
-            onClick={toggleModal}
-            testId={testIds.createStreamButton}
-          >
-            Create a stream
-          </Button>
-          <Modal isOpen={isModalOpened} onCloseModal={toggleModal}>
-            <CreateStream
-              onFormCancel={toggleModal}
-              onFormSubmit={(values) =>
-                handleCreateStreamFx(values).then(() => setIsModalOpened(false))
-              }
-              submitting={submitting}
-            />
-          </Modal>
+          <CreateStreamProposalButton submitting={submitting} />
         </div>
 
         <div className={clsx(styles.shadowCard, styles.withdrawalStatus)}>
@@ -117,13 +92,7 @@ const StreamsPageContent = () => {
       </Row>
       <StreamFilters className={styles.streamFilters} />
 
-      <StreamsList className={styles.streamListBlock} onCreateStreamClick={toggleModal} />
+      <StreamsList className={styles.streamListBlock} />
     </>
   );
 };
-
-export const StreamsPage = () => (
-  <Layout>
-    <StreamsPageContent />
-  </Layout>
-);

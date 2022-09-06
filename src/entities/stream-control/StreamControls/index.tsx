@@ -4,9 +4,9 @@ import {ReactNode, useState} from 'react';
 import Modal from 'react-modal';
 
 import {blurGate} from '~/entities/blur';
-import {$accountId} from '~/entities/wallet';
 // eslint-disable-next-line boundaries/element-types
-import {AddFunds} from '~/features/add-funds';
+import {AddFunds} from '~/entities/steam-add-funds';
+import {$accountId} from '~/entities/wallet';
 import {testIds} from '~/shared/constants';
 import {BooleanControl, useBool} from '~/shared/hooks/useBool';
 import {AdaptiveModal} from '~/shared/kit/AdaptiveModal';

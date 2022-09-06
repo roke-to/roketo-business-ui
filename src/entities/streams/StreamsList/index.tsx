@@ -3,13 +3,13 @@ import {useList, useStore, useStoreMap} from 'effector-react';
 import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 
-import {StreamListControls} from '~/features/stream-control/StreamControls';
+import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
+import {StreamListControls} from '~/entities/stream-control/StreamControls';
 import type {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {getStreamLink} from '~/shared/config/routes';
 import {testIds} from '~/shared/constants';
 import {ColorDot} from '~/shared/kit/ColorDot';
 import {Badge} from '~/shared/roketo-ui/Badge';
-import {Button} from '~/shared/roketo-ui/components/Button';
 import {CopyLinkButton} from '~/shared/roketo-ui/components/CopyLinkButton';
 import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
 import {Spinner} from '~/shared/roketo-ui/components/Spinner';
@@ -18,6 +18,7 @@ import clockIcon from '~/shared/roketo-ui/icons/clock.svg';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import {streamCardDataDefaults, streamProgressDataDefaults} from '../constants';
+import {CreateStreamProposalButton} from '../create-stream-proposal-button';
 import {
   $filteredStreams,
   $selectedStream,
@@ -248,15 +249,15 @@ const ExpandedStreamCard = ({stream}: {stream: RoketoStream}) => {
   );
 };
 
-const Placeholder = ({onCreateStreamClick}: {onCreateStreamClick(): void}) => {
+const Placeholder = () => {
   const {streamsLoading, hasStreams} = useStore($streamListData);
   if (streamsLoading) return <Spinner wrapperClassName={styles.loader} />;
   if (!hasStreams) {
     return (
-      <>
-        <div>You don't have any streams yet.</div>
-        <Button onClick={onCreateStreamClick}>Create First Stream</Button>
-      </>
+      <EmptyProposalList
+        createProposalComponent={<CreateStreamProposalButton className='mx-auto' />}
+        isDefaultFiltersValue
+      />
     );
   }
   return <div>No streams matching your filters. Try selecting different ones</div>;
@@ -277,28 +278,29 @@ const StreamRow = (stream: RoketoStream) => {
   );
 };
 
-export const StreamsList = ({
-  onCreateStreamClick,
-  className,
-}: {
-  onCreateStreamClick: () => void;
-  className: string;
-}) => (
-  <div className={clsx(styles.container, className)}>
-    <section className={styles.streamGrid}>
-      <h3 className={clsx(styles.leftStickyCell, styles.title)}>Amount to stream</h3>
-      <h3 className={styles.title}>Wallet address</h3>
-      <h3 className={styles.title}>Comment</h3>
+export const StreamsList = ({className}: {className?: string}) => {
+  const filteredStreams = useStore($filteredStreams);
+  return (
+    <div className={clsx(styles.container, className)}>
+      <section className={styles.streamGrid}>
+        {filteredStreams.length !== 0 && (
+          <>
+            <h3 className={clsx(styles.leftStickyCell, styles.title)}>Amount to stream</h3>
+            <h3 className={styles.title}>Wallet address</h3>
+            <h3 className={styles.title}>Comment</h3>
+          </>
+        )}
 
-      {useList($filteredStreams, {
-        getKey: ({id}) => id,
-        fn: StreamRow,
-        placeholder: (
-          <div className={styles.emptyState}>
-            <Placeholder onCreateStreamClick={onCreateStreamClick} />
-          </div>
-        ),
-      })}
-    </section>
-  </div>
-);
+        {useList($filteredStreams, {
+          getKey: ({id}) => id,
+          fn: StreamRow,
+          placeholder: (
+            <div className={styles.emptyState}>
+              <Placeholder />
+            </div>
+          ),
+        })}
+      </section>
+    </div>
+  );
+};
