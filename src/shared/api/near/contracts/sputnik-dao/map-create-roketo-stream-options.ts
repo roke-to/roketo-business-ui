@@ -34,7 +34,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
       description: encodeDescription({
         description: formData.description,
         link: formData.link,
-        variant: 'ProposeCustomFunctionCall',
+        variant: 'ProposeCreateRoketoStream',
       }),
       kind: {
         FunctionCall: {

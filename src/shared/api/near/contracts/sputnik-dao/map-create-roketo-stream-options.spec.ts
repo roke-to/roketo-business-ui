@@ -25,7 +25,7 @@ describe('mapCreateRoketoStreamOptions', () => {
       methodName: 'add_proposal',
       args: {
         proposal: {
-          description: 'test stream$$$$link$$$$ProposeCustomFunctionCall',
+          description: 'test stream$$$$link$$$$ProposeCreateRoketoStream',
           kind: {
             FunctionCall: {
               receiver_id: 'wrap.testnet',
