@@ -6,6 +6,7 @@ import {$currentDaoId, $isSignedIn} from '~/entities/wallet';
 import {DaoPage} from '~/pages/dao';
 import {DaoNewPage} from '~/pages/dao-new';
 import {DashboardPage} from '~/pages/dashboard';
+import {EmployeePage} from '~/pages/employee';
 import {EmployeesPage} from '~/pages/employees';
 import {GovernancePage} from '~/pages/governance';
 import {LoginPage} from '~/pages/login';
@@ -85,6 +86,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <EmployeesPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.employee.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <EmployeePage />
         </PrivateRoute>
 
         <PrivateRoute
