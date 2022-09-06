@@ -50,14 +50,13 @@ const loadEmployeesFx = attach({
       direction?: 'ASC' | 'DESC';
     } = {};
 
-    // TODO ждёт фикса в API
-    /*    if (sort === 'name') {
+    if (sort === 'name') {
       query.sort = 'name';
       query.direction = 'ASC';
     } else {
       query.sort = 'id';
       query.direction = 'DESC';
-    } */
+    }
 
     if (statusFilter !== 'all') {
       query.status = statusFilter;
