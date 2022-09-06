@@ -5,7 +5,6 @@ import {useTranslation} from 'react-i18next';
 
 import {Button} from '~/shared/ui/components/button';
 import {IconButton} from '~/shared/ui/components/icon-button';
-import {Layout} from '~/shared/ui/components/layout';
 import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
 import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
@@ -20,7 +19,7 @@ import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
 
-export const EmployeesPage = () => {
+export const Employees = () => {
   const {t} = useTranslation('employees');
   const addEmployeeModal = useModal();
 
@@ -37,7 +36,7 @@ export const EmployeesPage = () => {
   const handleViewTypeChange = (payload: ViewType) => setViewType(payload);
 
   return (
-    <Layout>
+    <>
       <Row>
         <Button onClick={addEmployeeModal.show}>{t('addEmployee.button')}</Button>
         <AddEmployeeModal
@@ -108,6 +107,6 @@ export const EmployeesPage = () => {
           return <EmployeeListItem employee={employee} key={employee.id} />;
         })}
       </div>
-    </Layout>
+    </>
   );
 };
