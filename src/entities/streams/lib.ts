@@ -1,8 +1,8 @@
 import * as nearApi from 'near-api-js';
 import {BigNumber} from 'bignumber.js';
+import BN from 'bn.js';
 import {Get} from 'type-fest';
 
-import {DEFAULT_FUNCTION_CALL_GAS_BN} from '~/shared/api/near/contracts/contract.constants';
 import {mapCreateRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/map-create-roketo-stream-options';
 import type {PriceOracle} from '~/shared/api/price-oracle';
 import {toHumanReadableValue} from '~/shared/api/token-formatter';
@@ -223,6 +223,7 @@ export async function createStreamProposal({
 }) {
   const totalAmount = new BigNumber(deposit).plus(commissionOnCreate).toFixed(0);
   const transferPayload = {
+    balance: deposit,
     owner_id: accountId,
     receiver_id: receiverId,
     tokens_per_sec: tokensPerSec,
@@ -263,7 +264,7 @@ export async function createStreamProposal({
           params: {
             methodName: 'near_deposit',
             args: {},
-            gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+            gas: new BN(30 * 10 ** 12).toString(),
             // minimal deposit is 0.1 NEAR
             deposit: new BigNumber(totalAmount).plus(depositSum).toFixed(0),
           },
@@ -285,7 +286,7 @@ export async function createStreamProposal({
                 account_id: accountIdForStorageDep,
                 registration_only: true,
               },
-              gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+              gas: new BN(30 * 10 ** 12).toString(),
               deposit: depositAmount,
             },
           },

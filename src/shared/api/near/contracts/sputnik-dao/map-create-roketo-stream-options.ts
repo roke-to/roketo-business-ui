@@ -19,7 +19,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
     description?: string;
     owner_id: string;
     receiver_id: string;
-    balance?: string;
+    balance: string;
     tokens_per_sec: string;
     cliff_period_sec?: number;
     is_auto_start_enabled?: boolean;
@@ -34,6 +34,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
       description: encodeDescription({
         description: formData.description,
         link: formData.link,
+        variant: 'ProposeCustomFunctionCall',
       }),
       kind: {
         FunctionCall: {
@@ -51,7 +52,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
                   },
                 }),
               }),
-              gas: new BN(150 * 10 ** 12).toString(), // 150 TGas,
+              gas: new BN(100 * 10 ** 12).toString(), // 100 TGas,
               deposit: '1',
             },
           ],

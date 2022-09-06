@@ -11,6 +11,7 @@ describe('mapCreateRoketoStreamOptions', () => {
       totalAmount: '110000000000000000000000',
       link: 'link',
       transferPayload: {
+        balance: '100000000000000',
         description: '',
         owner_id: 'testchangepolicy.sputnikv2.testnet',
         receiver_id: 'barsik.testnet',
@@ -24,7 +25,7 @@ describe('mapCreateRoketoStreamOptions', () => {
       methodName: 'add_proposal',
       args: {
         proposal: {
-          description: 'test stream$$$$link',
+          description: 'test stream$$$$link$$$$ProposeCustomFunctionCall',
           kind: {
             FunctionCall: {
               receiver_id: 'wrap.testnet',
@@ -38,18 +39,19 @@ describe('mapCreateRoketoStreamOptions', () => {
                     msg: JSON.stringify({
                       Create: {
                         request: {
+                          balance: '100000000000000',
+                          description: '',
                           owner_id: 'testchangepolicy.sputnikv2.testnet',
                           receiver_id: 'barsik.testnet',
                           tokens_per_sec: '2777777777777777777.8',
-                          description: '',
-                          is_expirable: true,
                           is_auto_start_enabled: true,
+                          is_expirable: true,
                         },
                       },
                     }),
                   }),
                   deposit: '1',
-                  gas: '150000000000000',
+                  gas: '100000000000000',
                 },
               ],
             },
