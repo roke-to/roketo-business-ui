@@ -3,21 +3,20 @@ import {useGate, useStore} from 'effector-react';
 import React, {ReactNode} from 'react';
 import {useParams} from 'react-router-dom';
 
-import {AddFunds} from '~/features/add-funds';
-import {StreamControls} from '~/features/stream-control/StreamControls';
-import {WithdrawButton} from '~/features/stream-control/WithdrawButton';
+import {AddFunds} from '~/entities/steam-add-funds';
+import {StreamControls} from '~/entities/stream-control/StreamControls';
+import {WithdrawButton} from '~/entities/stream-control/WithdrawButton';
 import {useMediaQuery} from '~/shared/hooks/useMatchQuery';
 import {ColorDot} from '~/shared/kit/ColorDot';
 import {Badge} from '~/shared/roketo-ui/Badge';
 import {CopyLinkButton} from '~/shared/roketo-ui/components/CopyLinkButton';
 import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
 import {PageError} from '~/shared/roketo-ui/PageError';
-import {Layout as AppLayout} from '~/shared/ui/components/layout';
 
 import {$loading, $pageError, $stream, $streamInfo, pageGate} from './model';
 import styles from './styles.module.scss';
 
-function StreamPageContent() {
+export function StreamPageContent() {
   const {id} = useParams() as {id: string};
   useGate(pageGate, id);
   const loading = useStore($loading);
@@ -190,9 +189,3 @@ function BlockLarge({
     </div>
   );
 }
-
-export const StreamPage = () => (
-  <AppLayout>
-    <StreamPageContent />
-  </AppLayout>
-);

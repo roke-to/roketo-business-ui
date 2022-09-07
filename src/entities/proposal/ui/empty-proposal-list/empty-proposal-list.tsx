@@ -1,8 +1,6 @@
-import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$isMobileScreen} from '~/entities/screens';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './empty-proposal-list.module.css';
@@ -27,10 +25,9 @@ export const EmptyProposalList = ({
   createProposalComponent: React.ReactNode;
 }) => {
   const {t} = useTranslation('proposal');
-  const isMobileWidth = useStore($isMobileScreen);
 
   const text = isDefaultFiltersValue ? <TextEmptyProposalList /> : t('emptySearchProposalList');
-  const showCreateButton = isDefaultFiltersValue || isMobileWidth;
+  const showCreateButton = isDefaultFiltersValue;
 
   return (
     <div className={styles.container}>

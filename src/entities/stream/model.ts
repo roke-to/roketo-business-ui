@@ -2,6 +2,7 @@ import {isPast} from 'date-fns';
 import {combine, createEffect, createEvent, createStore, sample, split} from 'effector';
 import {createGate} from 'effector-react';
 
+import {getStreamingSpeed} from '~/entities/create-stream/lib';
 import {
   $accountId,
   $priceOracle,
@@ -9,7 +10,6 @@ import {
   $tokens,
   lastCreatedStreamUpdated,
 } from '~/entities/wallet';
-import {getStreamingSpeed} from '~/features/create-stream/lib';
 import {STREAM_STATUS, StreamDirection} from '~/shared/api/roketo/constants';
 import {formatAmount, formatSmartly, toHumanReadableValue} from '~/shared/api/token-formatter';
 import {getStreamLink} from '~/shared/config/routes';

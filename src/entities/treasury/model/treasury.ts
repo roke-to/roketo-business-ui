@@ -72,7 +72,7 @@ const loadTreasuryProposalsFx = attach({
   },
   async effect({daoId, accountId, status, kind, sort}) {
     const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [{kind: {$cont: 'Transfer'}}, {kind: {$cont: 'FunctionCall'}}],
+      $or: [{kind: {$cont: 'FunctionCall'}}],
     };
 
     const search: SFields | SConditionAND = {

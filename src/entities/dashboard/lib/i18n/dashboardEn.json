@@ -2,5 +2,8 @@
   "treasury": "Treasury",
   "manageTreasury": "Manage treasury",
   "daoManagment": "DAO managment",
-  "manageDao": "Manage DAO"
+  "manageDao": "Manage DAO",
+  "streams": "Streams",
+  "proposeStream": "Propose a stream",
+  "manageStreams": "Manage streams"
 }

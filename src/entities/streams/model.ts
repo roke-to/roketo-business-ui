@@ -2,6 +2,9 @@ import {isPast} from 'date-fns';
 import {combine, createEffect, createEvent, createStore, sample} from 'effector';
 import {generatePath} from 'react-router-dom';
 
+import {colorDescriptions} from '~/entities/create-stream/constants';
+import type {FormValues} from '~/entities/create-stream/constants';
+import {getTokensPerSecondCount} from '~/entities/create-stream/lib';
 import {$isMobileScreen} from '~/entities/screens';
 import {
   $accountStreams,
@@ -11,9 +14,6 @@ import {
   $roketoWallet,
   $tokens,
 } from '~/entities/wallet';
-import {colorDescriptions} from '~/features/create-stream/constants';
-import type {FormValues} from '~/features/create-stream/constants';
-import {getTokensPerSecondCount} from '~/features/create-stream/lib';
 import {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {
   formatSmartly,
