@@ -1,6 +1,5 @@
 import * as nearApi from 'near-api-js';
 import {BigNumber} from 'bignumber.js';
-import BN from 'bn.js';
 import {Get} from 'type-fest';
 
 import {mapCreateRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/map-create-roketo-stream-options';
@@ -124,17 +123,7 @@ export function getTextFilter(accountId: string | null, text: string): FilterFn 
   return null;
 }
 
-export const STORAGE_DEPOSIT = '0.0025';
-
-export function isWNearTokenId({
-  tokenAccountId,
-  wNearId,
-}: {
-  tokenAccountId: string;
-  wNearId: string;
-}) {
-  return tokenAccountId === wNearId;
-}
+const STORAGE_DEPOSIT = '0.0025';
 
 async function isRegistered({
   accountId,
@@ -147,7 +136,7 @@ async function isRegistered({
   return res && res.total !== '0';
 }
 
-export async function countStorageDeposit({
+async function countStorageDeposit({
   tokenContract,
   storageDepositAccountIds,
   roketoContractName,
@@ -255,45 +244,9 @@ export async function createStreamProposal({
     financeContractName,
   });
 
-  if (isWNearTokenId({tokenAccountId, wNearId})) {
-    transactions.push({
-      receiverId: wNearId,
-      actions: [
-        {
-          type: 'FunctionCall',
-          params: {
-            methodName: 'near_deposit',
-            args: {},
-            gas: new BN(30 * 10 ** 12).toString(),
-            // minimal deposit is 0.1 NEAR
-            deposit: new BigNumber(totalAmount).plus(depositSum).toFixed(0),
-          },
-        },
-      ],
-    });
-  }
-
-  storageDepositAccountIds.forEach((accountIdForStorageDep, index) => {
-    if (!isRegisteredAccountIds[index]) {
-      transactions.push({
-        receiverId: tokenAccountId,
-        actions: [
-          {
-            type: 'FunctionCall',
-            params: {
-              methodName: 'storage_deposit',
-              args: {
-                account_id: accountIdForStorageDep,
-                registration_only: true,
-              },
-              gas: new BN(30 * 10 ** 12).toString(),
-              deposit: depositAmount,
-            },
-          },
-        ],
-      });
-    }
-  });
+  const filteredStorageDepositAccountIds = storageDepositAccountIds.filter(
+    (accountIdForStorageDep, index) => !isRegisteredAccountIds[index],
+  );
 
   transactions.push({
     receiverId: currentDaoId,
@@ -307,6 +260,10 @@ export async function createStreamProposal({
           roketoContractName,
           totalAmount,
           transferPayload,
+          wNearId,
+          depositSum,
+          depositAmount,
+          storageDepositAccountIds: filteredStorageDepositAccountIds,
         }),
       },
     ],
