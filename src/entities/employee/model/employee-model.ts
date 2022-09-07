@@ -5,6 +5,11 @@ import {validators} from '~/shared/lib/form/validators';
 import {Employee} from '~/shared/types/employee';
 
 export const pageLoaded = createEvent<string>();
+const loadEmployeeFx = createEffect((data: string) => console.log({data}));
+sample({
+  source: pageLoaded,
+  target: loadEmployeeFx,
+});
 
 export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
 export const addEmployeeForm = createForm<AddEmployeeFormFields>({
