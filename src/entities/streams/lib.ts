@@ -123,7 +123,7 @@ export function getTextFilter(accountId: string | null, text: string): FilterFn 
   return null;
 }
 
-export const STORAGE_DEPOSIT = '0.0025';
+const STORAGE_DEPOSIT = '0.0025';
 
 async function isRegistered({
   accountId,
@@ -136,7 +136,7 @@ async function isRegistered({
   return res && res.total !== '0';
 }
 
-export async function countStorageDeposit({
+async function countStorageDeposit({
   tokenContract,
   storageDepositAccountIds,
   roketoContractName,
