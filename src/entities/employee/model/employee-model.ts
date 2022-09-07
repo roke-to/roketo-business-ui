@@ -1,11 +1,12 @@
-import {createEffect, sample} from 'effector';
+import {createEffect, createEvent, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
 import {validators} from '~/shared/lib/form/validators';
 import {Employee} from '~/shared/types/employee';
 
-export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
+export const pageLoaded = createEvent<string>();
 
+export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
 export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
     type: {
@@ -52,9 +53,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   },
   validateOn: ['submit'],
 });
-
 export const addEmployeeFx = createEffect((data: AddEmployeeFormFields) => console.log({...data}));
-
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,
