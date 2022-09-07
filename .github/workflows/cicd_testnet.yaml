@@ -114,13 +114,13 @@ jobs:
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "##[set-output name=app_name;]$(echo $APP)"
             echo "##[set-output name=app_hostname;]$(echo $APP.germes.roke.to)"
-            echo "##[set-output name=app_tag;]$(echo $main-$SHORT_SHA)"
+            echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
           elif [ "$TAG_NAME" != "" ]; then
-            echo "##[set-output name=app_tag;]$(echo $main-$TAG_NAME)"
+            echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
           else
             echo "##[set-output name=app_name;]$(echo $APP-branch-$GIT_BRANCH)"
             echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.germes.roke.to)"
-            echo "##[set-output name=app_tag;]$(echo $branch-$GIT_BRANCH-$SHORT_SHA)"
+            echo "##[set-output name=app_tag;]$(echo branch-$GIT_BRANCH-$SHORT_SHA)"
           fi
         id: set_env
       - name: copy file via ssh password
@@ -150,14 +150,11 @@ jobs:
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
+            curl -H "Content-type:\ application/json" -X POST https://hooks.slack.com/services/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 --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }}'}
           host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           args: "-tt"
-      - name: curl
-        uses: wei/curl@master
-        with:
-          args: -H "Content-type:\ application/json" -X POST https://hooks.slack.com/services/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 --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }}'}
 
   success:
     needs:
