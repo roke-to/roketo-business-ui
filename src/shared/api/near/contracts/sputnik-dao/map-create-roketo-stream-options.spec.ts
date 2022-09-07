@@ -1,3 +1,5 @@
+import {BigNumber} from 'bignumber.js';
+
 import {jsonToBase64} from '~/shared/lib/base64';
 
 import {mapCreateRoketoStreamOptions} from './map-create-roketo-stream-options';
@@ -19,6 +21,8 @@ describe('mapCreateRoketoStreamOptions', () => {
         is_auto_start_enabled: true,
         is_expirable: true,
       },
+      wNearId: 'wrap.testnet',
+      depositSum: new BigNumber(30 * 10 ** 12),
     });
 
     expect(options).toMatchObject({
@@ -30,6 +34,12 @@ describe('mapCreateRoketoStreamOptions', () => {
             FunctionCall: {
               receiver_id: 'wrap.testnet',
               actions: [
+                {
+                  method_name: 'near_deposit',
+                  args: 'e30=',
+                  deposit: '110000000030000000000000',
+                  gas: '30000000000000',
+                },
                 {
                   method_name: 'ft_transfer_call',
                   args: jsonToBase64({

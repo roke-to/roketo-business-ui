@@ -1,12 +1,12 @@
 import * as nearApi from 'near-api-js';
 import {BigNumber} from 'bignumber.js';
-import BN from 'bn.js';
 
 import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
 import {encodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
+import {isWNearTokenId} from '~/shared/api/near/is-wrap-near-token-id';
 import {jsonToBase64} from '~/shared/lib/base64';
 
 export const mapCreateRoketoStreamOptions = (formData: {
@@ -26,6 +26,8 @@ export const mapCreateRoketoStreamOptions = (formData: {
     is_expirable?: boolean;
     is_locked?: boolean;
   };
+  wNearId: string;
+  depositSum: BigNumber;
 }) => ({
   methodName: 'add_proposal',
   args: {
@@ -40,6 +42,16 @@ export const mapCreateRoketoStreamOptions = (formData: {
         FunctionCall: {
           receiver_id: formData.tokenAccountId,
           actions: [
+            isWNearTokenId({
+              tokenAccountId: formData.tokenAccountId,
+              wNearId: formData.wNearId,
+            }) && {
+              method_name: 'near_deposit',
+              args: jsonToBase64({}),
+              gas: new BigNumber(30 * 10 ** 12).toString(),
+              // minimal deposit is 0.1 NEAR
+              deposit: new BigNumber(formData.totalAmount).plus(formData.depositSum).toFixed(0),
+            },
             {
               method_name: 'ft_transfer_call',
               args: jsonToBase64({
@@ -52,7 +64,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
                   },
                 }),
               }),
-              gas: new BN(100 * 10 ** 12).toString(), // 100 TGas,
+              gas: new BigNumber(100 * 10 ** 12).toString(), // 100 TGas,
               deposit: '1',
             },
           ],
