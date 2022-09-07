@@ -192,6 +192,7 @@ export enum ProposalVariant {
   ProposePoll = 'ProposePoll',
   ProposeDefault = 'ProposeDefault',
   ProposeCustomFunctionCall = 'ProposeCustomFunctionCall',
+  ProposeCreateRoketoStream = 'ProposeCreateRoketoStream',
   ProposeCreateToken = 'ProposeCreateToken',
   ProposeTokenDistribution = 'ProposeTokenDistribution',
   ProposeStakingContractDeployment = 'ProposeStakingContractDeployment',

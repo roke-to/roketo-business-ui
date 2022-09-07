@@ -1,8 +1,15 @@
+import * as nearApi from 'near-api-js';
 import {BigNumber} from 'bignumber.js';
+import BN from 'bn.js';
+import {Get} from 'type-fest';
 
+import {mapCreateRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/map-create-roketo-stream-options';
 import type {PriceOracle} from '~/shared/api/price-oracle';
 import {toHumanReadableValue} from '~/shared/api/token-formatter';
+import {FTContract} from '~/shared/api/types';
 
+import {WalletSelector} from '@near-wallet-selector/core';
+import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {getAvailableToWithdraw, getStreamProgress, parseComment} from '@roketo/sdk';
 import type {RichToken, RoketoStream} from '@roketo/sdk/dist/types';
 
@@ -115,4 +122,198 @@ export function getTextFilter(accountId: string | null, text: string): FilterFn 
     };
   }
   return null;
+}
+
+export const STORAGE_DEPOSIT = '0.0025';
+
+export function isWNearTokenId({
+  tokenAccountId,
+  wNearId,
+}: {
+  tokenAccountId: string;
+  wNearId: string;
+}) {
+  return tokenAccountId === wNearId;
+}
+
+async function isRegistered({
+  accountId,
+  tokenContract,
+}: {
+  accountId: string;
+  tokenContract: FTContract;
+}) {
+  const res = await tokenContract.storage_balance_of({account_id: accountId});
+  return res && res.total !== '0';
+}
+
+export async function countStorageDeposit({
+  tokenContract,
+  storageDepositAccountIds,
+  roketoContractName,
+  financeContractName,
+}: {
+  tokenContract: FTContract;
+  storageDepositAccountIds: Array<string>;
+  roketoContractName: string;
+  financeContractName: string;
+}) {
+  const allAccountIds = [...storageDepositAccountIds, roketoContractName, financeContractName];
+
+  const isRegisteredAccountIds = await Promise.all(
+    allAccountIds.map((accountId) => isRegistered({accountId, tokenContract})),
+  );
+
+  let depositSum = new BigNumber(0);
+  /** account creation costs 0.0025 NEAR for storage */
+  const depositAmount = nearApi.utils.format.parseNearAmount(STORAGE_DEPOSIT)!;
+
+  allAccountIds.forEach((accountId, index) => {
+    if (!isRegisteredAccountIds[index]) depositSum = depositSum.plus(depositAmount);
+  });
+
+  return {
+    isRegisteredAccountIds,
+    depositSum,
+    depositAmount,
+  };
+}
+
+export async function createStreamProposal({
+  currentDaoId,
+  comment,
+  deposit,
+  receiverId,
+  tokenAccountId,
+  commissionOnCreate,
+  tokensPerSec,
+  cliffPeriodSec,
+  delayed = false,
+  isExpirable,
+  isLocked,
+  callbackUrl,
+  color,
+  accountId,
+  tokenContract,
+  roketoContractName,
+  wNearId,
+  financeContractName,
+  walletSelector,
+}: {
+  currentDaoId: string;
+  comment: string;
+  deposit: string;
+  commissionOnCreate: string;
+  receiverId: string;
+  tokenAccountId: string;
+  tokensPerSec: string;
+  name?: string;
+  cliffPeriodSec?: number;
+  delayed?: boolean;
+  isExpirable?: boolean;
+  isLocked?: boolean;
+  callbackUrl?: string;
+  color: string | null;
+  accountId: string;
+  tokenContract: FTContract;
+  roketoContractName: string;
+  wNearId: string;
+  financeContractName: string;
+  walletSelector: WalletSelector;
+}) {
+  const totalAmount = new BigNumber(deposit).plus(commissionOnCreate).toFixed(0);
+  const transferPayload = {
+    balance: deposit,
+    owner_id: accountId,
+    receiver_id: receiverId,
+    tokens_per_sec: tokensPerSec,
+    cliff_period_sec: cliffPeriodSec,
+    is_locked: isLocked,
+    is_auto_start_enabled: !delayed,
+    is_expirable: isExpirable,
+  };
+  if (color || comment.length > 0) {
+    const description: {c?: string; col?: string} = {};
+    if (color) description.col = color;
+    if (comment.length > 0) description.c = comment;
+    // @ts-expect-error
+    transferPayload.description = JSON.stringify(description);
+  }
+
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [];
+
+  const wallet = await walletSelector.wallet();
+
+  const storageDepositAccountIds = [transferPayload.owner_id, transferPayload.receiver_id];
+
+  const {isRegisteredAccountIds, depositSum, depositAmount} = await countStorageDeposit({
+    tokenContract,
+    storageDepositAccountIds,
+    roketoContractName,
+    financeContractName,
+  });
+
+  if (isWNearTokenId({tokenAccountId, wNearId})) {
+    transactions.push({
+      receiverId: wNearId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: {
+            methodName: 'near_deposit',
+            args: {},
+            gas: new BN(30 * 10 ** 12).toString(),
+            // minimal deposit is 0.1 NEAR
+            deposit: new BigNumber(totalAmount).plus(depositSum).toFixed(0),
+          },
+        },
+      ],
+    });
+  }
+
+  storageDepositAccountIds.forEach((accountIdForStorageDep, index) => {
+    if (!isRegisteredAccountIds[index]) {
+      transactions.push({
+        receiverId: tokenAccountId,
+        actions: [
+          {
+            type: 'FunctionCall',
+            params: {
+              methodName: 'storage_deposit',
+              args: {
+                account_id: accountIdForStorageDep,
+                registration_only: true,
+              },
+              gas: new BN(30 * 10 ** 12).toString(),
+              deposit: depositAmount,
+            },
+          },
+        ],
+      });
+    }
+  });
+
+  transactions.push({
+    receiverId: currentDaoId,
+    actions: [
+      {
+        type: 'FunctionCall',
+        params: mapCreateRoketoStreamOptions({
+          description: '',
+          link: '',
+          tokenAccountId,
+          roketoContractName,
+          totalAmount,
+          transferPayload,
+        }),
+      },
+    ],
+  });
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
 }

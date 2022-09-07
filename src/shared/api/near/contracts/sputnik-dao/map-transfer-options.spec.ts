@@ -14,7 +14,7 @@ describe('mapTransferOptions', () => {
     expect(options).toMatchObject({
       args: {
         proposal: {
-          description: 'description$$$$link$$$$ProposeTransfer',
+          description: 'description$$$$link',
           kind: {
             Transfer: {
               token_id: 'near',
