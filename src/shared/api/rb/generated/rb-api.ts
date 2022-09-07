@@ -317,28 +317,13 @@ export class HttpClient<SecurityDataType = unknown> {
  * @contact
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  app = {
-    /**
-     * No description
-     *
-     * @name AppControllerGetHello
-     * @request GET:/app
-     * @response `200` `string`
-     */
-    appControllerGetHello: (params: RequestParams = {}) =>
-      this.request<string, any>({
-        path: `/app`,
-        method: 'GET',
-        format: 'json',
-        ...params,
-      }),
-  };
   dao = {
     /**
      * No description
      *
      * @name DaoControllerCreateDao
      * @request POST:/dao
+     * @secure
      * @response `201` `object`
      */
     daoControllerCreateDao: (data: CreateDaoDto, params: RequestParams = {}) =>
@@ -346,6 +331,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/dao`,
         method: 'POST',
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: 'json',
         ...params,
@@ -356,12 +342,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerFindOneDao
      * @request GET:/dao/{daoId}
+     * @secure
      * @response `200` `Dao`
      */
     daoControllerFindOneDao: (daoId: string, params: RequestParams = {}) =>
       this.request<Dao, any>({
         path: `/dao/${daoId}`,
         method: 'GET',
+        secure: true,
         format: 'json',
         ...params,
       }),
@@ -371,12 +359,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerRemoveDao
      * @request DELETE:/dao/{daoId}
+     * @secure
      * @response `200` `void`
      */
     daoControllerRemoveDao: (daoId: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/dao/${daoId}`,
         method: 'DELETE',
+        secure: true,
         ...params,
       }),
 
@@ -385,15 +375,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerFindAllEmployees
      * @request GET:/dao/{daoId}/employees
+     * @secure
      * @response `200` `(EmployeeResponseDto)[]` List of Employee
      */
     daoControllerFindAllEmployees: (
       daoId: string,
       query?: {
-        direction?: 'ASC' | 'DESC';
         sort?: 'name' | 'id';
-        status?: 'Active' | 'Suspended' | 'Fired';
+        direction?: 'ASC' | 'DESC';
         type?: 'Contractor' | 'Freelancer';
+        status?: 'Active' | 'Suspended' | 'Fired';
       },
       params: RequestParams = {},
     ) =>
@@ -401,6 +392,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/dao/${daoId}/employees`,
         method: 'GET',
         query: query,
+        secure: true,
         format: 'json',
         ...params,
       }),
@@ -410,6 +402,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerCreateEmployee
      * @request POST:/dao/{daoId}/employees
+     * @secure
      * @response `201` `(RelationDaoToEmployee)[]`
      */
     daoControllerCreateEmployee: (
@@ -421,6 +414,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/dao/${daoId}/employees`,
         method: 'POST',
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: 'json',
         ...params,
@@ -431,6 +425,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerUpdateEmployee
      * @request PATCH:/dao/{daoId}/employees/{employeeId}
+     * @secure
      * @response `200` `void`
      */
     daoControllerUpdateEmployee: (
@@ -443,6 +438,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'PATCH',
         body: data,
+        secure: true,
         type: ContentType.Json,
         ...params,
       }),
@@ -452,6 +448,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerFindOneEmployeeByDao
      * @request GET:/dao/{daoId}/employees/{employeeId}
+     * @secure
      * @response `200` `(EmployeeResponseDto)[]`
      */
     daoControllerFindOneEmployeeByDao: (
@@ -462,6 +459,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<EmployeeResponseDto[], any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'GET',
+        secure: true,
         format: 'json',
         ...params,
       }),
@@ -471,12 +469,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerRemoveEmployee
      * @request DELETE:/dao/{daoId}/employees/{employeeId}
+     * @secure
      * @response `200` `void`
      */
     daoControllerRemoveEmployee: (daoId: string, employeeId: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'DELETE',
+        secure: true,
         ...params,
       }),
 
@@ -485,12 +485,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerSuggestAllEmployees
      * @request GET:/dao/{daoId}/employees/suggest
+     * @secure
      * @response `200` `(object)[]`
      */
     daoControllerSuggestAllEmployees: (daoId: string, params: RequestParams = {}) =>
       this.request<object[], any>({
         path: `/dao/${daoId}/employees/suggest`,
         method: 'GET',
+        secure: true,
         format: 'json',
         ...params,
       }),
@@ -500,12 +502,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name DaoControllerGetTestDao
      * @request GET:/dao/secret/test-data
+     * @secure
      * @response `200` `(RelationDaoToEmployee)[]`
      */
     daoControllerGetTestDao: (params: RequestParams = {}) =>
       this.request<RelationDaoToEmployee[], any>({
         path: `/dao/secret/test-data`,
         method: 'GET',
+        secure: true,
         format: 'json',
         ...params,
       }),
@@ -516,12 +520,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @name EmployeeControllerRemoveEmployee
      * @request DELETE:/employee/{employeeId}
+     * @secure
      * @response `200` `void`
      */
     employeeControllerRemoveEmployee: (employeeId: string, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/employee/${employeeId}`,
         method: 'DELETE',
+        secure: true,
         ...params,
       }),
   };
