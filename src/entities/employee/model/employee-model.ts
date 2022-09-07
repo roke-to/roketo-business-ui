@@ -21,21 +21,23 @@ const loadEmployeeFx = attach({
       .then((response) => response.data); */
   },
 });
+// TBD: тут два сэмпла, потому что в первом возникает гонка, pageLoaded случился,
+// а $authenticationHeaders еще не засетились
+// TODO придумать решение получше
 sample({
-  source: pageLoaded,
+  clock: pageLoaded,
+  source: $authenticationHeaders,
+  filter: (sourceData) => Boolean(sourceData?.['x-authentication-api']),
+  fn: (sourceData, clockData) => clockData,
   target: loadEmployeeFx,
 });
-/* sample({
-  source: $authenticationHeaders,
-  clock: [pageLoaded, $statusFilter, $typeFilter, $sort],
-  filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
-  target: loadEmployeesFx,
-});
 sample({
-  source: $authenticationHeaders,
-  filter: () => window && window.location.pathname.includes(ROUTES.employees.path),
-  target: loadEmployeesFx,
+  clock: $authenticationHeaders,
+  source: pageLoaded,
+  filter: (sourceData, clockData) => Boolean(clockData?.['x-authentication-api']),
+  target: loadEmployeeFx,
 });
+/*
 sample({
   source: loadEmployeesFx.doneData,
   target: $employees,
