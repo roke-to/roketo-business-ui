@@ -186,8 +186,8 @@ export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStr
               </div>
               {tokenMeta && (
                 <div className={styles.feeDisclaimer}>
-                  {`You will be charged 
-                    ${formatAmount(tokenMeta.decimals, roketoMeta.commission_on_create)} 
+                  {`You will be charged
+                    ${formatAmount(tokenMeta.decimals, roketoMeta.commission_on_create)}
                     ${tokenMeta.symbol} fee for the stream`}
                 </div>
               )}
