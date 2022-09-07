@@ -1,46 +1,38 @@
 /* eslint-disable react/prop-types */
+import autosize from 'autosize';
 import clsx from 'clsx';
 import React from 'react';
-import {IMaskInput} from 'react-imask';
 import {Merge} from 'type-fest';
 
 import styles from './input.module.css';
-import {MaskOptions, maskTypes} from './mask-types';
 
-export type InputVariant = 'outlined';
+export type TextareaVariant = 'outlined';
 
-export type InputSize = 'md';
+export type TextareaSize = 'md';
 
 // Prefer extends, but override with Omit<..., 'size'> is clumsy
-export type InputProps = Merge<
-  React.InputHTMLAttributes<HTMLInputElement>,
+export type TextAreaProps = Merge<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   {
     className?: string;
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
-    variant?: InputVariant;
-    value?: string;
-    name?: string;
-    disabled?: boolean;
-    size?: InputSize;
-    mask?: keyof typeof maskTypes;
-    maskOptions?: MaskOptions;
-    postfix?: string;
+    variant?: TextareaVariant;
+    size?: TextareaSize;
     error?: boolean;
-    onChange?: (value: string, event?: React.ChangeEvent<HTMLInputElement>) => void;
+    multiline?: boolean;
+    onChange?: (value: string, event?: React.ChangeEvent<HTMLTextAreaElement>) => void;
   }
 >;
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
     {
-      type = 'text',
+      multiline,
       children,
       className,
       variant = 'outlined',
       size = 'md',
-      mask: maskType,
-      maskOptions,
       startIcon,
       endIcon,
       error,
@@ -65,24 +57,23 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [ref],
     );
 
-    const handleAccept = React.useCallback(
-      (value, mask, event) => onChange?.(mask.unmaskedValue, event),
+    const handleChange = React.useCallback(
+      (event) => onChange?.(event.target.value, event),
       [onChange],
     );
 
-    const maskProps = React.useMemo(
-      () => (maskType ? maskTypes[maskType]({...maskOptions, value: props.value}) : {}),
-      [maskType, maskOptions, props.value],
-    );
+    React.useEffect(() => {
+      autosize(currentRef.current!);
+
+      return () => autosize.destroy(currentRef.current!);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
-      // @ts-expect-error ref not matching
-      <IMaskInput
+      <textarea
         {...props}
-        {...maskProps}
         ref={handleRef}
-        type={type}
-        onAccept={handleAccept}
+        onChange={handleChange}
         className={clsx(
           styles.input,
           styles[size],
@@ -96,4 +87,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
-Input.displayName = 'Input';
+Textarea.displayName = 'Textarea';
