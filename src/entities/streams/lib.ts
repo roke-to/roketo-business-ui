@@ -237,12 +237,16 @@ export async function createStreamProposal({
 
   const storageDepositAccountIds = [transferPayload.owner_id, transferPayload.receiver_id];
 
-  const {depositSum} = await countStorageDeposit({
+  const {isRegisteredAccountIds, depositSum, depositAmount} = await countStorageDeposit({
     tokenContract,
     storageDepositAccountIds,
     roketoContractName,
     financeContractName,
   });
+
+  const filteredStorageDepositAccountIds = storageDepositAccountIds.filter(
+    (accountIdForStorageDep, index) => !isRegisteredAccountIds[index],
+  );
 
   transactions.push({
     receiverId: currentDaoId,
@@ -258,6 +262,8 @@ export async function createStreamProposal({
           transferPayload,
           wNearId,
           depositSum,
+          depositAmount,
+          storageDepositAccountIds: filteredStorageDepositAccountIds,
         }),
       },
     ],
