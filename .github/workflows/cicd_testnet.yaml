@@ -156,9 +156,9 @@ jobs:
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           args: "-tt"
       - name: curl
-          uses: wei/curl@master
-          with:
-            args: -X POST -H "Content-type:\ application/json" --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }} } "https://hooks.slack.com/services/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"
+        uses: wei/curl@master
+        with:
+          args: -X POST -H "Content-type:\ application/json" --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }} } "https://hooks.slack.com/services/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"
 
   success:
     needs:
