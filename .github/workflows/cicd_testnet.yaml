@@ -112,15 +112,15 @@ jobs:
           export SHORT_SHA=${{env.SHORT_SHA}}
           export GIT_BRANCH=${{env.GIT_BRANCH}}
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo "##[set-output name=app_name;]$(echo ${$APP})"
-            echo "##[set-output name=app_hostname;]$(echo ${$APP.germes.roke.to})"
-            echo "##[set-output name=app_tag;]$(echo ${main-$SHORT_SHA})"
+            echo "##[set-output name=app_name;]$(echo $$APP)"
+            echo "##[set-output name=app_hostname;]$(echo $$APP.germes.roke.to)"
+            echo "##[set-output name=app_tag;]$(echo $main-$SHORT_SHA)"
           elif [ "$TAG_NAME" != "" ]; then
-            echo "##[set-output name=app_tag;]$(echo ${main-$TAG_NAME})"
+            echo "##[set-output name=app_tag;]$(echo $main-$TAG_NAME)"
           else
-            echo "##[set-output name=app_name;]$(echo ${$APP-branch-$GIT_BRANCH})"
-            echo "##[set-output name=app_hostname;]$(echo ${$APP-branch-$GIT_BRANCH.germes.roke.to})"
-            echo "##[set-output name=app_tag;]$(echo ${branch-$GIT_BRANCH-$SHORT_SHA})"
+            echo "##[set-output name=app_name;]$(echo $$APP-branch-$GIT_BRANCH)"
+            echo "##[set-output name=app_hostname;]$(echo $$APP-branch-$GIT_BRANCH.germes.roke.to)"
+            echo "##[set-output name=app_tag;]$(echo $branch-$GIT_BRANCH-$SHORT_SHA)"
           fi
         id: set_env
       - name: copy file via ssh password
@@ -157,7 +157,7 @@ jobs:
       - name: curl
         uses: wei/curl@master
         with:
-          args: -X POST -H "Content-type:\ application/json" --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }}' } "https://hooks.slack.com/services/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"
+          args: -H "Content-type:\ application/json" -X POST https://hooks.slack.com/services/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 --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }}'}
 
   success:
     needs:
