@@ -13,15 +13,18 @@ import {Popover, Transition} from '@headlessui/react';
 
 import styles from './datepicker.module.css';
 
-interface Props extends InputProps {
-  value: string;
+// @ts-expect-err temp
+interface DatepickerProps extends InputProps {
+  className?: string;
+  name?: string;
+  value?: string;
   onChange: (value: string) => void;
   formatString?: string;
 }
 
-export const Datepicker: React.FC<Props> = ({
+export const Datepicker: React.FC<DatepickerProps> = ({
   className,
-  value,
+  value = '',
   onChange,
   formatString = 'dd/MM/yyyy',
   ...props
