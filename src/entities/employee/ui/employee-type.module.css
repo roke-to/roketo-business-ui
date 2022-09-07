@@ -1,0 +1,14 @@
+.Active {
+  color: theme('colors.green.default');
+  background-color: theme('colors.green.light');
+}
+
+.Suspended {
+  color: theme('colors.orange.default');
+  background-color: theme('colors.orange.light');
+}
+
+.Fired {
+  color: theme('colors.red.default');
+  background-color: theme('colors.red.light');
+}

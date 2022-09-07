@@ -6,6 +6,7 @@ import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 import * as employeeModel from '../model/employee-model';
+import {EmployeeType} from './employee-type';
 
 export const Employee: React.FC = () => {
   const employee = useStore(employeeModel.$employee);
@@ -13,10 +14,13 @@ export const Employee: React.FC = () => {
     <>
       <Row>
         <Col className='basis-3/4'>
-          <Typography as='h2' font='heading'>
-            {employee?.name}
-          </Typography>
-          <span>type</span>
+          <Row align='center' gap='sm'>
+            <Typography as='h2' font='heading'>
+              {employee?.name}
+            </Typography>
+            {employee && <EmployeeType type={employee.type} status={employee.status} />}
+          </Row>
+
           <span>position</span>
           <span>wallet address</span>
           <span>e-mail</span>

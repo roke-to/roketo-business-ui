@@ -47,7 +47,7 @@
   align-items: center;
   padding-left: theme('gap.md');
 
-  @apply text-heading font-heading text-orange;
+  @apply text-heading font-heading text-orange-default;
   /* TODO: remove 900 from index.html after normal logo will be */
   font-weight: 900;
 
