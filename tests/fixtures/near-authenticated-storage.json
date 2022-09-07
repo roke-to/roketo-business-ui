@@ -6,23 +6,23 @@
       "localStorage": [
         {
           "name": "_4:wallet:accounts_v2",
-          "value": "{\"rocketotestuser.testnet\":true}"
+          "value": "{\"rocketobiztestuser.testnet\":true}"
         },
         {
           "name": "languageCode",
           "value": "ru"
         },
         {
-          "name": "nearlib:keystore:rocketotestuser.testnet:default",
-          "value": "ed25519:2hQJ7LdCA7qWGaHGEVdhAZ1roLjLkHLmGQSCZpKsw64XKMAkuEUELgmdLVwyUMcox9e963i6kvXCR9CHs7qhHtaq"
+          "name": "nearlib:keystore:rocketobiztestuser.testnet:default",
+          "value": "ed25519:5HjirJSh9eQr16J3juZEE3mZiXwWAq8VVTuGXfyf8aeJPiU8BqkvG8q3ESVNDrpPa6TxU5mQU5Ex31A1g1EmMfas"
+        },
+        {
+          "name": "wallet.account:rocketobiztestuser.testnet:default:confirmed",
+          "value": "true"
         },
         {
           "name": "_4:wallet:active_account_id_v2",
-          "value": "rocketotestuser.testnet"
-        },
-        {
-          "name": "wallet.account:rocketotestuser.testnet:default:confirmed",
-          "value": "true"
+          "value": "rocketobiztestuser.testnet"
         }
       ]
     }
