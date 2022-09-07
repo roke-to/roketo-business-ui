@@ -14,7 +14,7 @@ import * as employeesModel from '../model/employees-model';
 import {AddEmployeeModal} from './add-employee-modal';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
-import styles from './employees-page.module.css';
+import styles from './employees.module.css';
 import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
