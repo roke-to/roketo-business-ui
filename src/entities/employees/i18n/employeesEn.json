@@ -65,5 +65,31 @@
       "submit": "Add",
       "abort": "Cancel"
     }
+  },
+  "filters": {
+    "status": {
+      "title": "Status",
+      "values": {
+        "all": "All employees",
+        "Active": "Active",
+        "Suspended": "Suspended",
+        "Fired": "Fired"
+      }
+    },
+    "type": {
+      "title": "Type",
+      "values": {
+        "all": "Any type",
+        "Contractor": "Contractor",
+        "Freelancer": "Freelancer"
+      }
+    }
+  },
+  "sort": {
+    "title": "Sort",
+    "values": {
+      "name": "Name",
+      "id": "Last added"
+    }
   }
 }

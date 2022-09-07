@@ -15,3 +15,12 @@
     }
   }
 }
+
+.viewTypeIcon {
+  fill: theme('colors.blue.light');
+
+  &.active,
+  &:hover {
+    fill: theme('colors.blue.dark');
+  }
+}

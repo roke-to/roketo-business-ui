@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {Governance} from '~/entities/governance';
+import {Employees} from '~/entities/employees';
 import {Layout} from '~/shared/ui/components/layout';
 
-export const GovernancePage = () => (
+export const EmployeesPage = () => (
   <Layout>
-    <Governance />
+    <Employees />
   </Layout>
 );
