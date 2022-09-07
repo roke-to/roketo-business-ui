@@ -6,7 +6,6 @@ import {
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
 import {encodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
-import {isWNearTokenId} from '~/shared/api/near/is-wrap-near-token-id';
 import {jsonToBase64} from '~/shared/lib/base64';
 
 export const mapCreateRoketoStreamOptions = (formData: {
@@ -31,14 +30,14 @@ export const mapCreateRoketoStreamOptions = (formData: {
   depositAmount: string;
   storageDepositAccountIds: string[];
 }) => {
-  const isWNearToken = isWNearTokenId({
-    tokenAccountId: formData.tokenAccountId,
-    wNearId: formData.wNearId,
-  });
+  const isNearToken = formData.tokenAccountId === 'NEAR';
+
+  const notNearTokens =
+    formData.tokenAccountId !== 'NEAR' && formData.tokenAccountId !== formData.wNearId;
 
   const actions = [];
 
-  if (isWNearToken) {
+  if (isNearToken) {
     actions.push({
       method_name: 'near_deposit',
       args: jsonToBase64({}),
@@ -46,7 +45,9 @@ export const mapCreateRoketoStreamOptions = (formData: {
       // minimal deposit is 0.1 NEAR
       deposit: new BigNumber(formData.totalAmount).plus(formData.depositSum).toFixed(0),
     });
-  } else {
+  }
+
+  if (notNearTokens) {
     formData.storageDepositAccountIds.forEach((accountIdForStorageDep) => {
       actions.push({
         method_name: 'storage_deposit',
@@ -73,7 +74,7 @@ export const mapCreateRoketoStreamOptions = (formData: {
         }),
         kind: {
           FunctionCall: {
-            receiver_id: formData.tokenAccountId,
+            receiver_id: notNearTokens ? formData.tokenAccountId : formData.wNearId,
             actions: [
               ...actions,
               {
