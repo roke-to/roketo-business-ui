@@ -29,6 +29,9 @@ export const ROUTES = typedRoutes({
   streams: {
     path: '/streams',
   },
+  streamProposals: {
+    path: '/streams/proposals',
+  },
   stream: {
     path: '/streams/:id',
   },

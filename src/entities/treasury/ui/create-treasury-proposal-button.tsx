@@ -2,17 +2,17 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
-import {Button} from '~/shared/ui/components/button';
+import {Button, ButtonProps} from '~/shared/ui/components/button';
 import {useModal} from '~/shared/ui/components/modal';
 
-export const CreateTreasuryProposalButton = () => {
+export const CreateTreasuryProposalButton = (props: Omit<ButtonProps, 'variant' | 'onClick'>) => {
   const {t} = useTranslation('proposal');
 
   const createProposalModal = useModal();
 
   return (
     <>
-      <Button variant='soft' onClick={createProposalModal.show}>
+      <Button {...props} variant='soft' onClick={createProposalModal.show}>
         {t('createProposal')}
       </Button>
       <CreateTreasuryProposalModal

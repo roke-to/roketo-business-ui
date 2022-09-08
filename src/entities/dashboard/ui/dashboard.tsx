@@ -27,8 +27,10 @@ export const Dashboard = () => {
             {t('treasury')}
           </Typography>
           <Row>
-            <CreateTreasuryProposalButton />
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageTreasury')}</ButtonLink>
+            <CreateTreasuryProposalButton size='sm' />
+            <ButtonLink size='sm' to={ROUTES.treasury.path}>
+              {t('manageTreasury')}
+            </ButtonLink>
           </Row>
         </Row>
         <TreasuryInfo variant='dashboard' />
@@ -40,8 +42,10 @@ export const Dashboard = () => {
             {t('daoManagment')}
           </Typography>
           <Row>
-            <ChangePolicyButton />
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageDao')}</ButtonLink>
+            <ChangePolicyButton size='sm' />
+            <ButtonLink size='sm' to={ROUTES.treasury.path}>
+              {t('manageDao')}
+            </ButtonLink>
           </Row>
         </Row>
         <Councils variant='dashboard' />
@@ -53,8 +57,10 @@ export const Dashboard = () => {
             {t('streams')}
           </Typography>
           <Row>
-            <Button>{t('proposeStream')}</Button>
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageStreams')}</ButtonLink>
+            <Button size='sm'>{t('proposeStream')}</Button>
+            <ButtonLink size='sm' to={ROUTES.treasury.path}>
+              {t('manageStreams')}
+            </ButtonLink>
           </Row>
         </Row>
         <StreamsList />

@@ -77,7 +77,8 @@ const loadTreasuryProposalsFx = attach({
       $or: [{kind: {$cont: 'FunctionCall'}}],
     };
 
-    const search: SFields | SConditionAND = {
+    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
+    const search: SConditionAND = {
       $and: [
         {
           daoId: {
@@ -90,6 +91,12 @@ const loadTreasuryProposalsFx = attach({
     addStatusProposalQuery(search, status);
 
     addKindProposalQuery(search, kind, defaultKindFilterQuery);
+
+    search.$and!.push({
+      description: {
+        $cont: 'ProposeCreateRoketoStream',
+      },
+    });
 
     const query = {
       s: JSON.stringify(search),
@@ -177,6 +184,8 @@ sample({
   target: $tokenBalances,
 });
 
+// TODO: подумать как перестать использовать токены из sdk в стримах,
+// в этом нет необходимости
 // limit tokens which dao council could stream
 sample({
   source: $listedTokens,

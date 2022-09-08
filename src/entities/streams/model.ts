@@ -1,12 +1,14 @@
 import {isPast} from 'date-fns';
-import {combine, createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, combine, createEffect, createEvent, createStore, sample} from 'effector';
 import {generatePath} from 'react-router-dom';
 
 import {colorDescriptions} from '~/entities/create-stream/constants';
 import type {FormValues} from '~/entities/create-stream/constants';
 import {getTokensPerSecondCount} from '~/entities/create-stream/lib';
 import {$isMobileScreen} from '~/entities/screens';
+import {sendTransactionsFx} from '~/entities/transactions';
 import {
+  $accountId,
   $accountStreams,
   $currentDaoId,
   $listedTokens,
@@ -16,6 +18,7 @@ import {
   $tokens,
   $walletSelector,
 } from '~/entities/wallet';
+import {astroApi, Proposal} from '~/shared/api/astro';
 import {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {
   formatSmartly,
@@ -25,6 +28,7 @@ import {
 } from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
+import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {
   areArraysDifferent,
   areObjectsDifferent,
@@ -33,7 +37,11 @@ import {
 import {isWNearTokenId} from '~/shared/lib/roketo/isWNearTokenId';
 import {getRoundedPercentageRatio} from '~/shared/lib/roketo/math';
 import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
+import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
+import {SConditionAND} from '@nestjsx/crud-request';
 import {
   ableToAddFunds,
   ableToPauseStream,
@@ -387,3 +395,119 @@ sample({
 $streamFilter.on(changeDirectionFilter, (filter, direction) => ({...filter, direction}));
 $streamFilter.on(changeStatusFilter, (filter, status) => ({...filter, status}));
 $streamFilter.on(changeTextFilter, (filter, text) => ({...filter, text}));
+
+// ------------ proposals ------------
+
+export const $streamProposals = createStore<Proposal[]>([]);
+
+export const $streamProposalLoading = createStore(true);
+
+// /------------ proposals ------------
+
+//  ------------ proposals filter by status ------------
+
+export const changeStreamProposalSelectedStatus = createEvent<ProposalStatusFilterType>();
+
+export const $streamSelectedProposalStatus = createStore<ProposalStatusFilterType>('all').on(
+  changeStreamProposalSelectedStatus,
+  (_, status) => status,
+);
+
+//  /------------ proposals filter by status ------------
+
+//  ------------ proposals filter by kind ------------
+export const changeStreamProposalSelectedKind = createEvent<ProposalKindFilterType>();
+
+export const $streamSelectedProposalKind = createStore<ProposalKindFilterType>('Any').on(
+  changeStreamProposalSelectedKind,
+  (_, proposalKind) => proposalKind,
+);
+//  /------------ proposals filter by kind ------------
+
+//  ------------ proposals sort by createAt  ------------
+export const changeStreamProposalSortOrder = createEvent<ProposalSortOrderType>();
+
+export const $streamProposalSortOrder = createStore<ProposalSortOrderType>('DESC').on(
+  changeStreamProposalSortOrder,
+  (_, sortType) => sortType,
+);
+//  /------------ proposals sort by createAt ------------
+
+const loadStreamProposalsFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    accountId: $accountId,
+    status: $streamSelectedProposalStatus,
+    kind: $streamSelectedProposalKind,
+    sort: $streamProposalSortOrder,
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async effect({daoId, accountId, status, kind, sort}) {
+    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
+    const search: SConditionAND = {
+      $and: [
+        {
+          daoId: {$eq: daoId},
+        },
+        {
+          $or: [{kind: {$cont: 'FunctionCall'}}],
+        },
+        {
+          description: {$cont: 'ProposeCreateRoketoStream'},
+        },
+      ],
+    };
+
+    addStatusProposalQuery(search, status);
+
+    const query = {
+      s: JSON.stringify(search),
+      limit: 20,
+      offset: 0,
+      sort: [`createdAt,${sort}`],
+      accountId,
+    };
+
+    return astroApi.proposalControllerProposals(query);
+  },
+});
+
+sample({
+  source: sendTransactionsFx.doneData,
+  target: loadStreamProposalsFx,
+});
+sample({
+  clock: $currentDaoId,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  source: loadStreamProposalsFx.doneData,
+  fn: (response) => response.data.data,
+  target: $streamProposals,
+});
+
+sample({
+  clock: changeStreamProposalSelectedStatus,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  clock: changeStreamProposalSelectedKind,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  clock: changeStreamProposalSortOrder,
+  target: loadStreamProposalsFx,
+});
+sample({
+  clock: loadStreamProposalsFx.finally,
+  fn: () => false,
+  target: $streamProposalLoading,
+});
+sample({
+  clock: loadStreamProposalsFx,
+  fn: () => true,
+  target: $streamProposalLoading,
+});
