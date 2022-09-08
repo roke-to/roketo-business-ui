@@ -15,10 +15,8 @@ export const isAccountExist = async (accountId: string): Promise<boolean> => {
 
   try {
     await account.state();
-    console.log('isAccountExist', accountId, true);
     return true;
   } catch (e) {
-    console.log('isAccountExist', accountId, false);
     return false;
   }
 };
