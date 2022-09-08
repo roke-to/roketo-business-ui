@@ -5,6 +5,7 @@ import {usePopper} from 'react-popper';
 
 // TODO fix FSD
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
+import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Label} from '~/shared/ui/components/label';
@@ -99,8 +100,9 @@ export const Employee: React.FC = () => {
                   style={popperStyles.popper}
                   {...popperAttributes.popper}
                 >
-                  <Portlet>
-                    <span>Transfer</span>
+                  <Portlet className='w-60'>
+                    {/* TODO bug при попытке открыть модалку из поппера она сразу же закрывается */}
+                    <CreateTreasuryProposalButton />
                     <span>Edit</span>
                     <span>Activate</span>
                     <span>Suspend</span>
