@@ -40,6 +40,7 @@ export const ProposalKindForGovernance: ProposalKindFilterType[] = [
 ];
 
 export const ProposalVariantForStream: ProposalVariantFilterType[] = [
+  'Any',
   'ProposeCreateRoketoStream',
   'ProposePauseRoketoStream',
   'ProposeStartRoketoStream',
