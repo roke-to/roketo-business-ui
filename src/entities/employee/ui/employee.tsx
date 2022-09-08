@@ -5,9 +5,11 @@ import {useTranslation} from 'react-i18next';
 // TODO fix FSD
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {Col} from '~/shared/ui/components/col';
+import {IconButton} from '~/shared/ui/components/icon-button';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
+import {ReactComponent as ThreeDotsIcon} from '~/shared/ui/icons/dots.svg';
 
 import * as employeeModel from '../model/employee-model';
 import {EmployeeType} from './employee-type';
@@ -59,7 +61,9 @@ export const Employee: React.FC = () => {
         <Col>
           <Row>
             <CreateStreamProposalButton />
-            <span>...</span>
+            <IconButton>
+              <ThreeDotsIcon className='fill-blue-textDefault' />
+            </IconButton>
           </Row>
         </Col>
       </Row>
