@@ -28,13 +28,7 @@ const loadEmployeeFx = attach({
 sample({
   source: pageLoaded,
   clock: [pageLoaded, $authenticationHeaders],
-  filter: (sourceData, clockData) => {
-    if (typeof clockData !== 'string') {
-      return Boolean(clockData?.['x-authentication-api']);
-    }
-
-    return false;
-  },
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: loadEmployeeFx,
 });
 sample({
