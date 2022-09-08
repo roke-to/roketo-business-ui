@@ -1,0 +1,11 @@
+{
+  "labels": {
+    "position": "Position",
+    "nearLogin": "Wallet address",
+    "email": "E-mail",
+    "salary": "Salary",
+    "payPeriod": "Invoice period",
+    "payoutType": "Payout type",
+    "comment": "Comment"
+  }
+}
