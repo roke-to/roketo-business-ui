@@ -20,14 +20,15 @@ export const Employee: React.FC = () => {
             </Typography>
             {employee && <EmployeeType type={employee.type} status={employee.status} />}
           </Row>
-
-          <span>position</span>
-          <span>wallet address</span>
-          <span>e-mail</span>
-          <span>salary</span>
-          <span>Invoice period</span>
-          <span>Payout type</span>
-          <span>Comment</span>
+          <div className='grid gap-4 desktop:grid-cols-3'>
+            <span>position</span>
+            <span>wallet address</span>
+            <span>e-mail</span>
+            <span>salary</span>
+            <span>Invoice period</span>
+            <span>Payout type</span>
+            <span className='desktop:col-span-3'>Comment</span>
+          </div>
           <div>proposal</div>
           <div>actions history</div>
         </Col>

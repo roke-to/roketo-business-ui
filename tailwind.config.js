@@ -117,10 +117,11 @@ export default {
       '5xl': '6rem',
     }),
     screens: {
-      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
-      tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
-      laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
+      // https://tailwindcss.com/docs/screens#max-width-breakpoints
       desktop: {min: '1280px'}, // => @media (min-width: 1280px) { ... }
+      laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
+      tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
+      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
     },
   },
 };
