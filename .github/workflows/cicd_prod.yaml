@@ -125,7 +125,7 @@ jobs:
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: germes.roke.to
+          host: ares.roke.to
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
@@ -148,7 +148,7 @@ jobs:
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
-          host: germes.roke.to
+          host: ares.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           args: "-tt"
