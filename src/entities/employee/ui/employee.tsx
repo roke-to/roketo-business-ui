@@ -2,6 +2,8 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+// TODO fix FSD
+import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {Col} from '~/shared/ui/components/col';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
@@ -52,10 +54,12 @@ export const Employee: React.FC = () => {
           <div>proposal</div>
           <div>actions history</div>
         </Col>
-        <Row>
-          <span>Create stream</span>
-          <span>...</span>
-        </Row>
+        <Col>
+          <Row>
+            <CreateStreamProposalButton />
+            <span>...</span>
+          </Row>
+        </Col>
       </Row>
     )
   );
