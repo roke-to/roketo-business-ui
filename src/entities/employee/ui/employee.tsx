@@ -36,10 +36,12 @@ export const Employee: React.FC = () => {
               <Typography>{employee.email || '—'}</Typography>
             </Label>
             <Label as='div' content={t('labels.salary')}>
-              <Typography>{employee.salary}</Typography>
+              {/* TODO как будто бы нужно отдельное поле для валюты */}
+              <Typography>{employee.salary} USD</Typography>
             </Label>
             <Label as='div' content={t('labels.payPeriod')}>
-              <Typography>{employee.payPeriod}</Typography>
+              {/* TODO нужно поле которое укажет  на каком промежутке работает период (per month etc.) */}
+              <Typography>{employee.payPeriod} per month</Typography>
             </Label>
             <Label as='div' content={t('labels.payoutType')}>
               {/* TODO у нас нет под это поля в базе */}
