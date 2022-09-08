@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
-import {Input, Textarea} from '~/shared/ui/components/input';
+import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
 import {Row} from '~/shared/ui/components/row';
@@ -82,7 +82,8 @@ export const FunctionCall = ({
         error={fields.json.errorText()}
         className='w-full font-mono'
       >
-        <Textarea
+        <Input
+          multiline
           name='json'
           value={fields.json.value}
           disabled={pending}

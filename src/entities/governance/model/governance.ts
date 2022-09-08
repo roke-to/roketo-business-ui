@@ -154,7 +154,7 @@ const initChangePolicyProposalFormFx = attach({
 
     return {
       type: 'changeQuorum',
-      quorum: String(quorum),
+      quorum,
       councilAddress: '',
       councilList: getCouncilListInitialState(currentDao.council, accountId),
       amount: ATTACHED_DEPOSIT,
@@ -178,7 +178,7 @@ export const changePolicyProposalForm = createForm({
       rules: [validators.required()],
     },
     quorum: {
-      init: '0',
+      init: 0 as number,
     },
     councilAddress: {
       init: '',
@@ -242,9 +242,7 @@ export const changePolicyProposalFx = attach({
           await sputnikDaoContract.add_proposal(mapAddCouncilOptions(currentDao, data));
           break;
         case 'changeQuorum':
-          await sputnikDaoContract.add_proposal(
-            mapChangeQuorumOptions(currentDao, {...data, quorum: Number(data.quorum)}),
-          );
+          await sputnikDaoContract.add_proposal(mapChangeQuorumOptions(currentDao, data));
           break;
         default:
           throw Error(`We don't recognize action for ${data.type}`);

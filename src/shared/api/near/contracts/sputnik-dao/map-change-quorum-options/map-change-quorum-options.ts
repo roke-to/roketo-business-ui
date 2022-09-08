@@ -20,14 +20,15 @@ export const mapChangeQuorumOptions = (
   },
 ) => {
   const {
-    bountyBond,
-    proposalBond,
-    proposalPeriod,
-    defaultVotePolicy,
-    bountyForgivenessPeriod,
-    roles,
-  } = currentDao.policy;
-  const {weightKind, ratio, quorum} = defaultVotePolicy;
+    policy: {
+      bountyBond,
+      proposalBond,
+      proposalPeriod,
+      defaultVotePolicy: {weightKind, ratio, quorum},
+      bountyForgivenessPeriod,
+      roles,
+    },
+  } = currentDao;
 
   const otherRoles = roles.filter(({name}) => name !== COUNCIL).map(dataRoleToContractRole);
 

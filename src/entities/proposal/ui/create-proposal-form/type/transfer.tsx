@@ -38,7 +38,6 @@ export const Transfer = ({
       >
         <Input
           name='amount'
-          mask='number'
           value={fields.amount.value}
           disabled={pending}
           placeholder={t('createForm.amountPlaceholder')}
