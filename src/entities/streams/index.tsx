@@ -92,7 +92,7 @@ export const StreamsPageContent = () => {
           <WithdrawAllButton className={styles.button} />
         </div>
       </Row>
-      <ProposalsList />
+      <ProposalsList variant='preview' />
       <div className='flex flex-col gap-6'>
         <StreamFilters className={styles.streamFilters} />
         <StreamsList className={styles.streamListBlock} />

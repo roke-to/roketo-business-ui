@@ -74,7 +74,7 @@ const loadTreasuryProposalsFx = attach({
   },
   async effect({daoId, accountId, status, kind, sort}) {
     const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [{kind: {$cont: 'FunctionCall'}}],
+      $or: [{kind: {$cont: 'FunctionCall'}}, {kind: {$cont: 'Transfer'}}],
     };
 
     // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
@@ -85,18 +85,17 @@ const loadTreasuryProposalsFx = attach({
             $eq: daoId,
           },
         },
+        {
+          description: {
+            $excl: 'ProposeCreateRoketoStream',
+          },
+        },
       ],
     };
 
     addStatusProposalQuery(search, status);
 
     addKindProposalQuery(search, kind, defaultKindFilterQuery);
-
-    search.$and!.push({
-      description: {
-        $cont: 'ProposeCreateRoketoStream',
-      },
-    });
 
     const query = {
       s: JSON.stringify(search),
