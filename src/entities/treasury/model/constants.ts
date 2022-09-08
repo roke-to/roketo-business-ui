@@ -39,7 +39,7 @@ export const ProposalKindForGovernance: ProposalKindFilterType[] = [
   'RemoveMemberFromRole',
 ];
 
-export const ProposalKindForStream: ProposalVariantFilterType[] = [
+export const ProposalVariantForStream: ProposalVariantFilterType[] = [
   'ProposeCreateRoketoStream',
   'ProposePauseRoketoStream',
   'ProposeStartRoketoStream',

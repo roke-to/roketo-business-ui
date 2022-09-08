@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
+import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
 import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
@@ -11,12 +11,12 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './filter.module.css';
 
 export interface ProposalKindFilterProps {
-  options: ProposalKindFilterType[];
-  selectedProposalKind: ProposalKindFilterType;
-  onChange(kind: ProposalKindFilterType): void;
+  options: ProposalVariantFilterType[];
+  selectedProposalKind: ProposalVariantFilterType;
+  onChange(kind: ProposalVariantFilterType): void;
 }
 
-export const ProposalKindFilter = ({
+export const ProposalVariantFilter = ({
   options,
   selectedProposalKind,
   onChange,

@@ -81,14 +81,22 @@ const loadTreasuryProposalsFx = attach({
     const search: SConditionAND = {
       $and: [
         {
-          daoId: {
-            $eq: daoId,
-          },
+          daoId: {$eq: daoId},
         },
         {
-          description: {
-            $excl: 'ProposeCreateRoketoStream',
-          },
+          description: {$excl: 'ProposeCreateRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposePauseRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeStartRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeStopRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeRoketoStreamWithdraw'},
         },
       ],
     };

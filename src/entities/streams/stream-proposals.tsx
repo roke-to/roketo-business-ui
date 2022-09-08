@@ -4,22 +4,23 @@ import React from 'react';
 import {ProposalsFilters} from '~/entities/filters/proposals-filters';
 import {
   $streamProposalLoading,
-  $streamProposalSortOrder, // $streamSelectedProposalKind,
+  $streamProposalSortOrder,
   $streamSelectedProposalStatus,
-  changeStreamProposalSelectedKind,
+  $streamSelectedProposalVariant,
   changeStreamProposalSelectedStatus,
+  changeStreamProposalSelectedVariant,
   changeStreamProposalSortOrder,
 } from '~/entities/streams/model';
 import {sendTransactionsFx} from '~/entities/transactions';
+import {ProposalVariantForStream} from '~/entities/treasury/model/constants';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
-// import {ProposalKindForStream} from '~/entities/treasury/model/constants';
 import {ProposalsList} from './proposals-list';
 
 export const StreamProposals = () => {
   const streamSelectedProposalStatus = useStore($streamSelectedProposalStatus);
-  // const streamSelectedProposalKind = useStore($streamSelectedProposalKind);
+  const streamSelectedProposalVariant = useStore($streamSelectedProposalVariant);
   const isLoading = useStore($streamProposalLoading);
   const streamProposalSortOrder = useStore($streamProposalSortOrder);
 
@@ -27,8 +28,8 @@ export const StreamProposals = () => {
     sendTransactionsFx();
   }, []);
 
-  // TODO: streamSelectedProposalKind === 'Any' &&
-  const isDefaultFiltersValue = streamSelectedProposalStatus === 'all';
+  const isDefaultFiltersValue =
+    streamSelectedProposalVariant === 'Any' && streamSelectedProposalStatus === 'all';
 
   return (
     <>
@@ -38,13 +39,13 @@ export const StreamProposals = () => {
         </Typography>
       </Row>
       <ProposalsFilters
-        // setKindProposal={ProposalKindForStream}
+        variantOptions={ProposalVariantForStream}
         isLoading={isLoading}
         selectedProposalStatus={streamSelectedProposalStatus}
-        // selectedProposalKind={streamSelectedProposalKind}
+        selectedProposalVariant={streamSelectedProposalVariant}
         proposalSortOrder={streamProposalSortOrder}
         handleChangeProposalStatus={changeStreamProposalSelectedStatus}
-        handleChangeProposalKind={changeStreamProposalSelectedKind}
+        handleChangeProposalVariant={changeStreamProposalSelectedVariant}
         handleChangeProposalSortOrder={changeStreamProposalSortOrder}
       />
       <ProposalsList isDefaultFiltersValue={isDefaultFiltersValue} />

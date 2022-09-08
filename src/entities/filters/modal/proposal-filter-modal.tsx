@@ -16,29 +16,29 @@ export interface ProposalFilterModalProps {
   selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
-  setKindProposal: ProposalKindFilterType[];
-  handleChangeProposalStatus(status: ProposalStatusFilterType): void;
-  handleChangeProposalKind?(kind: ProposalKindFilterType): void;
+  kindOptions: ProposalKindFilterType[];
+  onChangeStatus(status: ProposalStatusFilterType): void;
+  onChangeKind?(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalFilterModal = ({
-  setKindProposal,
+  kindOptions,
   selectedProposalStatus,
   selectedProposalKind,
   isLoading,
-  handleChangeProposalStatus,
-  handleChangeProposalKind,
+  onChangeStatus,
+  onChangeKind,
 }: ProposalFilterModalProps) => {
   const {t} = useTranslation('proposalFilters');
 
   const onChangeProposalStatus = (status: string) => {
-    handleChangeProposalStatus(status as ProposalStatusFilterType);
+    onChangeStatus(status as ProposalStatusFilterType);
   };
   const onChangeProposalKind = (kind: string) => {
-    handleChangeProposalKind?.(kind as ProposalKindFilterType);
+    onChangeKind?.(kind as ProposalKindFilterType);
   };
 
-  const hasKindModule = selectedProposalKind && handleChangeProposalKind;
+  const hasKindModule = selectedProposalKind && onChangeKind;
 
   return (
     <>
@@ -54,7 +54,7 @@ export const ProposalFilterModal = ({
         onChange={onChangeProposalKind}
         gap={0}
       >
-        {setKindProposal.map((kind) => (
+        {kindOptions.map((kind) => (
           <RadioGroupItem key={kind} value={kind} label={kind} />
         ))}
       </RadioGroup>

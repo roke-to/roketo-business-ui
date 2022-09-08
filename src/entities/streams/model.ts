@@ -37,9 +37,9 @@ import {
 import {isWNearTokenId} from '~/shared/lib/roketo/isWNearTokenId';
 import {getRoundedPercentageRatio} from '~/shared/lib/roketo/math';
 import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
-import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
+import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
 import {SConditionAND} from '@nestjsx/crud-request';
 import {
@@ -76,7 +76,7 @@ import type {
   StreamSort,
 } from './types';
 
-const redirectUrl = generatePath(ROUTES.treasury.path);
+const redirectUrl = generatePath(ROUTES.streamProposals.path);
 const returnPath = `${window.location.origin}${redirectUrl}`;
 
 export const $streamListData = createStore(
@@ -416,11 +416,11 @@ export const $streamSelectedProposalStatus = createStore<ProposalStatusFilterTyp
 //  /------------ proposals filter by status ------------
 
 //  ------------ proposals filter by kind ------------
-export const changeStreamProposalSelectedKind = createEvent<ProposalKindFilterType>();
+export const changeStreamProposalSelectedVariant = createEvent<ProposalVariantFilterType>();
 
-export const $streamSelectedProposalKind = createStore<ProposalKindFilterType>('Any').on(
-  changeStreamProposalSelectedKind,
-  (_, proposalKind) => proposalKind,
+export const $streamSelectedProposalVariant = createStore<ProposalVariantFilterType>('Any').on(
+  changeStreamProposalSelectedVariant,
+  (_, proposalVariant) => proposalVariant,
 );
 //  /------------ proposals filter by kind ------------
 
@@ -438,25 +438,28 @@ const loadStreamProposalsFx = attach({
     daoId: $currentDaoId,
     accountId: $accountId,
     status: $streamSelectedProposalStatus,
-    kind: $streamSelectedProposalKind,
+    variant: $streamSelectedProposalVariant,
     sort: $streamProposalSortOrder,
   },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async effect({daoId, accountId, status, kind, sort}) {
+  async effect({daoId, accountId, status, variant, sort}) {
     // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
     const search: SConditionAND = {
-      $and: [
-        {
-          daoId: {$eq: daoId},
-        },
-        {
-          $or: [{kind: {$cont: 'FunctionCall'}}],
-        },
-        {
-          description: {$cont: 'ProposeCreateRoketoStream'},
-        },
-      ],
+      $and: [{daoId: {$eq: daoId}}, {kind: {$cont: 'FunctionCall'}}],
     };
+
+    if (variant !== 'Any') {
+      search.$and?.push({description: {$cont: variant}});
+    } else {
+      search.$and?.push({
+        $or: [
+          {description: {$cont: 'ProposeCreateRoketoStream'}},
+          {description: {$cont: 'ProposePauseRoketoStream'}},
+          {description: {$cont: 'ProposeStartRoketoStream'}},
+          {description: {$cont: 'ProposeStopRoketoStream'}},
+          {description: {$cont: 'ProposeRoketoStreamWithdraw'}},
+        ],
+      });
+    }
 
     addStatusProposalQuery(search, status);
 
@@ -493,7 +496,7 @@ sample({
 });
 
 sample({
-  clock: changeStreamProposalSelectedKind,
+  clock: changeStreamProposalSelectedVariant,
   target: loadStreamProposalsFx,
 });
 

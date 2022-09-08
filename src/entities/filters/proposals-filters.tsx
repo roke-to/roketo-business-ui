@@ -6,52 +6,72 @@ import {ProposalKind} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
+import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
 import styles from './filter.module.css';
 import {ProposalDateSort} from './proposal-date-sort';
 import {ProposalKindFilter} from './proposal-kind-filter';
 import {ProposalStatusFilter} from './proposal-status-filter';
+import {ProposalVariantFilter} from './proposal-variant-filter';
 
 export interface ProposalsFiltersProps {
   selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
+  selectedProposalVariant?: ProposalVariantFilterType;
   proposalSortOrder: ProposalSortOrderType;
   isLoading: boolean;
-  setKindProposal?: ProposalKindFilterType[];
+  kindOpions?: ProposalKindFilterType[];
+  variantOptions?: ProposalVariantFilterType[];
   handleChangeProposalStatus(status: ProposalStatusFilterType): void;
   handleChangeProposalKind?(kind: ProposalKindFilterType): void;
+  handleChangeProposalVariant?(kind: ProposalVariantFilterType): void;
   handleChangeProposalSortOrder(sortType: ProposalSortOrderType): void;
 }
 
 export const ProposalsFilters = ({
   selectedProposalStatus,
   selectedProposalKind,
+  selectedProposalVariant,
   proposalSortOrder,
   isLoading,
-  setKindProposal = ProposalKind,
+  kindOpions = ProposalKind,
+  variantOptions = [],
   handleChangeProposalStatus,
   handleChangeProposalKind,
+  handleChangeProposalVariant,
   handleChangeProposalSortOrder,
 }: ProposalsFiltersProps) => {
   const canShowModal = useStore($isMobileScreen);
   const hasKindModule = selectedProposalKind && handleChangeProposalKind && !canShowModal;
+  const hasVariantModule =
+    variantOptions.length &&
+    selectedProposalVariant &&
+    handleChangeProposalVariant &&
+    !canShowModal;
 
   return (
     <div className={styles.filtersContainer}>
       <div className={styles.filterGroup}>
         <ProposalStatusFilter
-          setKindProposal={setKindProposal}
+          kindOptions={kindOpions}
           isLoading={isLoading}
           selectedProposalStatus={selectedProposalStatus}
           selectedProposalKind={selectedProposalKind}
-          handleChangeProposalStatus={handleChangeProposalStatus}
-          handleChangeProposalKind={handleChangeProposalKind}
+          onChangeStatus={handleChangeProposalStatus}
+          onChangeKind={handleChangeProposalKind}
         />
         {hasKindModule && (
           <ProposalKindFilter
-            setKindProposal={setKindProposal}
+            options={kindOpions}
             selectedProposalKind={selectedProposalKind}
-            handleChangeProposalKind={handleChangeProposalKind}
+            onChange={handleChangeProposalKind}
+          />
+        )}
+        {hasVariantModule && (
+          <ProposalVariantFilter
+            options={variantOptions}
+            selectedProposalKind={selectedProposalVariant}
+            onChange={handleChangeProposalVariant}
           />
         )}
       </div>

@@ -31,10 +31,9 @@ export const ProposalsList = ({variant = 'full', isDefaultFiltersValue}: Proposa
       />
     );
   }
-
-  return (
-    <Col gap='md'>
-      {variant === 'preview' && (
+  if (variant === 'preview') {
+    return (
+      <Col gap='md'>
         <Row align='center' justify='between'>
           <Typography as='span' font='heading'>
             Last stream proposals
@@ -43,8 +42,16 @@ export const ProposalsList = ({variant = 'full', isDefaultFiltersValue}: Proposa
             View all stream proposals
           </ButtonLink>
         </Row>
-      )}
-      {streamProposals.slice(0, 2).map((proposal) => (
+        {streamProposals.slice(0, 2).map((proposal) => (
+          <Proposal key={proposal.id} proposal={proposal} />
+        ))}
+      </Col>
+    );
+  }
+
+  return (
+    <Col gap='md'>
+      {streamProposals.map((proposal) => (
         <Proposal key={proposal.id} proposal={proposal} />
       ))}
     </Col>
