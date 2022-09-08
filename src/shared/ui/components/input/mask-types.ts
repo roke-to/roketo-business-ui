@@ -14,6 +14,8 @@ const numberMask = (): IMaskInputProps => ({
   overwrite: false,
   unmask: false,
   radix: '.',
+  // symbols to process as radix
+  mapToRadix: [','],
 });
 
 const postfixMask = ({value, postfix = ''}: MaskInnerOptions = {}): IMaskInputProps => ({

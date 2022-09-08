@@ -139,7 +139,7 @@ export const DaoNew = ({onReset}: DaoNewProps) => {
                   {t('daoNew.submitDaoName')}
                 </Button>
                 <Button variant='soft' onClick={handleClickCancel}>
-                  {t('daoNew.back')}
+                  {t('daoNew.cancel')}
                 </Button>
               </Col>
             </Col>

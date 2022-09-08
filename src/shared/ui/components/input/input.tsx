@@ -65,6 +65,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [ref],
     );
 
+    const handleChange = React.useCallback(
+      (event) => onChange?.(event.target.value, event),
+      [onChange],
+    );
+
     const handleAccept = React.useCallback(
       (value, mask, event) => onChange?.(mask.unmaskedValue, event),
       [onChange],
@@ -75,14 +80,19 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [maskType, maskOptions, props.value],
     );
 
+    const onChangeProps = React.useMemo(
+      () => (maskType ? {onAccept: handleAccept} : {onChange: handleChange}),
+      [maskType, handleAccept, handleChange],
+    );
+
     return (
       // @ts-expect-error ref not matching
       <IMaskInput
         {...props}
         {...maskProps}
+        {...onChangeProps}
         ref={handleRef}
         type={type}
-        onAccept={handleAccept}
         className={clsx(
           styles.input,
           styles[size],
