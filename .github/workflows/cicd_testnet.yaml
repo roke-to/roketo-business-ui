@@ -150,7 +150,7 @@ jobs:
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
-            curl -H "Content-type:\ application/json" -X POST https://hooks.slack.com/services/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 --data {"text":\ 'service ${{ steps.set_env.outputs.app_name }} updated with url ${{ steps.set_env.outputs.app_hostname }}'}
+            . ~/services/sucess.sh
           host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
