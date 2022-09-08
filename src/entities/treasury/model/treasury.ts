@@ -11,6 +11,7 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
+import {env} from '~/shared/config/env';
 import {ValuesOfForm} from '~/shared/lib/form';
 import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -21,9 +22,10 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
+import {RichToken} from '@roketo/sdk/dist/types';
 
 import {$sputnikDaoContract} from '../../dao';
-import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
+import {$accountId, $currentDaoId, $listedTokens, $walletSelector} from '../../wallet';
 
 // ------------ proposals ------------
 
@@ -173,6 +175,50 @@ sample({
   source: loadTokenBalancesFx.doneData,
   fn: (response) => response.data,
   target: $tokenBalances,
+});
+
+// limit tokens which dao council could stream
+sample({
+  source: $listedTokens,
+  clock: $tokenBalances,
+  fn(listedTokens, tokenBalances) {
+    return tokenBalances.reduce((accum, {id: tokenId, balance}) => {
+      if (listedTokens[tokenId]) {
+        return {
+          ...accum,
+          [tokenId]: {
+            ...listedTokens[tokenId],
+            balance,
+          },
+        };
+      }
+
+      const wNear = env.WNEAR_ID;
+
+      // this shit, because we don't have access to dao balance, we get `tokenBalances` from astro-api,
+      // but we need more info from `ftContract`, which attach in `listedTokens`
+      if (!listedTokens[tokenId] && tokenId === 'NEAR' && listedTokens[wNear]) {
+        return {
+          ...accum,
+          [tokenId]: {
+            ...listedTokens[wNear],
+            meta: {
+              ...listedTokens[wNear].meta,
+              name: 'NEAR',
+              symbol: 'NEAR',
+            },
+            roketoMeta: {
+              ...listedTokens[wNear].roketoMeta,
+              account_id: 'NEAR',
+            },
+            balance,
+          },
+        };
+      }
+      return accum;
+    }, {} as Record<string, RichToken>);
+  },
+  target: $listedTokens,
 });
 
 //  ------------ proposals create  ------------

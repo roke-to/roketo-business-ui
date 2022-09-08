@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import {useStore} from 'effector-react';
+import React from 'react';
 
 import {WithdrawAllButton} from '~/entities/stream-control/WithdrawAllButton';
 import {STREAM_DIRECTION, StreamDirection} from '~/shared/api/roketo/constants';

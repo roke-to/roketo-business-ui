@@ -1,5 +1,3 @@
-import {env} from '~/shared/config/env';
-
 export type StreamColor = 'none' | 'red' | 'blue' | 'orange' | 'purple' | 'green';
 type ColorDescription = {label: string; color: string};
 export const streamColors: StreamColor[] = ['none', 'red', 'blue', 'orange', 'purple', 'green'];
@@ -48,7 +46,7 @@ export type FormValues = {
 export const INITIAL_FORM_VALUES: FormValues = {
   receiver: '',
   streamName: '',
-  token: env.WNEAR_ID,
+  token: 'NEAR',
   duration: 0,
   deposit: 0,
   delayed: false,

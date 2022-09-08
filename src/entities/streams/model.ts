@@ -9,6 +9,7 @@ import {$isMobileScreen} from '~/entities/screens';
 import {
   $accountStreams,
   $currentDaoId,
+  $listedTokens,
   $near,
   $priceOracle,
   $roketoWallet,
@@ -104,16 +105,20 @@ export const $streamSort = createStore<StreamSort>(sorts.mostRecent);
 
 export const handleCreateStreamFx = createProtectedEffect({
   source: combine(
+    $listedTokens,
     $roketoWallet,
     $near,
     $currentDaoId,
     $walletSelector,
-    (roketo, near, currentDaoId, walletSelector) =>
+    (listedTokens, roketo, near, currentDaoId, walletSelector) =>
       !!roketo && !!near && !!currentDaoId && !!walletSelector
-        ? {roketo, near, currentDaoId, walletSelector}
+        ? {listedTokens, roketo, near, currentDaoId, walletSelector}
         : null,
   ),
-  async fn({roketo: {tokens}, near: {login}, currentDaoId, walletSelector}, values: FormValues) {
+  async fn(
+    {listedTokens: tokens, near: {login}, currentDaoId, walletSelector},
+    values: FormValues,
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const {receiver, delayed, comment, deposit, duration, token, isLocked, cliffDateTime, color} =
       values;
