@@ -1,14 +1,14 @@
-.Active {
+.activate {
   color: theme('colors.green.default');
   background-color: theme('colors.green.light');
 }
 
-.Suspended {
+.suspend {
   color: theme('colors.orange.default');
   background-color: theme('colors.orange.light');
 }
 
-.Fired {
+.fire {
   color: theme('colors.red.default');
   background-color: theme('colors.red.lightDefault');
 }

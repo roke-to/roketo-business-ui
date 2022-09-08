@@ -9,6 +9,7 @@ import {Employee} from '~/shared/types/employee';
 
 export const pageLoaded = createEvent<string>();
 export const $employee = createStore<EmployeeResponseDto | null>(null);
+
 const loadEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
@@ -23,17 +24,37 @@ const loadEmployeeFx = attach({
   },
 });
 
+type EmployeeStatusChangeAction = 'Suspend' | 'Reinstate' | 'Fire' | 'Rehire';
+export const employeeStatusChanged = createEvent<EmployeeStatusChangeAction>();
+const changeEmployeeStatusFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    employee: $employee,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, employee, authenticationHeaders}, action: EmployeeStatusChangeAction) {
+    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, String(employee!.id), action, {
+      headers: {...authenticationHeaders},
+    });
+  },
+});
+
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
 sample({
   source: pageLoaded,
-  clock: [pageLoaded, $authenticationHeaders],
+  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
   filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: loadEmployeeFx,
 });
 sample({
   source: loadEmployeeFx.doneData,
   target: $employee,
+});
+
+sample({
+  source: employeeStatusChanged,
+  target: changeEmployeeStatusFx,
 });
 
 export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
