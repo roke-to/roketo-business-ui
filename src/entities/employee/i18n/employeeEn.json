@@ -7,5 +7,12 @@
     "payPeriod": "Invoice period",
     "payoutType": "Payout type",
     "comment": "Comment"
+  },
+  "buttons": {
+    "edit": "Edit",
+    "transfer": "Transfer",
+    "activate": "Activate",
+    "suspend": "Suspend",
+    "fire": "Fire"
   }
 }
