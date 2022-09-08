@@ -1,15 +1,19 @@
 import {useStore} from 'effector-react';
-import React from 'react';
+import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {usePopper} from 'react-popper';
 
 // TODO fix FSD
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Label} from '~/shared/ui/components/label';
+import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as ThreeDotsIcon} from '~/shared/ui/icons/dots.svg';
+
+import {Popover, Transition} from '@headlessui/react';
 
 import * as employeeModel from '../model/employee-model';
 import {EmployeeType} from './employee-type';
@@ -17,6 +21,15 @@ import {EmployeeType} from './employee-type';
 export const Employee: React.FC = () => {
   const {t} = useTranslation('employee');
   const employee = useStore(employeeModel.$employee);
+
+  const [refPopoverButton, setRefPopoverButton] = useState();
+  const [refPopoverPanel, setRefPopoverPanel] = useState();
+
+  const {styles: popperStyles, attributes: popperAttributes} = usePopper(
+    refPopoverButton,
+    refPopoverPanel,
+  );
+
   return (
     employee && (
       <Row>
@@ -61,9 +74,41 @@ export const Employee: React.FC = () => {
         <Col>
           <Row>
             <CreateStreamProposalButton />
-            <IconButton>
-              <ThreeDotsIcon className='fill-blue-textDefault' />
-            </IconButton>
+            <Popover className='relative flex'>
+              <Popover.Button
+                as='div'
+                // @ts-expect-error
+                ref={setRefPopoverButton}
+              >
+                <IconButton>
+                  <ThreeDotsIcon className='fill-blue-textDefault' />
+                </IconButton>
+              </Popover.Button>
+
+              <Transition
+                enter='transition duration-200 ease-out'
+                enterFrom='transform scale-95 opacity-0'
+                enterTo='transform scale-100 opacity-100'
+                leave='transition duration-200 ease-out'
+                leaveFrom='transform scale-100 opacity-100'
+                leaveTo='transform scale-95 opacity-0'
+              >
+                <Popover.Panel
+                  // @ts-expect-error
+                  ref={setRefPopoverPanel}
+                  style={popperStyles.popper}
+                  {...popperAttributes.popper}
+                >
+                  <Portlet>
+                    <span>Transfer</span>
+                    <span>Edit</span>
+                    <span>Activate</span>
+                    <span>Suspend</span>
+                    <span>Fire</span>
+                  </Portlet>
+                </Popover.Panel>
+              </Transition>
+            </Popover>
           </Row>
         </Col>
       </Row>
