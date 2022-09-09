@@ -13,6 +13,7 @@ import {LayoutProvider} from '~/shared/ui/components/layout';
 import {Navigate} from '~/shared/ui/components/navigate';
 import {ReactComponent as DashboardIcon} from '~/shared/ui/icons/nav/dashboard.svg';
 import {ReactComponent as EmployeeIcon} from '~/shared/ui/icons/nav/employee.svg';
+import {ReactComponent as NftIcon} from '~/shared/ui/icons/nav/nft.svg';
 import {ReactComponent as SettingsIcon} from '~/shared/ui/icons/nav/settings.svg';
 import {ReactComponent as StreamIcon} from '~/shared/ui/icons/nav/stream.svg';
 import {ReactComponent as TreasuryIcon} from '~/shared/ui/icons/nav/treasury.svg';
@@ -43,6 +44,11 @@ const navItems = [
     icon: StreamIcon,
     title: 'Streams',
     path: ROUTES.streams.path,
+  },
+  {
+    icon: NftIcon,
+    title: 'NFT',
+    path: ROUTES.nft.path,
   },
 ];
 

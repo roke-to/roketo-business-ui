@@ -29,7 +29,7 @@ export const CreateStreamProposalButton = ({
   return (
     <>
       <Button size={size} className={className} onClick={toggleModal}>
-        Propose to rreate a stream
+        Propose to create a stream
       </Button>
       <Modal isOpen={isModalOpened} onCloseModal={toggleModal}>
         <CreateStream

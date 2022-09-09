@@ -1,4 +1,6 @@
 type EnvType = {
+  DEV: boolean;
+  PROD: boolean;
   APP_TITLE: string;
   NEAR_NETWORK_ID: 'testnet' | 'mainnet';
   WALLET_URL: string;
@@ -19,6 +21,8 @@ type EnvType = {
 };
 
 export const env: EnvType = {
+  DEV: import.meta.env.DEV,
+  PROD: import.meta.env.PROD,
   APP_TITLE: import.meta.env.VITE_APP_TITLE,
   NEAR_NETWORK_ID: import.meta.env.VITE_NEAR_NETWORK_ID,
   WALLET_URL: import.meta.env.VITE_WALLET_URL,

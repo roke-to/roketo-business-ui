@@ -38,6 +38,9 @@ export const ROUTES = typedRoutes({
   stream: {
     path: '/streams/:id',
   },
+  nft: {
+    path: '/nft',
+  },
 });
 
 export type RouteKey = keyof typeof ROUTES;
