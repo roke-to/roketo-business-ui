@@ -10,6 +10,7 @@ import {EmployeePage} from '~/pages/employee';
 import {EmployeesPage} from '~/pages/employees';
 import {GovernancePage} from '~/pages/governance';
 import {LoginPage} from '~/pages/login';
+import {NftPage} from '~/pages/nft';
 import {NotFoundPage} from '~/pages/not-found';
 import {StreamPage} from '~/pages/stream';
 import {StreamProposalsPage} from '~/pages/stream-proposals';
@@ -122,6 +123,15 @@ export function Routing() {
           redirect={<Redirect to={ROUTES.root.path} />}
         >
           <StreamPage />
+        </PrivateRoute>
+
+        <PrivateRoute
+          exact
+          allowed={signedIn && !!daoId}
+          path={ROUTES.nft.path}
+          redirect={<Redirect to={ROUTES.root.path} />}
+        >
+          <NftPage />
         </PrivateRoute>
 
         <Route render={NotFoundPage} />

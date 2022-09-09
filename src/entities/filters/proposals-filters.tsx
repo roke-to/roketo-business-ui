@@ -44,13 +44,13 @@ export const ProposalsFilters = ({
   const canShowModal = useStore($isMobileScreen);
   const hasKindModule = selectedProposalKind && handleChangeProposalKind && !canShowModal;
   const hasVariantModule =
-    variantOptions.length &&
+    !!variantOptions.length &&
     selectedProposalVariant &&
     handleChangeProposalVariant &&
     !canShowModal;
 
   return (
-    <div className={styles.filtersContainer}>
+    <div className={styles.filtersCoFntainer}>
       <div className={styles.filterGroup}>
         <ProposalStatusFilter
           kindOptions={kindOpions}
