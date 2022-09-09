@@ -1,8 +1,10 @@
+import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {ChangePolicyButton, Councils} from '~/entities/councils';
 import {LastGovernanceProposal} from '~/entities/governance';
+import {$isMobileScreen} from '~/entities/screens';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {StreamsList} from '~/entities/streams/StreamsList';
 import {
@@ -13,10 +15,12 @@ import {
 import {ROUTES} from '~/shared/config/routes';
 import {ButtonLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
+import {Line} from '~/shared/ui/components/line';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
 export const Dashboard = () => {
+  const isMobile = useStore($isMobileScreen);
   const {t} = useTranslation('dashboard');
 
   return (
@@ -26,14 +30,26 @@ export const Dashboard = () => {
           <Typography as='h2' font='heading'>
             {t('treasury')}
           </Typography>
-          <Row>
-            <CreateTreasuryProposalButton size='sm' />
-            <ButtonLink size='sm' to={ROUTES.treasury.path}>
-              {t('manageTreasury')}
-            </ButtonLink>
-          </Row>
+          {!isMobile && (
+            <Row>
+              <CreateTreasuryProposalButton size='sm' />
+              <ButtonLink size='sm' to={ROUTES.treasury.path}>
+                {t('manageTreasury')}
+              </ButtonLink>
+            </Row>
+          )}
         </Row>
-        <TreasuryInfo variant='dashboard' />
+        <TreasuryInfo variant='dashboard'>
+          {isMobile && (
+            <>
+              <Line />
+              <Col>
+                <CreateTreasuryProposalButton />
+                <ButtonLink to={ROUTES.treasury.path}>{t('manageTreasury')}</ButtonLink>
+              </Col>
+            </>
+          )}
+        </TreasuryInfo>
         <LastTreasuryProposal />
       </Col>
       <Col>
@@ -41,14 +57,26 @@ export const Dashboard = () => {
           <Typography as='h2' font='heading'>
             {t('daoManagment')}
           </Typography>
-          <Row>
-            <ChangePolicyButton size='sm' />
-            <ButtonLink size='sm' to={ROUTES.governance.path}>
-              {t('manageDao')}
-            </ButtonLink>
-          </Row>
+          {!isMobile && (
+            <Row>
+              <ChangePolicyButton size='sm' />
+              <ButtonLink size='sm' to={ROUTES.governance.path}>
+                {t('manageDao')}
+              </ButtonLink>
+            </Row>
+          )}
         </Row>
-        <Councils variant='dashboard' />
+        <Councils variant='dashboard'>
+          {isMobile && (
+            <>
+              <Line />
+              <Col>
+                <ChangePolicyButton />
+                <ButtonLink to={ROUTES.governance.path}>{t('manageDao')}</ButtonLink>
+              </Col>
+            </>
+          )}
+        </Councils>
         <LastGovernanceProposal />
       </Col>
       <Col>
@@ -56,12 +84,14 @@ export const Dashboard = () => {
           <Typography as='h2' font='heading'>
             {t('streams')}
           </Typography>
-          <Row>
-            <CreateStreamProposalButton size='sm' />
-            <ButtonLink size='sm' to={ROUTES.streams.path}>
-              {t('manageStreams')}
-            </ButtonLink>
-          </Row>
+          {!isMobile && (
+            <Row>
+              <CreateStreamProposalButton size='sm' />
+              <ButtonLink size='sm' to={ROUTES.streams.path}>
+                {t('manageStreams')}
+              </ButtonLink>
+            </Row>
+          )}
         </Row>
         <StreamsList />
       </Col>
