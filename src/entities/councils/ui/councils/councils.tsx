@@ -33,7 +33,7 @@ export const Councils = ({variant = 'default'}: CouncilsProps) => {
     <Portlet className={styles.councilWidget}>
       <CouncilsList />
 
-      <Row gap={3}>
+      <Row gap={6}>
         <Line className={styles.verticalLine} />
         <PieChart
           parts={[

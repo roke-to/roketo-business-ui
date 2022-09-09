@@ -1,5 +1,5 @@
 .root {
-  border-right: 1px solid theme('colors.blue.dark');
+  border-right: 1px solid theme('colors.blue.sat_1');
   /* Vertical line turns into horizontal on mobile 😱 */
-  border-top: 1px solid theme('colors.blue.dark');
+  border-top: 1px solid theme('colors.blue.sat_1');
 }

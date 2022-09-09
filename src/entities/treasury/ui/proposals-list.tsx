@@ -9,6 +9,7 @@ import {
   $treasurySelectedProposalStatus,
 } from '~/entities/treasury/model/treasury';
 import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
+import {Col} from '~/shared/ui/components/col';
 
 export const ProposalsList = () => {
   const treasuryProposals = useStore($treasuryProposals);
@@ -28,10 +29,10 @@ export const ProposalsList = () => {
   }
 
   return (
-    <>
+    <Col gap={3}>
       {treasuryProposals.map((proposal) => (
         <Proposal key={proposal.id} proposal={proposal} />
       ))}
-    </>
+    </Col>
   );
 };

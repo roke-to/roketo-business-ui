@@ -15,6 +15,7 @@ import {
   loadTokenBalances,
 } from '~/entities/treasury/model/treasury';
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
+import {Col} from '~/shared/ui/components/col';
 
 import {TreasuryInfo} from './treasury-info';
 
@@ -30,19 +31,21 @@ export const Treasury = () => {
   }, []);
 
   return (
-    <>
+    <Col gap={10}>
       <TreasuryInfo />
-      <ProposalsFilters
-        kindOpions={ProposalKindForTreasury}
-        isLoading={isLoading}
-        selectedProposalStatus={treasurySelectedProposalStatus}
-        selectedProposalKind={treasurySelectedProposalKind}
-        proposalSortOrder={treasuryProposalSortOrder}
-        handleChangeProposalStatus={changeTreasuryProposalSelectedStatus}
-        handleChangeProposalKind={changeTreasuryProposalSelectedKind}
-        handleChangeProposalSortOrder={changeTreasuryProposalSortOrder}
-      />
-      <ProposalsList />
-    </>
+      <Col gap='lg'>
+        <ProposalsFilters
+          kindOpions={ProposalKindForTreasury}
+          isLoading={isLoading}
+          selectedProposalStatus={treasurySelectedProposalStatus}
+          selectedProposalKind={treasurySelectedProposalKind}
+          proposalSortOrder={treasuryProposalSortOrder}
+          handleChangeProposalStatus={changeTreasuryProposalSelectedStatus}
+          handleChangeProposalKind={changeTreasuryProposalSelectedKind}
+          handleChangeProposalSortOrder={changeTreasuryProposalSortOrder}
+        />
+        <ProposalsList />
+      </Col>
+    </Col>
   );
 };

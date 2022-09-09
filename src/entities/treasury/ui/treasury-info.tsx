@@ -38,7 +38,7 @@ export const TreasuryInfo = ({variant = 'default'}: TreasuryInfoProps) => {
     <Portlet
       type='row'
       justify='between'
-      className='align-center pt-6 mobile:py-8 mobile:flex-col mobile:gap-lg'
+      className='align-center pt-6 mobile:py-8 mobile:pt-6 mobile:flex-col mobile:gap-lg'
       width='full'
     >
       <div className='flex grow flex-col gap-2'>
@@ -50,7 +50,7 @@ export const TreasuryInfo = ({variant = 'default'}: TreasuryInfoProps) => {
             {formatCurrency(totalBalance)} USD
           </Typography>
         </div>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 flex-wrap'>
           {tokens.map((token) => {
             const value = token.price
               ? `${formatCurrency(parseFloat(token.balance) * Number(token.price))} USD`
