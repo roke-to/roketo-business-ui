@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 import {attach} from 'effector';
 
-import {$accountId, $near} from '~/entities/wallet';
+import {$currentDaoId, $near} from '~/entities/wallet';
 
 import {COMMENT_TEXT_LIMIT} from '../constants';
 
 const isReceiverNotEqualOwnerFx = attach({
-  source: $accountId,
-  effect: (accountId, value: string | undefined) => !!accountId && value !== accountId,
+  source: $currentDaoId,
+  effect: (currentDaoId, value: string | undefined) => !!currentDaoId && value !== currentDaoId,
 });
 
 const isAddressNotExistsFx = attach({

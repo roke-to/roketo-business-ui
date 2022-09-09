@@ -1,21 +1,20 @@
-import clsx from 'clsx';
 import React from 'react';
 
 import {CreateStream} from '~/entities/create-stream/CreateStream';
 import {loadTokenBalances} from '~/entities/treasury/model/treasury';
-import {testIds} from '~/shared/constants';
-import {Button} from '~/shared/roketo-ui/components/Button';
 import {Modal} from '~/shared/roketo-ui/Modal';
+import {Button, ButtonSize} from '~/shared/ui/components/button';
 
 import {handleCreateStreamFx} from './model';
-import styles from './styles.module.scss';
 
 export const CreateStreamProposalButton = ({
   className,
   submitting,
+  size,
 }: {
   submitting?: boolean;
   className?: string;
+  size?: ButtonSize;
 }) => {
   const [isModalOpened, setIsModalOpened] = React.useState<boolean>(false);
   const toggleModal = React.useCallback(() => {
@@ -29,11 +28,7 @@ export const CreateStreamProposalButton = ({
 
   return (
     <>
-      <Button
-        className={clsx(styles.button, styles.createStreamButton, className)}
-        onClick={toggleModal}
-        testId={testIds.createStreamButton}
-      >
+      <Button size={size} className={className} onClick={toggleModal}>
         Create a stream
       </Button>
       <Modal isOpen={isModalOpened} onCloseModal={toggleModal}>

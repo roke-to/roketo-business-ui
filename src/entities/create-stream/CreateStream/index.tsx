@@ -59,6 +59,7 @@ const LOCK_DESCRIPTION = (
 
 export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStreamProps) => {
   const tokens = useStore($listedTokens);
+  console.log('t', tokens);
   const [submitError, setError] = useState<Error | null>(null);
 
   const handleFormSubmit = (formValues: FormValues) => {
@@ -66,7 +67,7 @@ export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStr
   };
   return (
     <div className={styles.root}>
-      <h2 className={styles.title}>Create Stream</h2>
+      <h2 className={styles.title}>Propose to create a stream</h2>
 
       <Formik
         initialValues={INITIAL_FORM_VALUES}

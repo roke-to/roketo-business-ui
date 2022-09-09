@@ -74,15 +74,29 @@ const loadTreasuryProposalsFx = attach({
   },
   async effect({daoId, accountId, status, kind, sort}) {
     const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [{kind: {$cont: 'FunctionCall'}}],
+      $or: [{kind: {$cont: 'FunctionCall'}}, {kind: {$cont: 'Transfer'}}],
     };
 
-    const search: SFields | SConditionAND = {
+    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
+    const search: SConditionAND = {
       $and: [
         {
-          daoId: {
-            $eq: daoId,
-          },
+          daoId: {$eq: daoId},
+        },
+        {
+          description: {$excl: 'ProposeCreateRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposePauseRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeStartRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeStopRoketoStream'},
+        },
+        {
+          description: {$excl: 'ProposeRoketoStreamWithdraw'},
         },
       ],
     };
@@ -177,6 +191,8 @@ sample({
   target: $tokenBalances,
 });
 
+// TODO: подумать как перестать использовать токены из sdk в стримах,
+// в этом нет необходимости
 // limit tokens which dao council could stream
 sample({
   source: $listedTokens,
