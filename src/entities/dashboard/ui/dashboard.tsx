@@ -57,14 +57,26 @@ export const Dashboard = () => {
           <Typography as='h2' font='heading'>
             {t('daoManagment')}
           </Typography>
-          <Row>
-            <ChangePolicyButton size='sm' />
-            <ButtonLink size='sm' to={ROUTES.governance.path}>
-              {t('manageDao')}
-            </ButtonLink>
-          </Row>
+          {!isMobile && (
+            <Row>
+              <ChangePolicyButton size='sm' />
+              <ButtonLink size='sm' to={ROUTES.governance.path}>
+                {t('manageDao')}
+              </ButtonLink>
+            </Row>
+          )}
         </Row>
-        <Councils variant='dashboard' />
+        <Councils variant='dashboard'>
+          {isMobile && (
+            <>
+              <Line />
+              <Col>
+                <ChangePolicyButton />
+                <ButtonLink to={ROUTES.governance.path}>{t('manageDao')}</ButtonLink>
+              </Col>
+            </>
+          )}
+        </Councils>
         <LastGovernanceProposal />
       </Col>
       <Col>
@@ -72,12 +84,14 @@ export const Dashboard = () => {
           <Typography as='h2' font='heading'>
             {t('streams')}
           </Typography>
-          <Row>
-            <CreateStreamProposalButton size='sm' />
-            <ButtonLink size='sm' to={ROUTES.streams.path}>
-              {t('manageStreams')}
-            </ButtonLink>
-          </Row>
+          {!isMobile && (
+            <Row>
+              <CreateStreamProposalButton size='sm' />
+              <ButtonLink size='sm' to={ROUTES.streams.path}>
+                {t('manageStreams')}
+              </ButtonLink>
+            </Row>
+          )}
         </Row>
         <StreamsList />
       </Col>

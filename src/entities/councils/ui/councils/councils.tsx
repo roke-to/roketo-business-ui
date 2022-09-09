@@ -20,7 +20,7 @@ interface CouncilsProps {
   variant?: 'default' | 'dashboard';
 }
 
-export const Councils = ({variant = 'default'}: CouncilsProps) => {
+export const Councils: React.FC<CouncilsProps> = ({variant = 'default', children}) => {
   const {t} = useTranslation('councils');
   const quorumPercent = useStore($currentDaoQuorumValue);
 
@@ -68,6 +68,7 @@ export const Councils = ({variant = 'default'}: CouncilsProps) => {
       </Row>
 
       {variant === 'default' && <ChangePolicyButton />}
+      {variant !== 'default' && children}
     </Portlet>
   );
 };
