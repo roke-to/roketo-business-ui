@@ -1,0 +1,14 @@
+.activate {
+  color: theme('colors.green.default');
+  background-color: theme('colors.green.light');
+}
+
+.suspend {
+  color: theme('colors.orange.default');
+  background-color: theme('colors.orange.light');
+}
+
+.fire {
+  color: theme('colors.red.default');
+  background-color: theme('colors.red.lightDefault');
+}

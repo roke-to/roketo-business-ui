@@ -35,14 +35,7 @@ const loadEmployeesFx = attach({
     typeFilter: $typeFilter,
     sort: $sort,
   },
-  async effect({
-    daoId,
-    authenticationHeaders,
-    statusFilter,
-    typeFilter,
-    // eslint-disable-next-line
-    sort,
-  }) {
+  async effect({daoId, authenticationHeaders, statusFilter, typeFilter, sort}) {
     const query: {
       status?: EmployeeResponseDto['status'];
       type?: EmployeeResponseDto['type'];
@@ -81,7 +74,6 @@ sample({
 });
 sample({
   source: $authenticationHeaders,
-  // TODO: нужна объяснялка пояснялка
   filter: () => window && window.location.pathname.includes(ROUTES.employees.path),
   target: loadEmployeesFx,
 });

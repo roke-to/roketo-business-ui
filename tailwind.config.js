@@ -53,7 +53,10 @@ export default {
       black: '#2B313B',
       white: colors.white,
       gray: '#8A96A8',
-      orange: '#E87C4C',
+      orange: {
+        default: '#E87C4C',
+        light: '#FFF7EE',
+      },
       green: {
         default: '#1EBA52',
         light: '#D6F5DF',
@@ -114,10 +117,11 @@ export default {
       '5xl': '6rem',
     }),
     screens: {
-      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
-      tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
-      laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
+      // https://tailwindcss.com/docs/screens#max-width-breakpoints
       desktop: {min: '1280px'}, // => @media (min-width: 1280px) { ... }
+      laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
+      tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
+      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
     },
   },
 };

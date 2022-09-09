@@ -14,10 +14,10 @@
 }
 
 .Suspended {
-  border-color: theme('colors.orange');
+  border-color: theme('colors.orange.default');
 
   &.Contractor {
-    background-color: theme('colors.orange');
+    background-color: theme('colors.orange.default');
   }
 }
 
