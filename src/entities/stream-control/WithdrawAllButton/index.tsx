@@ -60,7 +60,7 @@ export function WithdrawAllButton({className}: {className?: string}) {
         displayMode={preparedTokenData.length !== 0 ? DisplayMode.action : DisplayMode.secondary}
         className={clsx(preparedTokenData.length !== 0 ? undefined : styles.notAllowed, className)}
       >
-        Withdraw&nbsp;tokens
+        Propose withdraw
       </Button>
     </Tooltip>
   );

@@ -66,7 +66,7 @@ export function AddFunds({stream, className}: {stream: RoketoStream; className?:
               addFundsModal.turnOff();
             }}
           >
-            <h2 className={styles.modalHeader}>Amount to deposit</h2>
+            <h2 className={styles.modalHeader}>Propose deposit to stream</h2>
             <div>
               <Balance tokenAccountId={stream.token_account_id} className={styles.label} />
               <Input
