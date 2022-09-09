@@ -15,7 +15,7 @@ interface TreasuryInfoProps {
   variant?: 'default' | 'dashboard';
 }
 
-export const TreasuryInfo = ({variant = 'default'}: TreasuryInfoProps) => {
+export const TreasuryInfo: React.FC<TreasuryInfoProps> = ({variant = 'default', children}) => {
   const {t} = useTranslation('treasury');
   const tokenBalances = useStore($tokenBalances);
 
@@ -76,6 +76,7 @@ export const TreasuryInfo = ({variant = 'default'}: TreasuryInfoProps) => {
           <CreateTreasuryProposalButton />
         </>
       )}
+      {variant !== 'default' && children}
     </Portlet>
   );
 };
