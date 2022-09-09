@@ -197,6 +197,7 @@ export enum ProposalVariant {
   ProposeStartRoketoStream = 'ProposeStartRoketoStream',
   ProposeStopRoketoStream = 'ProposeStopRoketoStream',
   ProposeRoketoStreamWithdraw = 'ProposeRoketoStreamWithdraw',
+  ProposeAddFundsToRoketoStream = 'ProposeAddFundsToRoketoStream',
   ProposeCreateToken = 'ProposeCreateToken',
   ProposeTokenDistribution = 'ProposeTokenDistribution',
   ProposeStakingContractDeployment = 'ProposeStakingContractDeployment',

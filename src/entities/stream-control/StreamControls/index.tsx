@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import {blurGate} from '~/entities/blur';
 // eslint-disable-next-line boundaries/element-types
 import {AddFunds} from '~/entities/steam-add-funds';
-import {$accountId} from '~/entities/wallet';
+import {$accountId, $currentDaoId} from '~/entities/wallet';
 import {testIds} from '~/shared/constants';
 import {BooleanControl, useBool} from '~/shared/hooks/useBool';
 import {AdaptiveModal} from '~/shared/kit/AdaptiveModal';
@@ -290,11 +290,11 @@ export function StreamListControls({
   const loading = useStore($loading);
   const [menuOpened, setMenuOpened] = useState(false);
   const {isIncoming, isExternal} = useStoreMap({
-    store: $accountId,
+    store: $currentDaoId,
     keys: [stream],
-    fn(accountId) {
-      const outgoing = accountId === stream.owner_id;
-      const incoming = accountId === stream.receiver_id;
+    fn(currentDaoId) {
+      const outgoing = currentDaoId === stream.owner_id;
+      const incoming = currentDaoId === stream.receiver_id;
       const external = !outgoing && !incoming;
       return {isIncoming: incoming, isExternal: external};
     },
