@@ -14,6 +14,7 @@ import {decodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposa
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
 import {ButtonNativeLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
+import {Line} from '~/shared/ui/components/line';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './proposal.module.css';
@@ -80,6 +81,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
           isVotable={isVotable}
         />
       </Col>
+      <Line className='mobile:hidden' />
       <Votes
         proposalId={proposalId}
         dao={dao}

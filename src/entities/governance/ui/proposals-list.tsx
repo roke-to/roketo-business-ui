@@ -9,6 +9,7 @@ import {
 } from '~/entities/governance/model';
 import {Proposal} from '~/entities/proposal';
 import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
+import {Col} from '~/shared/ui/components/col';
 
 export const ProposalsList = () => {
   const governanceProposals = useStore($governanceProposals);
@@ -28,10 +29,10 @@ export const ProposalsList = () => {
   }
 
   return (
-    <>
+    <Col gap={3}>
       {governanceProposals.map((proposal) => (
         <Proposal key={proposal.id} proposal={proposal} />
       ))}
-    </>
+    </Col>
   );
 };

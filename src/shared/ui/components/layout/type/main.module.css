@@ -91,7 +91,7 @@
 
 .content {
   width: 100%;
-  max-width: 880px;
+  max-width: 944px; /* 880px + 32px (padding) * 2 */
   margin: 0 auto;
   display: flex;
   /* same as at src/shared/ui/components/layout/layout.module.css .layout */
@@ -116,7 +116,7 @@
   background: linear-gradient(180deg, #fff 0%, #fff 90%, rgba(255, 255, 255, 0.5) 100%);
   z-index: 100;
   width: 100%;
-  max-width: 880px;
+  max-width: 944px; /* 880px + 32px (padding) * 2 */
 
   padding-left: theme('gap.xl');
   padding-right: theme('gap.xl');

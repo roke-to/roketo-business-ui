@@ -44,7 +44,7 @@ export const Controls = ({
   return (
     <Row
       justify='start'
-      gap={4}
+      gap={2}
       className={clsx(
         {
           [styles.controls]: isVotable && !isViewMode,

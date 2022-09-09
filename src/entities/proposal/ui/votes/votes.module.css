@@ -1,8 +1,5 @@
 .root {
   min-width: 15rem;
-  border-left: 1px solid theme('colors.blue.sat_1');
-  margin-left: 1rem;
-  padding-left: 2.5rem;
   gap: 1.25rem;
 }
 

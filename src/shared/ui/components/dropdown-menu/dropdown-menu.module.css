@@ -10,3 +10,7 @@
   background-color: theme('colors.blue.light');
   border-radius: theme('borderRadius.3xl');
 }
+
+.button {
+  @apply px-4;
+}

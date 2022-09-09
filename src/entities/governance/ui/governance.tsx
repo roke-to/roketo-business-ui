@@ -4,6 +4,7 @@ import {Councils} from '~/entities/councils';
 import {GovernanceProposalsFilters} from '~/entities/governance/ui/proposals-filters';
 import {ProposalsList} from '~/entities/governance/ui/proposals-list';
 import {sendTransactionsFx} from '~/entities/transactions';
+import {Col} from '~/shared/ui/components/col';
 
 export const Governance = () => {
   React.useEffect(() => {
@@ -11,10 +12,12 @@ export const Governance = () => {
   }, []);
 
   return (
-    <>
+    <Col gap={10}>
       <Councils />
-      <GovernanceProposalsFilters />
-      <ProposalsList />
-    </>
+      <Col gap={6}>
+        <GovernanceProposalsFilters />
+        <ProposalsList />
+      </Col>
+    </Col>
   );
 };

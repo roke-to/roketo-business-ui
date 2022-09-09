@@ -17,6 +17,10 @@
   }
 }
 
+.mobileButton {
+  @apply px-3;
+}
+
 @media screen(mobile) {
   .activeMode {
     &.root {

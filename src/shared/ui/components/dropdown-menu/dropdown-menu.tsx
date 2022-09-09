@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import React from 'react';
 
 import {Button, ButtonSize, ButtonVariant} from '~/shared/ui/components/button';
@@ -26,7 +27,13 @@ export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProp
     <Dropdown
       onClick={onClick}
       target={
-        <Button variant={variant} size={size} className={className} {...props} ref={ref}>
+        <Button
+          variant={variant}
+          size={size}
+          className={clsx(className, styles.button)}
+          {...props}
+          ref={ref}
+        >
           <div className={styles.menuLabel}>
             {label}
             <ArrowDown className={styles.icon} />

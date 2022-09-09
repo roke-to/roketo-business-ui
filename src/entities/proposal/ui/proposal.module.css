@@ -10,12 +10,14 @@
   padding: theme('gap.lg') theme('gap.xl') theme('gap.xl');
   border-radius: theme('borderRadius.3xl');
   width: 100%;
+  gap: theme('gap.lg');
 
   &:hover {
     box-shadow: theme('dropShadow.DEFAULT');
   }
 
   .info {
+    flex-grow: 1;
     gap: 1rem;
   }
 }

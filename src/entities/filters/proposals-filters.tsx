@@ -50,7 +50,7 @@ export const ProposalsFilters = ({
     !canShowModal;
 
   return (
-    <div className={styles.filtersCoFntainer}>
+    <div className={styles.filtersContainer}>
       <div className={styles.filterGroup}>
         <ProposalStatusFilter
           kindOptions={kindOpions}

@@ -35,10 +35,10 @@
   @apply h-8 px-2 rounded-2xl text-sm;
 }
 .sm {
-  @apply h-8 px-3 rounded-2xl text-sm;
+  @apply h-8 px-4 rounded-2xl text-sm;
 }
 .md {
-  @apply h-12 px-4 rounded-3xl;
+  @apply h-12 px-6 rounded-3xl text-sm;
 }
 .lg {
   @apply h-16 px-6 rounded-4xl text-lg;
