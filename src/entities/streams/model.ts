@@ -76,8 +76,7 @@ import type {
   StreamSort,
 } from './types';
 
-const redirectUrl = generatePath(ROUTES.streamProposals.path);
-const returnPath = `${window.location.origin}${redirectUrl}`;
+const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 
 export const $streamListData = createStore(
   {

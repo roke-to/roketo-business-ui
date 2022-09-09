@@ -66,7 +66,6 @@ export const mapCreateRoketoStreamOptions = (formData: {
     methodName: 'add_proposal',
     args: {
       proposal: {
-        // variant no needed, because transfer is unambiguous by itself
         description: encodeDescription({
           description: formData.description,
           link: formData.link,
