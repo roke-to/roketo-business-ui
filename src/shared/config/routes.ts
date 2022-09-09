@@ -26,8 +26,14 @@ export const ROUTES = typedRoutes({
   employees: {
     path: '/employees',
   },
+  employee: {
+    path: '/employees/:id',
+  },
   streams: {
     path: '/streams',
+  },
+  streamProposals: {
+    path: '/streams/proposals',
   },
   stream: {
     path: '/streams/:id',

@@ -23,7 +23,11 @@ enum FormView {
   ADD_COUNCILS = 'addCouncils',
 }
 
-export const DaoNew = () => {
+interface DaoNewProps {
+  onReset?: () => void;
+}
+
+export const DaoNew = ({onReset}: DaoNewProps) => {
   const {t} = useTranslation('dao');
   const councilAddressRef = React.useRef<HTMLInputElement>(null);
   const {fields, submit, eachValid} = useForm(createDaoForm);
@@ -56,6 +60,11 @@ export const DaoNew = () => {
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     submit();
+  };
+
+  const handleClickCancel = () => {
+    createDaoForm.reset();
+    onReset?.();
   };
 
   let councilAddressError = fields.councilAddress.errorText();
@@ -104,6 +113,8 @@ export const DaoNew = () => {
                 >
                   <Input
                     name='daoAddress'
+                    mask='postfix'
+                    maskOptions={{postfix: '.sputnikv2.testnet'}}
                     size='md'
                     value={fields.address.value}
                     disabled={pending}
@@ -127,8 +138,8 @@ export const DaoNew = () => {
                 >
                   {t('daoNew.submitDaoName')}
                 </Button>
-                <Button variant='soft' onClick={() => createDaoForm.reset()}>
-                  {t('daoNew.back')}
+                <Button variant='soft' onClick={handleClickCancel}>
+                  {t('daoNew.cancel')}
                 </Button>
               </Col>
             </Col>

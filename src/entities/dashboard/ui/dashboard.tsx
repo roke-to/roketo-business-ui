@@ -3,6 +3,7 @@ import {useTranslation} from 'react-i18next';
 
 import {ChangePolicyButton, Councils} from '~/entities/councils';
 import {LastGovernanceProposal} from '~/entities/governance';
+import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {StreamsList} from '~/entities/streams/StreamsList';
 import {
   CreateTreasuryProposalButton,
@@ -10,7 +11,6 @@ import {
   TreasuryInfo,
 } from '~/entities/treasury';
 import {ROUTES} from '~/shared/config/routes';
-import {Button} from '~/shared/ui/components/button';
 import {ButtonLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Row} from '~/shared/ui/components/row';
@@ -27,8 +27,10 @@ export const Dashboard = () => {
             {t('treasury')}
           </Typography>
           <Row>
-            <CreateTreasuryProposalButton />
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageTreasury')}</ButtonLink>
+            <CreateTreasuryProposalButton size='sm' />
+            <ButtonLink size='sm' to={ROUTES.treasury.path}>
+              {t('manageTreasury')}
+            </ButtonLink>
           </Row>
         </Row>
         <TreasuryInfo variant='dashboard' />
@@ -40,8 +42,10 @@ export const Dashboard = () => {
             {t('daoManagment')}
           </Typography>
           <Row>
-            <ChangePolicyButton />
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageDao')}</ButtonLink>
+            <ChangePolicyButton size='sm' />
+            <ButtonLink size='sm' to={ROUTES.governance.path}>
+              {t('manageDao')}
+            </ButtonLink>
           </Row>
         </Row>
         <Councils variant='dashboard' />
@@ -53,8 +57,10 @@ export const Dashboard = () => {
             {t('streams')}
           </Typography>
           <Row>
-            <Button>{t('proposeStream')}</Button>
-            <ButtonLink to={ROUTES.treasury.path}>{t('manageStreams')}</ButtonLink>
+            <CreateStreamProposalButton size='sm' />
+            <ButtonLink size='sm' to={ROUTES.streams.path}>
+              {t('manageStreams')}
+            </ButtonLink>
           </Row>
         </Row>
         <StreamsList />

@@ -1,22 +1,30 @@
 import type {BigNumber} from 'bignumber.js';
-import {createEvent, createStore, sample} from 'effector';
+import {combine, createEvent, createStore, sample} from 'effector';
 
-import {$accountStreams, $roketoWallet, $tokens} from '~/entities/wallet';
+import {withdrawStreams} from '~/entities/streams/lib';
+import {$accountStreams, $currentDaoId, $tokens, $walletSelector} from '~/entities/wallet';
 import {formatAmount} from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
+import {ROUTES} from '~/shared/config/routes';
 import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
 
-import {getAvailableToWithdraw, hasPassedCliff, isActiveStream, withdrawStreams} from '@roketo/sdk';
+import {getAvailableToWithdraw, hasPassedCliff, isActiveStream} from '@roketo/sdk';
+
+const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 
 export const triggerWithdrawAll = createEvent();
 
 export const withdrawAllFx = createProtectedEffect({
-  source: $roketoWallet,
-  fn({transactionMediator}, streamIds: string[]) {
+  source: combine($currentDaoId, $walletSelector, (currentDaoId, walletSelector) =>
+    !!currentDaoId && !!walletSelector ? {currentDaoId, walletSelector} : null,
+  ),
+  fn({currentDaoId, walletSelector}, streamIds: string[]) {
     return withdrawStreams({
       streamIds,
-      transactionMediator,
       roketoContractName: env.ROKETO_CONTRACT_NAME,
+      currentDaoId,
+      walletSelector,
+      callbackUrl: returnPath,
     });
   },
 });

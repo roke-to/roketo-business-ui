@@ -11,22 +11,22 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './filter.module.css';
 
 export interface ProposalKindFilterProps {
-  setKindProposal: ProposalKindFilterType[];
+  options: ProposalKindFilterType[];
   selectedProposalKind: ProposalKindFilterType;
-  handleChangeProposalKind(kind: ProposalKindFilterType): void;
+  onChange(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalKindFilter = ({
-  setKindProposal,
+  options,
   selectedProposalKind,
-  handleChangeProposalKind,
+  onChange,
 }: ProposalKindFilterProps) => {
   const {t} = useTranslation('proposalFilters');
 
-  const selected = setKindProposal.findIndex((kind) => kind === selectedProposalKind);
+  const selected = options.findIndex((kind) => kind === selectedProposalKind);
 
   const handleChange = (index: number) => {
-    handleChangeProposalKind(setKindProposal[index]);
+    onChange(options[index]);
   };
 
   return (
@@ -36,7 +36,7 @@ export const ProposalKindFilter = ({
       </Typography>
       <DropdownMenu label={selectedProposalKind} variant='soft'>
         <DropdownContent selected={selected} handleChange={handleChange} offset='m' gap={3}>
-          {setKindProposal.map((kind) => (
+          {options.map((kind) => (
             <DropdownItem key={kind}>{kind}</DropdownItem>
           ))}
         </DropdownContent>

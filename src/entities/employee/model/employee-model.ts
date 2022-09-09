@@ -1,11 +1,63 @@
-import {createEffect, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
+import {$authenticationHeaders} from '~/entities/authentication-rb-api';
+import {$currentDaoId} from '~/entities/wallet';
+import {EmployeeResponseDto, rbApi} from '~/shared/api/rb';
 import {validators} from '~/shared/lib/form/validators';
 import {Employee} from '~/shared/types/employee';
 
-export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
+export const pageLoaded = createEvent<string>();
+export const $employee = createStore<EmployeeResponseDto | null>(null);
 
+const loadEmployeeFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, authenticationHeaders}, employeeId: string) {
+    return rbApi.dao
+      .daoControllerFindOneEmployeeByDao(daoId, employeeId, {
+        headers: {...authenticationHeaders},
+      })
+      .then((response) => response.data[0]);
+  },
+});
+
+type EmployeeStatusChangeAction = 'Suspend' | 'Reinstate' | 'Fire' | 'Rehire';
+export const employeeStatusChanged = createEvent<EmployeeStatusChangeAction>();
+const changeEmployeeStatusFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    employee: $employee,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, employee, authenticationHeaders}, action: EmployeeStatusChangeAction) {
+    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, String(employee!.id), action, {
+      headers: {...authenticationHeaders},
+    });
+  },
+});
+
+// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
+// Приходится ждать пока они засетятся и щелкнут в clock
+sample({
+  source: pageLoaded,
+  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  target: loadEmployeeFx,
+});
+sample({
+  source: loadEmployeeFx.doneData,
+  target: $employee,
+});
+
+sample({
+  source: employeeStatusChanged,
+  target: changeEmployeeStatusFx,
+});
+
+export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
 export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
     type: {
@@ -52,9 +104,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   },
   validateOn: ['submit'],
 });
-
 export const addEmployeeFx = createEffect((data: AddEmployeeFormFields) => console.log({...data}));
-
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,

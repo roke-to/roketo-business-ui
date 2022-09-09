@@ -38,9 +38,9 @@ export const Proposal = ({proposal}: ProposalProps) => {
   const isMobileScreen = useStore($isMobileScreen);
   const tokenBalances = useStore($tokenBalances);
 
-  const {description, link} = decodeDescription(rawDescription);
+  const {description, link, variant} = decodeDescription(rawDescription);
 
-  const title = getReadableProposalTitle(proposal, t, tokenBalances);
+  const title = getReadableProposalTitle(proposal, t, tokenBalances, variant);
   const isVotable = isVotableProposal(proposal);
 
   if (!dao) {

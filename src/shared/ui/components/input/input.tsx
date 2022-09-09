@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import autosize from 'autosize';
 import clsx from 'clsx';
 import React from 'react';
+import {IMaskInput} from 'react-imask';
 import {Merge} from 'type-fest';
 
 import styles from './input.module.css';
+import {MaskOptions, maskTypes} from './mask-types';
 
 export type InputVariant = 'outlined';
 
@@ -18,9 +19,14 @@ export type InputProps = Merge<
     startIcon?: React.ReactNode;
     endIcon?: React.ReactNode;
     variant?: InputVariant;
+    value?: string;
+    name?: string;
+    disabled?: boolean;
     size?: InputSize;
+    mask?: keyof typeof maskTypes;
+    maskOptions?: MaskOptions;
+    postfix?: string;
     error?: boolean;
-    multiline?: boolean;
     onChange?: (value: string, event?: React.ChangeEvent<HTMLInputElement>) => void;
   }
 >;
@@ -28,12 +34,13 @@ export type InputProps = Merge<
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
-      multiline,
       type = 'text',
       children,
       className,
       variant = 'outlined',
       size = 'md',
+      mask: maskType,
+      maskOptions,
       startIcon,
       endIcon,
       error,
@@ -42,7 +49,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
-    const Tag = multiline ? 'textarea' : 'input';
     const currentRef = React.useRef(null);
 
     const handleRef = React.useCallback(
@@ -59,22 +65,34 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [ref],
     );
 
-    React.useEffect(() => {
-      if (Tag === 'textarea') {
-        autosize(currentRef.current!);
-      }
+    const handleChange = React.useCallback(
+      (event) => onChange?.(event.target.value, event),
+      [onChange],
+    );
 
-      return () => autosize.destroy(currentRef.current!);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const handleAccept = React.useCallback(
+      (value, mask, event) => onChange?.(mask.unmaskedValue, event),
+      [onChange],
+    );
+
+    const maskProps = React.useMemo(
+      () => (maskType ? maskTypes[maskType]({...maskOptions, value: props.value}) : {}),
+      [maskType, maskOptions, props.value],
+    );
+
+    const onChangeProps = React.useMemo(
+      () => (maskType ? {onAccept: handleAccept} : {onChange: handleChange}),
+      [maskType, handleAccept, handleChange],
+    );
 
     return (
-      // @ts-expect-error problems with typing refs
-      <Tag
+      // @ts-expect-error ref not matching
+      <IMaskInput
         {...props}
+        {...maskProps}
+        {...onChangeProps}
         ref={handleRef}
         type={type}
-        onChange={(e) => onChange?.(e.target.value, e as React.ChangeEvent<HTMLInputElement>)}
         className={clsx(
           styles.input,
           styles[size],

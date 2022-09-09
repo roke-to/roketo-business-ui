@@ -21,7 +21,7 @@ export const GovernanceProposalsFilters = () => {
 
   return (
     <ProposalsFilters
-      setKindProposal={ProposalKindForGovernance}
+      kindOpions={ProposalKindForGovernance}
       isLoading={isLoading}
       selectedProposalStatus={governanceSelectedProposalStatus}
       selectedProposalKind={governanceSelectedProposalKind}

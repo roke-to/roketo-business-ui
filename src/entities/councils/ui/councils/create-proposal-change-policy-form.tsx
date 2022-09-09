@@ -35,7 +35,7 @@ export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   );
 
   return (
-    <Modal {...modalProps}>
+    <Modal {...modalProps} className='min-w-[774px] mobile:min-w-full'>
       <CreateProposalForm
         t={t}
         accountId={accountId}

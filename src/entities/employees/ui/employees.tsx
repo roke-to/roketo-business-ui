@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import {Link, useRouteMatch} from 'react-router-dom';
 
 import {Button} from '~/shared/ui/components/button';
 import {IconButton} from '~/shared/ui/components/icon-button';
@@ -14,12 +15,14 @@ import * as employeesModel from '../model/employees-model';
 import {AddEmployeeModal} from './add-employee-modal';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
-import styles from './employees-page.module.css';
+import styles from './employees.module.css';
 import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
 
 export const Employees = () => {
+  const {url} = useRouteMatch();
+
   const {t} = useTranslation('employees');
   const addEmployeeModal = useModal();
 
@@ -101,10 +104,18 @@ export const Employees = () => {
       <div className={clsx(styles.wrapper, styles[viewType])}>
         {employees.map((employee) => {
           if (viewType === 'card') {
-            return <EmployeeCard employee={employee} key={employee.id} />;
+            return (
+              <Link to={`${url}/${employee.id}`} key={employee.id}>
+                <EmployeeCard employee={employee} />
+              </Link>
+            );
           }
 
-          return <EmployeeListItem employee={employee} key={employee.id} />;
+          return (
+            <Link to={`${url}/${employee.id}`} key={employee.id}>
+              <EmployeeListItem employee={employee} />
+            </Link>
+          );
         })}
       </div>
     </>

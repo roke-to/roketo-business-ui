@@ -1,5 +1,6 @@
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
+import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
 export const ProposalStatuses: ProposalStatusFilterType[] = [
   'all',
@@ -36,4 +37,13 @@ export const ProposalKindForGovernance: ProposalKindFilterType[] = [
   'ChangePolicy',
   'AddMemberToRole',
   'RemoveMemberFromRole',
+];
+
+export const ProposalVariantForStream: ProposalVariantFilterType[] = [
+  'Any',
+  'ProposeCreateRoketoStream',
+  'ProposePauseRoketoStream',
+  'ProposeStartRoketoStream',
+  'ProposeStopRoketoStream',
+  'ProposeRoketoStreamWithdraw',
 ];

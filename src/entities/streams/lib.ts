@@ -1,9 +1,13 @@
 import * as nearApi from 'near-api-js';
 import {BigNumber} from 'bignumber.js';
-import BN from 'bn.js';
 import {Get} from 'type-fest';
 
-import {mapCreateRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/map-create-roketo-stream-options';
+import {mapAddFundsRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-add-funds-roketo-stream-options';
+import {mapCreateRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-create-roketo-stream-options';
+import {mapPauseRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-pause-roketo-stream-options';
+import {mapStartRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-start-roketo-stream-options';
+import {mapStopRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-stop-roketo-stream-options';
+import {mapWithdrawRoketoStreamOptions} from '~/shared/api/near/contracts/sputnik-dao/streams/map-withdraw-roketo-stream-options';
 import type {PriceOracle} from '~/shared/api/price-oracle';
 import {toHumanReadableValue} from '~/shared/api/token-formatter';
 import {FTContract} from '~/shared/api/types';
@@ -124,17 +128,7 @@ export function getTextFilter(accountId: string | null, text: string): FilterFn 
   return null;
 }
 
-export const STORAGE_DEPOSIT = '0.0025';
-
-export function isWNearTokenId({
-  tokenAccountId,
-  wNearId,
-}: {
-  tokenAccountId: string;
-  wNearId: string;
-}) {
-  return tokenAccountId === wNearId;
-}
+const STORAGE_DEPOSIT = '0.0025';
 
 async function isRegistered({
   accountId,
@@ -147,7 +141,7 @@ async function isRegistered({
   return res && res.total !== '0';
 }
 
-export async function countStorageDeposit({
+async function countStorageDeposit({
   tokenContract,
   storageDepositAccountIds,
   roketoContractName,
@@ -255,45 +249,9 @@ export async function createStreamProposal({
     financeContractName,
   });
 
-  if (isWNearTokenId({tokenAccountId, wNearId})) {
-    transactions.push({
-      receiverId: wNearId,
-      actions: [
-        {
-          type: 'FunctionCall',
-          params: {
-            methodName: 'near_deposit',
-            args: {},
-            gas: new BN(30 * 10 ** 12).toString(),
-            // minimal deposit is 0.1 NEAR
-            deposit: new BigNumber(totalAmount).plus(depositSum).toFixed(0),
-          },
-        },
-      ],
-    });
-  }
-
-  storageDepositAccountIds.forEach((accountIdForStorageDep, index) => {
-    if (!isRegisteredAccountIds[index]) {
-      transactions.push({
-        receiverId: tokenAccountId,
-        actions: [
-          {
-            type: 'FunctionCall',
-            params: {
-              methodName: 'storage_deposit',
-              args: {
-                account_id: accountIdForStorageDep,
-                registration_only: true,
-              },
-              gas: new BN(30 * 10 ** 12).toString(),
-              deposit: depositAmount,
-            },
-          },
-        ],
-      });
-    }
-  });
+  const filteredStorageDepositAccountIds = storageDepositAccountIds.filter(
+    (accountIdForStorageDep, index) => !isRegisteredAccountIds[index],
+  );
 
   transactions.push({
     receiverId: currentDaoId,
@@ -307,10 +265,210 @@ export async function createStreamProposal({
           roketoContractName,
           totalAmount,
           transferPayload,
+          wNearId,
+          depositSum,
+          depositAmount,
+          storageDepositAccountIds: filteredStorageDepositAccountIds,
         }),
       },
     ],
   });
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
+}
+
+export async function addFunds({
+  amount,
+  streamId,
+  callbackUrl,
+  tokenAccountId,
+  roketoContractName,
+  wNearId,
+  currentDaoId,
+  walletSelector,
+}: {
+  /** amount is in yocto */
+  amount: string;
+  streamId: string;
+  callbackUrl: string;
+  tokenAccountId: string;
+  roketoContractName: string;
+  wNearId: string;
+  currentDaoId: string;
+  walletSelector: WalletSelector;
+}) {
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [
+    {
+      receiverId: currentDaoId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: mapAddFundsRoketoStreamOptions({
+            description: '',
+            link: '',
+            tokenAccountId,
+            roketoContractName,
+            amount,
+            wNearId,
+            streamId,
+          }),
+        },
+      ],
+    },
+  ];
+
+  const wallet = await walletSelector.wallet();
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
+}
+
+interface StreamActionOptions {
+  currentDaoId: string;
+  streamId: string;
+  roketoContractName: string;
+  callbackUrl: string;
+  walletSelector: WalletSelector;
+}
+
+export async function startStream({
+  currentDaoId,
+  streamId,
+  roketoContractName,
+  callbackUrl,
+  walletSelector,
+}: StreamActionOptions) {
+  const wallet = await walletSelector.wallet();
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [
+    {
+      receiverId: currentDaoId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: mapStartRoketoStreamOptions({
+            description: '',
+            link: '',
+            roketoContractName,
+            streamId,
+          }),
+        },
+      ],
+    },
+  ];
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
+}
+
+export async function pauseStream({
+  currentDaoId,
+  streamId,
+  roketoContractName,
+  callbackUrl,
+  walletSelector,
+}: StreamActionOptions) {
+  const wallet = await walletSelector.wallet();
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [
+    {
+      receiverId: currentDaoId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: mapPauseRoketoStreamOptions({
+            description: '',
+            link: '',
+            roketoContractName,
+            streamId,
+          }),
+        },
+      ],
+    },
+  ];
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
+}
+
+export async function stopStream({
+  currentDaoId,
+  streamId,
+  roketoContractName,
+  callbackUrl,
+  walletSelector,
+}: StreamActionOptions) {
+  const wallet = await walletSelector.wallet();
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [
+    {
+      receiverId: currentDaoId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: mapStopRoketoStreamOptions({
+            description: '',
+            link: '',
+            roketoContractName,
+            streamId,
+          }),
+        },
+      ],
+    },
+  ];
+
+  return wallet.signAndSendTransactions({
+    transactions,
+    callbackUrl,
+  });
+}
+
+export async function withdrawStreams({
+  currentDaoId,
+  streamIds,
+  roketoContractName,
+  callbackUrl,
+  walletSelector,
+}: {
+  currentDaoId: string;
+  streamIds: string[];
+  roketoContractName: string;
+  callbackUrl: string;
+  walletSelector: WalletSelector;
+}) {
+  const wallet = await walletSelector.wallet();
+  // collect transactions for safe transfer
+  // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+  const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [
+    {
+      receiverId: currentDaoId,
+      actions: [
+        {
+          type: 'FunctionCall',
+          params: mapWithdrawRoketoStreamOptions({
+            description: '',
+            link: '',
+            roketoContractName,
+            streamIds,
+          }),
+        },
+      ],
+    },
+  ];
 
   return wallet.signAndSendTransactions({
     transactions,

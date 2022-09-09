@@ -5,6 +5,10 @@ on:
     branches:
       - master
   workflow_dispatch:
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
   
 jobs:
   build:
@@ -98,6 +102,31 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
         id: extract_branch
+      - name: Set envs
+        shell: bash
+        env:
+          TAG_NAME: ${{ steps.tag-name.outputs.tag }}
+          APP: ${{ matrix.app }}
+          SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
+          export TAG_NAME=${{env.TAG_NAME}}
+          export APP=${{env.APP}}
+          export SHORT_SHA=${{env.SHORT_SHA}}
+          export GIT_BRANCH=${{env.GIT_BRANCH}}
+          if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
+            echo "##[set-output name=app_name;]$(echo $APP)"
+            echo "##[set-output name=app_hostname;]$(echo $APP.germes.roke.to)"
+            echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
+          elif [ "$TAG_NAME" != "" ]; then
+            echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
+          else
+            echo "##[set-output name=app_name;]$(echo $APP-branch-$GIT_BRANCH)"
+            echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.germes.roke.to)"
+            echo "##[set-output name=app_tag;]$(echo branch-$GIT_BRANCH-$SHORT_SHA)"
+          fi
+        id: set_env
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
@@ -110,33 +139,22 @@ jobs:
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
-          TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ matrix.app }}
-          SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          APP_HOSTNAME: ${{ steps.set_env.outputs.app_hostname }}
+          APP_NAME: ${{ steps.set_env.outputs.app_name }}
+          APP_TAG: ${{ steps.set_env.outputs.app_tag }}
         with:
           command: |
-            export TAG_NAME=${{env.TAG_NAME}}
             export APP=${{env.APP}}
-            export SHORT_SHA=${{env.SHORT_SHA}}
-            export GIT_BRANCH=${{env.GIT_BRANCH}}
-            if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-              export APP_NAME=$APP
-              export APP_TAG=main-$SHORT_SHA
-              export APP_HOSTNAME=$APP_NAME.germes.roke.to
-            elif [ "$TAG_NAME" != "" ]; then
-              export APP_TAG=main-$SHORT_SHA
-            else
-              export APP_NAME=$APP-branch-$GIT_BRANCH
-              export APP_TAG=branch-$GIT_BRANCH-$SHORT_SHA
-              export APP_HOSTNAME=$APP_NAME.germes.roke.to
-            fi
+            export APP_HOSTNAME=${{env.APP_HOSTNAME}}
+            export APP_NAME=${{env.APP_NAME}}
+            export APP_TAG=${{env.APP_TAG}}
             mkdir -p ~/services/$APP_HOSTNAME/
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
-            curl -X POST -H 'Content-type: application/json' --data '{{ { }}"text": "'$text'" {{ } }}' "https://hooks.slack.com/services/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"
+            . ~/services/sucess.sh
           host: germes.roke.to
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}

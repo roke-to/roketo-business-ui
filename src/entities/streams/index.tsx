@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import {useStore} from 'effector-react';
+import React from 'react';
 
 import {WithdrawAllButton} from '~/entities/stream-control/WithdrawAllButton';
 import {STREAM_DIRECTION, StreamDirection} from '~/shared/api/roketo/constants';
@@ -9,6 +10,7 @@ import {Row} from '~/shared/ui/components/row';
 
 import {CreateStreamProposalButton} from './create-stream-proposal-button';
 import {$financialStatus, handleCreateStreamFx} from './model';
+import {ProposalsList} from './proposals-list';
 import {StreamFilters} from './StreamFilters';
 import {StreamsList} from './StreamsList';
 import styles from './styles.module.scss';
@@ -57,7 +59,7 @@ export const StreamsPageContent = () => {
   const {outcomeAmountInfo, incomeAmountInfo, availableForWithdrawal} = useStore($financialStatus);
 
   return (
-    <>
+    <div className='flex flex-col gap-14'>
       <Row className='mobile:flex-col'>
         <div className={clsx(styles.shadowCard, styles.sendingReceivingStatus)}>
           <FinancialInfo
@@ -90,9 +92,11 @@ export const StreamsPageContent = () => {
           <WithdrawAllButton className={styles.button} />
         </div>
       </Row>
-      <StreamFilters className={styles.streamFilters} />
-
-      <StreamsList className={styles.streamListBlock} />
-    </>
+      <ProposalsList variant='preview' />
+      <div className='flex flex-col gap-6'>
+        <StreamFilters className={styles.streamFilters} />
+        <StreamsList className={styles.streamListBlock} />
+      </div>
+    </div>
   );
 };

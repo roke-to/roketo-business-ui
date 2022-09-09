@@ -33,7 +33,7 @@ export const Treasury = () => {
     <>
       <TreasuryInfo />
       <ProposalsFilters
-        setKindProposal={ProposalKindForTreasury}
+        kindOpions={ProposalKindForTreasury}
         isLoading={isLoading}
         selectedProposalStatus={treasurySelectedProposalStatus}
         selectedProposalKind={treasurySelectedProposalKind}

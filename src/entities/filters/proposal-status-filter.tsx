@@ -20,18 +20,18 @@ export interface ProposalStatusFilterProps {
   selectedProposalStatus: ProposalStatusFilterType;
   selectedProposalKind?: ProposalKindFilterType;
   isLoading: boolean;
-  setKindProposal: ProposalKindFilterType[];
-  handleChangeProposalStatus(status: ProposalStatusFilterType): void;
-  handleChangeProposalKind?(kind: ProposalKindFilterType): void;
+  kindOptions: ProposalKindFilterType[];
+  onChangeStatus(status: ProposalStatusFilterType): void;
+  onChangeKind?(kind: ProposalKindFilterType): void;
 }
 
 export const ProposalStatusFilter = ({
-  setKindProposal,
+  kindOptions,
   isLoading,
   selectedProposalStatus,
   selectedProposalKind,
-  handleChangeProposalStatus,
-  handleChangeProposalKind,
+  onChangeStatus,
+  onChangeKind,
 }: ProposalStatusFilterProps) => {
   const {t} = useTranslation('proposalFilters');
   const canShowModal = useStore($isMobileScreen);
@@ -41,7 +41,7 @@ export const ProposalStatusFilter = ({
   const selected = ProposalStatuses.findIndex((status) => status === selectedProposalStatus);
 
   const handleChange = (index: number) => {
-    handleChangeProposalStatus(ProposalStatuses[index]);
+    onChangeStatus(ProposalStatuses[index]);
   };
 
   return (
@@ -66,12 +66,12 @@ export const ProposalStatusFilter = ({
         className={styles.modal}
       >
         <ProposalFilterModal
-          setKindProposal={setKindProposal}
+          kindOptions={kindOptions}
           isLoading={isLoading}
           selectedProposalStatus={selectedProposalStatus}
           selectedProposalKind={selectedProposalKind}
-          handleChangeProposalStatus={handleChangeProposalStatus}
-          handleChangeProposalKind={handleChangeProposalKind}
+          onChangeStatus={onChangeStatus}
+          onChangeKind={onChangeKind}
         />
       </Modal>
     </Row>

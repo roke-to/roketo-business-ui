@@ -25,7 +25,7 @@
     "councilAdded": "Council already added",
     "skipCouncils": "Add later",
     "submitDaoName": "Create DAO",
-    "back": "Cancel",
+    "cancel": "Cancel",
     "addressLabel": "Address",
     "addressPlaceholder": "newdaoname.sputnikv2.testnet",
     "nameLabel": "Name",

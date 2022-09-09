@@ -29,6 +29,7 @@
 }
 
 .sendingReceivingStatus {
+  flex-grow: 1;
   grid-column: 1 / span 2;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content max-content;

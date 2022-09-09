@@ -1,20 +1,24 @@
 import {isPast} from 'date-fns';
-import {combine, createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, combine, createEffect, createEvent, createStore, sample} from 'effector';
 import {generatePath} from 'react-router-dom';
 
 import {colorDescriptions} from '~/entities/create-stream/constants';
 import type {FormValues} from '~/entities/create-stream/constants';
 import {getTokensPerSecondCount} from '~/entities/create-stream/lib';
 import {$isMobileScreen} from '~/entities/screens';
+import {sendTransactionsFx} from '~/entities/transactions';
 import {
+  $accountId,
   $accountStreams,
   $currentDaoId,
+  $listedTokens,
   $near,
   $priceOracle,
   $roketoWallet,
   $tokens,
   $walletSelector,
 } from '~/entities/wallet';
+import {astroApi, Proposal} from '~/shared/api/astro';
 import {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {
   formatSmartly,
@@ -24,6 +28,7 @@ import {
 } from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
+import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {
   areArraysDifferent,
   areObjectsDifferent,
@@ -32,7 +37,11 @@ import {
 import {isWNearTokenId} from '~/shared/lib/roketo/isWNearTokenId';
 import {getRoundedPercentageRatio} from '~/shared/lib/roketo/math';
 import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
+import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
+import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
+import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
+import {SConditionAND} from '@nestjsx/crud-request';
 import {
   ableToAddFunds,
   ableToPauseStream,
@@ -67,8 +76,7 @@ import type {
   StreamSort,
 } from './types';
 
-const redirectUrl = generatePath(ROUTES.streams.path);
-const returnPath = `${window.location.origin}${redirectUrl}`;
+const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 
 export const $streamListData = createStore(
   {
@@ -104,16 +112,20 @@ export const $streamSort = createStore<StreamSort>(sorts.mostRecent);
 
 export const handleCreateStreamFx = createProtectedEffect({
   source: combine(
+    $listedTokens,
     $roketoWallet,
     $near,
     $currentDaoId,
     $walletSelector,
-    (roketo, near, currentDaoId, walletSelector) =>
+    (listedTokens, roketo, near, currentDaoId, walletSelector) =>
       !!roketo && !!near && !!currentDaoId && !!walletSelector
-        ? {roketo, near, currentDaoId, walletSelector}
+        ? {listedTokens, roketo, near, currentDaoId, walletSelector}
         : null,
   ),
-  async fn({roketo: {tokens}, near: {login}, currentDaoId, walletSelector}, values: FormValues) {
+  async fn(
+    {listedTokens: tokens, near: {login}, currentDaoId, walletSelector},
+    values: FormValues,
+  ) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const {receiver, delayed, comment, deposit, duration, token, isLocked, cliffDateTime, color} =
       values;
@@ -382,3 +394,122 @@ sample({
 $streamFilter.on(changeDirectionFilter, (filter, direction) => ({...filter, direction}));
 $streamFilter.on(changeStatusFilter, (filter, status) => ({...filter, status}));
 $streamFilter.on(changeTextFilter, (filter, text) => ({...filter, text}));
+
+// ------------ proposals ------------
+
+export const $streamProposals = createStore<Proposal[]>([]);
+
+export const $streamProposalLoading = createStore(true);
+
+// /------------ proposals ------------
+
+//  ------------ proposals filter by status ------------
+
+export const changeStreamProposalSelectedStatus = createEvent<ProposalStatusFilterType>();
+
+export const $streamSelectedProposalStatus = createStore<ProposalStatusFilterType>('all').on(
+  changeStreamProposalSelectedStatus,
+  (_, status) => status,
+);
+
+//  /------------ proposals filter by status ------------
+
+//  ------------ proposals filter by kind ------------
+export const changeStreamProposalSelectedVariant = createEvent<ProposalVariantFilterType>();
+
+export const $streamSelectedProposalVariant = createStore<ProposalVariantFilterType>('Any').on(
+  changeStreamProposalSelectedVariant,
+  (_, proposalVariant) => proposalVariant,
+);
+//  /------------ proposals filter by kind ------------
+
+//  ------------ proposals sort by createAt  ------------
+export const changeStreamProposalSortOrder = createEvent<ProposalSortOrderType>();
+
+export const $streamProposalSortOrder = createStore<ProposalSortOrderType>('DESC').on(
+  changeStreamProposalSortOrder,
+  (_, sortType) => sortType,
+);
+//  /------------ proposals sort by createAt ------------
+
+const loadStreamProposalsFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    accountId: $accountId,
+    status: $streamSelectedProposalStatus,
+    variant: $streamSelectedProposalVariant,
+    sort: $streamProposalSortOrder,
+  },
+  async effect({daoId, accountId, status, variant, sort}) {
+    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
+    const search: SConditionAND = {
+      $and: [{daoId: {$eq: daoId}}, {kind: {$cont: 'FunctionCall'}}],
+    };
+
+    if (variant !== 'Any') {
+      search.$and?.push({description: {$cont: variant}});
+    } else {
+      search.$and?.push({
+        $or: [
+          {description: {$cont: 'ProposeCreateRoketoStream'}},
+          {description: {$cont: 'ProposePauseRoketoStream'}},
+          {description: {$cont: 'ProposeStartRoketoStream'}},
+          {description: {$cont: 'ProposeStopRoketoStream'}},
+          {description: {$cont: 'ProposeRoketoStreamWithdraw'}},
+        ],
+      });
+    }
+
+    addStatusProposalQuery(search, status);
+
+    const query = {
+      s: JSON.stringify(search),
+      limit: 20,
+      offset: 0,
+      sort: [`createdAt,${sort}`],
+      accountId,
+    };
+
+    return astroApi.proposalControllerProposals(query);
+  },
+});
+
+sample({
+  source: sendTransactionsFx.doneData,
+  target: loadStreamProposalsFx,
+});
+sample({
+  clock: $currentDaoId,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  source: loadStreamProposalsFx.doneData,
+  fn: (response) => response.data.data,
+  target: $streamProposals,
+});
+
+sample({
+  clock: changeStreamProposalSelectedStatus,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  clock: changeStreamProposalSelectedVariant,
+  target: loadStreamProposalsFx,
+});
+
+sample({
+  clock: changeStreamProposalSortOrder,
+  target: loadStreamProposalsFx,
+});
+sample({
+  clock: loadStreamProposalsFx.finally,
+  fn: () => false,
+  target: $streamProposalLoading,
+});
+sample({
+  clock: loadStreamProposalsFx,
+  fn: () => true,
+  target: $streamProposalLoading,
+});

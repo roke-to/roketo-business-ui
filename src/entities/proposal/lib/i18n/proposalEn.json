@@ -11,7 +11,12 @@
     "AddMemberToRole": "{{proposer}} proposes to add {{member}} to {{role}}",
     "RemoveMemberFromRole": "{{proposer}} proposes to remove {{member}}",
     "ChangePolicy": "{{proposer}} proposes to change quorum to {{quorum}}",
-    "Unknown": "Unknown proposal type"
+    "Unknown": "Unknown proposal type",
+    "ProposeCreateRoketoStream": "{{proposer}} proposes create stream",
+    "ProposePauseRoketoStream": "{{proposer}} proposes pause stream",
+    "ProposeStartRoketoStream": "{{proposer}} proposes start stream",
+    "ProposeStopRoketoStream": "{{proposer}} proposes stop stream",
+    "ProposeRoketoStreamWithdraw": "{{proposer}} proposes withdraw stream"
   },
   "createForm": {
     "proposalTypeLabel": "Proposal type",
@@ -49,7 +54,7 @@
     "tgasPlaceholder": "150",
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
-    "councilAddressPlaceholder": "Addcouncilname.near",
+    "councilAddressPlaceholder": "newcouncilname.near",
     "requiredRemoveCouncilAddress": "You should choose one of councils for action",
     "councilListLabel": "Council list",
     "quorum": "Quorum"

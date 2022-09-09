@@ -51,15 +51,14 @@ export const TreasuryInfo = ({variant = 'default'}: TreasuryInfoProps) => {
           </Typography>
         </div>
         <div className='flex gap-2'>
-          {tokenBalances.map((token) => {
-            const balance = formatYoktoValue(token.balance, token.decimals);
+          {tokens.map((token) => {
             const value = token.price
-              ? `${formatCurrency(parseFloat(balance) * Number(token.price))} USD`
+              ? `${formatCurrency(parseFloat(token.balance) * Number(token.price))} USD`
               : null;
             return (
               <Chip key={token.id}>
                 <Typography as='span' weight='bold' font='xs'>
-                  {balance} {token.symbol}
+                  {token.balance} {token.symbol}
                 </Typography>
                 {value && (
                   <Typography as='span' weight='normal' font='xs' color='muted'>

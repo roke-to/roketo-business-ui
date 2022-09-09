@@ -1,42 +1,52 @@
 import {combine} from 'effector';
 
-import {$near, $roketoWallet} from '~/entities/wallet';
-import {env} from '~/shared/config/env';
-import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
-
 import {
   pauseStream as pauseStreamFn,
   startStream as startStreamFn,
   stopStream as stopStreamFn,
-} from '@roketo/sdk';
+} from '~/entities/streams/lib';
+import {$currentDaoId, $near, $walletSelector} from '~/entities/wallet';
+import {env} from '~/shared/config/env';
+import {ROUTES} from '~/shared/config/routes';
+import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
+
+const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 
 const modifyStreamFx = createProtectedEffect({
-  source: combine($roketoWallet, $near, (roketo, near) =>
-    !!roketo && !!near ? {roketo, near} : null,
+  source: combine($near, $currentDaoId, $walletSelector, (near, currentDaoId, walletSelector) =>
+    !!near && !!currentDaoId && !!walletSelector ? {near, currentDaoId, walletSelector} : null,
   ),
   async fn(
-    {roketo: {transactionMediator}, near: {login}},
+    {near, currentDaoId, walletSelector},
     {command, streamId}: {command: 'start' | 'stop' | 'pause'; streamId: string},
   ) {
+    const {login} = near;
+
     const creator = () => {
       switch (command) {
         case 'start':
           return startStreamFn({
             streamId,
-            transactionMediator,
             roketoContractName: env.ROKETO_CONTRACT_NAME,
+            currentDaoId,
+            walletSelector,
+            callbackUrl: returnPath,
           });
         case 'pause':
           return pauseStreamFn({
             streamId,
-            transactionMediator,
             roketoContractName: env.ROKETO_CONTRACT_NAME,
+            currentDaoId,
+            walletSelector,
+            callbackUrl: returnPath,
           });
         case 'stop':
           return stopStreamFn({
             streamId,
-            transactionMediator,
             roketoContractName: env.ROKETO_CONTRACT_NAME,
+            currentDaoId,
+            walletSelector,
+            callbackUrl: returnPath,
           });
         default:
           return null;
