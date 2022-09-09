@@ -181,7 +181,7 @@ export function StreamControls({
       <ConfirmModal
         modalControl={stopModalControl}
         onConfirm={() => stopStream(stream.id)}
-        header='Stop stream'
+        header='Propose to stop the stream'
         buttonText='Stop'
         className={styles.modalDanger}
         testId={testIds.streamModalStopButton}
@@ -354,7 +354,7 @@ export function StreamListControls({
       <ConfirmModal
         modalControl={stopModalControl}
         onConfirm={() => stopStream(stream.id)}
-        header='Stop stream'
+        header='Propose to stop the stream'
         buttonText='Stop'
         className={styles.modalDanger}
         testId={testIds.streamModalStopButton}
