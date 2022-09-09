@@ -21,7 +21,7 @@ export class NewDaoPage {
   async fillNewDaoData(randomDaoName: string, randomDaoAddress: string) {
     await this.page.locator('//input[@name="daoName"]').fill(randomDaoName);
     await expect(this.page.locator('//input[@name="daoAddress"]')).toHaveValue(
-      `${randomDaoAddress}.sputnikv2.testnet`,
+      `${randomDaoName}.sputnikv2.testnet`,
     );
     await this.page.locator('//input[@name="daoAddress"]').fill(randomDaoAddress);
   }
