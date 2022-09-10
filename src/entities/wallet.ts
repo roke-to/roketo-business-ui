@@ -15,15 +15,11 @@ import {
   tokenProvider as roketoTokenProvider,
   usersApiClient as roketoUsersApiClient,
 } from '~/shared/api/roketo-client';
+import {createRichContracts, getDao, initApiControl} from '~/shared/api/roketo/lib';
 import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
-import {
-  createRichContracts,
-  getIncomingStreams,
-  getOutgoingStreams,
-  initApiControl,
-} from '@roketo/sdk';
+import {getIncomingStreams, getOutgoingStreams} from '@roketo/sdk';
 import type {
   ApiControl,
   NearAuth,
@@ -211,11 +207,18 @@ const createRoketoWalletFx = createEffect(
   ({
     account,
     transactionMediator,
+    currentDaoId,
   }: {
     account: ConnectedWalletAccount;
     transactionMediator: TransactionMediator;
+    currentDaoId: string;
   }) =>
-    initApiControl({account, transactionMediator, roketoContractName: env.ROKETO_CONTRACT_NAME}),
+    initApiControl({
+      account,
+      transactionMediator,
+      roketoContractName: env.ROKETO_CONTRACT_NAME,
+      accountId: currentDaoId,
+    }),
 );
 
 const createPriceOracleFx = createEffect((account: ConnectedWalletAccount) =>
@@ -243,10 +246,12 @@ const requestUnknownTokensFx = createEffect(
     tokenNames,
     roketo,
     nearAuth,
+    currentDaoId,
   }: {
     tokenNames: string[];
     roketo: ApiControl | null;
     nearAuth: NearAuth | null;
+    currentDaoId: string;
   }) => {
     if (!roketo || !nearAuth) return {};
     const requestResults = await Promise.all(
@@ -255,9 +260,13 @@ const requestUnknownTokensFx = createEffect(
         return [tokenName, contract] as const;
       }),
     );
+    const {contract} = roketo;
+    const dao = await getDao({contract});
     const additionalTokens = await createRichContracts({
       tokensInfo: requestResults,
+      dao,
       account: nearAuth.account,
+      accountId: currentDaoId,
     });
     return additionalTokens;
   },
@@ -314,8 +323,13 @@ sample({
 });
 
 sample({
+  source: $currentDaoId,
   clock: initNearInstanceFx.doneData,
-  fn: ({account, transactionMediator}) => ({account, transactionMediator}),
+  fn: (currentDaoId, {account, transactionMediator}) => ({
+    account,
+    transactionMediator,
+    currentDaoId,
+  }),
   target: [createRoketoWalletFx],
 });
 
@@ -370,9 +384,10 @@ sample({
     tokens: $tokens,
     roketo: $roketoWallet,
     near: $near,
+    currentDaoId: $currentDaoId,
   },
   target: requestUnknownTokensFx,
-  fn({tokens, roketo, near}, streams) {
+  fn({tokens, roketo, near, currentDaoId}, streams) {
     const allStreams = [...streams.inputs, ...streams.outputs];
     const streamsTokens = [...new Set(allStreams.map((stream) => stream.token_account_id))];
     const unknownTokens = streamsTokens.filter((token) => !(token in tokens));
@@ -390,6 +405,7 @@ sample({
             transactionMediator: near.transactionMediator,
           }
         : null,
+      currentDaoId,
     };
   },
 });

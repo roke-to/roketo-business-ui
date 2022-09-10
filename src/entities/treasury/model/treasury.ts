@@ -22,7 +22,6 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
-import {RichToken} from '@roketo/sdk/dist/types';
 
 import {$sputnikDaoContract} from '../../dao';
 import {$accountId, $currentDaoId, $listedTokens, $walletSelector} from '../../wallet';
@@ -198,41 +197,26 @@ sample({
   source: $listedTokens,
   clock: $tokenBalances,
   fn(listedTokens, tokenBalances) {
-    return tokenBalances.reduce((accum, {id: tokenId, balance}) => {
-      if (listedTokens[tokenId]) {
-        return {
-          ...accum,
-          [tokenId]: {
-            ...listedTokens[tokenId],
-            balance,
-          },
-        };
-      }
+    const wNear = env.WNEAR_ID;
 
-      const wNear = env.WNEAR_ID;
+    const nearBalance = tokenBalances.find(({id}) => id === 'NEAR')?.balance ?? '0';
 
-      // this shit, because we don't have access to dao balance, we get `tokenBalances` from astro-api,
-      // but we need more info from `ftContract`, which attach in `listedTokens`
-      if (!listedTokens[tokenId] && tokenId === 'NEAR' && listedTokens[wNear]) {
-        return {
-          ...accum,
-          [tokenId]: {
-            ...listedTokens[wNear],
-            meta: {
-              ...listedTokens[wNear].meta,
-              name: 'NEAR',
-              symbol: 'NEAR',
-            },
-            roketoMeta: {
-              ...listedTokens[wNear].roketoMeta,
-              account_id: 'NEAR',
-            },
-            balance,
-          },
-        };
-      }
-      return accum;
-    }, {} as Record<string, RichToken>);
+    return {
+      ...listedTokens,
+      NEAR: {
+        ...listedTokens[wNear],
+        meta: {
+          ...listedTokens[wNear].meta,
+          name: 'NEAR',
+          symbol: 'NEAR',
+        },
+        roketoMeta: {
+          ...listedTokens[wNear].roketoMeta,
+          account_id: 'NEAR',
+        },
+        balance: nearBalance,
+      },
+    };
   },
   target: $listedTokens,
 });
