@@ -27,7 +27,7 @@ import {setupSender} from '@near-wallet-selector/sender';
 import {getNetworkPreset, WalletIconType} from './options';
 
 // Same as @near-wallet-selector/{module} id and installed wallets
-export type WalletId = 'sender' | 'my-wallet' | 'near-wallet';
+export type WalletId = 'sender' | 'my-near-wallet' | 'near-wallet';
 
 export interface NearInstance {
   near: Near;
@@ -80,14 +80,22 @@ export const createNearInstance = async (
     case 'sender':
       near = window.near as unknown as Near;
       break;
-    default:
+    case 'near-wallet':
       near = await connect({
         keyStore,
-        walletUrl: env.WALLET_URL,
+        walletUrl: env.NEAR_WALLET_URL,
         ...getNetworkPreset(env.NEAR_NETWORK_ID),
         headers: {},
       });
       break;
+    case 'my-near-wallet':
+    default:
+      near = await connect({
+        keyStore,
+        walletUrl: env.MY_NEAR_WALLET_URL,
+        ...getNetworkPreset(env.NEAR_NETWORK_ID),
+        headers: {},
+      });
   }
 
   // Same as in https://github.com/near/wallet-selector/blob/main/packages/my-near-wallet/src/lib/my-near-wallet.ts#L60
