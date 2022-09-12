@@ -3,7 +3,8 @@ type EnvType = {
   PROD: boolean;
   APP_TITLE: string;
   NEAR_NETWORK_ID: 'testnet' | 'mainnet';
-  WALLET_URL: string;
+  NEAR_WALLET_URL: string;
+  MY_NEAR_WALLET_URL: string;
   COMMIT_HASH: string;
   BUILD_TIME: string;
   ASTRO_API: string;
@@ -25,7 +26,8 @@ export const env: EnvType = {
   PROD: import.meta.env.PROD,
   APP_TITLE: import.meta.env.VITE_APP_TITLE,
   NEAR_NETWORK_ID: import.meta.env.VITE_NEAR_NETWORK_ID,
-  WALLET_URL: import.meta.env.VITE_WALLET_URL,
+  NEAR_WALLET_URL: import.meta.env.VITE_NEAR_WALLET_URL,
+  MY_NEAR_WALLET_URL: import.meta.env.VITE_MY_NEAR_WALLET_URL,
   COMMIT_HASH: import.meta.env.VITE_COMMIT_HASH,
   BUILD_TIME: import.meta.env.VITE_BUILD_TIME,
   ASTRO_API: import.meta.env.VITE_ASTRO_API,
