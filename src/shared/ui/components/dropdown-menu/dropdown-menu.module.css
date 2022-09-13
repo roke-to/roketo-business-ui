@@ -1,7 +1,6 @@
 .menuLabel {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
   color: theme('colors.black');
   white-space: nowrap;
 }
@@ -12,5 +11,5 @@
 }
 
 .button {
-  @apply px-4;
+  @apply px-4 gap-1;
 }

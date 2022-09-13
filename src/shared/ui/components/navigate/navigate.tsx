@@ -47,7 +47,12 @@ export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigatePro
         })}
       </ul>
       <Col align='center' className={styles.account} gap={gapInBottom}>
-        <Typography as='span' font='sm' weight='semibold' className={styles.accountName}>
+        <Typography
+          as='span'
+          font='sm'
+          weight='semibold'
+          className={clsx('collapse-account-id', styles.accountName)}
+        >
           {accountId}
         </Typography>
         <Button

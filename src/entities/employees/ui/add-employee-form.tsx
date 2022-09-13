@@ -337,7 +337,7 @@ export const AddEmployeeForm = () => {
             error={fields.type.errorText()}
             className='basis-1/3'
           >
-            <Typography>{accountId}</Typography>
+            <Typography className='collapse-account-id w-60'>{accountId}</Typography>
           </Label>
         </Row>
 

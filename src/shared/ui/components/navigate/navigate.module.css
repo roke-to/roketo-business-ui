@@ -16,10 +16,6 @@
 
 .accountName {
   width: calc(theme('sideBar') - 2 * theme('gap.md'));
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
 }
 
 .logoutButton {

@@ -124,5 +124,6 @@ export default {
       mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
     },
     sideBar: '240px',
+    widthAccountId: '240px',
   },
 };

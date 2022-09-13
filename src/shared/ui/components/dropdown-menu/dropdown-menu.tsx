@@ -17,11 +17,22 @@ export interface DropdownMenuProps extends React.HTMLAttributes<HTMLButtonElemen
   getIgnoreItems?: () => IgnoreItems[];
   children: React.ReactElement;
   onClick?(): void;
+  classNameMenuLabel?: string;
 }
 
 export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProps>(
   (
-    {label, size = 'md', variant = 'plain', onClick, getIgnoreItems, className, children, ...props},
+    {
+      label,
+      size = 'md',
+      variant = 'plain',
+      onClick,
+      getIgnoreItems,
+      classNameMenuLabel,
+      className,
+      children,
+      ...props
+    },
     ref,
   ) => (
     <Dropdown
@@ -34,10 +45,8 @@ export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProp
           {...props}
           ref={ref}
         >
-          <div className={styles.menuLabel}>
-            {label}
-            <ArrowDown className={styles.icon} />
-          </div>
+          <div className={clsx(styles.menuLabel, classNameMenuLabel)}>{label}</div>
+          <ArrowDown className={styles.icon} />
         </Button>
       }
       getIgnoreItems={getIgnoreItems}
