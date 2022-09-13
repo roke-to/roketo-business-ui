@@ -5,7 +5,10 @@ import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasur
 import {Button, ButtonProps} from '~/shared/ui/components/button';
 import {useModal} from '~/shared/ui/components/modal';
 
-export const CreateTreasuryProposalButton: React.FC<Omit<ButtonProps, 'variant' | 'onClick'>> = ({children, ...props}) => {
+export const CreateTreasuryProposalButton: React.FC<Omit<ButtonProps, 'variant' | 'onClick'>> = ({
+  children,
+  ...props
+}) => {
   const {t} = useTranslation('proposal');
 
   const createProposalModal = useModal();
