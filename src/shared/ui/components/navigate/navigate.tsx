@@ -1,10 +1,8 @@
 import clsx from 'clsx';
-import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useLocation} from 'react-router-dom';
 
-import {$isMobileScreen} from '~/entities/screens';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {LayoutContext} from '~/shared/ui/components/layout';
@@ -29,14 +27,13 @@ export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigatePro
   const {t} = useTranslation('dao');
   const location = useLocation();
   const layoutProps = React.useContext(LayoutContext);
-  const isMobileScreen = useStore($isMobileScreen);
 
   React.useEffect(() => {
-    if (isMobileScreen) {
+    if (isMobile) {
       layoutProps.onSidebarToggle();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobileScreen]);
+  }, [isMobile]);
 
   const gapInBottom = isMobile ? 4 : 1;
   const buttonVariant = isMobile ? 'outlined' : 'clean';
