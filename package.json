@@ -47,6 +47,7 @@
     "decimal.js": "^10.3.1",
     "effector": "^22.3.0",
     "effector-forms": "^0.0.24",
+    "effector-logger": "^0.13.4",
     "effector-react": "^22.1.6",
     "formik": "^2.2.9",
     "history": "^4.9.0",
