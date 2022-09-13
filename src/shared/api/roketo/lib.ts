@@ -1,4 +1,4 @@
-import {Account, Contract} from 'near-api-js';
+import {Account, Contract, Near} from 'near-api-js';
 
 import {FTContract} from '~/shared/api/types';
 
@@ -13,21 +13,24 @@ import type {
 } from '@roketo/sdk/dist/types';
 
 export async function initApiControl({
-  account,
+  near,
+  accountId,
   transactionMediator,
   roketoContractName,
-  accountId,
+  wNearId,
 }: {
-  account: Account;
+  near: Near;
+  accountId: string;
   transactionMediator: TransactionMediator;
   roketoContractName: string;
-  accountId?: string;
+  wNearId: string;
 }): Promise<ApiControl> {
-  const currentAccountId = accountId || account.accountId;
+  const account = await near.account(accountId);
   const contract = createRoketoContract({account, roketoContractName});
-  const [roketoAccount, dao] = await Promise.all([
-    getAccount({contract, accountId: currentAccountId}),
+  const [roketoAccount, dao, state] = await Promise.all([
+    getAccount({contract, accountId}),
     getDao({contract}),
+    account.state(),
   ]);
   const richTokens = await createRichContracts({
     account,
@@ -35,13 +38,31 @@ export async function initApiControl({
     dao,
     accountId,
   });
+
+  const nearAsToken = {
+    ...richTokens[wNearId],
+    meta: {
+      ...richTokens[wNearId].meta,
+      name: 'NEAR',
+      symbol: 'NEAR',
+    },
+    roketoMeta: {
+      ...richTokens[wNearId].roketoMeta,
+      account_id: 'NEAR',
+    },
+    balance: state.amount,
+  };
+
   return {
     account,
-    accountId: currentAccountId,
+    accountId,
     contract,
     roketoAccount,
     dao,
-    tokens: richTokens,
+    tokens: {
+      ...richTokens,
+      NEAR: nearAsToken,
+    },
     transactionMediator,
   };
 }

@@ -11,7 +11,6 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
-import {env} from '~/shared/config/env';
 import {ValuesOfForm} from '~/shared/lib/form';
 import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -24,7 +23,7 @@ import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wall
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
 import {$sputnikDaoContract} from '../../dao';
-import {$accountId, $currentDaoId, $listedTokens, $walletSelector} from '../../wallet';
+import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
 // ------------ proposals ------------
 
@@ -188,37 +187,6 @@ sample({
   source: loadTokenBalancesFx.doneData,
   fn: (response) => response.data,
   target: $tokenBalances,
-});
-
-// TODO: подумать как перестать использовать токены из sdk в стримах,
-// в этом нет необходимости
-// limit tokens which dao council could stream
-sample({
-  source: $listedTokens,
-  clock: $tokenBalances,
-  fn(listedTokens, tokenBalances) {
-    const wNear = env.WNEAR_ID;
-
-    const nearBalance = tokenBalances.find(({id}) => id === 'NEAR')?.balance ?? '0';
-
-    return {
-      ...listedTokens,
-      NEAR: {
-        ...listedTokens[wNear],
-        meta: {
-          ...listedTokens[wNear].meta,
-          name: 'NEAR',
-          symbol: 'NEAR',
-        },
-        roketoMeta: {
-          ...listedTokens[wNear].roketoMeta,
-          account_id: 'NEAR',
-        },
-        balance: nearBalance,
-      },
-    };
-  },
-  target: $listedTokens,
 });
 
 //  ------------ proposals create  ------------

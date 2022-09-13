@@ -78,6 +78,7 @@ export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStr
       >
         {({values, handleSubmit, setFieldValue, setFieldTouched, validateField}) => {
           const activeTokenAccountId = values.token;
+          console.log('tokens', tokens);
           const token = tokens[activeTokenAccountId];
           if (!token) return null;
           const {meta: tokenMeta, roketoMeta} = token;
