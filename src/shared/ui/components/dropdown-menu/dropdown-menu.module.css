@@ -1,7 +1,12 @@
+.dropdown {
+  min-width: 0;
+}
+
 .menuLabel {
-  display: flex;
   align-items: center;
   color: theme('colors.black');
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -11,5 +16,10 @@
 }
 
 .button {
+  flex-wrap: nowrap;
   @apply px-4 gap-1;
+}
+
+.icon {
+  min-width: 8px;
 }

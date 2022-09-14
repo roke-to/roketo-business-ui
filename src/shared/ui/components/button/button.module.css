@@ -17,7 +17,8 @@
     duration-200
     ease-in-out
     h-6
-    font-semibold;
+    font-semibold
+    whitespace-nowrap;
 
   &[disabled] {
     pointer-events: none;

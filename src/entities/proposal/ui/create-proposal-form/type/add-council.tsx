@@ -57,15 +57,18 @@ export const AddCouncil = ({
           error={fields.councilList.errorText()}
           className={styles.councilListLabel}
         >
-          <Col gap='sm'>
-            <Typography as='span' weight='bold'>
+          <Col gap='sm' className='w-full'>
+            <Typography as='span' weight='bold' className='truncate'>
               {accountId}
             </Typography>
             {fields.councilList.value.map((council: string) => (
               <Typography
                 as='span'
                 weight='bold'
-                className={clsx({[styles.addedCouncil]: fields.councilAddress.value === council})}
+                className={clsx(
+                  {[styles.addedCouncil]: fields.councilAddress.value === council},
+                  'truncate',
+                )}
               >
                 {council}
               </Typography>

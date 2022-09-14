@@ -54,12 +54,3 @@ body {
 li {
   list-style: none;
 }
-
-@layer components {
-  .collapse-account-id {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-  }
-}

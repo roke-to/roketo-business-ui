@@ -21,7 +21,7 @@ export const CouncilControl = ({
     <Typography
       as='span'
       weight='bold'
-      className={clsx({
+      className={clsx('truncate', {
         [styles.text]: willDelete,
         [styles.deleteText]: !willDelete,
       })}
