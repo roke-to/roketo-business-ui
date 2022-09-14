@@ -5,6 +5,7 @@ import {Link, useLocation} from 'react-router-dom';
 
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
+import {LayoutContext} from '~/shared/ui/components/layout';
 import {Typography} from '~/shared/ui/components/typography';
 
 import styles from './navigate.module.css';
@@ -25,6 +26,14 @@ export interface INavigateProps {
 export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigateProps) => {
   const {t} = useTranslation('dao');
   const location = useLocation();
+  const layoutProps = React.useContext(LayoutContext);
+
+  React.useEffect(() => {
+    if (isMobile) {
+      layoutProps.onSidebarToggle();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
 
   const gapInBottom = isMobile ? 4 : 1;
   const buttonVariant = isMobile ? 'outlined' : 'clean';
