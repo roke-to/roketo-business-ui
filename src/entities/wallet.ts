@@ -1,5 +1,5 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
-import {ConnectedWalletAccount} from 'near-api-js';
+import {ConnectedWalletAccount, Near} from 'near-api-js';
 import {Get} from 'type-fest';
 
 import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
@@ -205,19 +205,20 @@ export const $accountStreams = createStore<{
 
 const createRoketoWalletFx = createEffect(
   ({
-    account,
+    near,
+    accountId,
     transactionMediator,
-    currentDaoId,
   }: {
-    account: ConnectedWalletAccount;
+    near: Near;
+    accountId: string;
     transactionMediator: TransactionMediator;
-    currentDaoId: string;
   }) =>
     initApiControl({
-      account,
+      near,
+      accountId,
       transactionMediator,
       roketoContractName: env.ROKETO_CONTRACT_NAME,
-      accountId: currentDaoId,
+      wNearId: env.WNEAR_ID,
     }),
 );
 
@@ -323,12 +324,13 @@ sample({
 });
 
 sample({
-  source: $currentDaoId,
-  clock: initNearInstanceFx.doneData,
-  fn: (currentDaoId, {account, transactionMediator}) => ({
-    account,
+  source: $near,
+  clock: $currentDaoId,
+  filter: Boolean,
+  fn: ({near, transactionMediator}, currentDaoId) => ({
+    near,
+    accountId: currentDaoId,
     transactionMediator,
-    currentDaoId,
   }),
   target: [createRoketoWalletFx],
 });
