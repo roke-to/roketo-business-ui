@@ -162,7 +162,7 @@ export const DaoNew = ({onReset}: DaoNewProps) => {
           <form onSubmit={handleSubmit}>
             <Col gap='xl'>
               <Col gap='sm'>
-                <Typography as='span' weight='medium'>
+                <Typography as='span' weight='medium' className='truncate'>
                   {accountId}
                 </Typography>
                 {fields.councilList.value.map((council: string) => (
@@ -170,7 +170,7 @@ export const DaoNew = ({onReset}: DaoNewProps) => {
                     <Typography
                       as='span'
                       weight='medium'
-                      className={clsx({
+                      className={clsx('truncate', {
                         'text-blue-textDefault': fields.councilAddress.value === council,
                       })}
                     >

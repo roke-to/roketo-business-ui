@@ -56,7 +56,7 @@ export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigatePro
         })}
       </ul>
       <Col align='center' className={styles.account} gap={gapInBottom}>
-        <Typography as='span' font='sm' weight='semibold'>
+        <Typography as='span' font='sm' weight='semibold' className='truncate w-full'>
           {accountId}
         </Typography>
         <Button

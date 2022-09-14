@@ -8,7 +8,7 @@
 }
 
 .councilListLabel {
-  @apply basis-1/2;
+  @apply basis-1/2 min-w-0;
 }
 
 .councilSection {

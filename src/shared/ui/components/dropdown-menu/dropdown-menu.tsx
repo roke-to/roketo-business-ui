@@ -34,13 +34,12 @@ export const DropdownMenu = React.forwardRef<HTMLButtonElement, DropdownMenuProp
           {...props}
           ref={ref}
         >
-          <div className={styles.menuLabel}>
-            {label}
-            <ArrowDown className={styles.icon} />
-          </div>
+          <span className={styles.menuLabel}>{label}</span>
+          <ArrowDown className={styles.icon} />
         </Button>
       }
       getIgnoreItems={getIgnoreItems}
+      className={styles.dropdown}
     >
       {children}
     </Dropdown>

@@ -10,7 +10,7 @@ import {Typography} from '~/shared/ui/components/typography';
 import styles from './councils-list.module.css';
 
 const renderOptions = (councilAccountId: string) => (
-  <Typography as='span' font='sm' key={councilAccountId}>
+  <Typography as='span' font='sm' key={councilAccountId} className='truncate'>
     {councilAccountId}
   </Typography>
 );
@@ -20,7 +20,7 @@ export const CouncilsList = () => {
   const currentDao = useStore($currentDao);
 
   return (
-    <Col gap={1}>
+    <Col gap={1} className='min-w-0'>
       <Typography as='span' weight='bold'>
         {t('councils')}
       </Typography>

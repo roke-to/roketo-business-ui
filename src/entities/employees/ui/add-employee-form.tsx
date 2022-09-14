@@ -335,9 +335,11 @@ export const AddEmployeeForm = () => {
             required
             content={t('addEmployee.form.proposer')}
             error={fields.type.errorText()}
-            className='basis-1/3'
+            className='basis-1/3 min-w-0'
           >
-            <Typography>{accountId}</Typography>
+            <Typography as='span' className='truncate'>
+              {accountId}
+            </Typography>
           </Label>
         </Row>
 

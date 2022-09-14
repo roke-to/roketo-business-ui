@@ -123,5 +123,6 @@ export default {
       tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
       mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
     },
+    sidebarWidth: '240px',
   },
 };

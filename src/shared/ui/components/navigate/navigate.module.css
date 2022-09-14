@@ -12,6 +12,7 @@
 
 .account {
   padding: 0 theme('gap.md');
+  text-align: center;
 }
 
 .logoutButton {

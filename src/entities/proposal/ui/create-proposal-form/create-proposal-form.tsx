@@ -102,7 +102,9 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
             error={fields.type.errorText()}
             className={styles.proposerLabel}
           >
-            <Typography>{accountId}</Typography>
+            <Typography as='span' className='truncate'>
+              {accountId}
+            </Typography>
           </Label>
         </Row>
 

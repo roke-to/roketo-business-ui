@@ -2,7 +2,7 @@
   @apply basis-1/3;
 }
 .proposerLabel {
-  @apply basis-1/3;
+  @apply basis-1/3 min-w-0;
 }
 
 @media screen(mobile) {
