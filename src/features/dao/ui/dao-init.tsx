@@ -56,7 +56,7 @@ export const DaoInit = () => {
             <Typography font='heading'>{t('daoInit.hasDaoTitle')}</Typography>
             <Typography as='span'>
               {hasDaoTitleLeft}
-              <Typography as='span' data-qa='account' className='collapse-account-id'>
+              <Typography as='span' data-qa='account' className='break-words'>
                 {accountId}
               </Typography>
               {hasDaoTitleRight}
@@ -80,7 +80,7 @@ export const DaoInit = () => {
         <Col>
           <Typography>{t('daoInit.emptyDaoTitle')}</Typography>
           <Typography as='span'>{t('daoInit.emptyDaoSubtitle')}</Typography>
-          <Typography as='span' data-qa='account' className='collapse-account-id'>
+          <Typography as='span' data-qa='account' className='truncate'>
             {accountId}
           </Typography>
         </Col>

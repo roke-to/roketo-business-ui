@@ -28,7 +28,6 @@ export const Typography = React.forwardRef<HTMLHeadingElement, TypographyProps>(
     },
     ref,
   ) => {
-    console.log('Typography className=', className);
     const isHeading = ['h1', 'h2', 'h3'].includes(Tag);
 
     return (

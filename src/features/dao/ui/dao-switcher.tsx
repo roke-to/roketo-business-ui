@@ -43,7 +43,6 @@ export const DaoSwitcher = ({className}: {className?: string}) => {
       variant='clean'
       getIgnoreItems={getIgnoreItems}
       className={className}
-      classNameMenuLabel='collapse-account-id w-60'
     >
       <DropdownContent selected={daoId} handleChange={handleChange} size='xxs' offset='xs'>
         {userDaos.map((id) => (

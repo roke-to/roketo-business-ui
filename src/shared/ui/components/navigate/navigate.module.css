@@ -12,10 +12,7 @@
 
 .account {
   padding: 0 theme('gap.md');
-}
-
-.accountName {
-  width: calc(theme('sideBar') - 2 * theme('gap.md'));
+  text-align: center;
 }
 
 .logoutButton {

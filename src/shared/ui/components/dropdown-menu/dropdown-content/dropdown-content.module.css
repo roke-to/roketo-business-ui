@@ -10,6 +10,7 @@
   background-color: theme('colors.white');
   box-shadow: theme('dropShadow.DEFAULT');
   border-radius: theme('borderRadius.3xl');
+  max-width: 100%;
 }
 
 /* Depends of size button component */

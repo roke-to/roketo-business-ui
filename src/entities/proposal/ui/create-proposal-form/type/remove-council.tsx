@@ -37,7 +37,7 @@ export const RemoveCouncil = ({
           className={styles.councilListLabel}
         >
           <Col gap='sm'>
-            <Typography as='span' weight='bold'>
+            <Typography as='span' weight='bold' className='truncate'>
               {accountId}
             </Typography>
             {fields.councilList.value.map((council: string) => (
