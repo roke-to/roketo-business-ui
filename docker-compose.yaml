@@ -5,8 +5,6 @@ services:
     container_name: ${APP_NAME}
     networks:
       - proxy
-    logging:
-      driver: json-file
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.${APP_NAME}.loadbalancer.server.port=80"
