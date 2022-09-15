@@ -4,7 +4,7 @@ import {createGate} from 'effector-react';
 
 import {getStreamingSpeed} from '~/entities/create-stream/lib';
 import {
-  $accountId,
+  $currentDaoId,
   $priceOracle,
   $roketoWallet,
   $tokens,
@@ -160,7 +160,7 @@ split({
 
 sample({
   clock: [dataUpdated, drawRetriggered],
-  source: {accountId: $accountId, oracle: $priceOracle},
+  source: {accountId: $currentDaoId, oracle: $priceOracle},
   fn({accountId, oracle: {getPriceInUsd: toUsd}}, {stream, token}) {
     const {decimals, symbol} = token.meta;
     const tokenId = token.roketoMeta.account_id;
