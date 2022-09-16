@@ -7,7 +7,7 @@ export class NewDaoPage {
     treasuryPageURL: '/treasury',
     accountId: '[data-qa="account"]',
     daoSwitcher: '[data-qa="daoDropdownMenu"]',
-    choosenDao: '//button[contains(@data-qa,"daoDropdownMenu")]//div',
+    choosenDao: '//button[contains(@data-qa,"daoDropdownMenu")]//span',
   };
 
   constructor(page: Page) {
