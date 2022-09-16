@@ -53,6 +53,7 @@
     "history": "^4.9.0",
     "i18next": "^21.8.12",
     "lodash": "^4.17.21",
+    "nanoid": "^3.0.0",
     "near-api-js": "^1.0.0",
     "numbro": "^2.3.5",
     "patronum": "^1.8.2",

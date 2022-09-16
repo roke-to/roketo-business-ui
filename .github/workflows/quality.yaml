@@ -56,6 +56,10 @@ jobs:
         working-directory: .
         run: yarn
 
+      - name: Transfer Near for test account
+        working-directory: .
+        run: node .scripts/transferNearForTestAccount.js
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
           
