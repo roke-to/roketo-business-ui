@@ -33,9 +33,9 @@ async function transferNearForTestAccount() {
   try {
     // create a new account using funds from the account used to create it.
     await near.accountCreator.createAccount(accountId, publicKey);
-  } catch (e) {
-    if (!e.message.includes('does not exist while viewing')) {
-      throw e;
+  } catch (error) {
+    if (!error.message.includes('does not exist while viewing')) {
+      throw error;
     }
   }
 
