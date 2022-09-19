@@ -20,7 +20,7 @@ export const mapChangeQuorumOptions = (
     link: string;
     quorum: number;
   },
-): FunctionCallAction => {
+): FunctionCallAction['params'] => {
   const {
     bountyBond,
     proposalBond,
@@ -38,45 +38,42 @@ export const mapChangeQuorumOptions = (
   const {permissions, name, accountIds} = currentDao.policy.roles[indexCouncilRole];
 
   return {
-    type: 'FunctionCall',
-    params: {
-      methodName: 'add_proposal',
-      args: {
-        proposal: {
-          description: encodeDescription({
-            description: formData.description,
-            link: formData.link,
-          }),
-          kind: {
-            ChangePolicy: {
-              policy: {
-                roles: [
-                  ...otherRoles,
-                  {
-                    name,
-                    kind: {
-                      Group: accountIds,
-                    },
-                    permissions,
-                    vote_policy: generateVotePolicyForEachProposalType(formData.quorum),
+    methodName: 'add_proposal',
+    args: {
+      proposal: {
+        description: encodeDescription({
+          description: formData.description,
+          link: formData.link,
+        }),
+        kind: {
+          ChangePolicy: {
+            policy: {
+              roles: [
+                ...otherRoles,
+                {
+                  name,
+                  kind: {
+                    Group: accountIds,
                   },
-                ],
-                default_vote_policy: {
-                  quorum,
-                  threshold: ratio,
-                  weight_kind: weightKind,
+                  permissions,
+                  vote_policy: generateVotePolicyForEachProposalType(formData.quorum),
                 },
-                proposal_bond: proposalBond,
-                proposal_period: proposalPeriod,
-                bounty_bond: bountyBond,
-                bounty_forgiveness_period: bountyForgivenessPeriod,
+              ],
+              default_vote_policy: {
+                quorum,
+                threshold: ratio,
+                weight_kind: weightKind,
               },
+              proposal_bond: proposalBond,
+              proposal_period: proposalPeriod,
+              bounty_bond: bountyBond,
+              bounty_forgiveness_period: bountyForgivenessPeriod,
             },
           },
         },
       },
-      gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
-      deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!, // attached deposit — bond 1e+23 0.1 NEAR,
     },
+    gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+    deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!, // attached deposit — bond 1e+23 0.1 NEAR,
   };
 };

@@ -22,7 +22,6 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$sputnikDaoContract} from '../../dao';
 import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
 // ------------ proposals ------------
@@ -242,16 +241,12 @@ export const createTreasuryProposalFx = attach({
   source: {
     currentDaoId: $currentDaoId,
     walletSelector: $walletSelector,
-    sputnikDaoContract: $sputnikDaoContract,
     tokenBalances: $tokenBalances,
   },
   async effect(
-    {sputnikDaoContract, currentDaoId, walletSelector, tokenBalances},
+    {currentDaoId, walletSelector, tokenBalances},
     data: ValuesOfForm<typeof createTreasuryProposalForm>,
   ) {
-    if (!sputnikDaoContract) {
-      throw new Error('SputnikDaoContract is not initialized');
-    }
     if (!walletSelector) {
       throw new Error('walletSelector is not initialized');
     }
@@ -264,11 +259,12 @@ export const createTreasuryProposalFx = attach({
 
     const wallet = await walletSelector.wallet();
 
+    // collect transactions for safe transfer
+    // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
+    const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [];
+
     switch (data.type) {
       case 'transfer': {
-        // collect transactions for safe transfer
-        // https://github.com/near-daos/astro-ui/blob/368a710439c907ff5295625e98e87b5685319df3/services/sputnik/SputnikNearService/services/NearService.ts#L481
-        const transactions: Get<SignAndSendTransactionsParams, 'transactions'> = [];
         // reserve storage in contract of token
         if (token.id !== 'NEAR') {
           transactions.push({
@@ -313,16 +309,26 @@ export const createTreasuryProposalFx = attach({
         });
       }
       case 'functionCall':
-        return sputnikDaoContract.add_proposal(
-          mapFunctionCallOptions({
-            description: data.description,
-            deposit: data.deposit,
-            contractAddress: data.contractAddress,
-            contractMethod: data.contractMethod,
-            json: data.json,
-            link: data.link,
-          }),
-        );
+        transactions.push({
+          receiverId: currentDaoId,
+          actions: [
+            {
+              type: 'FunctionCall',
+              params: mapFunctionCallOptions({
+                description: data.description,
+                deposit: data.deposit,
+                contractAddress: data.contractAddress,
+                contractMethod: data.contractMethod,
+                json: data.json,
+                link: data.link,
+              }),
+            },
+          ],
+        });
+
+        return wallet.signAndSendTransactions({
+          transactions,
+        });
       default:
         throw Error(`We don't recognize action for ${data.type}`);
     }

@@ -237,13 +237,22 @@ export const changePolicyProposalFx = attach({
 
     switch (data.type) {
       case 'removeCouncil':
-        actions.push(mapRemoveCouncilOptions(currentDao, data));
+        actions.push({
+          type: 'FunctionCall',
+          params: mapRemoveCouncilOptions(currentDao, data),
+        });
         break;
       case 'addCouncil':
-        actions.push(mapAddCouncilOptions(currentDao, data));
+        actions.push({
+          type: 'FunctionCall',
+          params: mapAddCouncilOptions(currentDao, data),
+        });
         break;
       case 'changeQuorum':
-        actions.push(mapChangeQuorumOptions(currentDao, {...data, quorum: Number(data.quorum)}));
+        actions.push({
+          type: 'FunctionCall',
+          params: mapChangeQuorumOptions(currentDao, {...data, quorum: Number(data.quorum)}),
+        });
         break;
       default:
         throw Error(`We don't recognize action for ${data.type}`);

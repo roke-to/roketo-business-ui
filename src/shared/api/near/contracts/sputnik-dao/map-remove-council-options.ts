@@ -18,26 +18,23 @@ export const mapRemoveCouncilOptions = (
     link: string;
     councilAddress: string;
   },
-): FunctionCallAction => ({
-  type: 'FunctionCall',
-  params: {
-    methodName: 'add_proposal',
-    args: {
-      proposal: {
-        description: encodeDescription({
-          description: formData.description,
-          link: formData.link,
-          variant: 'ProposeRemoveMember',
-        }),
-        kind: {
-          RemoveMemberFromRole: {
-            member_id: formData.councilAddress,
-            role: COUNCIL,
-          },
+): FunctionCallAction['params'] => ({
+  methodName: 'add_proposal',
+  args: {
+    proposal: {
+      description: encodeDescription({
+        description: formData.description,
+        link: formData.link,
+        variant: 'ProposeRemoveMember',
+      }),
+      kind: {
+        RemoveMemberFromRole: {
+          member_id: formData.councilAddress,
+          role: COUNCIL,
         },
       },
     },
-    gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
-    deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!, // attached deposit — bond 1e+23 0.1 NEAR,
   },
+  gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+  deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!, // attached deposit — bond 1e+23 0.1 NEAR,
 });

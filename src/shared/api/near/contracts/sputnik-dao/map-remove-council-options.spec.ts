@@ -204,23 +204,20 @@ describe('Remove council options', () => {
       tgas: '150',
     };
     expect(mapRemoveCouncilOptions(currentDao, formData)).toMatchObject({
-      type: 'FunctionCall',
-      params: {
-        methodName: 'add_proposal',
-        args: {
-          proposal: {
-            description: 'remove extg2.testnet$$$$$$$$ProposeRemoveMember',
-            kind: {
-              RemoveMemberFromRole: {
-                member_id: 'extg2.testnet',
-                role: 'council',
-              },
+      methodName: 'add_proposal',
+      args: {
+        proposal: {
+          description: 'remove extg2.testnet$$$$$$$$ProposeRemoveMember',
+          kind: {
+            RemoveMemberFromRole: {
+              member_id: 'extg2.testnet',
+              role: 'council',
             },
           },
         },
-        gas: '300000000000000',
-        deposit: '100000000000000000000000',
       },
+      gas: '300000000000000',
+      deposit: '100000000000000000000000',
     });
   });
 });
