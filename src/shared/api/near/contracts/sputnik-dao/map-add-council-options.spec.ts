@@ -204,24 +204,23 @@ describe('Add council options', () => {
       tgas: '150',
     };
     expect(mapAddCouncilOptions(currentDao, formData)).toMatchObject({
-      args: {
-        proposal: {
-          description: 'add barsik.testnet$$$$ProposeAddMember',
-          kind: {
-            AddMemberToRole: {
-              member_id: 'barsik.testnet',
-              role: 'council',
+      type: 'FunctionCall',
+      params: {
+        methodName: 'add_proposal',
+        args: {
+          proposal: {
+            description: 'add barsik.testnet$$$$$$$$ProposeAddMember',
+            kind: {
+              AddMemberToRole: {
+                member_id: 'barsik.testnet',
+                role: 'council',
+              },
             },
           },
         },
+        gas: '300000000000000',
+        amount: '100000000000000000000000',
       },
-      gas: {
-        length: 2,
-        negative: 0,
-        red: null,
-        words: [24035328, 4470348],
-      },
-      amount: '100000000000000000000000',
     });
   });
 });
