@@ -54,6 +54,7 @@
     "tgasPlaceholder": "150",
     "charge": "You will be charge",
     "councilAddressLabel": "Council.address",
+    "accountNotExists": "Account not exists",
     "councilAddressPlaceholder": "newcouncilname.near",
     "requiredRemoveCouncilAddress": "You should choose one of councils for action",
     "councilListLabel": "Council list",
