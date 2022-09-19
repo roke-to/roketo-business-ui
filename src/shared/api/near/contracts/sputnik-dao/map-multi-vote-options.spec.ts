@@ -1,4 +1,4 @@
-import {VoteAction} from '~/shared/api/near/contracts/sputnik-dao/contract';
+import {VoteAction} from '~/shared/api/near/contracts/sputnik-dao';
 
 import {mapMultiVoteOptions} from './map-multi-vote-options';
 
