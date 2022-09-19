@@ -1,6 +1,5 @@
 import {attach, createEvent, sample} from 'effector';
 
-import {$sputnikDaoContract} from '~/entities/dao';
 import {$currentDaoId, $walletSelector} from '~/entities/wallet';
 import {VoteAction} from '~/shared/api/near';
 import {mapMultiVoteOptions} from '~/shared/api/near/contracts/sputnik-dao/map-multi-vote-options';
@@ -16,22 +15,13 @@ const multiVoteFx = attach({
   source: {
     currentDaoId: $currentDaoId,
     walletSelector: $walletSelector,
-    sputnikDaoContract: $sputnikDaoContract,
   },
-  async effect(
-    {currentDaoId, walletSelector, sputnikDaoContract},
-    {proposalId, voteAction}: MultiVoteProps,
-  ) {
-    if (!sputnikDaoContract) {
-      throw new Error('SputnikDaoContract is not initialized');
-    }
+  async effect({currentDaoId, walletSelector}, {proposalId, voteAction}: MultiVoteProps) {
     if (!walletSelector) {
       throw new Error('walletSelector is not initialized');
     }
 
     const wallet = await walletSelector.wallet();
-
-    // await sputnikDaoContract.act_proposal(mapMultiVoteOptions(proposalId, voteAction));
 
     return wallet.signAndSendTransactions({
       transactions: [

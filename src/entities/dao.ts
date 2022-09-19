@@ -3,12 +3,7 @@ import {attach, createEffect, createEvent, createStore, forward, sample} from 'e
 import {createForm, FormValues} from 'effector-forms';
 
 import {AccountDaoResponse, astroApi, Dao} from '~/shared/api/astro';
-import {
-  mapCreateOptions,
-  NearInstance,
-  SputnikDaoContract,
-  SputnikFactoryDaoContract,
-} from '~/shared/api/near';
+import {mapCreateOptions, NearInstance, SputnikFactoryDaoContract} from '~/shared/api/near';
 import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
@@ -16,7 +11,7 @@ import {validators} from '~/shared/lib/form/validators';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {history} from '~/shared/lib/router';
 
-import {$account, $accountId, $currentDaoId, initNearInstanceFx, setCurrentDaoId} from './wallet';
+import {$accountId, $currentDaoId, initNearInstanceFx, setCurrentDaoId} from './wallet';
 
 // ------------ sputnikFactoryDaoContract ------------
 
@@ -293,33 +288,4 @@ sample({
   source: checkErrorAfterCreateDaoFx.doneData,
   filter: (daoId) => Boolean(daoId),
   target: [setCurrentDaoId, redirectAfterCreateDaoFx],
-});
-
-//  ------------ sputnikDaoContract ------------
-
-export const $sputnikDaoContract = createStore<SputnikDaoContract | null>(null);
-
-const initSputnikDaoContractFx = attach({
-  source: {
-    currentDaoId: $currentDaoId,
-    account: $account,
-  },
-  effect({currentDaoId, account}) {
-    return currentDaoId && account ? new SputnikDaoContract(account, currentDaoId) : null;
-  },
-});
-
-sample({
-  clock: initNearInstanceFx.doneData,
-  target: initSputnikDaoContractFx,
-});
-
-sample({
-  clock: setCurrentDaoId,
-  target: initSputnikDaoContractFx,
-});
-
-sample({
-  clock: initSputnikDaoContractFx.doneData,
-  target: $sputnikDaoContract,
 });
