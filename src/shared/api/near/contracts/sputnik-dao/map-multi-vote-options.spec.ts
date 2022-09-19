@@ -8,16 +8,13 @@ describe('Multi vote ', () => {
     const action = VoteAction.VoteReject;
 
     expect(mapMultiVoteOptions(proposalId, action)).toMatchObject({
+      methodName: 'act_proposal',
       args: {
         id: proposalId,
         action,
       },
-      gas: {
-        length: 2,
-        negative: 0,
-        red: null,
-        words: [24035328, 4470348],
-      },
+      gas: '300000000000000',
+      deposit: '0',
     });
   });
 });
