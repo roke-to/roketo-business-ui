@@ -56,15 +56,15 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       <Label
         required
         content={t('addEmployee.form.labels.role.label')}
-        error={fields.role.errorText()}
+        error={fields.position?.errorText()}
         className='basis-1/3'
       >
         <Input
           name='role'
-          value={fields.role.value}
+          value={fields.position?.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.role.placeholder')}
-          onChange={fields.role.onChange}
+          onChange={fields.position?.onChange}
         />
       </Label>
     </Row>
@@ -86,15 +86,15 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       <Label
         required
         content={t('addEmployee.form.labels.salary.label')}
-        error={fields.salary.errorText()}
+        error={fields.amount.errorText()}
         className='basis-1/3'
       >
         <Input
           name='salary'
-          value={fields.salary.value}
+          value={fields.amount.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.salary.placeholder')}
-          onChange={fields.salary.onChange}
+          onChange={fields.amount.onChange}
         />
       </Label>
       <Label
@@ -150,15 +150,15 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       <Label
         required
         content={t('addEmployee.form.labels.salary.label')}
-        error={fields.salary.errorText()}
+        error={fields.amount.errorText()}
         className='basis-1/3'
       >
         <Input
           name='salary'
-          value={fields.salary.value}
+          value={fields.amount.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.salary.placeholder')}
-          onChange={fields.salary.onChange}
+          onChange={fields.amount.onChange}
         />
       </Label>
       <Label
@@ -195,15 +195,15 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       <Label
         required
         content={t('addEmployee.form.labels.role.label')}
-        error={fields.role.errorText()}
+        error={fields.position?.errorText()}
         className='basis-1/3'
       >
         <Input
           name='role'
-          value={fields.role.value}
+          value={fields.position?.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.role.placeholder')}
-          onChange={fields.role.onChange}
+          onChange={fields.position?.onChange}
         />
       </Label>
       <Label
@@ -225,29 +225,31 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       <Label
         required
         content={t('addEmployee.form.labels.startDate.label')}
-        error={fields.startDate.errorText()}
+        error={fields.startDate?.errorText()}
         className='basis-1/3'
       >
         <Datepicker
           name='startDate'
-          value={fields.startDate.value}
+          value={fields.startDate?.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.startDate.placeholder')}
-          onChange={fields.startDate.onChange}
+          // TODO add support for optional field
+          // @ts-expect-error
+          onChange={fields.startDate?.onChange}
         />
       </Label>
       <Label
         required
         content={t('addEmployee.form.labels.period.label')}
-        error={fields.period.errorText()}
+        error={fields.payPeriod.errorText()}
         className='basis-1/3'
       >
         <InputDropdown
           name='period'
-          value={fields.period.value}
+          value={fields.payPeriod.value}
           disabled={pending}
           placeholder={t('addEmployee.form.labels.period.placeholder')}
-          onChange={fields.period.onChange}
+          onChange={fields.payPeriod.onChange}
           options={[{label: '2 per month', value: '2 per month'}]}
         />
       </Label>
