@@ -1,4 +1,4 @@
-import {attach, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
 import {sendTransactionsFx} from '~/entities/transactions';
@@ -12,6 +12,7 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS,
 } from '~/shared/api/near/contracts/contract.constants';
+import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {validators, ValuesOfForm} from '~/shared/lib/form';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -272,4 +273,17 @@ export const changePolicyProposalFx = attach({
 sample({
   source: changePolicyProposalForm.formValidated,
   target: changePolicyProposalFx,
+});
+
+export const $isCouncilExists = createStore(false);
+const isCouncilExistsFx = createEffect(async (accountId: string) => isAccountExist(accountId));
+
+forward({
+  from: changePolicyProposalForm.fields.councilAddress.$value,
+  to: isCouncilExistsFx,
+});
+
+forward({
+  from: isCouncilExistsFx.doneData,
+  to: $isCouncilExists,
 });
