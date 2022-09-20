@@ -7,8 +7,8 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {encodeBase64} from '~/shared/lib/base64';
 
-import {ChangeMethodOptions} from '../contract.types';
-import {ProposalInput} from './contract';
+import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
+
 import {encodeDescription} from './proposal-format';
 
 export const mapFunctionCallOptions = (formData: {
@@ -18,7 +18,8 @@ export const mapFunctionCallOptions = (formData: {
   json: string;
   deposit: string;
   link: string;
-}): ChangeMethodOptions<{proposal: ProposalInput}> => ({
+}): FunctionCallAction['params'] => ({
+  methodName: 'add_proposal',
   args: {
     proposal: {
       description: encodeDescription({
@@ -41,6 +42,6 @@ export const mapFunctionCallOptions = (formData: {
       },
     },
   },
-  gas: DEFAULT_FUNCTION_CALL_GAS_BN,
-  amount: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT), // attached deposit — bond 1e+23 0.1 NEAR,
+  gas: DEFAULT_FUNCTION_CALL_GAS_BN.toString(),
+  deposit: nearApi.utils.format.parseNearAmount(ATTACHED_DEPOSIT)!, // attached deposit — bond 1e+23 0.1 NEAR,
 });

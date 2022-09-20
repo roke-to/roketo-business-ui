@@ -237,9 +237,10 @@ describe('Change quorum options', () => {
       tgas: '150',
     };
     expect(mapChangeQuorumOptions(currentDao, formData)).toMatchObject({
+      methodName: 'add_proposal',
       args: {
         proposal: {
-          description: 'change 10$$$$$$$$ProposeUpdateGroup',
+          description: 'change 10$$$$$$$$ProposeUpdateGroup$$$$',
           kind: {
             ChangePolicy: {
               policy: {
@@ -366,11 +367,19 @@ describe('Change quorum options', () => {
                       },
                       call: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
                       transfer: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
-                      set_vote_token: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
+                      set_vote_token: {
+                        quorum: '0',
+                        threshold: [1, 10],
+                        weight_kind: 'RoleWeight',
+                      },
                       policy: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
                       config: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
                       upgrade_self: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
-                      upgrade_remote: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
+                      upgrade_remote: {
+                        quorum: '0',
+                        threshold: [1, 10],
+                        weight_kind: 'RoleWeight',
+                      },
                       add_bounty: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
                       bounty_done: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
                       vote: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
@@ -391,13 +400,8 @@ describe('Change quorum options', () => {
           },
         },
       },
-      gas: {
-        length: 2,
-        negative: 0,
-        red: null,
-        words: [24035328, 4470348],
-      },
-      amount: '100000000000000000000000',
+      gas: '300000000000000',
+      deposit: '100000000000000000000000',
     });
   });
 });

@@ -20,10 +20,11 @@ import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
+import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
-import {$currentDao, $sputnikDaoContract} from '../../dao';
-import {$accountId, $currentDaoId} from '../../wallet';
+import {$currentDao} from '../../dao';
+import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
 export const $governanceProposals = createStore<Proposal[]>([]);
 
@@ -217,41 +218,54 @@ sample({
 
 export const changePolicyProposalFx = attach({
   source: {
-    sputnikDaoContract: $sputnikDaoContract,
+    walletSelector: $walletSelector,
     currentDao: $currentDao,
   },
-  async effect(
-    {sputnikDaoContract, currentDao},
-    data: ValuesOfForm<typeof changePolicyProposalForm>,
-  ) {
-    if (!sputnikDaoContract) {
+  async effect({walletSelector, currentDao}, data: ValuesOfForm<typeof changePolicyProposalForm>) {
+    if (!walletSelector) {
       // TODO: show error on form
-      throw new Error('SputnikDaoContract is not initialized');
+      throw new Error('walletSelector is not initialized');
     }
     if (!currentDao) {
       // TODO: show error on form
       throw new Error('You should create dao');
     }
 
-    try {
-      switch (data.type) {
-        case 'removeCouncil':
-          await sputnikDaoContract.add_proposal(mapRemoveCouncilOptions(currentDao, data));
-          break;
-        case 'addCouncil':
-          await sputnikDaoContract.add_proposal(mapAddCouncilOptions(currentDao, data));
-          break;
-        case 'changeQuorum':
-          await sputnikDaoContract.add_proposal(
-            mapChangeQuorumOptions(currentDao, {...data, quorum: Number(data.quorum)}),
-          );
-          break;
-        default:
-          throw Error(`We don't recognize action for ${data.type}`);
-      }
-    } catch (err) {
-      console.log('change policy error', err);
+    const wallet = await walletSelector.wallet();
+
+    const actions: Array<FunctionCallAction> = [];
+
+    switch (data.type) {
+      case 'removeCouncil':
+        actions.push({
+          type: 'FunctionCall',
+          params: mapRemoveCouncilOptions(currentDao, data),
+        });
+        break;
+      case 'addCouncil':
+        actions.push({
+          type: 'FunctionCall',
+          params: mapAddCouncilOptions(currentDao, data),
+        });
+        break;
+      case 'changeQuorum':
+        actions.push({
+          type: 'FunctionCall',
+          params: mapChangeQuorumOptions(currentDao, {...data, quorum: Number(data.quorum)}),
+        });
+        break;
+      default:
+        throw Error(`We don't recognize action for ${data.type}`);
     }
+
+    return wallet.signAndSendTransactions({
+      transactions: [
+        {
+          receiverId: currentDao.id,
+          actions,
+        },
+      ],
+    });
   },
 });
 
