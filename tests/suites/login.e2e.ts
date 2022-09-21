@@ -11,7 +11,7 @@ test('login via NEAR wallet', async ({page, accountId}) => {
   await loginPage.openLoginPage();
   await loginPage.chooseNearWallet();
 
-  await nearWallet.checkIsRedirectedToNear();
+  await nearWallet.checkIsRedirectedToNearWallet();
   await nearWallet.chooseFirstAccount();
   await nearWallet.submitButton();
 

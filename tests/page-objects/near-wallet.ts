@@ -5,7 +5,8 @@ export class NearWallet {
 
   readonly elements = {
     commonSubmitButton: '.button-group button.blue',
-    urlRegExp: /https:\/\/wallet\.testnet\.near\.org\//,
+    nearWalletUrlRegExp: /https:\/\/wallet\.testnet\.near\.org\//,
+    myNearWalletUrlRegExp: /https:\/\/testnet\.mynearwallet\.com\//,
   };
 
   constructor(page: Page) {
@@ -20,7 +21,11 @@ export class NearWallet {
     await this.page.locator(this.elements.commonSubmitButton).click();
   }
 
-  async checkIsRedirectedToNear() {
-    await expect(this.page).toHaveURL(this.elements.urlRegExp);
+  async checkIsRedirectedToNearWallet() {
+    await expect(this.page).toHaveURL(this.elements.nearWalletUrlRegExp);
+  }
+
+  async checkIsRedirectedMyNearWallet() {
+    await expect(this.page).toHaveURL(this.elements.myNearWalletUrlRegExp);
   }
 }

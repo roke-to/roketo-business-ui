@@ -9,6 +9,7 @@ export class LoginPage {
     loginURL: '/',
     buttonSelectDao: 'button:has-text("Select DAO")',
     buttonNearWallet: 'button:has-text("NEAR Wallet")',
+    buttonMyNearWallet: 'button:has-text("MyNearWallet")',
     accountId: '[data-qa="account"]',
   };
 
@@ -36,5 +37,9 @@ export class LoginPage {
 
   async chooseNearWallet() {
     await this.page.locator(this.elements.buttonNearWallet).first().click();
+  }
+
+  async chooseMyNearWallet() {
+    await this.page.locator(this.elements.buttonMyNearWallet).first().click();
   }
 }
