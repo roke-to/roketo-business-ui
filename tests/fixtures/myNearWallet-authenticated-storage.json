@@ -1,0 +1,34 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://testnet.mynearwallet.com",
+      "localStorage": [
+        {
+          "name": "_4:wallet:accounts_v2",
+          "value": "{\"rocketobiztestuser.testnet\":true}"
+        },
+        {
+          "name": "languageCode",
+          "value": "ru"
+        },
+        {
+          "name": "nearlib:keystore:rocketobiztestuser.testnet:default",
+          "value": "ed25519:45K3m2oqrsQYwwFobZG5pnzQBpGv7t1BKsZKQRaoypP2bh6icX1FT9tVxZAsGQRArXVzzvVcpgyTNfmziDP2qwqh"
+        },
+        {
+          "name": "__mpq_778bd24eec7329cf885f0cecfc3d4f5d_ev",
+          "value": "[{\"id\":\"8to4jc6bge3imuz5\",\"flushAfter\":1663769886767,\"payload\":{\"event\":\"LOGIN finish\",\"properties\":{\"$os\":\"Mac OS X\",\"$browser\":\"Chrome\",\"$referrer\":\"http://localhost:3000/\",\"$referring_domain\":\"localhost:3000\",\"$current_url\":\"https://testnet.mynearwallet.com/login/?contract_id=streaming-r-v2.dcversus.testnet&failure_url=http%253A%252F%252Flocalhost%253A3000%252F&public_key=REDACTED\",\"$browser_version\":104,\"$screen_height\":720,\"$screen_width\":1280,\"mp_lib\":\"web\",\"$lib_version\":\"2.42.0\",\"$insert_id\":\"us2k25io36ezl1rt\",\"time\":1663769876.767,\"distinct_id\":\"1836069189a1625-04cdd15bf26393-30796f07-e1000-1836069189b1ae0\",\"$device_id\":\"1836069189a1625-04cdd15bf26393-30796f07-e1000-1836069189b1ae0\",\"$initial_referrer\":\"http://localhost:3000/\",\"$initial_referring_domain\":\"localhost:3000\",\"timestamp\":\"Wed Sep 21 2022 16:17:23 GMT+0200 (Центральная Европа, летнее время)\",\"network_id\":\"testnet\",\"token\":\"778bd24eec7329cf885f0cecfc3d4f5d\"}}}]"
+        },
+        {
+          "name": "wallet.account:rocketobiztestuser.testnet:default:confirmed",
+          "value": "true"
+        },
+        {
+          "name": "_4:wallet:active_account_id_v2",
+          "value": "rocketobiztestuser.testnet"
+        }
+      ]
+    }
+  ]
+}
