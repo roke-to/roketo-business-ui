@@ -44,7 +44,13 @@ export const DaoSwitcher = ({className}: {className?: string}) => {
       getIgnoreItems={getIgnoreItems}
       className={className}
     >
-      <DropdownContent selected={daoId} handleChange={handleChange} size='xxs' offset='xs'>
+      <DropdownContent
+        selected={daoId}
+        handleChange={handleChange}
+        size='xxs'
+        offset='xs'
+        className='max-w-full'
+      >
         {userDaos.map((id) => (
           <DropdownItem key={id}>
             <RadioGroupItem value={id} label={id} checked={id === daoId} />
