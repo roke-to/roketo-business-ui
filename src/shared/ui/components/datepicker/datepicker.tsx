@@ -26,7 +26,7 @@ export const Datepicker: React.FC<DatepickerProps> = ({
   className,
   value = '',
   onChange,
-  formatString = 'dd/MM/yyyy',
+  formatString = 'yyyy-MM-dd',
   ...props
 }) => {
   const date = parse(value, formatString, new Date());
