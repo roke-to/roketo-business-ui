@@ -4,15 +4,13 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useRouteMatch} from 'react-router-dom';
 
-import {Button} from '~/shared/ui/components/button';
 import {IconButton} from '~/shared/ui/components/icon-button';
-import {useModal} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
 import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
 import {ReactComponent as ListViewIcon} from '~/shared/ui/icons/employees/list.svg';
 
 import * as employeesModel from '../model/employees-model';
-import {AddEmployeeModal} from './add-employee-modal';
+import {CreateEmployeeButton} from './create-employee-button';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
 import styles from './employees.module.css';
@@ -24,7 +22,6 @@ export const Employees = () => {
   const {url} = useRouteMatch();
 
   const {t} = useTranslation('employees');
-  const addEmployeeModal = useModal();
 
   const employees = useStore(employeesModel.$employees);
   const selectedStatus = useStore(employeesModel.$statusFilter);
@@ -41,12 +38,7 @@ export const Employees = () => {
   return (
     <>
       <Row>
-        <Button onClick={addEmployeeModal.show}>{t('addEmployee.button')}</Button>
-        <AddEmployeeModal
-          isOpen={addEmployeeModal.isOpen}
-          title={t('addEmployee.modal.title')}
-          onCloseModal={addEmployeeModal.hide}
-        />
+        <CreateEmployeeButton />
       </Row>
 
       <Row justify='between' align='center'>

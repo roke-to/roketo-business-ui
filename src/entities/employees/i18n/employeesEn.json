@@ -9,7 +9,7 @@
       "comment": "Comment"
     }
   },
-  "addEmployee": {
+  "createEmployee": {
     "button": "Add new employee",
     "modal": {
       "title": "Add a new employee"
