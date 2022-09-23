@@ -3,7 +3,7 @@ import React from 'react';
 
 import {STREAM_STATUS} from '~/shared/api/roketo/constants';
 
-import type {RoketoStream} from '@roketo/sdk/dist/types';
+import type {RoketoStream} from '@roketo/sdk/src/types';
 
 const bindings = {
   [STREAM_STATUS.Initialized]: {

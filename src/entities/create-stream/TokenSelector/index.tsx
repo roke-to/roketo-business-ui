@@ -9,7 +9,7 @@ import {DropdownOpener} from '~/shared/kit/DropdownOpener';
 import {TokenImage} from '~/shared/kit/TokenImage';
 import {FormField} from '~/shared/roketo-ui/components/FormField';
 
-import type {RichToken} from '@roketo/sdk/dist/types';
+import type {RichToken} from '@roketo/sdk/src/types';
 
 import styles from './styles.module.scss';
 

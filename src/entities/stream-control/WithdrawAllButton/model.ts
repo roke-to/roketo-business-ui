@@ -8,7 +8,7 @@ import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
 
-import {getAvailableToWithdraw, hasPassedCliff, isActiveStream} from '@roketo/sdk';
+import {getAvailableToWithdraw, hasPassedCliff, isActiveStream} from '@roketo/sdk/src';
 
 const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 
