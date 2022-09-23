@@ -51,7 +51,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
   return (
     <div className={clsx(styles.proposal, styles[status])}>
       <Col className={styles.info}>
-        <Typography as='span' weight='bold'>
+        <Typography as='span' weight='bold' className='max-w-lg break-all'>
           {title}
         </Typography>
         {description && (
