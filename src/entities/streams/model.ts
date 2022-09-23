@@ -55,8 +55,8 @@ import {
   isActiveStream,
   parseColor,
   parseComment,
-} from '@roketo/sdk/src';
-import type {RoketoStream} from '@roketo/sdk/src/types';
+} from '@roketo/sdk';
+import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import {sorts, statusOptions} from './constants';
 import {
