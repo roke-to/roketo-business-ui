@@ -2,7 +2,7 @@ import {BigNumber} from 'bignumber.js';
 
 import {OrderType} from '~/shared/roketo-ui/icons/Sort';
 
-import type {RoketoStream} from '@roketo/sdk/dist/types';
+import type {RoketoStream} from '@roketo/sdk/src/types';
 
 import type {
   DirectionFilter,

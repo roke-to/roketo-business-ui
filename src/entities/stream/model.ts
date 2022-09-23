@@ -32,8 +32,8 @@ import {
   isIdling,
   parseColor,
   parseComment,
-} from '@roketo/sdk';
-import type {RichToken, RoketoStream} from '@roketo/sdk/dist/types';
+} from '@roketo/sdk/src';
+import type {RichToken, RoketoStream} from '@roketo/sdk/src/types';
 
 export const pageGate = createGate<string | null>({defaultState: null});
 export const $stream = createStore<RoketoStream | null>(null);

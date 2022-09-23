@@ -13,8 +13,8 @@ import {AdaptiveModal} from '~/shared/kit/AdaptiveModal';
 import {DropdownMenuDivider, DropdownMenuItem} from '~/shared/kit/DropdownMenu';
 import {DropdownOpener} from '~/shared/kit/DropdownOpener';
 
-import {isActiveStream, isDead, isPausedStream, wasStartedAndLocked} from '@roketo/sdk';
-import type {RoketoStream} from '@roketo/sdk/dist/types';
+import {isActiveStream, isDead, isPausedStream, wasStartedAndLocked} from '@roketo/sdk/src';
+import type {RoketoStream} from '@roketo/sdk/src/types';
 
 import {StreamStatus} from '../StreamStatus';
 import {WithdrawButton} from '../WithdrawButton';
