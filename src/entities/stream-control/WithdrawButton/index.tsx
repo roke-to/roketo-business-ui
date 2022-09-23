@@ -8,8 +8,8 @@ import {testIds} from '~/shared/constants';
 import {Tooltip} from '~/shared/kit/Tooltip';
 import {Button, ButtonType, DisplayMode} from '~/shared/roketo-ui/components/Button';
 
-import {calculateCliffPercent, getAvailableToWithdraw, getStreamProgress} from '@roketo/sdk';
-import type {RoketoStream} from '@roketo/sdk/dist/types';
+import {calculateCliffPercent, getAvailableToWithdraw, getStreamProgress} from '@roketo/sdk/src';
+import type {RoketoStream} from '@roketo/sdk/src/types';
 
 import {withdrawAllFx} from '../WithdrawAllButton/model';
 import styles from './styles.module.scss';

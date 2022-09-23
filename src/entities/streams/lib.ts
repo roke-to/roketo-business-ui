@@ -14,8 +14,8 @@ import {FTContract} from '~/shared/api/types';
 
 import {WalletSelector} from '@near-wallet-selector/core';
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
-import {getAvailableToWithdraw, getStreamProgress, parseComment} from '@roketo/sdk';
-import type {RichToken, RoketoStream} from '@roketo/sdk/dist/types';
+import {getAvailableToWithdraw, getStreamProgress, parseComment} from '@roketo/sdk/src';
+import type {RichToken, RoketoStream} from '@roketo/sdk/src/types';
 
 import type {DirectionFilter, FilterFn, StatusFilter} from './types';
 
