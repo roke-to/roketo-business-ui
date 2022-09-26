@@ -1,5 +1,6 @@
 import {attach, createEvent, createStore, sample} from 'effector';
 
+import * as employeeModel from '~/entities/employee/model/employee-model';
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/wallet';
 import {rbApi} from '~/shared/api/rb';
@@ -68,7 +69,7 @@ const loadEmployeesFx = attach({
 });
 sample({
   source: $authenticationHeaders,
-  clock: [pageLoaded, $statusFilter, $typeFilter, $sort],
+  clock: [pageLoaded, $statusFilter, $typeFilter, $sort, employeeModel.addEmployeeFx.done],
   filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
   target: loadEmployeesFx,
 });
