@@ -124,6 +124,12 @@ export const addEmployeeFx = attach({
   },
 });
 
+export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
+export const openCreateEmployeeModal = createEvent();
+export const closeCreateEmployeeModal = createEvent();
+$isCreateEmployeeModalOpen.on(openCreateEmployeeModal, () => true);
+$isCreateEmployeeModalOpen.on(closeCreateEmployeeModal, () => false);
+
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
 sample({
@@ -145,4 +151,9 @@ sample({
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,
+});
+
+sample({
+  clock: addEmployeeFx.done,
+  target: closeCreateEmployeeModal,
 });
