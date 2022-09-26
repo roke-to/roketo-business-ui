@@ -1,13 +1,11 @@
 .wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: theme('gap.DEFAULT');
 
   @media screen(desktop) {
     &.card {
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     &.list {
