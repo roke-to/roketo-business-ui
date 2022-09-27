@@ -13,8 +13,8 @@ import {Balance, useBalanceForToken} from '~/shared/roketo-ui/Balance';
 import {Button, ButtonType} from '~/shared/roketo-ui/components/Button';
 import {Input} from '~/shared/roketo-ui/components/Input';
 
-import {calculateEndTimestamp, getStreamProgress} from '@roketo/sdk/src';
-import type {RoketoStream} from '@roketo/sdk/src/types';
+import {calculateEndTimestamp, getStreamProgress} from '@roketo/sdk';
+import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import {addFundsFx} from './model';
 import styles from './styles.module.scss';

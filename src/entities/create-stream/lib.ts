@@ -4,7 +4,7 @@ import {addMonths, differenceInDays} from 'date-fns';
 import {tokensPerMeaningfulPeriod, toYocto} from '~/shared/api/token-formatter';
 import {SECONDS_IN_DAY, SECONDS_IN_HOUR, SECONDS_IN_MINUTE} from '~/shared/constants';
 
-import type {RichToken, TokenMetadata} from '@roketo/sdk/src/types';
+import type {RichToken, TokenMetadata} from '@roketo/sdk/dist/types';
 
 export const getDurationInSeconds = (
   months: number,

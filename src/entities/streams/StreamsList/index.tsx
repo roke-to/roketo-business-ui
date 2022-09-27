@@ -15,7 +15,7 @@ import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
 import {Spinner} from '~/shared/roketo-ui/components/Spinner';
 import clockIcon from '~/shared/roketo-ui/icons/clock.svg';
 
-import type {RoketoStream} from '@roketo/sdk/src/types';
+import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import {streamCardDataDefaults, streamProgressDataDefaults} from '../constants';
 import {CreateStreamProposalButton} from '../create-stream-proposal-button';

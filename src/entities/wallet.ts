@@ -24,14 +24,14 @@ import {
   getIncomingStreams,
   getOutgoingStreams,
   initApiControl,
-} from '@roketo/sdk/src';
+} from '@roketo/sdk';
 import type {
   ApiControl,
   NearAuth,
   RichToken,
   RoketoStream,
   TransactionMediator,
-} from '@roketo/sdk/src/types';
+} from '@roketo/sdk/dist/types';
 
 // createWalletSelectorInstance is async and it could be null until intialized
 export const $walletSelector = createStore<WalletSelector | null>(null);
