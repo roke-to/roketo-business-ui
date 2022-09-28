@@ -1,11 +1,10 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/wallet';
-import {EmployeeResponseDto, rbApi} from '~/shared/api/rb';
+import {CreateEmployeeDto, EmployeeResponseDto, rbApi} from '~/shared/api/rb';
 import {validators} from '~/shared/lib/form/validators';
-import {Employee} from '~/shared/types/employee';
 
 export const pageLoaded = createEvent<string>();
 export const $employee = createStore<EmployeeResponseDto | null>(null);
@@ -39,6 +38,96 @@ const changeEmployeeStatusFx = attach({
   },
 });
 
+export interface AddEmployeeFormFields
+  extends Omit<CreateEmployeeDto, 'status' | 'daoId' | 'amount' | 'payPeriod'> {
+  amount: string;
+  payPeriod: string;
+  payoutType: 'Smooth';
+}
+export const addEmployeeForm = createForm<AddEmployeeFormFields>({
+  fields: {
+    type: {
+      init: 'Freelancer',
+      rules: [validators.required()],
+    },
+    name: {
+      init: '',
+      rules: [validators.required()],
+    },
+    nearLogin: {
+      init: '',
+      rules: [validators.required()],
+    },
+    email: {
+      init: '',
+      rules: [validators.required()],
+    },
+    amount: {
+      init: '',
+      rules: [validators.required()],
+    },
+    position: {
+      init: '',
+    },
+    startDate: {
+      init: '',
+    },
+    payPeriod: {
+      init: '',
+    },
+    // TODO нужно подумать как модель поудобнее сделать
+    payoutType: {
+      init: 'Smooth',
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required()],
+    },
+    comment: {
+      init: '',
+    },
+  },
+  validateOn: ['submit'],
+});
+export const addEmployeeFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, authenticationHeaders}, formData: AddEmployeeFormFields) {
+    // черновой вариант, много несостыковок между формой и моделью в апи
+    const {
+      // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
+      amount,
+
+      // TODO так же как и в amount
+      payPeriod,
+
+      // TODO нужно добавить колонку в базу
+      payoutType,
+
+      // TODO QueryFailedError: date/time field value out of range: "21/09/2022" — нужно разобраться
+      startDate,
+      ...restForm
+    } = formData;
+
+    const data: CreateEmployeeDto = {
+      daoId,
+      status: 'Active',
+      amount: Number(amount) || 0,
+      payPeriod: 2,
+      ...restForm,
+    };
+    return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
+      headers: {...authenticationHeaders},
+    });
+  },
+});
+
+export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
+export const toggleCreateEmployeeModal = createEvent();
+$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
+
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
 sample({
@@ -57,55 +146,12 @@ sample({
   target: changeEmployeeStatusFx,
 });
 
-export type AddEmployeeFormFields = Omit<Employee, 'id' | 'status'>;
-export const addEmployeeForm = createForm<AddEmployeeFormFields>({
-  fields: {
-    type: {
-      init: 'Freelancer',
-      rules: [validators.required()],
-    },
-    name: {
-      init: '',
-      rules: [validators.required()],
-    },
-    nearLogin: {
-      init: '',
-      rules: [validators.required()],
-    },
-    role: {
-      init: '',
-      rules: [validators.required()],
-    },
-    email: {
-      init: '',
-      rules: [validators.required()],
-    },
-    salary: {
-      init: '',
-      rules: [validators.required()],
-    },
-    startDate: {
-      init: '',
-      rules: [validators.required()],
-    },
-    period: {
-      init: '2 per month',
-    },
-    payoutType: {
-      init: 'Smooth',
-    },
-    token: {
-      init: 'near',
-      rules: [validators.required()],
-    },
-    comment: {
-      init: '',
-    },
-  },
-  validateOn: ['submit'],
-});
-export const addEmployeeFx = createEffect((data: AddEmployeeFormFields) => console.log({...data}));
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,
+});
+
+sample({
+  clock: addEmployeeFx.done,
+  target: toggleCreateEmployeeModal,
 });

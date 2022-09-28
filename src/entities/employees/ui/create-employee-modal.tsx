@@ -11,6 +11,7 @@ import {Datepicker} from '~/shared/ui/components/datepicker';
 import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
+import {Modal, ModalProps} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
 
@@ -27,7 +28,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.name.label')}
+        content={t('createEmployee.form.labels.name.label')}
         error={fields.name.errorText()}
         className='basis-1/3'
       >
@@ -35,13 +36,13 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           name='name'
           value={fields.name.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.name.placeholder')}
+          placeholder={t('createEmployee.form.labels.name.placeholder')}
           onChange={fields.name.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.nearLogin.label')}
+        content={t('createEmployee.form.labels.nearLogin.label')}
         error={fields.nearLogin.errorText()}
         className='basis-1/3'
       >
@@ -49,29 +50,29 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           name='nearLogin'
           value={fields.nearLogin.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.nearLogin.placeholder')}
+          placeholder={t('createEmployee.form.labels.nearLogin.placeholder')}
           onChange={fields.nearLogin.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.role.label')}
-        error={fields.role.errorText()}
+        content={t('createEmployee.form.labels.role.label')}
+        error={fields.position?.errorText()}
         className='basis-1/3'
       >
         <Input
           name='role'
-          value={fields.role.value}
+          value={fields.position?.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.role.placeholder')}
-          onChange={fields.role.onChange}
+          placeholder={t('createEmployee.form.labels.role.placeholder')}
+          onChange={fields.position?.onChange}
         />
       </Label>
     </Row>
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.email.label')}
+        content={t('createEmployee.form.labels.email.label')}
         error={fields.email.errorText()}
         className='basis-1/3'
       >
@@ -79,27 +80,27 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           name='email'
           value={fields.email.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.email.placeholder')}
+          placeholder={t('createEmployee.form.labels.email.placeholder')}
           onChange={fields.email.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.salary.label')}
-        error={fields.salary.errorText()}
+        content={t('createEmployee.form.labels.salary.label')}
+        error={fields.amount.errorText()}
         className='basis-1/3'
       >
         <Input
           name='salary'
-          value={fields.salary.value}
+          value={fields.amount.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.salary.placeholder')}
-          onChange={fields.salary.onChange}
+          placeholder={t('createEmployee.form.labels.salary.placeholder')}
+          onChange={fields.amount.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.token.label')}
+        content={t('createEmployee.form.labels.token.label')}
         error={fields.token.errorText()}
         className='basis-1/3'
       >
@@ -107,7 +108,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           name='token'
           value={fields.token.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.token.placeholder')}
+          placeholder={t('createEmployee.form.labels.token.placeholder')}
           onChange={fields.token.onChange}
           options={[{label: 'NEAR', value: 'near'}]}
         />
@@ -115,7 +116,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
     </Row>
     <Row>
       <Label
-        content={t('addEmployee.form.labels.comment.label')}
+        content={t('createEmployee.form.labels.comment.label')}
         error={fields.comment?.errorText()}
         className='w-full'
       >
@@ -123,7 +124,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           name='comment'
           value={fields.comment?.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.comment.placeholder')}
+          placeholder={t('createEmployee.form.labels.comment.placeholder')}
           onChange={fields.comment?.onChange}
         />
       </Label>
@@ -135,7 +136,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.nearLogin.label')}
+        content={t('createEmployee.form.labels.nearLogin.label')}
         error={fields.nearLogin.errorText()}
         className='basis-1/3'
       >
@@ -143,27 +144,27 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='nearLogin'
           value={fields.nearLogin.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.nearLogin.placeholder')}
+          placeholder={t('createEmployee.form.labels.nearLogin.placeholder')}
           onChange={fields.nearLogin.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.salary.label')}
-        error={fields.salary.errorText()}
+        content={t('createEmployee.form.labels.salary.label')}
+        error={fields.amount.errorText()}
         className='basis-1/3'
       >
         <Input
           name='salary'
-          value={fields.salary.value}
+          value={fields.amount.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.salary.placeholder')}
-          onChange={fields.salary.onChange}
+          placeholder={t('createEmployee.form.labels.salary.placeholder')}
+          onChange={fields.amount.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.token.label')}
+        content={t('createEmployee.form.labels.token.label')}
         error={fields.token.errorText()}
         className='basis-1/3'
       >
@@ -171,7 +172,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='token'
           value={fields.token.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.token.placeholder')}
+          placeholder={t('createEmployee.form.labels.token.placeholder')}
           onChange={fields.token.onChange}
           options={[{label: 'NEAR', value: 'near'}]}
         />
@@ -180,7 +181,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.name.label')}
+        content={t('createEmployee.form.labels.name.label')}
         error={fields.name.errorText()}
         className='basis-1/3'
       >
@@ -188,27 +189,27 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='name'
           value={fields.name.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.name.placeholder')}
+          placeholder={t('createEmployee.form.labels.name.placeholder')}
           onChange={fields.name.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.role.label')}
-        error={fields.role.errorText()}
+        content={t('createEmployee.form.labels.role.label')}
+        error={fields.position?.errorText()}
         className='basis-1/3'
       >
         <Input
           name='role'
-          value={fields.role.value}
+          value={fields.position?.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.role.placeholder')}
-          onChange={fields.role.onChange}
+          placeholder={t('createEmployee.form.labels.role.placeholder')}
+          onChange={fields.position?.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.email.label')}
+        content={t('createEmployee.form.labels.email.label')}
         error={fields.email.errorText()}
         className='basis-1/3'
       >
@@ -216,7 +217,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='email'
           value={fields.email.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.email.placeholder')}
+          placeholder={t('createEmployee.form.labels.email.placeholder')}
           onChange={fields.email.onChange}
         />
       </Label>
@@ -224,36 +225,38 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
     <Row gap='md' className='justify-between'>
       <Label
         required
-        content={t('addEmployee.form.labels.startDate.label')}
-        error={fields.startDate.errorText()}
+        content={t('createEmployee.form.labels.startDate.label')}
+        error={fields.startDate?.errorText()}
         className='basis-1/3'
       >
         <Datepicker
           name='startDate'
-          value={fields.startDate.value}
+          value={fields.startDate?.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.startDate.placeholder')}
-          onChange={fields.startDate.onChange}
+          placeholder={t('createEmployee.form.labels.startDate.placeholder')}
+          // TODO add support for optional field
+          // @ts-expect-error
+          onChange={fields.startDate?.onChange}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.period.label')}
-        error={fields.period.errorText()}
+        content={t('createEmployee.form.labels.period.label')}
+        error={fields.payPeriod.errorText()}
         className='basis-1/3'
       >
         <InputDropdown
           name='period'
-          value={fields.period.value}
+          value={fields.payPeriod.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.period.placeholder')}
-          onChange={fields.period.onChange}
+          placeholder={t('createEmployee.form.labels.period.placeholder')}
+          onChange={fields.payPeriod.onChange}
           options={[{label: '2 per month', value: '2 per month'}]}
         />
       </Label>
       <Label
         required
-        content={t('addEmployee.form.labels.payoutType.label')}
+        content={t('createEmployee.form.labels.payoutType.label')}
         error={fields.payoutType.errorText()}
         className='basis-1/3'
       >
@@ -261,7 +264,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='payoutType'
           value={fields.payoutType.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.payoutType.placeholder')}
+          placeholder={t('createEmployee.form.labels.payoutType.placeholder')}
           onChange={fields.payoutType.onChange}
           options={[{label: 'Smooth', value: 'Smooth'}]}
         />
@@ -269,7 +272,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
     </Row>
     <Row>
       <Label
-        content={t('addEmployee.form.labels.comment.label')}
+        content={t('createEmployee.form.labels.comment.label')}
         error={fields.comment?.errorText()}
         className='w-full'
       >
@@ -277,7 +280,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           name='comment'
           value={fields.comment?.value}
           disabled={pending}
-          placeholder={t('addEmployee.form.labels.comment.placeholder')}
+          placeholder={t('createEmployee.form.labels.comment.placeholder')}
           onChange={fields.comment?.onChange}
         />
       </Label>
@@ -290,7 +293,7 @@ const formTypes = {
   Contractor,
 };
 
-export const AddEmployeeForm = () => {
+export const CreateEmployeeModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('employees');
   const accountId = useStore($accountId);
   const {fields, submit, eachValid} = useForm(employeeModel.addEmployeeForm);
@@ -304,54 +307,64 @@ export const AddEmployeeForm = () => {
   const FormPartComponent = formTypes[fields.type.value] || Nothing;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Col gap='xl'>
-        <Row gap='md' className='justify-between'>
-          <Label
-            required
-            content={t('addEmployee.form.labels.type.label')}
-            error={fields.type.errorText()}
-            className='basis-1/3'
-          >
-            <InputDropdown
-              name='type'
-              value={fields.type.value}
-              disabled={pending}
-              placeholder={t('addEmployee.form.labels.type.placeholder')}
-              onChange={fields.type.onChange}
-              options={[
-                {
-                  value: 'Freelancer',
-                  label: 'Freelancer',
-                },
-                {
-                  value: 'Contractor',
-                  label: 'Contractor',
-                },
-              ]}
-            />
-          </Label>
-          <Label
-            required
-            content={t('addEmployee.form.proposer')}
-            error={fields.type.errorText()}
-            className='basis-1/3 min-w-0'
-          >
-            <Typography as='span' className='truncate'>
-              {accountId}
-            </Typography>
-          </Label>
-        </Row>
+    <Modal {...modalProps}>
+      <form onSubmit={handleSubmit}>
+        <Col gap='xl'>
+          <Row gap='md' className='justify-between'>
+            <Label
+              required
+              content={t('createEmployee.form.labels.type.label')}
+              error={fields.type.errorText()}
+              className='basis-1/3'
+            >
+              <InputDropdown
+                name='type'
+                value={fields.type.value}
+                disabled={pending}
+                placeholder={t('createEmployee.form.labels.type.placeholder')}
+                onChange={fields.type.onChange}
+                options={[
+                  {
+                    value: 'Freelancer',
+                    label: 'Freelancer',
+                  },
+                  {
+                    value: 'Contractor',
+                    label: 'Contractor',
+                  },
+                ]}
+              />
+            </Label>
+            <Label
+              required
+              content={t('createEmployee.form.proposer')}
+              error={fields.type.errorText()}
+              className='basis-1/3 min-w-0'
+            >
+              <Typography as='span' className='truncate'>
+                {accountId}
+              </Typography>
+            </Label>
+          </Row>
 
-        <FormPartComponent fields={fields} t={t} pending={pending} />
+          <FormPartComponent fields={fields} t={t} pending={pending} />
 
-        <Row justify='end'>
-          <Button variant='outlined'>{t('addEmployee.form.abort')}</Button>
-          <Button disabled={!eachValid || pending} type='submit' variant='soft'>
-            {t('addEmployee.form.submit')}
-          </Button>
-        </Row>
-      </Col>
-    </form>
+          <Row justify='end'>
+            <Button
+              type='reset'
+              variant='outlined'
+              // TODO TBD это правило вообще нужно?
+              // eslint-disable-next-line react/destructuring-assignment
+              onClick={modalProps.onCloseModal}
+            >
+              {t('createEmployee.form.abort')}
+            </Button>
+            <Button type='submit' variant='soft' disabled={!eachValid || pending}>
+              {t('createEmployee.form.submit')}
+            </Button>
+          </Row>
+        </Col>
+      </form>
+    </Modal>
   );
 };

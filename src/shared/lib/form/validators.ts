@@ -17,9 +17,9 @@ const validateWithOptions =
     return validate(value, form, source);
   };
 
-const required = (options: ValidatorOptions<string> = {}): Rule<string> => ({
+const required = <T>(options: ValidatorOptions<T> = {}): Rule<T> => ({
   name: 'required',
-  validator: validateWithOptions(options, (value: string) => ({
+  validator: validateWithOptions(options, (value: T) => ({
     isValid: Boolean(value),
     errorText: t('validators:required'),
   })),
