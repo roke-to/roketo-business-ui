@@ -240,13 +240,13 @@ export const changePolicyProposalFx = attach({
       case 'removeCouncil':
         actions.push({
           type: 'FunctionCall',
-          params: mapRemoveCouncilOptions(currentDao, data),
+          params: mapRemoveCouncilOptions(data),
         });
         break;
       case 'addCouncil':
         actions.push({
           type: 'FunctionCall',
-          params: mapAddCouncilOptions(currentDao, data),
+          params: mapAddCouncilOptions(data),
         });
         break;
       case 'changeQuorum':

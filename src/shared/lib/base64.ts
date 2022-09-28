@@ -1,3 +1,7 @@
+export function decodeBase64(jsonStr: string): string {
+  return Buffer.from(jsonStr, 'base64').toString('utf-8');
+}
+
 export function encodeBase64(jsonStr: string): string {
   return Buffer.from(jsonStr).toString('base64');
 }
