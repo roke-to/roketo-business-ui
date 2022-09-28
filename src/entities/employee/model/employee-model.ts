@@ -125,10 +125,8 @@ export const addEmployeeFx = attach({
 });
 
 export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
-export const openCreateEmployeeModal = createEvent();
-export const closeCreateEmployeeModal = createEvent();
-$isCreateEmployeeModalOpen.on(openCreateEmployeeModal, () => true);
-$isCreateEmployeeModalOpen.on(closeCreateEmployeeModal, () => false);
+export const toggleCreateEmployeeModal = createEvent();
+$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
 
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
@@ -155,5 +153,5 @@ sample({
 
 sample({
   clock: addEmployeeFx.done,
-  target: closeCreateEmployeeModal,
+  target: toggleCreateEmployeeModal,
 });

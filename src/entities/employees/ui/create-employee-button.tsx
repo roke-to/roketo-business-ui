@@ -16,15 +16,16 @@ export const CreateEmployeeButton: React.FC<Omit<ButtonProps, 'variant' | 'onCli
       <Button
         {...props}
         variant='soft'
+        // TODO fix typings
         // @ts-expect-error
-        onClick={employeeModel.openCreateEmployeeModal}
+        onClick={employeeModel.toggleCreateEmployeeModal}
       >
         {t('createEmployee.button')}
       </Button>
       <CreateEmployeeModal
         isOpen={isModalOpen}
         title={t('createEmployee.modal.title')}
-        onCloseModal={employeeModel.closeCreateEmployeeModal}
+        onCloseModal={employeeModel.toggleCreateEmployeeModal}
       />
     </>
   );
