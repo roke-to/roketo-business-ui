@@ -67,6 +67,7 @@ interface FunctionalCallOptions {
   jsContract?: boolean;
 }
 
+// ts-unused-exports:disable-next-line
 export class DaoManagement {
   private readonly nearNetworkId: NetworkId;
 
