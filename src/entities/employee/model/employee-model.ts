@@ -106,8 +106,6 @@ export const addEmployeeFx = attach({
       // TODO нужно добавить колонку в базу
       payoutType,
 
-      // TODO QueryFailedError: date/time field value out of range: "21/09/2022" — нужно разобраться
-      startDate,
       ...restForm
     } = formData;
 
