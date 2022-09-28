@@ -4,16 +4,19 @@ import {
   COUNCIL,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
+import {DaoVotePolicy} from '~/shared/api/near/contracts/sputnik-dao/proposal.types';
 import {jsonToBase64} from '~/shared/lib/base64';
 
 export const mapCreateOptions = ({
   name,
   address,
+  votePolicy,
   councilList = [],
   callbackUrl,
 }: {
   name: string;
   address: string;
+  votePolicy?: Record<string, DaoVotePolicy>;
   councilList?: string[];
   callbackUrl: string;
 }) => ({
@@ -84,7 +87,7 @@ export const mapCreateOptions = ({
               'upgrade_remote:VoteReject',
               'upgrade_remote:VoteRemove',
             ],
-            vote_policy: {},
+            vote_policy: votePolicy || {},
           },
           {
             name: 'all',

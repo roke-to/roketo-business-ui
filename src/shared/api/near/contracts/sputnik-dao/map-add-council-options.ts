@@ -1,6 +1,5 @@
 import * as nearApi from 'near-api-js';
 
-import {Dao} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
   COUNCIL,
@@ -11,14 +10,11 @@ import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transact
 
 import {encodeDescription} from './proposal-format';
 
-export const mapAddCouncilOptions = (
-  currentDao: Dao,
-  formData: {
-    description: string;
-    link: string;
-    councilAddress: string;
-  },
-): FunctionCallAction['params'] => ({
+export const mapAddCouncilOptions = (formData: {
+  description: string;
+  link: string;
+  councilAddress: string;
+}): FunctionCallAction['params'] => ({
   methodName: 'add_proposal',
   args: {
     proposal: {
