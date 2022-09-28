@@ -22,9 +22,17 @@ export const sendTransactionsFx = attach({
 
         await Promise.all(
           hashes.map((hash) =>
-            astroApi.transactionControllerSuccess(accountId, {
-              transactionHashes: hash,
-            }),
+            astroApi.transactionControllerSuccess(
+              accountId,
+              {
+                transactionHashes: hash,
+              },
+              {
+                headers: {
+                  'Access-Control-Allow-Origin': 'no-cors',
+                },
+              },
+            ),
           ),
         );
       }

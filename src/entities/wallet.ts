@@ -423,7 +423,6 @@ sample({
       roketo,
       nearAuth: near
         ? {
-            balance: near.balance,
             account: near.account,
             signedIn: !!near.accountId,
             accountId: near.accountId,

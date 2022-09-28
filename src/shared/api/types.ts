@@ -1,5 +1,4 @@
 import type {Account, ConnectedWalletAccount, Contract} from 'near-api-js';
-import type {AccountBalance} from 'near-api-js/lib/account';
 import type {Action as NearAction} from 'near-api-js/lib/transaction';
 
 import type {Action as SelectorAction} from '@near-wallet-selector/core';
@@ -48,7 +47,6 @@ export type TransactionMediator<
 };
 
 export type NearAuth = {
-  balance?: AccountBalance;
   account: ConnectedWalletAccount;
   signedIn: boolean;
   accountId: string;
