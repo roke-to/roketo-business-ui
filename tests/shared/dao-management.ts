@@ -241,27 +241,3 @@ export class DaoManagement {
     await this.createProposalAndApproveThat(account, currentDaoId, options);
   }
 }
-
-/** Code example * */
-// const daoManagementInstance = new DaoManagement('testnet');
-//
-// daoManagmentInstance
-//   .createDao()
-//   .then((currentDaoId: string) => {
-//     console.log('was created dao', currentDaoId);
-//     return Promise.all([
-//       Promise.resolve(currentDaoId),
-//       daoManagementInstance.addCouncil(currentDaoId, 'rkate'),
-//     ]);
-//   })
-//   .then(([currentDaoId]: [string]) => {
-//     console.log('was added council in dao', currentDaoId);
-//     return daoManagementInstance.removeCouncil(currentDaoId, 'rkate');
-//   })
-//   .then(([currentDaoId]: [string]) => {
-//     console.log('was removed council in dao', currentDaoId);
-//     return daoManagementInstance.removeCouncil(currentDaoId, 'rkate');
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
