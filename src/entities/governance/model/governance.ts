@@ -67,28 +67,22 @@ const loadGovernanceProposalsFx = attach({
     kind: $governanceSelectedProposalKind,
   },
   async effect({daoId, accountId, sort, status, kind}) {
-    const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [
-        {kind: {$cont: 'ChangeConfig'}},
-        {kind: {$cont: 'ChangePolicy'}},
-        {kind: {$cont: 'AddMemberToRole'}},
-        {kind: {$cont: 'RemoveMemberFromRole'}},
-      ],
-    };
+    const defaultKindFilterQuery = 'ChangeConfig,ChangePolicy,AddMemberToRole,RemoveMemberFromRole';
 
     const search: SFields | SConditionAND = {
       $and: [{daoId: {$eq: daoId}}],
     };
 
-    addStatusProposalQuery(search, status);
-    addKindProposalQuery(search, kind, defaultKindFilterQuery);
-
     const query = {
-      s: JSON.stringify(search),
+      ...addStatusProposalQuery(status),
+      search: JSON.stringify(search),
       limit: 20,
       offset: 0,
-      sort: [`createdAt,${sort}`],
+      type: addKindProposalQuery(kind, defaultKindFilterQuery),
+      orderBy: 'createdAt',
+      sort,
       accountId,
+      dao: daoId,
     };
     return astroApi.proposalControllerProposals(query);
   },
@@ -96,6 +90,9 @@ const loadGovernanceProposalsFx = attach({
 
 sample({
   source: sendTransactionsFx.doneData,
+  filter() {
+    return window.location.pathname.includes('governance');
+  },
   target: loadGovernanceProposalsFx,
 });
 
@@ -106,7 +103,7 @@ sample({
 
 sample({
   source: loadGovernanceProposalsFx.doneData,
-  fn: (response) => response.data.data,
+  fn: (response) => response.data.data as unknown as Proposal[],
   target: $governanceProposals,
 });
 

@@ -1,6 +1,6 @@
 import isEmpty from 'lodash/isEmpty';
 
-import {Dao, PolicyDto} from '~/shared/api/astro';
+import {Dao, PolicyDtoV1} from '~/shared/api/astro';
 import {COUNCIL} from '~/shared/api/near/contracts/contract.constants';
 import {isVotePolicyWithThreshold} from '~/shared/types/proposal.types';
 
@@ -29,7 +29,7 @@ export const getQuorumValueFromDao = (dao: Dao) => {
   return getQuorum(ratio);
 };
 
-export const getQuorumValueFromPolicy = ({roles}: PolicyDto) => {
+export const getQuorumValueFromPolicy = ({roles}: PolicyDtoV1) => {
   if (!Array.isArray(roles) || roles.length === 0) {
     return 0;
   }

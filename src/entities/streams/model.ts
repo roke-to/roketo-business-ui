@@ -443,7 +443,7 @@ const loadStreamProposalsFx = attach({
   async effect({daoId, accountId, status, variant, sort}) {
     // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
     const search: SConditionAND = {
-      $and: [{daoId: {$eq: daoId}}, {kind: {$cont: 'FunctionCall'}}],
+      $and: [],
     };
 
     if (variant !== 'Any') {
@@ -460,14 +460,14 @@ const loadStreamProposalsFx = attach({
       });
     }
 
-    addStatusProposalQuery(search, status);
-
     const query = {
-      s: JSON.stringify(search),
+      ...addStatusProposalQuery(status),
       limit: 20,
       offset: 0,
+      type: 'FunctionCall',
       sort: [`createdAt,${sort}`],
       accountId,
+      dao: daoId,
     };
 
     return astroApi.proposalControllerProposals(query);
@@ -485,7 +485,7 @@ sample({
 
 sample({
   source: loadStreamProposalsFx.doneData,
-  fn: (response) => response.data.data,
+  fn: (response) => response.data.data as unknown as Proposal[],
   target: $streamProposals,
 });
 

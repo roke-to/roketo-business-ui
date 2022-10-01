@@ -20,7 +20,7 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
-import {SConditionAND, SFields} from '@nestjsx/crud-request';
+import {SConditionAND} from '@nestjsx/crud-request';
 
 import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
@@ -70,16 +70,11 @@ const loadTreasuryProposalsFx = attach({
     sort: $treasuryProposalSortOrder,
   },
   async effect({daoId, accountId, status, kind, sort}) {
-    const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [{kind: {$cont: 'FunctionCall'}}, {kind: {$cont: 'Transfer'}}],
-    };
+    const defaultKindFilterQuery = 'FunctionCall,Transfer';
 
     // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
     const search: SConditionAND = {
       $and: [
-        {
-          daoId: {$eq: daoId},
-        },
         {
           description: {$excl: 'ProposeCreateRoketoStream'},
         },
@@ -98,16 +93,16 @@ const loadTreasuryProposalsFx = attach({
       ],
     };
 
-    addStatusProposalQuery(search, status);
-
-    addKindProposalQuery(search, kind, defaultKindFilterQuery);
-
     const query = {
-      s: JSON.stringify(search),
+      ...addStatusProposalQuery(status),
+      search: JSON.stringify(search),
       limit: 20,
       offset: 0,
-      sort: [`createdAt,${sort}`],
       accountId,
+      dao: daoId,
+      type: addKindProposalQuery(kind, defaultKindFilterQuery),
+      orderBy: 'createdAt',
+      sort,
     };
 
     return astroApi.proposalControllerProposals(query);
@@ -116,6 +111,9 @@ const loadTreasuryProposalsFx = attach({
 
 sample({
   source: sendTransactionsFx.doneData,
+  filter() {
+    return window.location.pathname.includes('treasury');
+  },
   target: loadTreasuryProposalsFx,
 });
 sample({
@@ -125,7 +123,7 @@ sample({
 
 sample({
   source: loadTreasuryProposalsFx.doneData,
-  fn: (response) => response.data.data,
+  fn: (response) => response.data.data as unknown as Proposal[],
   target: $treasuryProposals,
 });
 
