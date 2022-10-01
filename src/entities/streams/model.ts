@@ -443,7 +443,7 @@ const loadStreamProposalsFx = attach({
   async effect({daoId, accountId, status, variant, sort}) {
     // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
     const search: SConditionAND = {
-      $and: [],
+      $and: [{kind: {$cont: 'FunctionCall'}}],
     };
 
     if (variant !== 'Any') {
@@ -462,6 +462,7 @@ const loadStreamProposalsFx = attach({
 
     const query = {
       ...addStatusProposalQuery(status),
+      search: JSON.stringify(search),
       limit: 20,
       offset: 0,
       type: 'FunctionCall',

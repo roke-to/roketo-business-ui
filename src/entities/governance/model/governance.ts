@@ -90,9 +90,6 @@ const loadGovernanceProposalsFx = attach({
 
 sample({
   source: sendTransactionsFx.doneData,
-  filter() {
-    return window.location.pathname.includes('governance');
-  },
   target: loadGovernanceProposalsFx,
 });
 

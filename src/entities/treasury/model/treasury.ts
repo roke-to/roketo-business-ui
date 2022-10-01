@@ -111,9 +111,6 @@ const loadTreasuryProposalsFx = attach({
 
 sample({
   source: sendTransactionsFx.doneData,
-  filter() {
-    return window.location.pathname.includes('treasury');
-  },
   target: loadTreasuryProposalsFx,
 });
 sample({
