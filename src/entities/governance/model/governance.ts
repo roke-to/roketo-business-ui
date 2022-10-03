@@ -80,7 +80,7 @@ const loadGovernanceProposalsFx = attach({
       offset: 0,
       type: addKindProposalQuery(kind, defaultKindFilterQuery),
       orderBy: 'createdAt',
-      sort,
+      order: sort,
       accountId,
       dao: daoId,
     };

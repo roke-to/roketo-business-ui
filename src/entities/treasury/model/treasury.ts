@@ -20,7 +20,6 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
-import {SConditionAND} from '@nestjsx/crud-request';
 
 import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
@@ -72,40 +71,28 @@ const loadTreasuryProposalsFx = attach({
   async effect({daoId, accountId, status, kind, sort}) {
     const defaultKindFilterQuery = 'FunctionCall,Transfer';
 
-    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
-    const search: SConditionAND = {
-      $and: [
-        {
-          description: {$excl: 'ProposeCreateRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposePauseRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeStartRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeStopRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeRoketoStreamWithdraw'},
-        },
-      ],
-    };
-
     const query = {
       ...addStatusProposalQuery(status),
-      search: JSON.stringify(search),
       limit: 20,
       offset: 0,
       accountId,
       dao: daoId,
       type: addKindProposalQuery(kind, defaultKindFilterQuery),
       orderBy: 'createdAt',
-      sort,
+      order: sort,
     };
 
-    return astroApi.proposalControllerProposals(query);
+    return astroApi.proposalControllerProposals(query).then((response) => {
+      const proposals = response.data.data as unknown as Proposal[];
+      return proposals.filter(
+        (p) =>
+          !p.description.includes('ProposeCreateRoketoStream') &&
+          !p.description.includes('ProposePauseRoketoStream') &&
+          !p.description.includes('ProposeStartRoketoStream') &&
+          !p.description.includes('ProposeStopRoketoStream') &&
+          !p.description.includes('ProposeRoketoStreamWithdraw'),
+      );
+    });
   },
 });
 
@@ -120,7 +107,6 @@ sample({
 
 sample({
   source: loadTreasuryProposalsFx.doneData,
-  fn: (response) => response.data.data as unknown as Proposal[],
   target: $treasuryProposals,
 });
 
