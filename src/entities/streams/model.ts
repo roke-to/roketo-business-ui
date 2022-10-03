@@ -41,7 +41,6 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
-import {SConditionAND} from '@nestjsx/crud-request';
 import {
   ableToAddFunds,
   ableToPauseStream,
@@ -441,36 +440,32 @@ const loadStreamProposalsFx = attach({
     sort: $streamProposalSortOrder,
   },
   async effect({daoId, accountId, status, variant, sort}) {
-    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
-    const search: SConditionAND = {
-      $and: [{daoId: {$eq: daoId}}, {kind: {$cont: 'FunctionCall'}}],
-    };
-
-    if (variant !== 'Any') {
-      search.$and?.push({description: {$cont: variant}});
-    } else {
-      search.$and?.push({
-        $or: [
-          {description: {$cont: 'ProposeCreateRoketoStream'}},
-          {description: {$cont: 'ProposePauseRoketoStream'}},
-          {description: {$cont: 'ProposeStartRoketoStream'}},
-          {description: {$cont: 'ProposeStopRoketoStream'}},
-          {description: {$cont: 'ProposeRoketoStreamWithdraw'}},
-        ],
-      });
-    }
-
-    addStatusProposalQuery(search, status);
-
     const query = {
-      s: JSON.stringify(search),
+      ...addStatusProposalQuery(status),
       limit: 20,
       offset: 0,
-      sort: [`createdAt,${sort}`],
+      type: 'FunctionCall',
+      orderBy: 'createdAt',
+      order: sort,
       accountId,
+      dao: daoId,
     };
 
-    return astroApi.proposalControllerProposals(query);
+    return astroApi.proposalControllerProposals(query).then((response) => {
+      const proposals = response.data.data as unknown as Proposal[];
+      return proposals.filter((p) => {
+        if (variant !== 'Any') {
+          return p.description.includes(variant);
+        }
+        return (
+          p.description.includes('ProposeCreateRoketoStream') ||
+          p.description.includes('ProposePauseRoketoStream') ||
+          p.description.includes('ProposeStartRoketoStream') ||
+          p.description.includes('ProposeStopRoketoStream') ||
+          p.description.includes('ProposeRoketoStreamWithdraw')
+        );
+      });
+    });
   },
 });
 
@@ -485,7 +480,6 @@ sample({
 
 sample({
   source: loadStreamProposalsFx.doneData,
-  fn: (response) => response.data.data,
   target: $streamProposals,
 });
 

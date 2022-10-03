@@ -1,12 +1,9 @@
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 
-import {SConditionAND, SFields} from '@nestjsx/crud-request';
-
 export const addKindProposalQuery = (
-  search: SFields | SConditionAND,
   kind: ProposalKindFilterType,
-  defaultKindFilterQuery: SFields | SConditionAND,
-): void => {
+  defaultKindFilterQuery: string,
+): string => {
   switch (kind) {
     case 'Transfer':
     case 'ChangeConfig':
@@ -19,15 +16,9 @@ export const addKindProposalQuery = (
     case 'AddBounty':
     case 'BountyDone':
     case 'Vote':
-      search.$and?.push({
-        kind: {
-          $cont: kind,
-        },
-      });
-      break;
+      return kind;
     case 'Any':
     default:
-      search.$and?.push(defaultKindFilterQuery);
-      break;
+      return defaultKindFilterQuery;
   }
 };

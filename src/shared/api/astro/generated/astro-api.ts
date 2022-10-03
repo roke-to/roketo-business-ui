@@ -123,7 +123,7 @@ export interface RoleKindDto {
   group: string[];
 }
 
-export interface RoleDto {
+export interface RoleDtoV1 {
   isArchived: boolean;
 
   /** @format date-time */
@@ -133,20 +133,20 @@ export interface RoleDto {
   updatedAt: string;
   id: string;
   name: string;
-  kind: RoleKindDto;
   balance: number;
   accountIds: string[];
   permissions: string[];
   votePolicy: object;
+  kind: RoleKindDto;
 }
 
-export interface PolicyDto {
+export interface PolicyDtoV1 {
   proposalBond: string;
   bountyBond: string;
   proposalPeriod: number;
   bountyForgivenessPeriod: number;
   defaultVotePolicy: VotePolicy;
-  roles: RoleDto;
+  roles: RoleDtoV1;
 }
 
 export interface ActionCall {
@@ -176,7 +176,8 @@ export interface ProposalKindSwaggerDto {
    * For type: ChangeConfig
    */
   config: DaoConfig;
-  policy: PolicyDto;
+  policy: PolicyDtoV1;
+  proposalVariant: string;
 
   /** For type: AddMemberToRole or RemoveMemberFromRole */
   memberId: string;
@@ -210,6 +211,9 @@ export interface ProposalKindSwaggerDto {
 
   /** For type: BountyDone */
   bountyId: string;
+
+  /** For type: Transfer */
+  amount: string;
 }
 
 export interface ProposalAction {
@@ -226,6 +230,7 @@ export interface ProposalPermissions {
   canReject: boolean;
   canDelete: boolean;
   isCouncil: boolean;
+  canAdd: boolean;
 }
 
 export interface Proposal {
@@ -249,6 +254,19 @@ export interface Proposal {
   status: 'InProgress' | 'Approved' | 'Rejected' | 'Removed' | 'Expired' | 'Moved' | 'Failed';
   voteStatus: 'Active' | 'Expired';
   kind: ProposalKindSwaggerDto;
+  type:
+    | 'ChangeConfig'
+    | 'ChangePolicy'
+    | 'AddMemberToRole'
+    | 'RemoveMemberFromRole'
+    | 'FunctionCall'
+    | 'UpgradeSelf'
+    | 'UpgradeRemote'
+    | 'Transfer'
+    | 'SetStakingContract'
+    | 'AddBounty'
+    | 'BountyDone'
+    | 'Vote';
   submissionTime: number;
   voteCounts: object;
   votes: object;
@@ -257,6 +275,7 @@ export interface Proposal {
   votePeriodEnd: number;
   bountyDoneId: string;
   bountyClaimId: string;
+  commentsCount: number;
   permissions: ProposalPermissions;
 }
 
@@ -345,12 +364,60 @@ export interface UpdateBountyContextDto {
   isArchived: boolean;
 }
 
-export interface DaoResponse {
+export interface DaoResponseV1 {
+  isArchived: boolean;
+
+  /** @format date-time */
+  createdAt: string;
+
+  /** @format date-time */
+  updatedAt: string;
+  transactionHash: string;
+  updateTransactionHash: string;
+  createTimestamp: number;
+  updateTimestamp: number;
+  id: string;
+  config: DaoConfig;
+  metadata: object;
+  amount: number;
+  totalSupply: string;
+  lastBountyId: number;
+  lastProposalId: number;
+  stakingContract: string;
+
+  /** How many accounts in total have interacted with the DAO (made proposals, voted, etc). */
+  numberOfAssociates: number;
+
+  /** How many accounts are members of the DAO */
+  numberOfMembers: number;
+
+  /** How many groups exist in the DAO */
+  numberOfGroups: number;
+
+  /** List of accounts that can vote for various activity */
+  council: string[];
+
+  /** List of all account ids that joined the DAO */
+  accountIds: string[];
+
+  /** Council accounts count */
+  councilSeats: number;
+  createdBy: string;
+  daoVersionHash: string;
+  daoVersion: DaoVersion;
+  status: object;
+  activeProposalCount: number;
+  totalProposalCount: number;
+  totalDaoFunds: number;
+  policy: Policy;
+}
+
+export interface DaoPageResponse {
   count: number;
   total: number;
   page: number;
   pageCount: number;
-  data: Dao[];
+  data: DaoResponseV1[];
 }
 
 export interface AccountDaoResponse {
@@ -487,39 +554,19 @@ export interface ProposalTemplateDto {
   config: ProposalTemplateConfigDto;
 }
 
+export interface ProposalsResponse {
+  offset: number;
+  limit: number;
+  total: number;
+  data: string[];
+}
+
 export interface ProposalResponse {
   count: number;
   total: number;
   page: number;
   pageCount: number;
   data: Proposal[];
-}
-
-export interface SearchMemberRoleDto {
-  daoId: string;
-  name: string;
-  kind: 'Everyone' | 'Member' | 'Group';
-  permissions: string;
-}
-
-export interface SearchMemberDto {
-  accountId: string;
-  roles: SearchMemberRoleDto[];
-  voteCount: number;
-}
-
-export interface SearchMemberResponse {
-  count: number;
-  total: number;
-  page: number;
-  pageCount: number;
-  data: SearchMemberDto[];
-}
-
-export interface SearchResultDto {
-  daos: DaoResponse;
-  proposals: ProposalResponse;
-  members: SearchMemberResponse;
 }
 
 export interface SubscriptionDto {
@@ -538,6 +585,24 @@ export interface Subscription {
   dao: Dao;
   accountId: string;
   daoId: string;
+}
+
+export interface TokenResponse {
+  id: string;
+  totalSupply: string;
+  decimals: number;
+  icon: string;
+  symbol: string;
+  price: string;
+  balance?: string;
+  tokenId: string;
+}
+
+export interface TokensPageResponseDto {
+  offset: number;
+  limit: number;
+  total: number;
+  data: TokenResponse[];
 }
 
 export interface TokenBalance {
@@ -573,14 +638,6 @@ export interface Token {
   tokenId: string;
   balance: string;
   balances: TokenBalance[];
-}
-
-export interface TokenResponse {
-  count: number;
-  total: number;
-  page: number;
-  pageCount: number;
-  data: Token[];
 }
 
 export interface NFTContract {
@@ -778,6 +835,7 @@ export interface AccountNotificationSettings {
   isAllMuted: boolean;
   enableSms: boolean;
   enableEmail: boolean;
+  actionRequiredOnly: boolean;
 }
 
 export interface AccountNotificationSettingsResponse {
@@ -795,6 +853,7 @@ export interface CreateAccountNotificationSettingsDto {
   enableSms: boolean;
   enableEmail: boolean;
   isAllMuted: boolean;
+  actionRequiredOnly: boolean;
 }
 
 export interface NotificationStatusResponse {
@@ -857,6 +916,18 @@ export interface CommentDeleteDto {
   reason: string;
 }
 
+export interface TransactionHandlerBlock {
+  height: number;
+  timestamp: object;
+}
+
+export interface TransactionHandlerBlocks {
+  lastBlock: TransactionHandlerBlock;
+  lastAstroBlock: TransactionHandlerBlock;
+  lastHandledBlock: TransactionHandlerBlock;
+  lastProcessedBlock: TransactionHandlerBlock;
+}
+
 export interface StatsStateDto {
   value: number;
   growth: number;
@@ -909,6 +980,33 @@ export interface AccountVerificationDto {
 
 export interface AccountPhoneDto {
   phoneNumber: string;
+}
+
+export interface SearchMemberRoleDto {
+  daoId: string;
+  name: string;
+  kind: 'Everyone' | 'Member' | 'Group';
+  permissions: string;
+}
+
+export interface SearchMemberDto {
+  accountId: string;
+  roles: SearchMemberRoleDto[];
+  voteCount: number;
+}
+
+export interface SearchMemberResponse {
+  count: number;
+  total: number;
+  page: number;
+  pageCount: number;
+  data: SearchMemberDto[];
+}
+
+export interface SearchResultDto {
+  daos: DaoPageResponse;
+  proposals: ProposalResponse;
+  members: SearchMemberResponse;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -1246,7 +1344,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags DAO
      * @name DaoControllerDaos
      * @request GET:/api/v1/daos
-     * @response `200` `DaoResponse` List of aggregated Sputnik DAOs
+     * @response `200` `DaoPageResponse` List of aggregated Sputnik DAOs
      * @response `400` `void` Bad Request Response based on the query params set
      */
     daoControllerDaos: (
@@ -1262,7 +1360,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<DaoResponse, void>({
+      this.request<DaoPageResponse, void>({
         path: `/api/v1/daos`,
         method: 'GET',
         query: query,
@@ -1277,7 +1375,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerDaosByAccountId
      * @request GET:/api/v1/daos/account-daos/{accountId}
      * @response `200` `(AccountDaoResponse)[]` List of Sputnik DAOs by Account
-     * @response `400` `void` Invalid Dao ID
+     * @response `400` `void` Invalid DAO ID
      * @response `404` `void` Account does not exist
      */
     daoControllerDaosByAccountId: (accountId: string, params: RequestParams = {}) =>
@@ -1295,7 +1393,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerDaoById
      * @request GET:/api/v1/daos/{id}
      * @response `200` `Dao` Sputnik DAO
-     * @response `400` `void` Invalid Dao ID
+     * @response `400` `void` Invalid DAO ID <id>
      */
     daoControllerDaoById: (id: string, params: RequestParams = {}) =>
       this.request<Dao, void>({
@@ -1309,10 +1407,27 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags DAO
+     * @name DaoControllerDaoByIdV2
+     * @request GET:/api/v2/daos/{id}
+     * @response `200` `Dao` Sputnik DAO
+     * @response `400` `void` Invalid DAO ID <id>
+     */
+    daoControllerDaoByIdV2: (id: string, params: RequestParams = {}) =>
+      this.request<Dao, void>({
+        path: `/api/v2/daos/${id}`,
+        method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags DAO
      * @name DaoControllerDaoMembers
      * @request GET:/api/v1/daos/{id}/members
      * @response `200` `(DaoMemberVote)[]` DAO Members
-     * @response `400` `void` Invalid Dao ID
+     * @response `400` `void` Invalid DAO ID <id>
      */
     daoControllerDaoMembers: (id: string, params: RequestParams = {}) =>
       this.request<DaoMemberVote[], void>({
@@ -1578,25 +1693,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Proposals
      * @name ProposalControllerProposals
      * @request GET:/api/v1/proposals
-     * @response `200` `ProposalResponse` List of aggregated Sputnik DAO Proposals
+     * @response `200` `ProposalsResponse` List of aggregated Sputnik DAO Proposals
      * @response `400` `void` Bad Request Response based on the query params set
      */
     proposalControllerProposals: (
       query?: {
-        sort?: string[];
-        limit?: number;
         offset?: number;
-        page?: number;
-        fields?: string;
-        s?: string;
-        filter?: string[];
-        or?: string[];
-        voted?: boolean;
+        limit?: number;
+        search?: string;
+        orderBy?: string;
+        order?: 'ASC' | 'DESC';
+        dao?: string;
+        status?: string;
+        type?: string;
+        proposer?: string;
+        active?: boolean;
+        failed?: boolean;
         accountId?: string;
+        voted?: boolean;
       },
       params: RequestParams = {},
     ) =>
-      this.request<ProposalResponse, void>({
+      this.request<ProposalsResponse, void>({
         path: `/api/v1/proposals`,
         method: 'GET',
         query: query,
@@ -1653,34 +1771,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<ProposalResponse, void>({
         path: `/api/v1/proposals/account-proposals/${accountId}`,
-        method: 'GET',
-        query: query,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Search
-     * @name SearchControllerSearch
-     * @request GET:/api/v1/search
-     * @response `200` `SearchResultDto` Search results: dao/proposals combined
-     * @response `400` `void` query should not be empty
-     */
-    searchControllerSearch: (
-      query: {
-        sort?: string[];
-        limit?: number;
-        offset?: number;
-        page?: number;
-        query: string;
-        accountId?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<SearchResultDto, void>({
-        path: `/api/v1/search`,
         method: 'GET',
         query: query,
         format: 'json',
@@ -1753,23 +1843,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Token
      * @name TokenControllerTokens
      * @request GET:/api/v1/tokens
-     * @response `200` `TokenResponse` List of aggregated Fungible Tokens
+     * @response `200` `TokensPageResponseDto` List of aggregated Fungible Tokens
      * @response `400` `void` Bad Request Response based on the query params set
      */
     tokenControllerTokens: (
       query?: {
-        sort?: any[];
-        limit?: number;
         offset?: number;
-        page?: number;
-        fields?: string;
-        s?: string;
-        filter?: any[];
-        or?: any[];
+        limit?: number;
+        search?: string;
+        orderBy?: string;
+        order?: 'ASC' | 'DESC';
       },
       params: RequestParams = {},
     ) =>
-      this.request<TokenResponse, void>({
+      this.request<TokensPageResponseDto, void>({
         path: `/api/v1/tokens`,
         method: 'GET',
         query: query,
@@ -2029,8 +2116,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PATCH:/api/v1/account-notifications/{id}
      * @secure
      * @response `200` `AccountNotification` OK
+     * @response `400` `void` Invalid Account Notification ID <id>
      * @response `403` `void` Account <accountId> identity is invalid - public key / invalid signature / invalid accountId
-     * @response `404` `void` Account Notification with id <id> not found
      */
     notificationControllerUpdateAccountNotification: (
       id: string,
@@ -2233,6 +2320,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/api/v1/aggregator/aggregate-dao/${id}`,
         method: 'POST',
         secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Aggregator
+     * @name AggregatorControllerGetBlocks
+     * @request GET:/api/v1/aggregator/blocks
+     * @secure
+     * @response `200` `TransactionHandlerBlocks` Aggregator State Blocks
+     */
+    aggregatorControllerGetBlocks: (params: RequestParams = {}) =>
+      this.request<TransactionHandlerBlocks, any>({
+        path: `/api/v1/aggregator/blocks`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -2510,6 +2615,34 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<VerificationStatus, void>({
         path: `/api/v1/account/${accountId}/phone/verification-status`,
         method: 'GET',
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Search
+     * @name SearchControllerSearch
+     * @request GET:/api/v1/search
+     * @response `200` `SearchResultDto` Search results: dao/proposals combined
+     * @response `400` `void` query should not be empty
+     */
+    searchControllerSearch: (
+      query: {
+        sort?: string[];
+        limit?: number;
+        offset?: number;
+        page?: number;
+        query: string;
+        accountId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<SearchResultDto, void>({
+        path: `/api/v1/search`,
+        method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),

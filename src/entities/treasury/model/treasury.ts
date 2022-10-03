@@ -20,7 +20,6 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
-import {SConditionAND, SFields} from '@nestjsx/crud-request';
 
 import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
 
@@ -70,47 +69,30 @@ const loadTreasuryProposalsFx = attach({
     sort: $treasuryProposalSortOrder,
   },
   async effect({daoId, accountId, status, kind, sort}) {
-    const defaultKindFilterQuery: SFields | SConditionAND = {
-      $or: [{kind: {$cont: 'FunctionCall'}}, {kind: {$cont: 'Transfer'}}],
-    };
-
-    // https://github.com/nestjsx/crud/wiki/Requests#filter-conditions
-    const search: SConditionAND = {
-      $and: [
-        {
-          daoId: {$eq: daoId},
-        },
-        {
-          description: {$excl: 'ProposeCreateRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposePauseRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeStartRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeStopRoketoStream'},
-        },
-        {
-          description: {$excl: 'ProposeRoketoStreamWithdraw'},
-        },
-      ],
-    };
-
-    addStatusProposalQuery(search, status);
-
-    addKindProposalQuery(search, kind, defaultKindFilterQuery);
+    const defaultKindFilterQuery = 'FunctionCall,Transfer';
 
     const query = {
-      s: JSON.stringify(search),
+      ...addStatusProposalQuery(status),
       limit: 20,
       offset: 0,
-      sort: [`createdAt,${sort}`],
       accountId,
+      dao: daoId,
+      type: addKindProposalQuery(kind, defaultKindFilterQuery),
+      orderBy: 'createdAt',
+      order: sort,
     };
 
-    return astroApi.proposalControllerProposals(query);
+    return astroApi.proposalControllerProposals(query).then((response) => {
+      const proposals = response.data.data as unknown as Proposal[];
+      return proposals.filter(
+        (p) =>
+          !p.description.includes('ProposeCreateRoketoStream') &&
+          !p.description.includes('ProposePauseRoketoStream') &&
+          !p.description.includes('ProposeStartRoketoStream') &&
+          !p.description.includes('ProposeStopRoketoStream') &&
+          !p.description.includes('ProposeRoketoStreamWithdraw'),
+      );
+    });
   },
 });
 
@@ -125,7 +107,6 @@ sample({
 
 sample({
   source: loadTreasuryProposalsFx.doneData,
-  fn: (response) => response.data.data,
   target: $treasuryProposals,
 });
 

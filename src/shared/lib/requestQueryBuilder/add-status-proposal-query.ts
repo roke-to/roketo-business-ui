@@ -1,56 +1,25 @@
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
-import {SConditionAND, SFields} from '@nestjsx/crud-request';
-
 export const addStatusProposalQuery = (
-  search: SFields | SConditionAND,
   status: ProposalStatusFilterType,
-): void => {
+): {
+  status?: string;
+  active?: boolean;
+  failed?: boolean;
+} => {
   switch (status) {
     case 'active':
-      search.$and?.push(
-        {
-          status: {
-            $eq: 'InProgress',
-          },
-        },
-        {
-          voteStatus: {
-            $eq: 'Active',
-          },
-        },
-      );
-      break;
+      return {active: true, status: 'InProgress'};
     case 'approved':
-      search.$and?.push({
-        status: {
-          $eq: 'Approved',
-        },
-      });
-      break;
+      return {status: 'Approved'};
     case 'failed':
-      search.$and?.push({
-        status: {
-          $eq: 'Failed',
-        },
-      });
-      break;
+      return {failed: true};
     case 'rejected':
-      search.$and?.push({
-        status: {
-          $eq: 'Rejected',
-        },
-      });
-      break;
+      return {status: 'Rejected'};
     case 'expired':
-      search.$and?.push({
-        voteStatus: {
-          $eq: 'Expired',
-        },
-      });
-      break;
+      return {status: 'Expired'};
     case 'all':
     default:
-      break;
+      return {};
   }
 };

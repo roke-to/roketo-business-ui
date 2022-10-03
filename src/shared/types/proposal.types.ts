@@ -5,7 +5,7 @@ import {
 } from '~/shared/api/astro';
 
 interface ProposalKindSwaggerDto extends BaseProposalKindSwaggerDto {
-  amount?: string;
+  amount: string;
 }
 
 export interface ImprovedProposalType extends ProposalType {
