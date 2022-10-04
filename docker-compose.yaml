@@ -3,6 +3,7 @@ services:
   frontbizui:
     image: gcr.io/main-project-354317/${APP?Variable not set}:${APP_TAG}
     container_name: ${APP_NAME}
+    restart: alwaya
     networks:
       - proxy
     labels:
