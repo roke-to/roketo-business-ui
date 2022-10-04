@@ -3,6 +3,7 @@ import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {Get} from 'type-fest';
 
+import {invoiceDraftModalOpened} from '~/entities/employees/model/employees-model';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {
@@ -216,6 +217,12 @@ export const createTreasuryProposalForm = createForm({
     },
   },
   validateOn: ['submit'],
+});
+
+sample({
+  clock: invoiceDraftModalOpened,
+  fn: (clockData) => ({description: `${clockData.id} blah blah`}),
+  target: createTreasuryProposalForm.setForm,
 });
 
 export const createTreasuryProposalFx = attach({

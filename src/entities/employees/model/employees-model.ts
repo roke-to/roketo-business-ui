@@ -67,18 +67,61 @@ const loadEmployeesFx = attach({
       .then((response) => response.data);
   },
 });
+
+const sampleFilters = {
+  isAuthHeadersExists: (authenticationHeaders: Record<string, string> | null) =>
+    Boolean(authenticationHeaders?.['x-authentication-api']),
+  isCurrentPathCorrect: () => window && window.location.pathname.includes(ROUTES.employees.path),
+};
+
 sample({
   source: $authenticationHeaders,
   clock: [pageLoaded, $statusFilter, $typeFilter, $sort, employeeModel.addEmployeeFx.done],
-  filter: (authenticationHeaders) => Boolean(authenticationHeaders?.['x-authentication-api']),
+  filter: sampleFilters.isAuthHeadersExists,
   target: loadEmployeesFx,
 });
 sample({
   source: $authenticationHeaders,
-  filter: () => window && window.location.pathname.includes(ROUTES.employees.path),
+  filter: sampleFilters.isCurrentPathCorrect,
   target: loadEmployeesFx,
 });
 sample({
   source: loadEmployeesFx.doneData,
   target: $employees,
+});
+
+export const $stubInvoicesDrafts = createStore([{id: 1}, {id: 2}]);
+export const $draftInvoices = createStore<any>([]);
+$draftInvoices.watch((draftInvoices) => console.log({draftInvoices}));
+
+export const invoiceDraftModalOpened = createEvent<any>();
+invoiceDraftModalOpened.watch((invoiceDraft) => console.log(invoiceDraft));
+
+const loadDraftInvoicesFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, authenticationHeaders}) {
+    return rbApi.dao
+      .daoControllerFindAllDaoInvoices(daoId, {
+        headers: {...authenticationHeaders},
+      })
+      .then((response) => response.data);
+  },
+});
+sample({
+  source: $authenticationHeaders,
+  clock: [pageLoaded, employeeModel.addEmployeeFx.done],
+  filter: sampleFilters.isAuthHeadersExists,
+  target: loadDraftInvoicesFx,
+});
+sample({
+  source: $authenticationHeaders,
+  filter: sampleFilters.isCurrentPathCorrect,
+  target: loadDraftInvoicesFx,
+});
+sample({
+  source: loadDraftInvoicesFx.doneData,
+  target: $draftInvoices,
 });

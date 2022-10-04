@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useRouteMatch} from 'react-router-dom';
 
+import {CreateTreasuryProposalButton} from '~/entities/treasury';
+import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Row} from '~/shared/ui/components/row';
 import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
@@ -18,6 +20,16 @@ import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
 
+const InvoiceDraft: React.FC<{clickHandler: () => void}> = ({clickHandler}) => (
+  <div className='flex justify-between px-8 pt-6 pb-8 gap-8 border border-blue-sat_1 rounded-3xl'>
+    <span>
+      Appoint a salary by ${'{proposal_type}'} of ${'{amount}'} ${'{token}'} to ${'{employee_name}'}{' '}
+      for the remaining billing period (${'{remaining_billing_period}'})
+    </span>
+    <CreateTreasuryProposalButton onClick={clickHandler}>Propose</CreateTreasuryProposalButton>
+  </div>
+);
+
 export const Employees = () => {
   const {url} = useRouteMatch();
 
@@ -27,6 +39,8 @@ export const Employees = () => {
   const selectedStatus = useStore(employeesModel.$statusFilter);
   const selectedType = useStore(employeesModel.$typeFilter);
   const selectedSort = useStore(employeesModel.$sort);
+
+  const stubInvoicesDrafts = useStore(employeesModel.$stubInvoicesDrafts);
 
   useEffect(() => {
     employeesModel.pageLoaded();
@@ -41,6 +55,21 @@ export const Employees = () => {
         <CreateEmployeeButton />
       </Row>
 
+      {stubInvoicesDrafts.length && (
+        <>
+          <Row>Coming soon payments</Row>
+          <Col>
+            {stubInvoicesDrafts.map((invoiceDraft) => (
+              <InvoiceDraft
+                clickHandler={() => employeesModel.invoiceDraftModalOpened(invoiceDraft)}
+                key={invoiceDraft.id}
+              />
+            ))}
+          </Col>
+        </>
+      )}
+
+      <Row>Employees list</Row>
       <Row justify='between' align='center'>
         <Row align='center'>
           <Filter
