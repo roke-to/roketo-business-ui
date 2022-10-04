@@ -6,6 +6,7 @@ import {FinalExecutionStatus} from 'near-api-js/lib/providers';
 import {functionCall, stringifyJsonOrBytes} from 'near-api-js/lib/transaction';
 import path from 'path';
 
+// import { string } from 'yup';
 import {
   mapAddCouncilOptions,
   mapCreateOptions,
