@@ -12,14 +12,23 @@ RUN yarn --pure-lockfile
 COPY . .
 
 # STAGE 2
+# Generate third-party api
+FROM base AS generate
+ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
+WORKDIR /generate
+COPY --from=base /base ./
+RUN yarn generate:astro-api:$BUILD_ARG_VITE_NEAR_NETWORK_ID
+RUN yarn generate:rb-api:$BUILD_ARG_VITE_NEAR_NETWORK_ID
+
+# STAGE 3
 # Build the RoketoBiz app
-FROM base AS build
+FROM generate AS build
 ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /build
-COPY --from=base /base ./
+COPY --from=generate /generate ./
 RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 
-# STAGE 3 — Final image
+# STAGE 4 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
 # Copy build output
 FROM node:16.13.2-alpine3.15
