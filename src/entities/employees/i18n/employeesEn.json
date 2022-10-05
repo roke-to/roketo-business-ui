@@ -91,5 +91,9 @@
       "name": "Name",
       "id": "Last added"
     }
+  },
+  "titles": {
+    "comingSoonPayments": "Coming soon payments",
+    "employeesList": "Employees list"
   }
 }

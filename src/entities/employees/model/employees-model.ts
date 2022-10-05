@@ -90,8 +90,18 @@ sample({
   target: $employees,
 });
 
-export const $stubInvoicesDrafts = createStore([{id: 1}, {id: 2}]);
-export const $draftInvoices = createStore<any>([]);
+export interface TemporaryStubForDraftInvoicesDTO {
+  id: number;
+  type: string;
+  daoId: string;
+  employeeId: number;
+  employeeNearLogin: string;
+  token: string;
+  amount: number;
+  periodStart: string;
+  periodEnd: string;
+}
+export const $draftInvoices = createStore<TemporaryStubForDraftInvoicesDTO[]>([]);
 $draftInvoices.watch((draftInvoices) => console.log({draftInvoices}));
 
 export const invoiceDraftModalOpened = createEvent<any>();
@@ -107,7 +117,7 @@ const loadDraftInvoicesFx = attach({
       .daoControllerFindAllDaoInvoices(daoId, {
         headers: {...authenticationHeaders},
       })
-      .then((response) => response.data);
+      .then((response) => response.data as TemporaryStubForDraftInvoicesDTO[]);
   },
 });
 sample({
