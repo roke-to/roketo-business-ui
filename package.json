@@ -20,10 +20,8 @@
     "pretty": "prettier \"./**/**.{ts,tsx,js,jsx,mjs,cjs,css,scss,sass,md,*.json,.prettierrc,.lintstagedrc,.babelrc,.eslintrc,*.webmanifest}\"",
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
-    "generate:astro-api:testnet": "swagger-typescript-api --path https://api.testnet.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
-    "generate:astro-api:mainnet": "swagger-typescript-api --path https://api.app.astrodao.com/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
-    "generate:rb-api:testnet": "swagger-typescript-api --path https://bis-api.germes.roke.to/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
-    "generate:rb-api:mainnet": "swagger-typescript-api --path https://bis-api.germes.roke.to/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
+    "generate:astro-api": "swagger-typescript-api --path $VITE_ASTRO_API/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
+    "generate:rb-api": "swagger-typescript-api --path $VITE_RB_API/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
     "test:e2e": "playwright test",
     "test:e2e-report": "playwright show-report"
   },
