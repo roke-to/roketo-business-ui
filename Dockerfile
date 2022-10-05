@@ -14,14 +14,10 @@ COPY . .
 # STAGE 2
 # Generate third-party api
 FROM base AS generate
-ARG BUILD_ARG_VITE_ASTRO_API
-ARG BUILD_ARG_VITE_RB_API
-ENV VITE_ASTRO_API "$BUILD_ARG_VITE_ASTRO_API"
-ENV VITE_RB_API "$BUILD_ARG_VITE_RB_API"
+ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /generate
 COPY --from=base /base ./
-RUN yarn generate:astro-api
-RUN yarn generate:rb-api
+RUN NODE_ENV=$BUILD_ARG_VITE_NEAR_NETWORK_ID yarn generate:api
 
 # STAGE 3
 # Build the RoketoBiz app
