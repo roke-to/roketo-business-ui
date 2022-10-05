@@ -3,7 +3,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
-import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
+import {isModuleTypeInjected, WalletIconType} from '~/shared/api/near';
+import {resolveWalletIcon} from '~/shared/api/near/resolve-wallet-icon';
 import {Button} from '~/shared/ui/components/button';
 import {ButtonNativeLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';

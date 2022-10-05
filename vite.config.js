@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import checker from 'vite-plugin-checker';
+import EnvironmentPlugin from 'vite-plugin-environment';
 import htmlEnv from 'vite-plugin-html-env';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -17,6 +18,7 @@ export default defineConfig({
     postcss,
   },
   plugins: [
+    EnvironmentPlugin('all'),
     viteCommonjs(),
     react(),
     svgr(),

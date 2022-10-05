@@ -7,8 +7,7 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {encodeBase64} from '~/shared/lib/base64';
 
-import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
-
+// import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
 import {encodeDescription} from './proposal-format';
 
 export const mapFunctionCallOptions = (formData: {
@@ -18,7 +17,7 @@ export const mapFunctionCallOptions = (formData: {
   json: string;
   deposit: string;
   link: string;
-}): FunctionCallAction['params'] => ({
+}) => ({
   methodName: 'add_proposal',
   args: {
     proposal: {

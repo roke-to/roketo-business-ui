@@ -8,7 +8,8 @@ test('Proposal add council', async ({page}) => {
   const governancePage = new GovernancePage(page);
   const nearWallet = new NearWallet(page);
   const loginPage = new LoginPage(page);
-  const daoManagement = new DaoManagement('testnet');
+  const currentURL = page.url();
+  const daoManagement = new DaoManagement('testnet', currentURL);
 
   const daoname = await daoManagement.createDao();
 

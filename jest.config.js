@@ -7,4 +7,5 @@ module.exports = {
   moduleNameMapper: {
     '^~/(.*)$': '<rootDir>/src/$1',
   },
+  presets: ['@babel/preset-env', ['@babel/preset-react', {runtime: 'automatic'}]],
 };
