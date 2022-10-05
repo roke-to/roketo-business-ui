@@ -221,7 +221,11 @@ export const createTreasuryProposalForm = createForm({
 
 sample({
   clock: invoiceDraftModalOpened,
-  fn: (clockData) => ({description: `${clockData.id} blah blah`}),
+  fn: ({id, employeeNearLogin, amount, periodStart, periodEnd}) => ({
+    description: `#${id} draft invoice to pay salary from ${periodStart} to ${periodEnd}`,
+    targetAccountId: employeeNearLogin,
+    amount: String(amount),
+  }),
   target: createTreasuryProposalForm.setForm,
 });
 

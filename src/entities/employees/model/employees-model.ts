@@ -104,7 +104,7 @@ export interface TemporaryStubForDraftInvoicesDTO {
 export const $draftInvoices = createStore<TemporaryStubForDraftInvoicesDTO[]>([]);
 $draftInvoices.watch((draftInvoices) => console.log({draftInvoices}));
 
-export const invoiceDraftModalOpened = createEvent<any>();
+export const invoiceDraftModalOpened = createEvent<TemporaryStubForDraftInvoicesDTO>();
 invoiceDraftModalOpened.watch((invoiceDraft) => console.log(invoiceDraft));
 
 const loadDraftInvoicesFx = attach({
