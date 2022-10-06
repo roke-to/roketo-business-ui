@@ -66,10 +66,20 @@ export interface EmployeeResponseDto {
   comment?: string;
 }
 
-export interface InvoiceDto {
+export interface DraftInvoiceResponseDto {
   id: number;
+  type: 'EmployeePayroll';
   daoId: string;
   employeeId: number;
+  employeeNearLogin: string;
+  token: string;
+  amount: number;
+
+  /** @format date-time */
+  periodStart: string;
+
+  /** @format date-time */
+  periodEnd: string;
 }
 
 export interface CreateEmployeeDto {
@@ -447,10 +457,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerFindAllDaoInvoices
      * @request GET:/dao/{daoId}/invoices
      * @secure
-     * @response `200` `(InvoiceDto)[]` List of DAO invoices
+     * @response `200` `(DraftInvoiceResponseDto)[]` List of DAO invoices
      */
     daoControllerFindAllDaoInvoices: (daoId: string, params: RequestParams = {}) =>
-      this.request<InvoiceDto[], any>({
+      this.request<DraftInvoiceResponseDto[], any>({
         path: `/dao/${daoId}/invoices`,
         method: 'GET',
         secure: true,
@@ -529,7 +539,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerChangeEmployeeStatus
      * @request POST:/dao/{daoId}/employees/{employeeId}/{action}
      * @secure
-     * @response `201` `void`
+     * @response `201` `object`
      */
     daoControllerChangeEmployeeStatus: (
       daoId: string,
@@ -537,10 +547,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       action: 'Suspend' | 'Reinstate' | 'Fire' | 'Rehire',
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees/${employeeId}/${action}`,
         method: 'POST',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
