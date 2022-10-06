@@ -3,7 +3,6 @@ import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {TFunction, useTranslation} from 'react-i18next';
 
-import {employeeModel} from '~/entities/employee';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Datepicker} from '~/shared/ui/components/datepicker';
@@ -12,6 +11,8 @@ import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
+
+import * as employeeModel from '../model/employee-model';
 
 interface FormTypesProps {
   fields: ConnectedFields<employeeModel.UpdateEmployeeFormFields>;
