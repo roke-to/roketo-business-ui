@@ -46,10 +46,6 @@ export const Employees = () => {
 
   return (
     <>
-      <Row>
-        <CreateEmployeeButton />
-      </Row>
-
       {draftInvoices.length ? (
         <>
           <Row>
@@ -69,10 +65,11 @@ export const Employees = () => {
         </>
       ) : null}
 
-      <Row>
+      <Row justify='between'>
         <Typography as='h2' font='heading'>
           {t('titles.employeesList')}
         </Typography>
+        <CreateEmployeeButton size='sm' />
       </Row>
       <Row justify='between' align='center'>
         <Row align='center'>

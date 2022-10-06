@@ -151,6 +151,10 @@ sample({
   clock: addEmployeeFx.done,
   target: toggleCreateEmployeeModal,
 });
+sample({
+  source: addEmployeeFx.doneData,
+  target: addEmployeeForm.resetValues,
+});
 
 export const $isUpdateEmployeeModalOpen = createStore<boolean>(false);
 export const toggleUpdateEmployeeModal = createEvent();

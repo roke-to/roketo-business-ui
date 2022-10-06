@@ -18,13 +18,13 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
     const targetRef = React.useRef<HTMLElement>(null);
     const [isOpen, setOpen] = useState(false);
 
-    const onChangeIsOpen = () => {
+    const onChangeIsOpen = React.useCallback(() => {
       if (onClick) {
         onClick();
       } else {
         setOpen((currentIsOpen) => !currentIsOpen);
       }
-    };
+    }, [onClick]);
 
     const onClose = () => {
       setOpen(false);
@@ -36,7 +36,11 @@ export const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       ...(getIgnoreItems?.() || []),
     ];
 
-    const targetElement = React.cloneElement(target, {onClick: onChangeIsOpen, ref: targetRef});
+    const targetElement = React.cloneElement(target, {
+      ...target.props,
+      onClick: onChangeIsOpen,
+      ref: targetRef,
+    });
     const contentElement = React.cloneElement(children, {ref: contentRef});
 
     return (
