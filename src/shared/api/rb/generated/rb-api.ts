@@ -36,9 +36,11 @@ export interface RelationDaoToEmployee {
   token: string;
 
   /** @format date-time */
-  startDate: string;
+  startDate: string | null;
   payPeriod: number;
-  deadline: string;
+
+  /** @format date-time */
+  deadline: string | null;
   workPrice: number;
   isTest: boolean;
   employeeId: number;
@@ -64,10 +66,20 @@ export interface EmployeeResponseDto {
   comment?: string;
 }
 
-export interface InvoiceDto {
+export interface DraftInvoiceResponseDto {
   id: number;
+  type: 'EmployeePayroll';
   daoId: string;
   employeeId: number;
+  employeeNearLogin: string;
+  token: string;
+  amount: number;
+
+  /** @format date-time */
+  periodStart: string;
+
+  /** @format date-time */
+  periodEnd: string;
 }
 
 export interface CreateEmployeeDto {
@@ -375,13 +387,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerRemoveDao
      * @request DELETE:/dao/{daoId}
      * @secure
-     * @response `200` `void`
+     * @response `200` `object`
      */
     daoControllerRemoveDao: (daoId: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}`,
         method: 'DELETE',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -420,14 +433,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerCreateEmployee
      * @request POST:/dao/{daoId}/employees
      * @secure
-     * @response `201` `(RelationDaoToEmployee)[]`
+     * @response `201` `object`
      */
     daoControllerCreateEmployee: (
       daoId: string,
       data: CreateEmployeeDto,
       params: RequestParams = {},
     ) =>
-      this.request<RelationDaoToEmployee[], any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees`,
         method: 'POST',
         body: data,
@@ -444,10 +457,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerFindAllDaoInvoices
      * @request GET:/dao/{daoId}/invoices
      * @secure
-     * @response `200` `(InvoiceDto)[]` List of DAO invoices
+     * @response `200` `(DraftInvoiceResponseDto)[]` List of DAO invoices
      */
     daoControllerFindAllDaoInvoices: (daoId: string, params: RequestParams = {}) =>
-      this.request<InvoiceDto[], any>({
+      this.request<DraftInvoiceResponseDto[], any>({
         path: `/dao/${daoId}/invoices`,
         method: 'GET',
         secure: true,
@@ -462,7 +475,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerUpdateEmployee
      * @request PATCH:/dao/{daoId}/employees/{employeeId}
      * @secure
-     * @response `200` `void`
+     * @response `200` `object`
      */
     daoControllerUpdateEmployee: (
       daoId: string,
@@ -470,12 +483,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       data: UpdateEmployeeDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'PATCH',
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
@@ -525,7 +539,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerChangeEmployeeStatus
      * @request POST:/dao/{daoId}/employees/{employeeId}/{action}
      * @secure
-     * @response `201` `void`
+     * @response `201` `object`
      */
     daoControllerChangeEmployeeStatus: (
       daoId: string,
@@ -533,10 +547,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       action: 'Suspend' | 'Reinstate' | 'Fire' | 'Rehire',
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees/${employeeId}/${action}`,
         method: 'POST',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
