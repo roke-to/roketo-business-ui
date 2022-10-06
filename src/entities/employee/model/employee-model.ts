@@ -1,3 +1,4 @@
+import {format, parseISO} from 'date-fns';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
@@ -204,7 +205,7 @@ sample({
     email: source!.email,
     amount: source!.salary.toString(),
     position: source!.position,
-    startDate: source!.startDate,
+    startDate: format(parseISO(source!.startDate), 'yyyy-MM-dd'),
     payPeriod: source!.payPeriod.toString(),
     token: source!.token,
     comment: source!.comment,

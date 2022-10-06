@@ -78,8 +78,6 @@ export const Employee: React.FC = () => {
               </Label>
             )}
           </div>
-          <div>proposal</div>
-          <div>actions history</div>
         </Col>
         <Col>
           <Row>
