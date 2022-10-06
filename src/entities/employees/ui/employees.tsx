@@ -17,6 +17,7 @@ import {DraftInvoice} from './draft-invoice';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
 import styles from './employees.module.css';
+import {EmptyEmployeeList} from './empty-employee-list';
 import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
@@ -39,6 +40,9 @@ export const Employees = () => {
 
   const [viewType, setViewType] = useState<ViewType>('card');
   const handleViewTypeChange = (payload: ViewType) => setViewType(payload);
+
+  const isDefaultFiltersValue = selectedStatus === 'all' && selectedType === 'all';
+  const isEmployeeListEmpty = employees.length === 0;
 
   return (
     <>
@@ -122,7 +126,15 @@ export const Employees = () => {
           </IconButton>
         </Row>
       </Row>
-      <div className={clsx(styles.wrapper, styles[viewType])}>
+      <div
+        className={clsx(styles.wrapper, styles[viewType], {[styles.isEmpty]: isEmployeeListEmpty})}
+      >
+        {employees.length === 0 && (
+          <EmptyEmployeeList
+            isDefaultFiltersValue={isDefaultFiltersValue}
+            createEmployeeComponent={<CreateEmployeeButton />}
+          />
+        )}
         {employees.map((employee) => {
           if (viewType === 'card') {
             return (

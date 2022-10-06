@@ -9,6 +9,10 @@
       "comment": "Comment"
     }
   },
+  "list": {
+    "emptySearch": "No empoloyees with current filters",
+    "emptyList": "No empoloyees have been created yet. \nYou can add a new employee"
+  },
   "createEmployee": {
     "button": "Add new employee",
     "modal": {

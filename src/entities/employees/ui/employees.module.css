@@ -12,6 +12,14 @@
       gap: 0;
     }
   }
+
+  &.isEmpty {
+    @media screen(desktop) {
+      &.card {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
 }
 
 .viewTypeIcon {

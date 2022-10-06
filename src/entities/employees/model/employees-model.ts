@@ -76,7 +76,14 @@ const sampleFilters = {
 
 sample({
   source: $authenticationHeaders,
-  clock: [pageLoaded, $statusFilter, $typeFilter, $sort, employeeModel.addEmployeeFx.done],
+  clock: [
+    pageLoaded,
+    $statusFilter,
+    $typeFilter,
+    $sort,
+    employeeModel.addEmployeeFx.done,
+    $currentDaoId,
+  ],
   filter: sampleFilters.isAuthHeadersExists,
   target: loadEmployeesFx,
 });
