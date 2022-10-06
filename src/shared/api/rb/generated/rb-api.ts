@@ -36,9 +36,11 @@ export interface RelationDaoToEmployee {
   token: string;
 
   /** @format date-time */
-  startDate: string;
+  startDate: string | null;
   payPeriod: number;
-  deadline: string;
+
+  /** @format date-time */
+  deadline: string | null;
   workPrice: number;
   isTest: boolean;
   employeeId: number;
@@ -375,13 +377,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerRemoveDao
      * @request DELETE:/dao/{daoId}
      * @secure
-     * @response `200` `void`
+     * @response `200` `object`
      */
     daoControllerRemoveDao: (daoId: string, params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}`,
         method: 'DELETE',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -420,14 +423,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerCreateEmployee
      * @request POST:/dao/{daoId}/employees
      * @secure
-     * @response `201` `(RelationDaoToEmployee)[]`
+     * @response `201` `object`
      */
     daoControllerCreateEmployee: (
       daoId: string,
       data: CreateEmployeeDto,
       params: RequestParams = {},
     ) =>
-      this.request<RelationDaoToEmployee[], any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees`,
         method: 'POST',
         body: data,
@@ -462,7 +465,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name DaoControllerUpdateEmployee
      * @request PATCH:/dao/{daoId}/employees/{employeeId}
      * @secure
-     * @response `200` `void`
+     * @response `200` `object`
      */
     daoControllerUpdateEmployee: (
       daoId: string,
@@ -470,12 +473,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       data: UpdateEmployeeDto,
       params: RequestParams = {},
     ) =>
-      this.request<void, any>({
+      this.request<object, any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'PATCH',
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
 
