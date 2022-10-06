@@ -5,6 +5,7 @@ import {usePopper} from 'react-popper';
 
 // TODO fix FSD -->
 import {EmployeeStatusActions} from '~/entities/employee/ui/employee-status-actions';
+import {UpdateEmployeeModal} from '~/entities/employee/ui/update-employee-modal';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
 // TODO fix FSD <--
@@ -37,6 +38,7 @@ export const Employee: React.FC = () => {
   );
 
   const createProposalModal = useModal();
+  const isUpdateEmployeeModalOpen = useStore(employeeModel.$isUpdateEmployeeModalOpen);
 
   return (
     employee && (
@@ -111,7 +113,9 @@ export const Employee: React.FC = () => {
                     <Button variant='soft' onClick={createProposalModal.show}>
                       {t('buttons.transfer')}
                     </Button>
-                    <Button>{t('buttons.edit')}</Button>
+                    <Button onClick={() => employeeModel.toggleUpdateEmployeeModal()}>
+                      {t('buttons.edit')}
+                    </Button>
                     <hr className='h-px border-blue-light' />
                     <EmployeeStatusActions status={employee.status} />
                   </Portlet>
@@ -122,6 +126,11 @@ export const Employee: React.FC = () => {
               isOpen={createProposalModal.isOpen}
               title={t2('createProposal')}
               onCloseModal={createProposalModal.hide}
+            />
+            <UpdateEmployeeModal
+              isOpen={isUpdateEmployeeModalOpen}
+              title='Update employee'
+              onCloseModal={employeeModel.toggleUpdateEmployeeModal}
             />
           </Row>
         </Col>

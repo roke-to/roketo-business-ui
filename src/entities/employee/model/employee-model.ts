@@ -152,6 +152,10 @@ sample({
   target: toggleCreateEmployeeModal,
 });
 
+export const $isUpdateEmployeeModalOpen = createStore<boolean>(false);
+export const toggleUpdateEmployeeModal = createEvent();
+$isUpdateEmployeeModalOpen.on(toggleUpdateEmployeeModal, (isOpen) => !isOpen);
+
 export interface UpdateEmployeeFormFields
   extends Omit<UpdateEmployeeDto, 'type' | 'amount' | 'payPeriod' | 'daoId'> {
   amount: string;
@@ -197,4 +201,36 @@ export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
     },
   },
   validateOn: ['submit'],
+});
+export const updateEmployeeFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({daoId, authenticationHeaders}, formData: AddEmployeeFormFields) {
+    // черновой вариант, много несостыковок между формой и моделью в апи
+    const {
+      // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
+      amount,
+
+      // TODO так же как и в amount
+      payPeriod,
+
+      // TODO нужно добавить колонку в базу
+      payoutType,
+
+      ...restForm
+    } = formData;
+
+    const data: CreateEmployeeDto = {
+      daoId,
+      status: 'Active',
+      amount: Number(amount) || 0,
+      payPeriod: 2,
+      ...restForm,
+    };
+    return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
+      headers: {...authenticationHeaders},
+    });
+  },
 });
