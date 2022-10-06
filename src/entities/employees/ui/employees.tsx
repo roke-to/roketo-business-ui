@@ -46,7 +46,7 @@ export const Employees = () => {
         <CreateEmployeeButton />
       </Row>
 
-      {draftInvoices.length && (
+      {draftInvoices.length ? (
         <>
           <Row>
             <Typography as='h2' font='heading'>
@@ -63,7 +63,7 @@ export const Employees = () => {
             ))}
           </Col>
         </>
-      )}
+      ) : null}
 
       <Row>
         <Typography as='h2' font='heading'>
