@@ -84,6 +84,10 @@ export interface DraftInvoiceResponseDto {
   status: 'Active' | 'Cancel' | 'Confirmed';
 }
 
+export interface UpdateDraftInvoiceDto {
+  status: 'Active' | 'Cancel' | 'Confirmed';
+}
+
 export interface CreateEmployeeDto {
   daoId: string;
   name: string;
@@ -480,21 +484,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags DAO
      * @name DaoControllerUpdateDaoDraftInvoiceStatus
-     * @request POST:/dao/{daoId}/invoices
+     * @request POST:/dao/{daoId}/invoices/{invoiceId}
      * @secure
      * @response `200` `void` Updated invoices
      * @response `201` `void`
      */
     daoControllerUpdateDaoDraftInvoiceStatus: (
+      invoiceId: string,
       daoId: string,
-      employeeId: number,
-      status: 'Active' | 'Cancel' | 'Confirmed',
+      data: UpdateDraftInvoiceDto,
       params: RequestParams = {},
     ) =>
       this.request<void, any>({
-        path: `/dao/${daoId}/invoices`,
+        path: `/dao/${daoId}/invoices/${invoiceId}`,
         method: 'POST',
+        body: data,
         secure: true,
+        type: ContentType.Json,
         ...params,
       }),
 

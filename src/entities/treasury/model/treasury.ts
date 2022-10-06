@@ -3,7 +3,6 @@ import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {Get} from 'type-fest';
 
-import {invoiceDraftModalOpened} from '~/entities/employees/model/employees-model';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {
@@ -215,18 +214,11 @@ export const createTreasuryProposalForm = createForm({
       init: '150',
       rules: [validators.required()],
     },
+    callbackUrl: {
+      init: '',
+    },
   },
   validateOn: ['submit'],
-});
-
-sample({
-  clock: invoiceDraftModalOpened,
-  fn: ({id, employeeNearLogin, amount, periodStart, periodEnd}) => ({
-    description: `#${id} draft invoice to pay salary from ${periodStart} to ${periodEnd}`,
-    targetAccountId: employeeNearLogin,
-    amount: String(amount),
-  }),
-  target: createTreasuryProposalForm.setForm,
 });
 
 export const createTreasuryProposalFx = attach({
@@ -298,6 +290,7 @@ export const createTreasuryProposalFx = attach({
 
         return wallet.signAndSendTransactions({
           transactions,
+          callbackUrl: data.callbackUrl,
         });
       }
       case 'functionCall':
@@ -320,6 +313,7 @@ export const createTreasuryProposalFx = attach({
 
         return wallet.signAndSendTransactions({
           transactions,
+          callbackUrl: data.callbackUrl,
         });
       default:
         throw Error(`We don't recognize action for ${data.type}`);

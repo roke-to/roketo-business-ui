@@ -1,11 +1,13 @@
-import {attach, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import * as employeeModel from '~/entities/employee/model/employee-model';
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
+import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {DraftInvoiceResponseDto, rbApi} from '~/shared/api/rb';
 import type {EmployeeResponseDto} from '~/shared/api/rb';
 import {ROUTES} from '~/shared/config/routes';
+import {history} from '~/shared/lib/router';
 
 export const pageLoaded = createEvent<void>();
 export const $employees = createStore<EmployeeResponseDto[]>([]);
@@ -132,4 +134,85 @@ sample({
 sample({
   source: loadDraftInvoicesFx.doneData,
   target: $draftInvoices,
+});
+
+// ----------------------------------------  propose draft -----------------------------
+
+const createCallbackUrl = (invoiceId: number) => {
+  const url = new URL(window.location.toString());
+  url.search = `?invoiceId=${invoiceId}`;
+  return url.toString();
+};
+
+sample({
+  clock: invoiceDraftModalOpened,
+  fn: ({id, employeeNearLogin, amount, periodStart, periodEnd}) => ({
+    description: `#${id} draft invoice to pay salary from ${periodStart} to ${periodEnd}`,
+    targetAccountId: employeeNearLogin,
+    amount: String(amount),
+    callbackUrl: createCallbackUrl(id),
+  }),
+  target: createTreasuryProposalForm.setForm,
+});
+
+export const setInvoiceStatusAfterRedirectFx = attach({
+  source: {
+    currentDaoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+  },
+  async effect({currentDaoId, authenticationHeaders}) {
+    const searchParams = new URLSearchParams(window.location.search);
+    const invoiceId = searchParams.get('invoiceId');
+    const errorCode = searchParams.get('errorCode');
+    const queryKeysToRemove = ['errorCode'];
+
+    try {
+      if (invoiceId && !errorCode) {
+        queryKeysToRemove.push('invoiceId');
+
+        await rbApi.dao.daoControllerUpdateDaoDraftInvoiceStatus(
+          String(invoiceId),
+          currentDaoId,
+          {
+            status: 'Confirmed',
+          },
+          {
+            headers: {...authenticationHeaders},
+          },
+        );
+      }
+    } catch {
+      // if it not sended or error,
+      // it will be updated from blockchain
+    }
+
+    return queryKeysToRemove;
+  },
+});
+
+const clearUrlFx = createEffect((queryKeysToRemove: string[]) => {
+  const url = new URL(window.location.toString());
+
+  queryKeysToRemove.forEach((key) => {
+    url.searchParams.delete(key);
+  });
+
+  history.replace(url);
+});
+
+sample({
+  source: pageLoaded,
+  clock: [pageLoaded, $authenticationHeaders],
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  target: setInvoiceStatusAfterRedirectFx,
+});
+
+sample({
+  clock: setInvoiceStatusAfterRedirectFx.doneData,
+  target: clearUrlFx,
+});
+
+sample({
+  clock: setInvoiceStatusAfterRedirectFx.doneData,
+  target: loadDraftInvoicesFx,
 });
