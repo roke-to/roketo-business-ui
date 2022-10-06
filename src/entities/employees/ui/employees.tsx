@@ -4,16 +4,20 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useRouteMatch} from 'react-router-dom';
 
+import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Row} from '~/shared/ui/components/row';
+import {Typography} from '~/shared/ui/components/typography';
 import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
 import {ReactComponent as ListViewIcon} from '~/shared/ui/icons/employees/list.svg';
 
 import * as employeesModel from '../model/employees-model';
 import {CreateEmployeeButton} from './create-employee-button';
+import {DraftInvoice} from './draft-invoice';
 import {EmployeeCard} from './employee-card';
 import {EmployeeListItem} from './employee-list-item';
 import styles from './employees.module.css';
+import {EmptyEmployeeList} from './empty-employee-list';
 import {Filter} from './filter';
 
 type ViewType = 'card' | 'list';
@@ -28,6 +32,8 @@ export const Employees = () => {
   const selectedType = useStore(employeesModel.$typeFilter);
   const selectedSort = useStore(employeesModel.$sort);
 
+  const draftInvoices = useStore(employeesModel.$draftInvoices);
+
   useEffect(() => {
     employeesModel.pageLoaded();
   }, []);
@@ -35,12 +41,36 @@ export const Employees = () => {
   const [viewType, setViewType] = useState<ViewType>('card');
   const handleViewTypeChange = (payload: ViewType) => setViewType(payload);
 
+  const isDefaultFiltersValue = selectedStatus === 'all' && selectedType === 'all';
+  const isEmployeeListEmpty = employees.length === 0;
+
   return (
     <>
-      <Row>
-        <CreateEmployeeButton />
-      </Row>
+      {draftInvoices.length ? (
+        <>
+          <Row>
+            <Typography as='h2' font='heading'>
+              {t('titles.comingSoonPayments')}
+            </Typography>
+          </Row>
+          <Col>
+            {draftInvoices.map((draftInvoice) => (
+              <DraftInvoice
+                clickHandler={() => employeesModel.invoiceDraftModalOpened(draftInvoice)}
+                draftInvoice={draftInvoice}
+                key={draftInvoice.id}
+              />
+            ))}
+          </Col>
+        </>
+      ) : null}
 
+      <Row justify='between'>
+        <Typography as='h2' font='heading'>
+          {t('titles.employeesList')}
+        </Typography>
+        <CreateEmployeeButton size='sm' />
+      </Row>
       <Row justify='between' align='center'>
         <Row align='center'>
           <Filter
@@ -93,7 +123,15 @@ export const Employees = () => {
           </IconButton>
         </Row>
       </Row>
-      <div className={clsx(styles.wrapper, styles[viewType])}>
+      <div
+        className={clsx(styles.wrapper, styles[viewType], {[styles.isEmpty]: isEmployeeListEmpty})}
+      >
+        {employees.length === 0 && (
+          <EmptyEmployeeList
+            isDefaultFiltersValue={isDefaultFiltersValue}
+            createEmployeeComponent={<CreateEmployeeButton />}
+          />
+        )}
         {employees.map((employee) => {
           if (viewType === 'card') {
             return (

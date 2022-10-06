@@ -71,6 +71,7 @@ export interface DraftInvoiceResponseDto {
   type: 'EmployeePayroll';
   daoId: string;
   employeeId: number;
+  employeeName: string;
   employeeNearLogin: string;
   token: string;
   amount: number;
@@ -80,6 +81,11 @@ export interface DraftInvoiceResponseDto {
 
   /** @format date-time */
   periodEnd: string;
+  status: 'Active' | 'Cancel' | 'Confirmed';
+}
+
+export interface UpdateDraftInvoiceDto {
+  status: 'Active' | 'Cancel' | 'Confirmed';
 }
 
 export interface CreateEmployeeDto {
@@ -459,12 +465,63 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      * @response `200` `(DraftInvoiceResponseDto)[]` List of DAO invoices
      */
-    daoControllerFindAllDaoInvoices: (daoId: string, params: RequestParams = {}) =>
+    daoControllerFindAllDaoInvoices: (
+      daoId: string,
+      query: {status: 'Active' | 'Cancel' | 'Confirmed'},
+      params: RequestParams = {},
+    ) =>
       this.request<DraftInvoiceResponseDto[], any>({
         path: `/dao/${daoId}/invoices`,
         method: 'GET',
+        query: query,
         secure: true,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags DAO
+     * @name DaoControllerUpdateDaoDraftInvoiceStatus
+     * @request POST:/dao/{daoId}/invoices/{invoiceId}
+     * @secure
+     * @response `200` `void` Updated invoices
+     * @response `201` `void`
+     */
+    daoControllerUpdateDaoDraftInvoiceStatus: (
+      invoiceId: string,
+      daoId: string,
+      data: UpdateDraftInvoiceDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/dao/${daoId}/invoices/${invoiceId}`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags DAO
+     * @name DaoControllerRemoveDaoDraftInvoice
+     * @request DELETE:/dao/{daoId}/invoices/{invoiceId}
+     * @secure
+     * @response `200` `void` Remove invoices
+     */
+    daoControllerRemoveDaoDraftInvoice: (
+      daoId: string,
+      invoiceId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/dao/${daoId}/invoices/${invoiceId}`,
+        method: 'DELETE',
+        secure: true,
         ...params,
       }),
 

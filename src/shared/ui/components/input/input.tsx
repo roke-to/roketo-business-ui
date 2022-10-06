@@ -45,6 +45,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       endIcon,
       error,
       onChange,
+      value,
       ...props
     },
     ref,
@@ -71,13 +72,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     );
 
     const handleAccept = React.useCallback(
-      (value, mask, event) => onChange?.(mask.unmaskedValue, event),
+      (val, mask, event) => onChange?.(mask.unmaskedValue, event),
       [onChange],
     );
 
     const maskProps = React.useMemo(
-      () => (maskType ? maskTypes[maskType]({...maskOptions, value: props.value}) : {}),
-      [maskType, maskOptions, props.value],
+      () => (maskType ? maskTypes[maskType]({...maskOptions, value}) : {}),
+      [maskType, maskOptions, value],
     );
 
     const onChangeProps = React.useMemo(
@@ -85,12 +86,33 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       [maskType, handleAccept, handleChange],
     );
 
+    if (!maskType) {
+      return (
+        <input
+          {...props}
+          onChange={handleChange}
+          value={value}
+          ref={handleRef}
+          type={type}
+          className={clsx(
+            styles.input,
+            styles[size],
+            styles[variant],
+            {[styles.hasIcon]: startIcon || endIcon},
+            {[styles.error]: error},
+            className,
+          )}
+        />
+      );
+    }
+
     return (
       // @ts-expect-error ref not matching
       <IMaskInput
         {...props}
         {...maskProps}
         {...onChangeProps}
+        value={value}
         ref={handleRef}
         type={type}
         className={clsx(

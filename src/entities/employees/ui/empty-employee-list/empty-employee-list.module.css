@@ -1,0 +1,13 @@
+.container {
+  background-color: theme('colors.white');
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: theme('spacing.6') theme('spacing.6') theme('spacing.8') theme('spacing.6');
+  gap: theme('spacing.6');
+
+  border: 1px solid theme('colors.blue.sat_1');
+  border-radius: theme('borderRadius.3xl');
+}

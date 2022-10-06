@@ -1,9 +1,10 @@
+import {format, parseISO} from 'date-fns';
 import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/wallet';
-import {CreateEmployeeDto, EmployeeResponseDto, rbApi} from '~/shared/api/rb';
+import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
 import {validators} from '~/shared/lib/form/validators';
 
 export const pageLoaded = createEvent<string>();
@@ -37,6 +38,15 @@ const changeEmployeeStatusFx = attach({
     });
   },
 });
+
+sample({
+  source: employeeStatusChanged,
+  target: changeEmployeeStatusFx,
+});
+
+export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
+export const toggleCreateEmployeeModal = createEvent();
+$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
 
 export interface AddEmployeeFormFields
   extends Omit<CreateEmployeeDto, 'status' | 'daoId' | 'amount' | 'payPeriod'> {
@@ -73,7 +83,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
       init: '',
     },
     payPeriod: {
-      init: '',
+      init: '2',
     },
     // TODO нужно подумать как модель поудобнее сделать
     payoutType: {
@@ -113,7 +123,7 @@ export const addEmployeeFx = attach({
       daoId,
       status: 'Active',
       amount: Number(amount) || 0,
-      payPeriod: 2,
+      payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
     return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
@@ -121,35 +131,142 @@ export const addEmployeeFx = attach({
     });
   },
 });
+sample({
+  source: addEmployeeForm.formValidated,
+  target: addEmployeeFx,
+});
+sample({
+  clock: addEmployeeFx.done,
+  target: toggleCreateEmployeeModal,
+});
+sample({
+  source: addEmployeeFx.doneData,
+  target: addEmployeeForm.resetValues,
+});
 
-export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
-export const toggleCreateEmployeeModal = createEvent();
-$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
+export const $isUpdateEmployeeModalOpen = createStore<boolean>(false);
+export const toggleUpdateEmployeeModal = createEvent();
+$isUpdateEmployeeModalOpen.on(toggleUpdateEmployeeModal, (isOpen) => !isOpen);
+
+export interface UpdateEmployeeFormFields
+  extends Omit<UpdateEmployeeDto, 'type' | 'amount' | 'payPeriod' | 'daoId'> {
+  amount: string;
+  payPeriod: string;
+}
+export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
+  fields: {
+    name: {
+      init: '',
+      rules: [validators.required()],
+    },
+    status: {
+      init: 'Active',
+      rules: [validators.required()],
+    },
+    nearLogin: {
+      init: '',
+      rules: [validators.required()],
+    },
+    email: {
+      init: '',
+      rules: [validators.required()],
+    },
+    amount: {
+      init: '',
+      rules: [validators.required()],
+    },
+    position: {
+      init: '',
+    },
+    startDate: {
+      init: '',
+    },
+    payPeriod: {
+      init: '2',
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required()],
+    },
+    comment: {
+      init: '',
+    },
+  },
+  validateOn: ['submit'],
+});
+sample({
+  source: $employee,
+  clock: $isUpdateEmployeeModalOpen,
+  filter: (sourceValue, clockValue) => clockValue,
+  fn: (source) => ({
+    name: source!.name,
+    status: source!.status,
+    nearLogin: source!.nearLogin,
+    email: source!.email,
+    amount: source!.salary.toString(),
+    position: source!.position,
+    startDate: format(parseISO(source!.startDate), 'yyyy-MM-dd'),
+    payPeriod: source!.payPeriod.toString(),
+    token: source!.token,
+    comment: source!.comment,
+  }),
+  target: updateEmployeeForm.setForm,
+});
+
+export const updateEmployeeFx = attach({
+  source: {
+    daoId: $currentDaoId,
+    authenticationHeaders: $authenticationHeaders,
+    employee: $employee,
+  },
+  async effect({daoId, authenticationHeaders, employee}, formData: UpdateEmployeeFormFields) {
+    // черновой вариант, много несостыковок между формой и моделью в апи
+    const {
+      // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
+      amount,
+
+      // TODO так же как и в amount
+      payPeriod,
+
+      ...restForm
+    } = formData;
+
+    const data: UpdateEmployeeDto = {
+      daoId,
+      type: employee!.type,
+      amount: Number(amount) || 0,
+      payPeriod: Number(payPeriod) || 2,
+      ...restForm,
+    };
+    return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data, {
+      headers: {...authenticationHeaders},
+    });
+  },
+});
+
+sample({
+  source: updateEmployeeForm.formValidated,
+  target: updateEmployeeFx,
+});
+sample({
+  clock: updateEmployeeFx.done,
+  target: [toggleUpdateEmployeeModal, updateEmployeeForm.reset],
+});
 
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
 sample({
   source: pageLoaded,
-  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
+  clock: [
+    pageLoaded,
+    $authenticationHeaders,
+    changeEmployeeStatusFx.doneData,
+    updateEmployeeFx.doneData,
+  ],
   filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: loadEmployeeFx,
 });
 sample({
   source: loadEmployeeFx.doneData,
   target: $employee,
-});
-
-sample({
-  source: employeeStatusChanged,
-  target: changeEmployeeStatusFx,
-});
-
-sample({
-  source: addEmployeeForm.formValidated,
-  target: addEmployeeFx,
-});
-
-sample({
-  clock: addEmployeeFx.done,
-  target: toggleCreateEmployeeModal,
 });

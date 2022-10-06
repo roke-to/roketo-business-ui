@@ -3,8 +3,6 @@ import {useStore} from 'effector-react';
 import React, {FormEventHandler} from 'react';
 import {TFunction, useTranslation} from 'react-i18next';
 
-import {employeeModel} from '~/entities/employee';
-import {$accountId} from '~/entities/wallet';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Datepicker} from '~/shared/ui/components/datepicker';
@@ -13,12 +11,11 @@ import {InputDropdown} from '~/shared/ui/components/input-dropdown';
 import {Label} from '~/shared/ui/components/label';
 import {Modal, ModalProps} from '~/shared/ui/components/modal';
 import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
 
-const Nothing = () => null;
+import * as employeeModel from '../model/employee-model';
 
 interface FormTypesProps {
-  fields: ConnectedFields<employeeModel.AddEmployeeFormFields>;
+  fields: ConnectedFields<employeeModel.UpdateEmployeeFormFields>;
   t: TFunction<'employees'>;
   pending: boolean;
 }
@@ -257,21 +254,6 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           ]}
         />
       </Label>
-      <Label
-        required
-        content={t('createEmployee.form.labels.payoutType.label')}
-        error={fields.payoutType.errorText()}
-        className='basis-1/3'
-      >
-        <InputDropdown
-          name='payoutType'
-          value={fields.payoutType.value}
-          disabled={pending}
-          placeholder={t('createEmployee.form.labels.payoutType.placeholder')}
-          onChange={fields.payoutType.onChange}
-          options={[{label: 'Smooth', value: 'Smooth'}]}
-        />
-      </Label>
     </Row>
     <Row>
       <Label
@@ -291,79 +273,33 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
   </>
 );
 
-const formTypes = {
-  Freelancer,
-  Contractor,
-};
-
-export const CreateEmployeeModal = (modalProps: ModalProps) => {
+export const UpdateEmployeeModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('employees');
-  const accountId = useStore($accountId);
-  const {fields, submit, eachValid} = useForm(employeeModel.addEmployeeForm);
-  const pending = useStore(employeeModel.addEmployeeFx.pending);
+  const employee = useStore(employeeModel.$employee);
+  const {fields, submit, eachValid} = useForm(employeeModel.updateEmployeeForm);
+  const pending = useStore(employeeModel.updateEmployeeFx.pending);
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     submit();
   };
 
-  const FormPartComponent = formTypes[fields.type.value] || Nothing;
-
   return (
     <Modal {...modalProps}>
       <form onSubmit={handleSubmit}>
         <Col gap='xl'>
-          <Row gap='md' className='justify-between'>
-            <Label
-              required
-              content={t('createEmployee.form.labels.type.label')}
-              error={fields.type.errorText()}
-              className='basis-1/3'
-            >
-              <InputDropdown
-                name='type'
-                value={fields.type.value}
-                disabled={pending}
-                placeholder={t('createEmployee.form.labels.type.placeholder')}
-                onChange={fields.type.onChange}
-                options={[
-                  {
-                    value: 'Freelancer',
-                    label: 'Freelancer',
-                  },
-                  {
-                    value: 'Contractor',
-                    label: 'Contractor',
-                  },
-                ]}
-              />
-            </Label>
-            <Label
-              required
-              content={t('createEmployee.form.proposer')}
-              error={fields.type.errorText()}
-              className='basis-1/3 min-w-0'
-            >
-              <Typography as='span' className='truncate'>
-                {accountId}
-              </Typography>
-            </Label>
-          </Row>
-
-          <FormPartComponent fields={fields} t={t} pending={pending} />
-
+          {employee?.type === 'Contractor' && (
+            <Contractor fields={fields} t={t} pending={pending} />
+          )}
+          {employee?.type === 'Freelancer' && (
+            <Freelancer fields={fields} t={t} pending={pending} />
+          )}
           <Row justify='end'>
-            <Button
-              type='reset'
-              variant='outlined'
-              // TODO TBD это правило вообще нужно?
-              // eslint-disable-next-line react/destructuring-assignment
-              onClick={modalProps.onCloseModal}
-            >
+            <Button type='reset' variant='outlined' onClick={modalProps.onCloseModal}>
               {t('createEmployee.form.abort')}
             </Button>
             <Button type='submit' variant='soft' disabled={!eachValid || pending}>
-              {t('createEmployee.form.submit')}
+              Update
             </Button>
           </Row>
         </Col>

@@ -214,6 +214,9 @@ export const createTreasuryProposalForm = createForm({
       init: '150',
       rules: [validators.required()],
     },
+    callbackUrl: {
+      init: '',
+    },
   },
   validateOn: ['submit'],
 });
@@ -287,6 +290,7 @@ export const createTreasuryProposalFx = attach({
 
         return wallet.signAndSendTransactions({
           transactions,
+          callbackUrl: data.callbackUrl,
         });
       }
       case 'functionCall':
@@ -309,6 +313,7 @@ export const createTreasuryProposalFx = attach({
 
         return wallet.signAndSendTransactions({
           transactions,
+          callbackUrl: data.callbackUrl,
         });
       default:
         throw Error(`We don't recognize action for ${data.type}`);
