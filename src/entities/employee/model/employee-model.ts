@@ -83,7 +83,7 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
       init: '',
     },
     payPeriod: {
-      init: '',
+      init: '2',
     },
     // TODO нужно подумать как модель поудобнее сделать
     payoutType: {
@@ -123,7 +123,7 @@ export const addEmployeeFx = attach({
       daoId,
       status: 'Active',
       amount: Number(amount) || 0,
-      payPeriod: 2,
+      payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
     return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
@@ -182,7 +182,7 @@ export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
       init: '',
     },
     payPeriod: {
-      init: '',
+      init: '2',
     },
     token: {
       init: 'near',
@@ -235,7 +235,7 @@ export const updateEmployeeFx = attach({
       daoId,
       type: employee!.type,
       amount: Number(amount) || 0,
-      payPeriod: 2,
+      payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
     return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data, {

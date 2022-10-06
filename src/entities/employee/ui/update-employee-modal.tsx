@@ -248,7 +248,10 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           disabled={pending}
           placeholder={t('createEmployee.form.labels.period.placeholder')}
           onChange={fields.payPeriod.onChange}
-          options={[{label: '2 per month', value: '2 per month'}]}
+          options={[
+            {label: '1 per month', value: '1'},
+            {label: '2 per month', value: '2'},
+          ]}
         />
       </Label>
     </Row>
