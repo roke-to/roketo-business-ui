@@ -3,7 +3,7 @@ import {createForm} from 'effector-forms';
 
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/wallet';
-import {CreateEmployeeDto, EmployeeResponseDto, rbApi} from '~/shared/api/rb';
+import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
 import {validators} from '~/shared/lib/form/validators';
 
 export const pageLoaded = createEvent<string>();
@@ -37,6 +37,28 @@ const changeEmployeeStatusFx = attach({
     });
   },
 });
+
+// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
+// Приходится ждать пока они засетятся и щелкнут в clock
+sample({
+  source: pageLoaded,
+  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  target: loadEmployeeFx,
+});
+sample({
+  source: loadEmployeeFx.doneData,
+  target: $employee,
+});
+
+sample({
+  source: employeeStatusChanged,
+  target: changeEmployeeStatusFx,
+});
+
+export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
+export const toggleCreateEmployeeModal = createEvent();
+$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
 
 export interface AddEmployeeFormFields
   extends Omit<CreateEmployeeDto, 'status' | 'daoId' | 'amount' | 'payPeriod'> {
@@ -121,35 +143,58 @@ export const addEmployeeFx = attach({
     });
   },
 });
-
-export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
-export const toggleCreateEmployeeModal = createEvent();
-$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
-
-// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
-// Приходится ждать пока они засетятся и щелкнут в clock
-sample({
-  source: pageLoaded,
-  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
-  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
-  target: loadEmployeeFx,
-});
-sample({
-  source: loadEmployeeFx.doneData,
-  target: $employee,
-});
-
-sample({
-  source: employeeStatusChanged,
-  target: changeEmployeeStatusFx,
-});
-
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,
 });
-
 sample({
   clock: addEmployeeFx.done,
   target: toggleCreateEmployeeModal,
+});
+
+export interface UpdateEmployeeFormFields
+  extends Omit<UpdateEmployeeDto, 'type' | 'amount' | 'payPeriod' | 'daoId'> {
+  amount: string;
+  payPeriod: string;
+}
+export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
+  fields: {
+    name: {
+      init: '',
+      rules: [validators.required()],
+    },
+    status: {
+      init: 'Active',
+      rules: [validators.required()],
+    },
+    nearLogin: {
+      init: '',
+      rules: [validators.required()],
+    },
+    email: {
+      init: '',
+      rules: [validators.required()],
+    },
+    amount: {
+      init: '',
+      rules: [validators.required()],
+    },
+    position: {
+      init: '',
+    },
+    startDate: {
+      init: '',
+    },
+    payPeriod: {
+      init: '',
+    },
+    token: {
+      init: 'near',
+      rules: [validators.required()],
+    },
+    comment: {
+      init: '',
+    },
+  },
+  validateOn: ['submit'],
 });
