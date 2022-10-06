@@ -38,19 +38,6 @@ const changeEmployeeStatusFx = attach({
   },
 });
 
-// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
-// Приходится ждать пока они засетятся и щелкнут в clock
-sample({
-  source: pageLoaded,
-  clock: [pageLoaded, $authenticationHeaders, changeEmployeeStatusFx.doneData],
-  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
-  target: loadEmployeeFx,
-});
-sample({
-  source: loadEmployeeFx.doneData,
-  target: $employee,
-});
-
 sample({
   source: employeeStatusChanged,
   target: changeEmployeeStatusFx,
@@ -206,7 +193,6 @@ export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
   },
   validateOn: ['submit'],
 });
-
 sample({
   source: $employee,
   clock: $isUpdateEmployeeModalOpen,
@@ -230,8 +216,9 @@ export const updateEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
     authenticationHeaders: $authenticationHeaders,
+    employee: $employee,
   },
-  async effect({daoId, authenticationHeaders}, formData: AddEmployeeFormFields) {
+  async effect({daoId, authenticationHeaders, employee}, formData: UpdateEmployeeFormFields) {
     // черновой вариант, много несостыковок между формой и моделью в апи
     const {
       // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
@@ -240,21 +227,45 @@ export const updateEmployeeFx = attach({
       // TODO так же как и в amount
       payPeriod,
 
-      // TODO нужно добавить колонку в базу
-      payoutType,
-
       ...restForm
     } = formData;
 
-    const data: CreateEmployeeDto = {
+    const data: UpdateEmployeeDto = {
       daoId,
-      status: 'Active',
+      type: employee!.type,
       amount: Number(amount) || 0,
       payPeriod: 2,
       ...restForm,
     };
-    return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
+    return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data, {
       headers: {...authenticationHeaders},
     });
   },
+});
+
+sample({
+  source: updateEmployeeForm.formValidated,
+  target: updateEmployeeFx,
+});
+sample({
+  clock: updateEmployeeFx.done,
+  target: [toggleUpdateEmployeeModal, updateEmployeeForm.reset],
+});
+
+// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
+// Приходится ждать пока они засетятся и щелкнут в clock
+sample({
+  source: pageLoaded,
+  clock: [
+    pageLoaded,
+    $authenticationHeaders,
+    changeEmployeeStatusFx.doneData,
+    updateEmployeeFx.doneData,
+  ],
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  target: loadEmployeeFx,
+});
+sample({
+  source: loadEmployeeFx.doneData,
+  target: $employee,
 });
