@@ -202,6 +202,26 @@ export const updateEmployeeForm = createForm<UpdateEmployeeFormFields>({
   },
   validateOn: ['submit'],
 });
+
+sample({
+  source: $employee,
+  clock: $isUpdateEmployeeModalOpen,
+  filter: (sourceValue, clockValue) => clockValue,
+  fn: (source) => ({
+    name: source!.name,
+    status: source!.status,
+    nearLogin: source!.nearLogin,
+    email: source!.email,
+    amount: source!.salary.toString(),
+    position: source!.position,
+    startDate: source!.startDate,
+    payPeriod: source!.payPeriod.toString(),
+    token: source!.token,
+    comment: source!.comment,
+  }),
+  target: updateEmployeeForm.setForm,
+});
+
 export const updateEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
