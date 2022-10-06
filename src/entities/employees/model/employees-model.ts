@@ -3,7 +3,7 @@ import {attach, createEvent, createStore, sample} from 'effector';
 import * as employeeModel from '~/entities/employee/model/employee-model';
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {$currentDaoId} from '~/entities/wallet';
-import {rbApi} from '~/shared/api/rb';
+import {DraftInvoiceResponseDto, rbApi} from '~/shared/api/rb';
 import type {EmployeeResponseDto} from '~/shared/api/rb';
 import {ROUTES} from '~/shared/config/routes';
 
@@ -90,22 +90,9 @@ sample({
   target: $employees,
 });
 
-export interface TemporaryStubForDraftInvoicesDTO {
-  id: number;
-  type: string;
-  daoId: string;
-  employeeId: number;
-  employeeNearLogin: string;
-  token: string;
-  amount: number;
-  periodStart: string;
-  periodEnd: string;
-}
-export const $draftInvoices = createStore<TemporaryStubForDraftInvoicesDTO[]>([]);
-$draftInvoices.watch((draftInvoices) => console.log({draftInvoices}));
+export const $draftInvoices = createStore<DraftInvoiceResponseDto[]>([]);
 
-export const invoiceDraftModalOpened = createEvent<TemporaryStubForDraftInvoicesDTO>();
-invoiceDraftModalOpened.watch((invoiceDraft) => console.log(invoiceDraft));
+export const invoiceDraftModalOpened = createEvent<DraftInvoiceResponseDto>();
 
 const loadDraftInvoicesFx = attach({
   source: {
@@ -114,10 +101,14 @@ const loadDraftInvoicesFx = attach({
   },
   async effect({daoId, authenticationHeaders}) {
     return rbApi.dao
-      .daoControllerFindAllDaoInvoices(daoId, {
-        headers: {...authenticationHeaders},
-      })
-      .then((response) => response.data as TemporaryStubForDraftInvoicesDTO[]);
+      .daoControllerFindAllDaoInvoices(
+        daoId,
+        {status: 'Active'},
+        {
+          headers: {...authenticationHeaders},
+        },
+      )
+      .then((response) => response.data);
   },
 });
 sample({
