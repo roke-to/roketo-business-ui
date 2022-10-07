@@ -87,7 +87,9 @@ export const Employee: React.FC = () => {
               </Label>
               <Label as='div' content={t('labels.salary')}>
                 {/* TODO как будто бы нужно отдельное поле для валюты */}
-                <Typography>{employee.salary} USD</Typography>
+                <Typography>
+                  {employee.salary} {employee.token}
+                </Typography>
               </Label>
               <Label as='div' content={t('labels.payPeriod')}>
                 {/* TODO нужно поле которое укажет  на каком промежутке работает период (per month etc.) */}
