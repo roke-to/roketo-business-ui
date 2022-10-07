@@ -3,6 +3,7 @@ import {attach, createEvent, createStore, sample} from 'effector';
 import {createForm} from 'effector-forms';
 
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
+import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
 import {validators} from '~/shared/lib/form/validators';
@@ -43,6 +44,8 @@ sample({
   source: employeeStatusChanged,
   target: changeEmployeeStatusFx,
 });
+
+// ---------------------------------------- create employee -----------------------------
 
 export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
 export const toggleCreateEmployeeModal = createEvent();
@@ -135,6 +138,8 @@ sample({
   source: addEmployeeFx.doneData,
   target: addEmployeeForm.resetValues,
 });
+
+// ---------------------------------------- update employee -----------------------------
 
 export const $isUpdateEmployeeModalOpen = createStore<boolean>(false);
 export const toggleUpdateEmployeeModal = createEvent();
@@ -244,6 +249,22 @@ sample({
   clock: updateEmployeeFx.done,
   target: [toggleUpdateEmployeeModal, updateEmployeeForm.reset],
 });
+
+// -------------------------------------- transfer to employee -----------------------------
+export const $isTransferToEmployeeModalOpen = createStore<boolean>(false);
+export const toggleTransferToEmployeeModal = createEvent();
+$isTransferToEmployeeModalOpen.on(toggleTransferToEmployeeModal, (isOpen) => !isOpen);
+
+sample({
+  source: $employee,
+  clock: toggleTransferToEmployeeModal,
+  fn: (sourceData) => ({
+    targetAccountId: sourceData!.nearLogin,
+  }),
+  target: createTreasuryProposalForm.setForm,
+});
+
+// -------------------------------------- general page loading logic -----------------------------
 
 // TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
 // Приходится ждать пока они засетятся и щелкнут в clock
