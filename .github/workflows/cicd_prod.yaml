@@ -152,6 +152,7 @@ jobs:
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
             docker-compose up -d
+            docker-compose start frontbizui
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
             . ~/services/sucess.sh
           host: ares.roke.to
