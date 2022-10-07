@@ -222,7 +222,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         />
       </Label>
     </Row>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md'>
       <Label
         required
         content={t('createEmployee.form.labels.startDate.label')}
@@ -255,21 +255,6 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
             {label: '1 per month', value: '1'},
             {label: '2 per month', value: '2'},
           ]}
-        />
-      </Label>
-      <Label
-        required
-        content={t('createEmployee.form.labels.payoutType.label')}
-        error={fields.payoutType.errorText()}
-        className='basis-1/3'
-      >
-        <InputDropdown
-          name='payoutType'
-          value={fields.payoutType.value}
-          disabled={pending}
-          placeholder={t('createEmployee.form.labels.payoutType.placeholder')}
-          onChange={fields.payoutType.onChange}
-          options={[{label: 'Smooth', value: 'Smooth'}]}
         />
       </Label>
     </Row>

@@ -9,7 +9,7 @@ export const DraftInvoice: React.FC<{
   draftInvoice: DraftInvoiceResponseDto;
 }> = ({clickHandler, draftInvoice}) => {
   const {amount, token, periodStart, periodEnd, employeeName} = draftInvoice;
-  const formatDate = (date: string) => format(parseISO(date), 'yyyy-MM-dd');
+  const formatDate = (date: string) => format(parseISO(date), 'd MMM yyyy');
 
   return (
     <div className='flex justify-between px-8 pt-6 pb-8 gap-8 border border-blue-sat_1 rounded-3xl'>

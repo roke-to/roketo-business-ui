@@ -36,7 +36,9 @@ export const EmployeeCard: React.FC<Props> = ({employee}) => {
       },
       {
         content: t('card.labels.salary'),
-        children: `${employee.salary} (salary frequency)`,
+        children: `${employee.salary || 0} ${employee.token} (${
+          employee.payPeriod || 2
+        } per month)`,
       },
       {
         content: t('card.labels.comment'),

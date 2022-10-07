@@ -52,7 +52,6 @@ export interface AddEmployeeFormFields
   extends Omit<CreateEmployeeDto, 'status' | 'daoId' | 'amount' | 'payPeriod'> {
   amount: string;
   payPeriod: string;
-  payoutType: 'Smooth';
 }
 export const addEmployeeForm = createForm<AddEmployeeFormFields>({
   fields: {
@@ -85,10 +84,6 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
     payPeriod: {
       init: '2',
     },
-    // TODO нужно подумать как модель поудобнее сделать
-    payoutType: {
-      init: 'Smooth',
-    },
     token: {
       init: 'near',
       rules: [validators.required()],
@@ -112,9 +107,6 @@ export const addEmployeeFx = attach({
 
       // TODO так же как и в amount
       payPeriod,
-
-      // TODO нужно добавить колонку в базу
-      payoutType,
 
       ...restForm
     } = formData;
