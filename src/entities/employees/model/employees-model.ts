@@ -2,6 +2,7 @@ import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import * as employeeModel from '~/entities/employee/model/employee-model';
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
+import {pageLoaded as employeePageLoaded} from '~/entities/employee/model/employee-model';
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {DraftInvoiceResponseDto, rbApi} from '~/shared/api/rb';
@@ -203,6 +204,13 @@ const clearUrlFx = createEffect((queryKeysToRemove: string[]) => {
 sample({
   source: pageLoaded,
   clock: [pageLoaded, $authenticationHeaders],
+  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  target: setInvoiceStatusAfterRedirectFx,
+});
+
+sample({
+  source: employeePageLoaded,
+  clock: [employeePageLoaded, $authenticationHeaders],
   filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: setInvoiceStatusAfterRedirectFx,
 });

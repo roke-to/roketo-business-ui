@@ -10,7 +10,7 @@ import {validators} from '~/shared/lib/form/validators';
 export const pageLoaded = createEvent<string>();
 export const $employee = createStore<EmployeeResponseDto | null>(null);
 
-const loadEmployeeFx = attach({
+export const loadEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
     authenticationHeaders: $authenticationHeaders,
