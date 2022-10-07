@@ -1,3 +1,4 @@
+import {format, parseISO} from 'date-fns';
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import * as employeeModel from '~/entities/employee/model/employee-model';
@@ -144,10 +145,14 @@ const createCallbackUrl = (invoiceId: number) => {
   return url.toString();
 };
 
+const formatDate = (date: string) => format(parseISO(date), 'd MMM yyyy');
+
 sample({
   clock: invoiceDraftModalOpened,
   fn: ({id, employeeNearLogin, amount, periodStart, periodEnd}) => ({
-    description: `#${id} draft invoice to pay salary from ${periodStart} to ${periodEnd}`,
+    description: `#${id} draft invoice to pay salary from ${formatDate(
+      periodStart,
+    )} to ${formatDate(periodEnd)}`,
     targetAccountId: employeeNearLogin,
     amount: String(amount),
     callbackUrl: createCallbackUrl(id),
