@@ -1,4 +1,4 @@
-name: ci/cd prod
+name: ci/cd testnet
 on:
   push:
     branches:
