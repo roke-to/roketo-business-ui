@@ -135,7 +135,7 @@ export const Employees = () => {
         {employees.map((employee) => {
           if (viewType === 'card') {
             return (
-              <Link to={`${url}/${employee.id}`} key={employee.id}>
+              <Link to={`${url}/${employee.id}`} key={employee.id} className='flex'>
                 <EmployeeCard employee={employee} />
               </Link>
             );

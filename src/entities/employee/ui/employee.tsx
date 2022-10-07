@@ -13,7 +13,6 @@ import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
 import {Label} from '~/shared/ui/components/label';
-import {useModal} from '~/shared/ui/components/modal';
 import {Portlet} from '~/shared/ui/components/portlet';
 import {Row} from '~/shared/ui/components/row';
 import {Typography} from '~/shared/ui/components/typography';
@@ -43,8 +42,8 @@ export const Employee: React.FC = () => {
     refPopoverPanel,
   );
 
-  const createProposalModal = useModal();
   const isUpdateEmployeeModalOpen = useStore(employeeModel.$isUpdateEmployeeModalOpen);
+  const isTransferToEmployeeModalOpen = useStore(employeeModel.$isTransferToEmployeeModalOpen);
 
   return (
     employee && (
@@ -131,7 +130,10 @@ export const Employee: React.FC = () => {
                     {...popperAttributes.popper}
                   >
                     <Portlet className='w-60'>
-                      <Button variant='soft' onClick={createProposalModal.show}>
+                      <Button
+                        variant='soft'
+                        onClick={() => employeeModel.toggleTransferToEmployeeModal()}
+                      >
                         {t('buttons.transfer')}
                       </Button>
                       <Button onClick={() => employeeModel.toggleUpdateEmployeeModal()}>
@@ -144,9 +146,9 @@ export const Employee: React.FC = () => {
                 </Transition>
               </Popover>
               <CreateTreasuryProposalModal
-                isOpen={createProposalModal.isOpen}
+                isOpen={isTransferToEmployeeModalOpen}
                 title={t2('createProposal')}
-                onCloseModal={createProposalModal.hide}
+                onCloseModal={employeeModel.toggleTransferToEmployeeModal}
               />
               <UpdateEmployeeModal
                 isOpen={isUpdateEmployeeModalOpen}
