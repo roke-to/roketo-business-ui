@@ -219,7 +219,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         />
       </Label>
     </Row>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md'>
       <Label
         required
         content={t('createEmployee.form.labels.startDate.label')}

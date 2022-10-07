@@ -93,10 +93,6 @@ export const Employee: React.FC = () => {
                 {/* TODO нужно поле которое укажет  на каком промежутке работает период (per month etc.) */}
                 <Typography>{employee.payPeriod} per month</Typography>
               </Label>
-              <Label as='div' content={t('labels.payoutType')}>
-                {/* TODO у нас нет под это поля в базе */}
-                <Typography>Smooth</Typography>
-              </Label>
               {employee.comment && (
                 <Label as='div' content={t('labels.comment')} className='desktop:col-span-3'>
                   <Typography>{employee.comment}</Typography>

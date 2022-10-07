@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import type {Employee} from '~/shared/types/employee';
+import {EmployeeResponseDto} from '~/shared/api/rb';
 
 import styles from './employee-status.module.css';
 
 interface Props {
-  status: Employee['status'];
-  type: Employee['type'];
+  status: EmployeeResponseDto['status'];
+  type: EmployeeResponseDto['type'];
 }
 
 export const EmployeeStatus: React.FC<Props> = ({status, type}) => (
