@@ -259,7 +259,7 @@ export async function createStreamProposal({
       {
         type: 'FunctionCall',
         params: mapCreateRoketoStreamOptions({
-          description: '',
+          description: comment,
           link: '',
           tokenAccountId,
           roketoContractName,
