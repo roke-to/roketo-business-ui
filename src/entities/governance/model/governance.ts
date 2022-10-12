@@ -1,7 +1,8 @@
-import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
+import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {t} from 'i18next';
 
+import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, Proposal} from '~/shared/api/astro';
 import {
@@ -13,7 +14,6 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS,
 } from '~/shared/api/near/contracts/contract.constants';
-import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {validators, ValuesOfForm} from '~/shared/lib/form';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -270,15 +270,13 @@ sample({
   target: changePolicyProposalFx,
 });
 
-const isCouncilExistsFx = createEffect(async (accountId: string) => isAccountExist(accountId));
-
 forward({
   from: changePolicyProposalForm.fields.councilAddress.$value,
-  to: isCouncilExistsFx,
+  to: isAccountExistFx,
 });
 
 sample({
-  clock: isCouncilExistsFx.doneData,
+  clock: isAccountExistFx.doneData,
   source: {
     errors: changePolicyProposalForm.fields.councilAddress.$errors,
     councilAddress: changePolicyProposalForm.fields.councilAddress.$value,

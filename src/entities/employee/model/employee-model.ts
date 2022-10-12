@@ -1,7 +1,9 @@
 import {format, parseISO} from 'date-fns';
-import {attach, createEvent, createStore, sample} from 'effector';
+import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {t} from 'i18next';
 
+import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
@@ -137,6 +139,33 @@ sample({
 sample({
   source: addEmployeeFx.doneData,
   target: addEmployeeForm.resetValues,
+});
+
+forward({
+  from: addEmployeeForm.fields.nearLogin.$value,
+  to: isAccountExistFx,
+});
+
+sample({
+  clock: isAccountExistFx.doneData,
+  source: {
+    errors: addEmployeeForm.fields.nearLogin.$errors,
+    nearLogin: addEmployeeForm.fields.nearLogin.$value,
+  },
+  fn({nearLogin, errors}, isNearLoginExist) {
+    if (!isNearLoginExist && Boolean(nearLogin)) {
+      return [
+        ...errors,
+        {
+          rule: 'accountIdExist',
+          value: nearLogin,
+          errorText: t('proposal:createForm.accountNotExists'),
+        },
+      ];
+    }
+    return errors;
+  },
+  target: addEmployeeForm.fields.nearLogin.$errors,
 });
 
 // ---------------------------------------- update employee -----------------------------

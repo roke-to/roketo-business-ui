@@ -1,9 +1,10 @@
 import * as nearApi from 'near-api-js';
-import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
+import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {t} from 'i18next';
 import {Get} from 'type-fest';
 
+import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {
@@ -12,7 +13,6 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
-import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {ValuesOfForm} from '~/shared/lib/form';
 import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -328,17 +328,13 @@ forward({
   to: createTreasuryProposalFx,
 });
 
-const isTargetAccountIdExistsFx = createEffect(async (accountId: string) =>
-  isAccountExist(accountId),
-);
-
 forward({
   from: createTreasuryProposalForm.fields.targetAccountId.$value,
-  to: isTargetAccountIdExistsFx,
+  to: isAccountExistFx,
 });
 
 sample({
-  clock: isTargetAccountIdExistsFx.doneData,
+  clock: isAccountExistFx.doneData,
   source: {
     errors: createTreasuryProposalForm.fields.targetAccountId.$errors,
     targetAccountId: createTreasuryProposalForm.fields.targetAccountId.$value,
