@@ -1,6 +1,7 @@
 import * as nearApi from 'near-api-js';
-import {attach, createEvent, createStore, forward, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {t} from 'i18next';
 import {Get} from 'type-fest';
 
 import {sendTransactionsFx} from '~/entities/transactions';
@@ -11,6 +12,7 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
+import {isAccountExist} from '~/shared/api/near/is-account-exists';
 import {ValuesOfForm} from '~/shared/lib/form';
 import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
@@ -235,7 +237,7 @@ export const createTreasuryProposalFx = attach({
       throw new Error('walletSelector is not initialized');
     }
 
-    const token = tokenBalances.find((t) => t.id === data.token);
+    const token = tokenBalances.find((tokenBalance) => tokenBalance.id === data.token);
 
     if (!token) {
       throw new Error(`Token ${data.token} not found`);
@@ -324,4 +326,35 @@ export const createTreasuryProposalFx = attach({
 forward({
   from: createTreasuryProposalForm.formValidated,
   to: createTreasuryProposalFx,
+});
+
+const isTargetAccountIdExistsFx = createEffect(async (accountId: string) =>
+  isAccountExist(accountId),
+);
+
+forward({
+  from: createTreasuryProposalForm.fields.targetAccountId.$value,
+  to: isTargetAccountIdExistsFx,
+});
+
+sample({
+  clock: isTargetAccountIdExistsFx.doneData,
+  source: {
+    errors: createTreasuryProposalForm.fields.targetAccountId.$errors,
+    targetAccountId: createTreasuryProposalForm.fields.targetAccountId.$value,
+  },
+  fn({targetAccountId, errors}, isTargetAccountIdExists) {
+    if (!isTargetAccountIdExists && Boolean(targetAccountId)) {
+      return [
+        ...errors,
+        {
+          rule: 'accountIdExist',
+          value: targetAccountId,
+          errorText: t('proposal:createForm.accountNotExists'),
+        },
+      ];
+    }
+    return errors;
+  },
+  target: createTreasuryProposalForm.fields.targetAccountId.$errors,
 });

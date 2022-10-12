@@ -1,5 +1,6 @@
 import {attach, createEffect, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {t} from 'i18next';
 
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, Proposal} from '~/shared/api/astro';
@@ -269,7 +270,6 @@ sample({
   target: changePolicyProposalFx,
 });
 
-export const $isCouncilExists = createStore(false);
 const isCouncilExistsFx = createEffect(async (accountId: string) => isAccountExist(accountId));
 
 forward({
@@ -277,7 +277,24 @@ forward({
   to: isCouncilExistsFx,
 });
 
-forward({
-  from: isCouncilExistsFx.doneData,
-  to: $isCouncilExists,
+sample({
+  clock: isCouncilExistsFx.doneData,
+  source: {
+    errors: changePolicyProposalForm.fields.councilAddress.$errors,
+    councilAddress: changePolicyProposalForm.fields.councilAddress.$value,
+  },
+  fn({councilAddress, errors}, isCouncilExists) {
+    if (!isCouncilExists && Boolean(councilAddress)) {
+      return [
+        ...errors,
+        {
+          rule: 'accountIdExist',
+          value: councilAddress,
+          errorText: t('proposal:createForm.accountNotExists'),
+        },
+      ];
+    }
+    return errors;
+  },
+  target: changePolicyProposalForm.fields.councilAddress.$errors,
 });
