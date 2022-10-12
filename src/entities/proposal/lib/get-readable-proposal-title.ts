@@ -22,7 +22,7 @@ export const getReadableProposalTitle = (
     case 'Transfer':
       return t('readableTitle.Transfer', {
         proposer,
-        value: `${formatYoktoValue(amount)} ${token?.symbol || tokenId}`,
+        value: `${formatYoktoValue(amount, token?.decimals)} ${token?.symbol || tokenId}`,
         receiver: receiverId,
       });
     case 'FunctionCall':
