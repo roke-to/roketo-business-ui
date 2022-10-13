@@ -1,16 +1,20 @@
 import {useStore} from 'effector-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 import '~/app/initI18n';
-import {$appLoading} from '~/entities/app';
+import {$appLoading, $appState} from '~/entities/app';
 import {$isMobileScreen} from '~/entities/screens';
 import {$accountId, logoutClicked} from '~/entities/wallet';
 import {DaoSwitcher} from '~/features/dao/ui/dao-switcher';
 import {Notifications} from '~/features/notifications/ui';
 import {Routing} from '~/pages';
+import {NetworkId} from '~/shared/api/near/options';
+import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
-import {LayoutProvider} from '~/shared/ui/components/layout';
+import {Layout, LayoutProvider} from '~/shared/ui/components/layout';
 import {Navigate} from '~/shared/ui/components/navigate';
+import {PageStub} from '~/shared/ui/components/page-stub';
 import {ReactComponent as DashboardIcon} from '~/shared/ui/icons/nav/dashboard.svg';
 import {ReactComponent as EmployeeIcon} from '~/shared/ui/icons/nav/employee.svg';
 import {ReactComponent as NftIcon} from '~/shared/ui/icons/nav/nft.svg';
@@ -52,9 +56,16 @@ const navItems = [
   },
 ];
 
+const dAppHref: Record<NetworkId, string> = {
+  mainnet: env.RB_UI_MAINNET,
+  testnet: env.RB_UI_TESTNET,
+};
+
 export function Root() {
+  const {t} = useTranslation('stub');
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const isLoading = useStore($appLoading);
+  const appState = useStore($appState);
   const accountId = useStore($accountId);
   const isMobile = useStore($isMobileScreen);
   const showSideBar = !isMobile || isSidebarOpen;
@@ -64,9 +75,24 @@ export function Root() {
     [],
   );
 
+  if (appState === 'crashed') {
+    const networkId = env.NEAR_NETWORK_ID === 'testnet' ? 'mainnet' : 'testnet';
+    return (
+      <Layout type='intro'>
+        <PageStub
+          primaryText={t('nearCrashed.primaryText')}
+          secondaryText={t('nearCrashed.secondaryText')}
+          href={dAppHref[networkId]}
+          buttonText={t('nearCrashed.goTo', {networkId})}
+          className='w-[600px] tablet:w-full bg-white'
+        />
+      </Layout>
+    );
+  }
+
   // TODO: TBD кажется тут нужен спиннер ибо при ините есть белый экран заметный глазом
   if (isLoading) {
-    return null;
+    return <Layout type='intro'>Loading...</Layout>;
   }
 
   return (

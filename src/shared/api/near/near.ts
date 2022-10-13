@@ -109,7 +109,15 @@ export const createNearInstance = async (
   const account: ConnectedWalletAccount = wallet.account();
   let balance;
   if (accountId) {
-    balance = await account.getAccountBalance();
+    // If rpc not available, then account.getAccountBalance() couldn't resolve
+    await Promise.race([
+      account.getAccountBalance(),
+      new Promise((resolve, reject) => {
+        setTimeout(reject, 3000);
+      }),
+    ]).then((b) => {
+      balance = b;
+    });
   }
 
   let transactionMediator;
