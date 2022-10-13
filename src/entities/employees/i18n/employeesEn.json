@@ -41,7 +41,10 @@
           "placeholder": "mail@mail.com"
         },
         "salary": {
-          "label": "Amount",
+          "label": {
+            "contractor": "Salary",
+            "freelancer": "Work price"
+          },
           "placeholder": "0.00"
         },
         "token": {
