@@ -1,3 +1,4 @@
+import {t} from 'i18next';
 import React from 'react';
 
 import {ButtonNativeLink} from '../button-link';
@@ -13,7 +14,7 @@ export const PageStub = ({
   primaryText,
   secondaryText,
   href = 'https://9drgrlu3ak4.typeform.com/to/H0v7xT7i',
-  buttonText = ' Get early access',
+  buttonText = t('stub:earlyAccess.buttonText'),
   className,
 }: PageStubProps) => (
   <div

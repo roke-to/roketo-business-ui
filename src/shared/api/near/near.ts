@@ -109,7 +109,7 @@ export const createNearInstance = async (
   const account: ConnectedWalletAccount = wallet.account();
   let balance;
   if (accountId) {
-    // eslint-disable-next-line no-promise-executor-return
+    // If rpc not available, then account.getAccountBalance() couldn't resolve
     await Promise.race([
       account.getAccountBalance(),
       new Promise((resolve, reject) => {

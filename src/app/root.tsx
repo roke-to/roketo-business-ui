@@ -1,5 +1,6 @@
 import {useStore} from 'effector-react';
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 import '~/app/initI18n';
 import {$appLoading, $appState} from '~/entities/app';
@@ -61,6 +62,7 @@ const dAppHref: Record<NetworkId, string> = {
 };
 
 export function Root() {
+  const {t} = useTranslation('stub');
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
   const isLoading = useStore($appLoading);
   const appState = useStore($appState);
@@ -78,10 +80,10 @@ export function Root() {
     return (
       <Layout type='intro'>
         <PageStub
-          primaryText='Near not available now'
-          secondaryText='Please, try another network'
+          primaryText={t('nearCrashed.primaryText')}
+          secondaryText={t('nearCrashed.secondaryText')}
           href={dAppHref[networkId]}
-          buttonText={`Go to ${networkId}`}
+          buttonText={t('nearCrashed.goTo', {networkId})}
           className='w-[600px] tablet:w-full bg-white'
         />
       </Layout>

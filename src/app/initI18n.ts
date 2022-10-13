@@ -10,6 +10,7 @@ import proposalEn from '../entities/proposal/lib/i18n/proposalEn.json';
 import treasuryEn from '../entities/treasury/lib/i18n/treasuryEn.json';
 import authEn from '../features/auth/lib/i18n/authEn.json';
 import daoEn from '../features/dao/lib/i18n/daoEn.json';
+import stubEn from '../shared/lib/i18n/stubEn.json';
 import validatorsEn from '../shared/lib/i18n/validatorsEn.json';
 
 export type Locale = 'en';
@@ -26,6 +27,7 @@ const resources: Record<Locale, ResourceLanguage> = {
     employees: employeesEn,
     employee: employeeEn,
     proposalFilters: proposalFiltersEn,
+    stub: stubEn,
   },
 };
 
@@ -43,6 +45,7 @@ declare module 'react-i18next' {
       employees: typeof employeesEn;
       employee: typeof employeeEn;
       proposalFilters: typeof proposalFiltersEn;
+      stub: typeof stubEn;
     };
   }
 }
