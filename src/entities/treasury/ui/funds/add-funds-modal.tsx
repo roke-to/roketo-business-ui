@@ -1,3 +1,4 @@
+import copy from 'clipboard-copy';
 import {useStore} from 'effector-react';
 import {QRCodeSVG} from 'qrcode.react';
 import React from 'react';
@@ -17,6 +18,7 @@ export const AddFundsModal = (modalProps: ModalProps) => {
   const currentDaoId = useStore($currentDaoId);
 
   const handleCopyClick = () => {
+    copy(currentDaoId);
     modalProps.onCloseModal?.();
   };
 
