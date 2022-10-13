@@ -1,8 +1,10 @@
 import * as nearApi from 'near-api-js';
 import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {t} from 'i18next';
 import {Get} from 'type-fest';
 
+import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
 import {
@@ -235,7 +237,7 @@ export const createTreasuryProposalFx = attach({
       throw new Error('walletSelector is not initialized');
     }
 
-    const token = tokenBalances.find((t) => t.id === data.token);
+    const token = tokenBalances.find((tokenBalance) => tokenBalance.id === data.token);
 
     if (!token) {
       throw new Error(`Token ${data.token} not found`);
@@ -324,4 +326,31 @@ export const createTreasuryProposalFx = attach({
 forward({
   from: createTreasuryProposalForm.formValidated,
   to: createTreasuryProposalFx,
+});
+
+forward({
+  from: createTreasuryProposalForm.fields.targetAccountId.$value,
+  to: isAccountExistFx,
+});
+
+sample({
+  clock: isAccountExistFx.doneData,
+  source: {
+    errors: createTreasuryProposalForm.fields.targetAccountId.$errors,
+    targetAccountId: createTreasuryProposalForm.fields.targetAccountId.$value,
+  },
+  fn({targetAccountId, errors}, isTargetAccountIdExists) {
+    if (!isTargetAccountIdExists && Boolean(targetAccountId)) {
+      return [
+        ...errors,
+        {
+          rule: 'accountIdExist',
+          value: targetAccountId,
+          errorText: t('proposal:createForm.accountNotExists'),
+        },
+      ];
+    }
+    return errors;
+  },
+  target: createTreasuryProposalForm.fields.targetAccountId.$errors,
 });

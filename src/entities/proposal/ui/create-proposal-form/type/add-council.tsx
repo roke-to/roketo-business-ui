@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import {useStore} from 'effector-react';
 import React, {useState} from 'react';
 
-import {$isCouncilExists, changePolicyProposalForm} from '~/entities/governance/model';
+import {changePolicyProposalForm} from '~/entities/governance/model';
 import {$accountId} from '~/entities/wallet';
 import {Col} from '~/shared/ui/components/col';
 import {IconButton} from '~/shared/ui/components/icon-button';
@@ -22,7 +22,6 @@ export const AddCouncil = ({
 }: IFormPartProps<typeof changePolicyProposalForm>) => {
   const [wasAdded, setWasAdded] = useState(false);
   const accountId = useStore($accountId);
-  const isCouncilExists = useStore($isCouncilExists);
 
   const handleAddTypedCouncil = () => {
     const updatedCouncilList = [...fields.councilList.value, fields.councilAddress.value];
@@ -31,11 +30,7 @@ export const AddCouncil = ({
     setWasAdded(true);
   };
 
-  let councilAddressError = fields.councilAddress.errorText();
-
-  if (fields.councilAddress.value && !isCouncilExists) {
-    councilAddressError = t('createForm.accountNotExists');
-  }
+  const councilAddressError = fields.councilAddress.errorText();
 
   return (
     <>
@@ -44,7 +39,7 @@ export const AddCouncil = ({
           <Label
             required
             content={t('createForm.councilAddressLabel')}
-            error={councilAddressError}
+            error={fields.councilAddress.errorText()}
             className={styles.councilAddressLabel}
           >
             <Input
@@ -53,7 +48,6 @@ export const AddCouncil = ({
               disabled={pending}
               placeholder={t('createForm.councilAddressPlaceholder')}
               onChange={fields.councilAddress.onChange}
-              error={Boolean(councilAddressError)}
             />
           </Label>
           <IconButton
