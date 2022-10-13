@@ -5,6 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {$tokenBalances, loadTokenBalances} from '~/entities/treasury/model/treasury';
 import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
+import {AddFundsButton} from '~/entities/treasury/ui/funds/add-funds-button';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
 import {Chip} from '~/shared/ui/components/chip/Chip';
 import {Line} from '~/shared/ui/components/line';
@@ -48,6 +49,7 @@ export const TreasuryInfo: React.FC<TreasuryInfoProps> = ({variant = 'default', 
           </Typography>
           <Typography as='span' weight='bold' font='heading'>
             {formatCurrency(totalBalance)} USD
+            <AddFundsButton />
           </Typography>
         </div>
         <div className='flex gap-2 flex-wrap'>

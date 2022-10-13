@@ -61,6 +61,7 @@
     "patronum": "^1.8.2",
     "pino-http": "^8.2.0",
     "postcss-import": "^14.1.0",
+    "qrcode.react": "^3.1.0",
     "rc-tooltip": "^5.1.1",
     "react": "^16.13.1",
     "react-countdown-hook": "^1.1.1",
