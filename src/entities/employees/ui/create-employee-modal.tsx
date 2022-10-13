@@ -54,12 +54,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
           onChange={fields.nearLogin.onChange}
         />
       </Label>
-      <Label
-        required
-        content={t('createEmployee.form.labels.role.label')}
-        error={fields.position?.errorText()}
-        className='basis-1/3'
-      >
+      <Label content={t('createEmployee.form.labels.role.label')} className='basis-1/3'>
         <Input
           name='role'
           value={fields.position?.value}
@@ -193,12 +188,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
           onChange={fields.name.onChange}
         />
       </Label>
-      <Label
-        required
-        content={t('createEmployee.form.labels.role.label')}
-        error={fields.position?.errorText()}
-        className='basis-1/3'
-      >
+      <Label content={t('createEmployee.form.labels.role.label')} className='basis-1/3'>
         <Input
           name='role'
           value={fields.position?.value}
