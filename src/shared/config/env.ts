@@ -1,8 +1,10 @@
+import {NetworkId} from '~/shared/api/near/options';
+
 type EnvType = {
   DEV: boolean;
   PROD: boolean;
   APP_TITLE: string;
-  NEAR_NETWORK_ID: 'testnet' | 'mainnet';
+  NEAR_NETWORK_ID: NetworkId;
   NEAR_WALLET_URL: string;
   MY_NEAR_WALLET_URL: string;
   COMMIT_HASH: string;
@@ -19,6 +21,8 @@ type EnvType = {
   ACCOUNT_SUFFIX: string;
   PRICE_ORACLE_CONTRACT_NAME: string;
   NEAR_NODE_URL: string;
+  RB_UI_MAINNET: string;
+  RB_UI_TESTNET: string;
 };
 
 export const env: EnvType = {
@@ -42,4 +46,6 @@ export const env: EnvType = {
   ACCOUNT_SUFFIX: import.meta.env.VITE_NEAR_ACCOUNT_SUFFIX,
   PRICE_ORACLE_CONTRACT_NAME: import.meta.env.VITE_PRICE_ORACLE_CONTRACT_NAME,
   NEAR_NODE_URL: import.meta.env.VITE_NEAR_NODE_URL,
+  RB_UI_MAINNET: import.meta.env.VITE_RB_UI_MAINNET,
+  RB_UI_TESTNET: import.meta.env.VITE_RB_UI_TESTNET,
 };

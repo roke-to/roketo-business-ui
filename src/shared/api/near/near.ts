@@ -109,7 +109,15 @@ export const createNearInstance = async (
   const account: ConnectedWalletAccount = wallet.account();
   let balance;
   if (accountId) {
-    balance = await account.getAccountBalance();
+    // eslint-disable-next-line no-promise-executor-return
+    await Promise.race([
+      account.getAccountBalance(),
+      new Promise((resolve, reject) => {
+        setTimeout(reject, 3000);
+      }),
+    ]).then((b) => {
+      balance = b;
+    });
   }
 
   let transactionMediator;
