@@ -69,12 +69,12 @@ jobs:
         run: yarn build
 
       - name: Run Playwright tests
-				working-directory: packages/near-dapp/
+        working-directory: packages/near-dapp/
         run: yarn playwright test
 
       - name: Upload artifacts
-				uses: actions/upload-artifact@v2
-				working-directory: packages/near-dapp/
+        uses: actions/upload-artifact@v2
+        working-directory: packages/near-dapp/
         if: always()
         with:
           name: playwright-report
