@@ -5,8 +5,10 @@
 FROM node:16.13.2-alpine3.15 AS base
 # Set working directory
 WORKDIR /base
+RUN mkdir -p "packages/near-dapp"
 # Copy root level package files and install any root dependency
-COPY ["./packages/near-dapp/package.json", "package.json", "yarn.lock", "./"]
+COPY ["package.json", "yarn.lock", "./"]
+COPY ./packages/near-dapp/package.json ./packages/near-dapp/package.json
 RUN yarn --pure-lockfile
 # Copy required packages
 COPY . .
@@ -17,7 +19,8 @@ FROM base AS generate
 ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /generate
 COPY --from=base /base ./
-RUN NODE_ENV=$BUILD_ARG_VITE_NEAR_NETWORK_ID yarn workspace near-dapp generate:api
+WORKDIR /base/packages/near-dapp
+RUN NODE_ENV=$BUILD_ARG_VITE_NEAR_NETWORK_ID yarn generate:api
 
 # STAGE 3
 # Build the RoketoBiz app
