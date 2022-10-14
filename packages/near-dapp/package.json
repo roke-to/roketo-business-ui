@@ -1,5 +1,5 @@
 {
-  "name": "@roketo/dapp",
+  "name": "near-dapp",
   "version": "0.2.0",
   "homepage": "https://app2.roke.to/",
   "private": true,

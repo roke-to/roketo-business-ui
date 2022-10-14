@@ -31,11 +31,11 @@ jobs:
 
       - name: Run ESLint 🌸
         working-directory: .
-        run: yarn lint
+        run: yarn workspace near-dapp lint
 
       - name: Run check unused-exports 👽
         working-directory: .
-        run: yarn check:unused:exports
+        run: yarn workspace near-dapp check:unused:exports
   e2e:
     timeout-minutes: 60
     runs-on:
@@ -51,26 +51,30 @@ jobs:
           node-version: '18.x'
           cache: 'yarn'
           cache-dependency-path: yarn.lock
-          
+
       - name: Install 🔧
         working-directory: .
         run: yarn
 
       - name: Transfer Near for test account
-        working-directory: .
+        working-directory: packages/near-dapp/
         run: node .scripts/transferNearForTestAccount.js
 
       - name: Install Playwright Browsers
+        working-directory: packages/near-dapp/
         run: npx playwright install --with-deps
-          
+
       - name: Build 🔧
-        working-directory: .
+        working-directory: packages/near-dapp/
         run: yarn build
 
       - name: Run Playwright tests
+				working-directory: packages/near-dapp/
         run: yarn playwright test
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload artifacts
+				uses: actions/upload-artifact@v2
+				working-directory: packages/near-dapp/
         if: always()
         with:
           name: playwright-report
