@@ -9,8 +9,7 @@
     "prepare": "is-ci || husky install"
   },
   "workspaces": [
-    "services/*",
-    "tools/*"
+    "packages/*"
   ],
   "private": true,
   "devDependencies": {

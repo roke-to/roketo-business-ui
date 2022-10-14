@@ -3,7 +3,7 @@ build
 dist
 
 # configuration
-.env.local
+packages/near-dapp/.env.local
 .env.development.local
 .env.test.local
 .env.production.local
