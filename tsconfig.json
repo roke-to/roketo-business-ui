@@ -1,9 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
     "target": "es2016",
     "module": "esnext",
     "allowJs": true,
@@ -19,6 +15,5 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve"
-  },
-  "include": ["src", "env.d.ts", "playwright.config.ts", "tests"]
+  }
 }

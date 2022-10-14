@@ -1,0 +1,8 @@
+.idea
+.vscode
+.git
+node_modules
+playwright-report
+test-results
+.husky
+yarn-error.log
