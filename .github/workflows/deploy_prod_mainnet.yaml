@@ -133,7 +133,7 @@ jobs:
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
-          source: "docker-compose.yaml"
+          source: "./packages/near-dapp/docker-compose.yaml"
           target: "~/tmp/"
       - name: deploy
         uses: fifsky/ssh-action@master
