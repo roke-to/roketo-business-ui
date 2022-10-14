@@ -558,7 +558,7 @@ export interface ProposalsResponse {
   offset: number;
   limit: number;
   total: number;
-  data: string[];
+  data: Proposal[];
 }
 
 export interface ProposalResponse {
