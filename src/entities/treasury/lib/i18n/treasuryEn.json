@@ -1,3 +1,9 @@
 {
-  "totalValue": "Total value FT"
+  "totalValue": "Total value FT",
+  "addFunds": {
+    "title": "Add Funds",
+    "contractAddress": "Contract address",
+    "cancel": "Cancel",
+    "copy": "Copy Address"
+  }
 }
