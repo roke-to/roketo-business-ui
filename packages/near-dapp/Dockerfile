@@ -6,7 +6,7 @@ FROM node:16.13.2-alpine3.15 AS base
 # Set working directory
 WORKDIR /base
 # Copy root level package files and install any root dependency
-COPY ["package.json", "yarn.lock", "./"]
+COPY ["package.json", "../../yarn.lock", "./"]
 RUN yarn --pure-lockfile
 # Copy required packages
 COPY . .
