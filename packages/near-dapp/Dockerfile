@@ -26,17 +26,16 @@ ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /build
 COPY --from=generate /generate ./
 WORKDIR /build/packages/near-dapp
-RUN echo $(pwd)
-#RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
-#
-## STAGE 4 — Final image
-## RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
-## Copy build output
-#FROM node:16.13.2-alpine3.15
-#WORKDIR /build
-#
-#COPY --from=build /build/node_modules node_modules
-#COPY --from=build /build/packages/near-dapp/static-server.js .
-#COPY --from=build /build/packages/near-dapp/dist ./dist/
-#
-#CMD ["node", "static-server.js"]
+RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
+
+# STAGE 4 — Final image
+# RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
+# Copy build output
+FROM node:16.13.2-alpine3.15
+WORKDIR /build
+
+COPY --from=build /build/node_modules node_modules
+COPY --from=build /build/packages/near-dapp/static-server.js .
+COPY --from=build /build/packages/near-dapp/dist ./dist/
+
+CMD ["node", "static-server.js"]
