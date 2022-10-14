@@ -3,6 +3,7 @@ import {Account, ConnectedWalletAccount} from 'near-api-js';
 import {Get} from 'type-fest';
 
 import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
+import {filterRichTokensByBalance} from '~/entities/treasury/lib/filter-rich-tokens-by-balance';
 import {
   createNearInstance,
   createWalletSelectorInstance,
@@ -442,11 +443,10 @@ sample({
   source: $tokens,
   target: $tokens,
   fn(tokens, additionalTokens) {
-    if (Object.keys(additionalTokens).length === 0) return tokens;
-    return {
+    return filterRichTokensByBalance({
       ...tokens,
       ...additionalTokens,
-    };
+    });
   },
 });
 

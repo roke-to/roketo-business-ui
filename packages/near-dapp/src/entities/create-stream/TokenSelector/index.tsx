@@ -3,7 +3,7 @@ import {useStore} from 'effector-react';
 import {FieldInputProps, FormikState} from 'formik';
 import React, {useState} from 'react';
 
-import {$listedTokens} from '~/entities/wallet';
+import {$tokens} from '~/entities/wallet';
 import {DropdownMenu} from '~/shared/kit/DropdownMenu';
 import {DropdownOpener} from '~/shared/kit/DropdownOpener';
 import {TokenImage} from '~/shared/kit/TokenImage';
@@ -68,7 +68,7 @@ export const TokenSelector = (props: TokenSelectorProps) => {
     activeTokenAccountId,
   } = props;
 
-  const tokens = useStore($listedTokens);
+  const tokens = useStore($tokens);
 
   const [isDropdownOpened, setIsDropdownOpened] = useState(false);
 
