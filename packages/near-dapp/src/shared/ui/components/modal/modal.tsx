@@ -18,13 +18,13 @@ const TRANSITION_DURATION_MS = 200;
 
 const Close = ({className, ...props}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
   <button {...props} className={clsx(styles.close, className)} type='button' aria-label='Close'>
-    <CloseIcon />
+    <CloseIcon/>
   </button>
 );
 
 const renderOverlay = (props: React.ComponentPropsWithRef<'div'>, children: React.ReactElement) => (
   <div {...props}>
-    <Close className={styles.overlayClose} />
+    <Close className={styles.overlayClose}/>
     {children}
   </div>
 );
@@ -45,15 +45,17 @@ export const Modal = React.forwardRef<ReactModal, ModalProps>(
       }}
       ref={ref}
     >
-      {title && (
-        <header className={styles.header}>
-          <Typography as='h2' font='heading' className={styles.title}>
-            {title}
-          </Typography>
-        </header>
-      )}
-      <Close className={styles.contentClose} onClick={onCloseModal} />
-      {children}
+      <>
+        {title && (
+          <header className={styles.header}>
+            <Typography as='h2' font='heading' className={styles.title}>
+              {title}
+            </Typography>
+          </header>
+        )}
+        <Close className={styles.contentClose} onClick={onCloseModal}/>
+        {children}
+      </>
     </ReactModal>
   ),
 );

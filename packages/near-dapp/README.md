@@ -33,3 +33,10 @@ How ViteJS handle environment variables and configs [read here](https://vitejs.d
 - [dApp](test.app-v2.roke.to) (testnet)
 - [Docs](https://www.notion.so/kikimora-labs/Roketo-2056455fdcf4452f9e690601cc49d7a4)
 - [API docs](/streaming/README.md)
+
+# Test Docker image build
+- go to root directory
+- run docker build
+```
+docker build -f ./packages/near-dapp/Dockerfile -t hoba:boba --build-arg BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet . 
+```

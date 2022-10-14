@@ -19,5 +19,6 @@ export function PrivateRoute({
   path,
   exact = false,
 }: PrivateRouteProps) {
+  // @ts-expect-error
   return <Route exact={exact} path={path} render={() => (allowed ? children : redirect)} />;
 }

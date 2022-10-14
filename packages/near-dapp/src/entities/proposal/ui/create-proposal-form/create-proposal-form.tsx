@@ -108,6 +108,7 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
           </Label>
         </Row>
 
+        {/* @ts-expect-error */}
         <FormPartComponent fields={fields} t={t} pending={pending} tokenOptions={tokenOptions} />
 
         <ShowMore showMoreText={t('showMore')} showLessText={t('showLess')}>

@@ -84,7 +84,6 @@ sample({
 
       if (!tokensData[tokenAccountId]) {
         tokensData[tokenAccountId] = {
-          // @ts-expect-error BigNumber types in sdk and app are incompatible for some reason
           available,
           tokenAccountId,
         };

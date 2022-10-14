@@ -107,13 +107,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      // @ts-expect-error ref not matching
       <IMaskInput
         {...props}
         {...maskProps}
         {...onChangeProps}
         value={value}
         ref={handleRef}
+        // @ts-expect-error `type` does not exist on type
         type={type}
         className={clsx(
           styles.input,
