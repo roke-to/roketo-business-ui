@@ -57,24 +57,24 @@ jobs:
         run: yarn
 
       - name: Transfer Near for test account
-        working-directory: packages/near-dapp/
+        working-directory: ./packages/near-dapp/
         run: node .scripts/transferNearForTestAccount.js
 
       - name: Install Playwright Browsers
-        working-directory: packages/near-dapp/
+        working-directory: ./packages/near-dapp/
         run: npx playwright install --with-deps
 
       - name: Build 🔧
-        working-directory: packages/near-dapp/
+        working-directory: ./packages/near-dapp/
         run: yarn build
 
       - name: Run Playwright tests
-        working-directory: packages/near-dapp/
+        working-directory: ./packages/near-dapp/
         run: yarn playwright test
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
-        working-directory: packages/near-dapp/
+        working-directory: ./packages/near-dapp/
         if: always()
         with:
           name: playwright-report
