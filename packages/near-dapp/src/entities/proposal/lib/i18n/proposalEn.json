@@ -52,7 +52,7 @@
     "linkPlaceholder": "link.com/example",
     "tgasLabel": "TGAS",
     "tgasPlaceholder": "150",
-    "charge": "You will be charge",
+    "charge": "You will be charged",
     "councilAddressLabel": "Council.address",
     "accountNotExists": "Account not exists",
     "councilAddressPlaceholder": "newcouncilname.near",
