@@ -6,7 +6,7 @@ FROM node:16.13.2-alpine3.15 AS base
 # Set working directory
 WORKDIR /base
 # Copy root level package files and install any root dependency
-COPY ["package.json", "../../yarn.lock", "./"]
+COPY ["./packages/near-dapp/package.json", "package.json", "yarn.lock", "./"]
 RUN yarn --pure-lockfile
 # Copy required packages
 COPY . .
@@ -17,7 +17,7 @@ FROM base AS generate
 ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /generate
 COPY --from=base /base ./
-RUN NODE_ENV=$BUILD_ARG_VITE_NEAR_NETWORK_ID yarn generate:api
+RUN NODE_ENV=$BUILD_ARG_VITE_NEAR_NETWORK_ID yarn workspace near-dapp generate:api
 
 # STAGE 3
 # Build the RoketoBiz app
@@ -25,7 +25,7 @@ FROM generate AS build
 ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
 WORKDIR /build
 COPY --from=generate /generate ./
-RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
+RUN yarn workspace near-dapp build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
 
 # STAGE 4 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
