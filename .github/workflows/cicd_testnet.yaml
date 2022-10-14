@@ -67,7 +67,7 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./packages/near-dapp/
           build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=${{ env.BUILD_ARG_VITE_NEAR_NETWORK_ID }}
           push: true
           tags: ${{ env.DOCKER_TAGS }}
