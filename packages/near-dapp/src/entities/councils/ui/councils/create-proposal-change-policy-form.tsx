@@ -13,7 +13,7 @@ export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');
   const accountId = useStore($accountId);
   const tokenBalances = useStore($tokenBalances);
-  const {fields, submit, eachValid} = useForm(changePolicyProposalForm);
+  const {fields, submit, eachValid, reset} = useForm(changePolicyProposalForm);
   const pending = useStore(changePolicyProposalFx.pending);
 
   const formOptions = React.useMemo(
@@ -42,6 +42,8 @@ export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
         tokenBalances={tokenBalances}
         fields={fields}
         submit={submit}
+        reset={reset}
+        onReset={modalProps.onCloseModal}
         eachValid={eachValid}
         pending={pending}
         formOptions={formOptions}

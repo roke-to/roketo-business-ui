@@ -133,6 +133,22 @@ sample({
 });
 
 //  ------------ proposals change policy  ------------
+interface ChangePolicyProposalFormInitialValue {
+  type: string;
+  quorum: string;
+  councilAddress: string;
+  councilList: string[];
+  amount: string;
+  token: string;
+  description: string;
+  link: string;
+  tgas: string;
+}
+
+export const openChangePolicyProposalForm = createEvent();
+
+const initialValueForChangePolicyProposalForm =
+  createStore<ChangePolicyProposalFormInitialValue | null>(null);
 
 const getCouncilListInitialState = (councils: string[], accountId: string): string[] =>
   councils.filter((council) => council !== accountId);
@@ -142,7 +158,7 @@ const initChangePolicyProposalFormFx = attach({
     accountId: $accountId,
     currentDao: $currentDao,
   },
-  effect({accountId, currentDao}) {
+  effect({accountId, currentDao}): ChangePolicyProposalFormInitialValue {
     if (!currentDao) {
       throw Error('You need create Dao');
     }
@@ -209,6 +225,13 @@ export const changePolicyProposalForm = createForm({
 
 sample({
   source: initChangePolicyProposalFormFx.doneData,
+  target: initialValueForChangePolicyProposalForm,
+});
+
+sample({
+  source: initialValueForChangePolicyProposalForm,
+  clock: openChangePolicyProposalForm,
+  filter: Boolean,
   target: changePolicyProposalForm.setForm,
 });
 

@@ -7,14 +7,14 @@ import {DropdownMenu} from '~/shared/kit/DropdownMenu';
 import styles from './styles.module.scss';
 
 export function AdaptiveModal({
-                                onClose,
-                                isOpen,
-                                dropdownClassName,
-                                overlayClassName,
-                                modalClassName,
-                                compact = false,
-                                children,
-                              }: {
+  onClose,
+  isOpen,
+  dropdownClassName,
+  overlayClassName,
+  modalClassName,
+  compact = false,
+  children,
+}: {
   onClose(): void;
   isOpen: boolean;
   dropdownClassName?: string;
@@ -31,9 +31,7 @@ export function AdaptiveModal({
       overlayClassName={clsx(styles.modalOverlay, overlayClassName)}
     >
       {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      <>
-        {children}
-      </>
+      <>{children}</>
     </Modal>
   ) : (
     <DropdownMenu opened={isOpen} onClose={onClose} className={clsx(dropdownClassName)}>

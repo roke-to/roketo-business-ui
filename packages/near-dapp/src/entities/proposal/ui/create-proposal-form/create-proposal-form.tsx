@@ -2,9 +2,7 @@ import {Form} from 'effector-forms';
 import React, {FormEventHandler} from 'react';
 
 import {Token} from '~/shared/api/astro';
-import {ROUTES} from '~/shared/config/routes';
 import {Button} from '~/shared/ui/components/button';
-import {ButtonLink} from '~/shared/ui/components/button-link';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
 import {InputDropdown} from '~/shared/ui/components/input-dropdown';
@@ -50,9 +48,11 @@ export interface CreateProposalFormProps<F extends Form<CommonFormValues>>
   extends IFormBaseProps<F> {
   accountId: string;
   submit(p: void): void;
+  reset(p: void): void;
   eachValid: boolean;
   formOptions: Array<{value: string; label: string}>;
   tokenBalances: Array<Token>;
+  onReset?: (p: void) => void;
 }
 
 export function CreateProposalForm<F extends Form<CommonFormValues>>({
@@ -60,9 +60,11 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
   tokenBalances,
   fields,
   submit,
+  reset,
   eachValid,
   pending,
   t,
+  onReset,
   formOptions,
 }: CreateProposalFormProps<F>) {
   const handleSubmit: FormEventHandler = (e) => {
@@ -76,6 +78,11 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
     value: token.id,
     label: token.symbol,
   }));
+
+  const handleClickCancel = () => {
+    reset();
+    onReset?.();
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -156,9 +163,9 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
             </Row>
           </Col>
           <Row className='mobile:basis-auto'>
-            <ButtonLink to={ROUTES.dao.path} variant='outlined'>
+            <Button onClick={handleClickCancel} variant='outlined'>
               {t('createForm.cancel')}
-            </ButtonLink>
+            </Button>
             <Button disabled={!eachValid || pending} type='submit' variant='soft'>
               {t('createForm.submit')}
             </Button>
