@@ -270,7 +270,7 @@ const requestAccountStreamsFx = createEffect(
   },
 );
 
-const requestUnknownTokensFx = createEffect(
+export const requestUnknownTokensFx = createEffect(
   async ({
     tokenNames,
     roketo,
@@ -404,38 +404,6 @@ sample({
 sample({
   clock: createPriceOracleFx.doneData,
   target: $priceOracle,
-});
-
-sample({
-  clock: $accountStreams,
-  source: {
-    tokens: $tokens,
-    roketo: $roketoWallet,
-    near: $near,
-    currentDaoId: $currentDaoId,
-  },
-  target: requestUnknownTokensFx,
-  fn({tokens, roketo, near, currentDaoId}, streams) {
-    const allStreams = [...streams.inputs, ...streams.outputs];
-    const streamsTokens = [...new Set(allStreams.map((stream) => stream.token_account_id))];
-    const unknownTokens = streamsTokens.filter((token) => !(token in tokens));
-    return {
-      tokenNames: unknownTokens,
-      roketo,
-      nearAuth: near
-        ? {
-            balance: near.balance,
-            account: near.account,
-            signedIn: !!near.accountId,
-            accountId: near.accountId,
-            login: near.login,
-            logout: near.logout,
-            transactionMediator: near.transactionMediator,
-          }
-        : null,
-      currentDaoId,
-    };
-  },
 });
 
 sample({

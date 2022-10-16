@@ -23,7 +23,16 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
 
-import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';
+import {
+  $accountId,
+  $accountStreams,
+  $currentDaoId,
+  $near,
+  $roketoWallet,
+  $tokens,
+  $walletSelector,
+  requestUnknownTokensFx,
+} from '../../wallet';
 
 // ------------ proposals ------------
 
@@ -140,6 +149,20 @@ sample({
 // ------------- tokens --------------
 
 export const $tokenBalances = createStore<Array<Token>>([]);
+export const $tokensNonZeroBalance = $tokenBalances.map((tokenBalances) =>
+  tokenBalances.reduce((prev, token) => {
+    if (parseInt(token.balance, 10) > 0) {
+      return [
+        ...prev,
+        {
+          value: token.id,
+          label: token.symbol,
+        },
+      ];
+    }
+    return prev;
+  }, [] as {value: string; label: string}[]),
+);
 
 export const loadTokenBalances = createEvent();
 
@@ -169,6 +192,42 @@ sample({
   source: loadTokenBalancesFx.doneData,
   fn: (response) => response.data,
   target: $tokenBalances,
+});
+
+sample({
+  clock: $accountStreams,
+  source: {
+    tokens: $tokens,
+    roketo: $roketoWallet,
+    near: $near,
+    currentDaoId: $currentDaoId,
+    tokenBalances: $tokenBalances,
+  },
+  target: requestUnknownTokensFx,
+  fn({tokens, roketo, near, currentDaoId, tokenBalances}, streams) {
+    const allStreams = [...streams.inputs, ...streams.outputs];
+    const otherTokens = tokenBalances.map(({id}) => id);
+    const streamsTokens = [
+      ...new Set(allStreams.map((stream) => stream.token_account_id).concat(otherTokens)),
+    ];
+    const unknownTokens = streamsTokens.filter((token) => !(token in tokens));
+    return {
+      tokenNames: unknownTokens,
+      roketo,
+      nearAuth: near
+        ? {
+            balance: near.balance,
+            account: near.account,
+            signedIn: !!near.accountId,
+            accountId: near.accountId,
+            login: near.login,
+            logout: near.logout,
+            transactionMediator: near.transactionMediator,
+          }
+        : null,
+      currentDaoId,
+    };
+  },
 });
 
 //  ------------ proposals create  ------------
