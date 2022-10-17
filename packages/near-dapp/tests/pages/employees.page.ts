@@ -18,7 +18,7 @@ export class EmployeesPage {
     invoiceFrequently: 'input[name="period"]',
     invoiceOnePerMonth: 'ul>li:has-text("1 per month")',
     comment: 'input[name="comment"]',
-    submitButton: 'button[type="submit"]:visible',
+    submitButton: 'button[type="submit"]',
   };
 
   constructor(page: Page) {
@@ -34,46 +34,46 @@ export class EmployeesPage {
   }
 
   async chooseContractor() {
-    await this.page.locator(this.elements.employeeType).nth(1).click();
+    await this.page.locator(this.elements.employeeType).click();
     await this.page.locator(this.elements.contractor).click();
   }
 
   async chooseFreelancer() {
-    await this.page.locator(this.elements.employeeType).nth(1).click();
+    await this.page.locator(this.elements.employeeType).click();
     await this.page.locator(this.elements.freelancer).click();
   }
 
   async typeNearLogin(nearWallet: string) {
-    await this.page.locator(this.elements.nearLogin).first().type(nearWallet, {delay: 150});
+    await this.page.locator(this.elements.nearLogin).type(nearWallet, {delay: 150});
   }
 
   async typeSalary(salaryAmount: string) {
-    await this.page.locator(this.elements.salary).first().type(salaryAmount);
+    await this.page.locator(this.elements.salary).type(salaryAmount);
   }
 
   async typeName(name: string) {
-    await this.page.locator(this.elements.nameSurname).first().type(name);
+    await this.page.locator(this.elements.nameSurname).type(name);
   }
 
   async typeRole(role: string) {
-    await this.page.locator(this.elements.role).first().type(role);
+    await this.page.locator(this.elements.role).type(role);
   }
 
   async typeEmail(email: string) {
-    await this.page.locator(this.elements.email).first().type(email);
+    await this.page.locator(this.elements.email).type(email);
   }
 
   async typeStartDate(startDate: string) {
-    await this.page.locator(this.elements.startDate).first().type(startDate);
+    await this.page.locator(this.elements.startDate).type(startDate);
   }
 
   async chooseInvoiceFrequentlyOnePerMonth() {
-    await this.page.locator(this.elements.invoiceFrequently).nth(0).click();
+    await this.page.locator(this.elements.invoiceFrequently).click();
     await this.page.locator(this.elements.invoiceOnePerMonth).click();
   }
 
   async typeComment(comment: string) {
-    await this.page.locator(this.elements.comment).first().type(comment);
+    await this.page.locator(this.elements.comment).type(comment);
   }
 
   async clickSubmitButton() {

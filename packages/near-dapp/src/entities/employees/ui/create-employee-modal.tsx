@@ -236,6 +236,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         className='basis-1/3'
       >
         <InputDropdown
+          data-qa='payPeriod'
           name='period'
           value={fields.payPeriod.value}
           disabled={pending}
@@ -280,6 +281,7 @@ export const CreateEmployeeModal = (modalProps: ModalProps) => {
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     submit();
+    modalProps.onCloseModal?.();
   };
 
   const FormPartComponent = formTypes[fields.type.value] || Nothing;
