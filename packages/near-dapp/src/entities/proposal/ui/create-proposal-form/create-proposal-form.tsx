@@ -1,7 +1,6 @@
 import {Form} from 'effector-forms';
 import React, {FormEventHandler} from 'react';
 
-import {Token} from '~/shared/api/astro';
 import {Button} from '~/shared/ui/components/button';
 import {Col} from '~/shared/ui/components/col';
 import {Input} from '~/shared/ui/components/input';
@@ -51,13 +50,13 @@ export interface CreateProposalFormProps<F extends Form<CommonFormValues>>
   reset(p: void): void;
   eachValid: boolean;
   formOptions: Array<{value: string; label: string}>;
-  tokenBalances: Array<Token>;
+  tokenOptions: Array<{value: string; label: string}>;
   onReset?: (p: void) => void;
 }
 
 export function CreateProposalForm<F extends Form<CommonFormValues>>({
   accountId,
-  tokenBalances,
+  tokenOptions,
   fields,
   submit,
   reset,
@@ -73,11 +72,6 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
   };
 
   const FormPartComponent = formTypes[fields.type.value] || Nothing;
-
-  const tokenOptions = tokenBalances.map((token) => ({
-    value: token.id,
-    label: token.symbol,
-  }));
 
   const handleClickCancel = () => {
     reset();

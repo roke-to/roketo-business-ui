@@ -3,7 +3,7 @@ import {useStore} from 'effector-react';
 import {Field, Formik} from 'formik';
 import React, {useState} from 'react';
 
-import {$listedTokens} from '~/entities/wallet';
+import {$tokens} from '~/entities/wallet';
 import {formatAmount} from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
 import {testIds} from '~/shared/constants';
@@ -58,7 +58,7 @@ const LOCK_DESCRIPTION = (
 );
 
 export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStreamProps) => {
-  const tokens = useStore($listedTokens);
+  const tokens = useStore($tokens);
   const [submitError, setError] = useState<Error | null>(null);
 
   const handleFormSubmit = (formValues: FormValues) => {

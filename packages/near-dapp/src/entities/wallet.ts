@@ -3,6 +3,7 @@ import {Account, ConnectedWalletAccount} from 'near-api-js';
 import {Get} from 'type-fest';
 
 import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
+import {filterRichTokensByBalance} from '~/entities/treasury/lib/filter-rich-tokens-by-balance';
 import {
   createNearInstance,
   createWalletSelectorInstance,
@@ -269,7 +270,7 @@ const requestAccountStreamsFx = createEffect(
   },
 );
 
-const requestUnknownTokensFx = createEffect(
+export const requestUnknownTokensFx = createEffect(
   async ({
     tokenNames,
     roketo,
@@ -406,47 +407,14 @@ sample({
 });
 
 sample({
-  clock: $accountStreams,
-  source: {
-    tokens: $tokens,
-    roketo: $roketoWallet,
-    near: $near,
-    currentDaoId: $currentDaoId,
-  },
-  target: requestUnknownTokensFx,
-  fn({tokens, roketo, near, currentDaoId}, streams) {
-    const allStreams = [...streams.inputs, ...streams.outputs];
-    const streamsTokens = [...new Set(allStreams.map((stream) => stream.token_account_id))];
-    const unknownTokens = streamsTokens.filter((token) => !(token in tokens));
-    return {
-      tokenNames: unknownTokens,
-      roketo,
-      nearAuth: near
-        ? {
-            balance: near.balance,
-            account: near.account,
-            signedIn: !!near.accountId,
-            accountId: near.accountId,
-            login: near.login,
-            logout: near.logout,
-            transactionMediator: near.transactionMediator,
-          }
-        : null,
-      currentDaoId,
-    };
-  },
-});
-
-sample({
   clock: requestUnknownTokensFx.doneData,
   source: $tokens,
   target: $tokens,
   fn(tokens, additionalTokens) {
-    if (Object.keys(additionalTokens).length === 0) return tokens;
-    return {
+    return filterRichTokensByBalance({
       ...tokens,
       ...additionalTokens,
-    };
+    });
   },
 });
 
