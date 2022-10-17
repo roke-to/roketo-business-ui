@@ -15,7 +15,7 @@ export class EmployeesPage {
     role: 'input[name="role"]',
     email: 'input[name="email"]',
     startDate: 'input[name="startDate"]',
-    invoiceFrequently: '[placeholder="2 per month"]',
+    invoiceFrequently: 'input[name="period"]',
     invoiceOnePerMonth: 'ul>li:has-text("1 per month")',
     comment: 'input[name="comment"]',
     submitButton: 'button[type="submit"]:visible',
