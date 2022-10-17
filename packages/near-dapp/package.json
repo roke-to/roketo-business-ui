@@ -20,7 +20,7 @@
     "format:check": "yarn pretty --check",
     "generate:api": "run-p generate:api:*",
     "generate:api:astro": "swagger-typescript-api --path $(./get-dotenv.js VITE_ASTRO_API)/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
-    "generate:api:rb": "swagger-typescript-api --path https://api.roke.biz/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
+    "generate:api:rb": "swagger-typescript-api --path $(./get-dotenv.js VITE_RB_API)/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
     "test:e2e": "playwright test",
     "test:e2e-report": "playwright show-report"
   },
