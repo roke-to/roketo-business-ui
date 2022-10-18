@@ -23,6 +23,7 @@ type EnvType = {
   NEAR_NODE_URL: string;
   RB_UI_MAINNET: string;
   RB_UI_TESTNET: string;
+  NEAR_NETWORK_WAITING: number;
 };
 
 export const env: EnvType = {
@@ -48,4 +49,5 @@ export const env: EnvType = {
   NEAR_NODE_URL: import.meta.env.VITE_NEAR_NODE_URL,
   RB_UI_MAINNET: import.meta.env.VITE_RB_UI_MAINNET,
   RB_UI_TESTNET: import.meta.env.VITE_RB_UI_TESTNET,
+  NEAR_NETWORK_WAITING: import.meta.env.VITE_NEAR_NETWORK_WAITING,
 };

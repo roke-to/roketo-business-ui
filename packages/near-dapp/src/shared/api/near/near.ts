@@ -113,7 +113,7 @@ export const createNearInstance = async (
     await Promise.race([
       account.getAccountBalance(),
       new Promise((resolve, reject) => {
-        setTimeout(reject, 3000);
+        setTimeout(reject, env.NEAR_NETWORK_WAITING);
       }),
     ]).then((b) => {
       balance = b;
