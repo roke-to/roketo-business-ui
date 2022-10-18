@@ -50,8 +50,6 @@ sample({
 // ---------------------------------------- create employee -----------------------------
 
 export const $isCreateEmployeeModalOpen = createStore<boolean>(false);
-export const toggleCreateEmployeeModal = createEvent();
-$isCreateEmployeeModalOpen.on(toggleCreateEmployeeModal, (isOpen) => !isOpen);
 
 export interface AddEmployeeFormFields
   extends Omit<CreateEmployeeDto, 'status' | 'daoId' | 'amount' | 'payPeriod'> {
@@ -131,10 +129,6 @@ export const addEmployeeFx = attach({
 sample({
   source: addEmployeeForm.formValidated,
   target: addEmployeeFx,
-});
-sample({
-  clock: addEmployeeFx.done,
-  target: toggleCreateEmployeeModal,
 });
 sample({
   source: addEmployeeFx.doneData,
