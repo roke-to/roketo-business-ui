@@ -78,6 +78,10 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
     onReset?.();
   };
 
+  const tokenLabel = tokenOptions.find(
+    (tknOption) => tknOption.value === fields.token.value,
+  )?.label;
+
   return (
     <form onSubmit={handleSubmit}>
       <Col gap='xl'>
@@ -150,7 +154,7 @@ export function CreateProposalForm<F extends Form<CommonFormValues>>({
             <Row justify='between' className='mobile:flex-col'>
               {fields.amount.value && (
                 <Typography>
-                  {fields.amount.value} {fields.token.value}
+                  {fields.amount.value} {tokenLabel}
                 </Typography>
               )}
               {fields.tgas.value && <Typography>{fields.tgas.value} TGas</Typography>}
