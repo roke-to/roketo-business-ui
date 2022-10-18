@@ -15,8 +15,9 @@ export const getReadableProposalTitle = (
   const {proposer, kind} = proposal;
   const {actions = [], memberId, role, amount = '0', receiverId, policy, tokenId} = kind;
   const methods = actions.map((action) => action.methodName).join(', ');
+  const tknId = tokenId || 'NEAR';
 
-  const token = tokenBalances.find((tkn) => tkn.id === tokenId);
+  const token = tokenBalances.find((tkn) => tkn.id === tknId);
 
   switch (kind.type) {
     case 'Transfer':
