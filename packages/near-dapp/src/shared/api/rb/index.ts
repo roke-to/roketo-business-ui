@@ -3,7 +3,7 @@ import {env} from '~/shared/config/env';
 
 import {Api as RbApi} from './generated/rb-api';
 
-export const rbApiAuthInstance = new RbApi({
+const rbApiAuthInstance = new RbApi({
   baseUrl: env.RB_API,
 });
 
