@@ -101,7 +101,7 @@ sample({
 
 sample({
   source: loadGovernanceProposalsFx.doneData,
-  fn: (response) => response.data.data as unknown as Proposal[],
+  fn: (response) => response.data as unknown as Proposal[],
   target: $governanceProposals,
 });
 

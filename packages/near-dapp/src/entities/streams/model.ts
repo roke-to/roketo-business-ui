@@ -452,7 +452,7 @@ const loadStreamProposalsFx = attach({
     };
 
     return astroApi.proposalControllerProposals(query).then((response) => {
-      const proposals = response.data.data as unknown as Proposal[];
+      const proposals = response.data as unknown as Proposal[];
       return proposals.filter((p) => {
         if (variant !== 'Any') {
           return p.description.includes(variant);

@@ -2,13 +2,11 @@ import {format, parseISO} from 'date-fns';
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import * as employeeModel from '~/entities/employee/model/employee-model';
-import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {pageLoaded as employeePageLoaded} from '~/entities/employee/model/employee-model';
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {DraftInvoiceResponseDto, rbApi} from '~/shared/api/rb';
 import type {EmployeeResponseDto} from '~/shared/api/rb';
-import {ROUTES} from '~/shared/config/routes';
 import {history} from '~/shared/lib/router';
 
 export const pageLoaded = createEvent<void>();
@@ -35,12 +33,11 @@ $sort.on(sortChanged, (_, index) => sortOptions[index]);
 const loadEmployeesFx = attach({
   source: {
     daoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
     statusFilter: $statusFilter,
     typeFilter: $typeFilter,
     sort: $sort,
   },
-  async effect({daoId, authenticationHeaders, statusFilter, typeFilter, sort}) {
+  async effect({daoId, statusFilter, typeFilter, sort}) {
     const query: {
       status?: EmployeeResponseDto['status'];
       type?: EmployeeResponseDto['type'];
@@ -64,22 +61,11 @@ const loadEmployeesFx = attach({
       query.type = typeFilter;
     }
 
-    return rbApi.dao
-      .daoControllerFindAllEmployees(daoId, query, {
-        headers: {...authenticationHeaders},
-      })
-      .then((response) => response.data);
+    return rbApi.dao.daoControllerFindAllEmployees(daoId, query);
   },
 });
 
-const sampleFilters = {
-  isAuthHeadersExists: (authenticationHeaders: Record<string, string> | null) =>
-    Boolean(authenticationHeaders?.['x-authentication-api']),
-  isCurrentPathCorrect: () => window && window.location.pathname.includes(ROUTES.employees.path),
-};
-
 sample({
-  source: $authenticationHeaders,
   clock: [
     pageLoaded,
     $statusFilter,
@@ -88,12 +74,6 @@ sample({
     employeeModel.addEmployeeFx.done,
     $currentDaoId,
   ],
-  filter: sampleFilters.isAuthHeadersExists,
-  target: loadEmployeesFx,
-});
-sample({
-  source: $authenticationHeaders,
-  filter: sampleFilters.isCurrentPathCorrect,
   target: loadEmployeesFx,
 });
 sample({
@@ -108,29 +88,13 @@ export const invoiceDraftModalOpened = createEvent<DraftInvoiceResponseDto>();
 const loadDraftInvoicesFx = attach({
   source: {
     daoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
   },
-  async effect({daoId, authenticationHeaders}) {
-    return rbApi.dao
-      .daoControllerFindAllDaoInvoices(
-        daoId,
-        {status: 'Active'},
-        {
-          headers: {...authenticationHeaders},
-        },
-      )
-      .then((response) => response.data);
+  async effect({daoId}) {
+    return rbApi.dao.daoControllerFindAllDaoInvoices(daoId, {status: 'Active'});
   },
 });
 sample({
-  source: $authenticationHeaders,
   clock: [pageLoaded, employeeModel.addEmployeeFx.done],
-  filter: sampleFilters.isAuthHeadersExists,
-  target: loadDraftInvoicesFx,
-});
-sample({
-  source: $authenticationHeaders,
-  filter: sampleFilters.isCurrentPathCorrect,
   target: loadDraftInvoicesFx,
 });
 sample({
@@ -164,9 +128,8 @@ sample({
 export const setInvoiceStatusAfterRedirectFx = attach({
   source: {
     currentDaoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
   },
-  async effect({currentDaoId, authenticationHeaders}) {
+  async effect({currentDaoId}) {
     const searchParams = new URLSearchParams(window.location.search);
     const invoiceId = searchParams.get('invoiceId');
     const errorCode = searchParams.get('errorCode');
@@ -176,16 +139,9 @@ export const setInvoiceStatusAfterRedirectFx = attach({
       if (invoiceId && !errorCode) {
         queryKeysToRemove.push('invoiceId');
 
-        await rbApi.dao.daoControllerUpdateDaoDraftInvoiceStatus(
-          String(invoiceId),
-          currentDaoId,
-          {
-            status: 'Confirmed',
-          },
-          {
-            headers: {...authenticationHeaders},
-          },
-        );
+        await rbApi.dao.daoControllerUpdateDaoDraftInvoiceStatus(String(invoiceId), currentDaoId, {
+          status: 'Confirmed',
+        });
       }
     } catch {
       // if it not sended or error,
@@ -208,15 +164,11 @@ const clearUrlFx = createEffect((queryKeysToRemove: string[]) => {
 
 sample({
   source: pageLoaded,
-  clock: [pageLoaded, $authenticationHeaders],
-  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: setInvoiceStatusAfterRedirectFx,
 });
 
 sample({
   source: employeePageLoaded,
-  clock: [employeePageLoaded, $authenticationHeaders],
-  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
   target: setInvoiceStatusAfterRedirectFx,
 });
 

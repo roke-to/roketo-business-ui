@@ -210,19 +210,17 @@ sample({
 
 sample({
   source: loadDaosFx.doneData,
-  fn: (response) => response.data,
   target: $daos,
 });
 
 sample({
   source: loadDaoFx.doneData,
-  fn: (response) => response.data,
   target: $currentDao,
 });
 
 sample({
   source: loadDaoFx.doneData,
-  fn: (response) => getQuorumValueFromDao(response.data),
+  fn: (response) => getQuorumValueFromDao(response),
   target: $currentDaoQuorumValue,
 });
 
