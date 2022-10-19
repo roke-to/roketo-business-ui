@@ -35,6 +35,7 @@ dist
 
 # configuration
 packages/near-dapp/.env.local
+packages/solana-dapp/.env.local
 .env.development.local
 .env.test.local
 .env.production.local
