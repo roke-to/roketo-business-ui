@@ -1,12 +1,8 @@
 import {keyStores} from 'near-api-js';
 
 import {$keyStore, $near} from '~/entities/wallet';
-import type {Api as RbApi} from '~/shared/api/rb';
+import type {AuthenticationTokenDto, Api as RbApi} from '~/shared/api/rb';
 import {getSignature} from '~/shared/lib/get-signature';
-
-export interface AuthenticationTokenDto {
-  'x-authentication-api': string;
-}
 
 export class TokenProvider {
   private token: null | Promise<AuthenticationTokenDto> = null;
@@ -44,9 +40,9 @@ export class TokenProvider {
       'X-Authorization': `Bearer ${buff.toString('base64')}`,
     };
 
-    const token = (await this.rbApiInstance.authentication.authenticationControllerLogIn({
+    const token = await this.rbApiInstance.authentication.authenticationControllerLogIn({
       headers,
-    })) as unknown as Promise<AuthenticationTokenDto>;
+    });
 
     return token;
   }
