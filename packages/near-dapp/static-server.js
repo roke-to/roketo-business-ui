@@ -13,6 +13,10 @@ const serveOptions = {
 
 const server = http.createServer((req, res) => {
   logger(req, res);
+
+  if (req.method === 'GET' && req.url === '/ping') {
+    return res.end();
+  }
   // You pass two more arguments for config and middleware
   // More details here: https://github.com/vercel/serve-handler#options
   return handler(req, res, serveOptions);
