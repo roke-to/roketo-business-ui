@@ -6,7 +6,7 @@ import {Get} from 'type-fest';
 
 import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {sendTransactionsFx} from '~/entities/transactions';
-import {astroApi, HttpResponse, Proposal, Token} from '~/shared/api/astro';
+import {astroApi, Proposal, Token} from '~/shared/api/astro';
 import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS_BN,
@@ -93,8 +93,8 @@ const loadTreasuryProposalsFx = attach({
       order: sort,
     };
 
-    return astroApi.proposalControllerProposals(query).then((response) => {
-      const proposals = response.data.data as unknown as Proposal[];
+    return astroApi.proposalControllerProposals(query).then((response: {data: unknown}) => {
+      const proposals = response.data as unknown as Proposal[];
       return proposals.filter(
         (p) =>
           !p.description.includes('ProposeCreateRoketoStream') &&
@@ -173,9 +173,7 @@ const loadTokenBalancesFx = attach({
   async effect({daoId}) {
     // TODO: remove after PR https://github.com/near-daos/astro-api-gateway/pull/386 merged
     // and astro-api regenerated
-    return astroApi.tokenControllerTokensByDao(daoId) as unknown as Promise<
-      HttpResponse<Array<Token>>
-    >;
+    return astroApi.tokenControllerTokensByDao(daoId) as unknown as Promise<Array<Token>>;
   },
 });
 
@@ -190,7 +188,6 @@ sample({
 
 sample({
   source: loadTokenBalancesFx.doneData,
-  fn: (response) => response.data,
   target: $tokenBalances,
 });
 

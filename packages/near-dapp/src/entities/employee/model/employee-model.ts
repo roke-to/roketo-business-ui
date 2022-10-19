@@ -4,7 +4,6 @@ import {createForm} from 'effector-forms';
 import {t} from 'i18next';
 
 import {isAccountExistFx} from '~/entities/account-exist-effect';
-import {$authenticationHeaders} from '~/entities/authentication-rb-api';
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
@@ -16,14 +15,11 @@ export const $employee = createStore<EmployeeResponseDto | null>(null);
 export const loadEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
   },
-  async effect({daoId, authenticationHeaders}, employeeId: string) {
+  async effect({daoId}, employeeId: string) {
     return rbApi.dao
-      .daoControllerFindOneEmployeeByDao(daoId, employeeId, {
-        headers: {...authenticationHeaders},
-      })
-      .then((response) => response.data[0]);
+      .daoControllerFindOneEmployeeByDao(daoId, employeeId)
+      .then((response) => response[0]);
   },
 });
 
@@ -33,12 +29,9 @@ const changeEmployeeStatusFx = attach({
   source: {
     daoId: $currentDaoId,
     employee: $employee,
-    authenticationHeaders: $authenticationHeaders,
   },
-  async effect({daoId, employee, authenticationHeaders}, action: EmployeeStatusChangeAction) {
-    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, String(employee!.id), action, {
-      headers: {...authenticationHeaders},
-    });
+  async effect({daoId, employee}, action: EmployeeStatusChangeAction) {
+    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, String(employee!.id), action);
   },
 });
 
@@ -100,9 +93,8 @@ export const addEmployeeForm = createForm<AddEmployeeFormFields>({
 export const addEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
   },
-  async effect({daoId, authenticationHeaders}, formData: AddEmployeeFormFields) {
+  async effect({daoId}, formData: AddEmployeeFormFields) {
     // черновой вариант, много несостыковок между формой и моделью в апи
     const {
       // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
@@ -121,9 +113,7 @@ export const addEmployeeFx = attach({
       payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
-    return rbApi.dao.daoControllerCreateEmployee(daoId, data, {
-      headers: {...authenticationHeaders},
-    });
+    return rbApi.dao.daoControllerCreateEmployee(daoId, data);
   },
 });
 sample({
@@ -236,10 +226,9 @@ sample({
 export const updateEmployeeFx = attach({
   source: {
     daoId: $currentDaoId,
-    authenticationHeaders: $authenticationHeaders,
     employee: $employee,
   },
-  async effect({daoId, authenticationHeaders, employee}, formData: UpdateEmployeeFormFields) {
+  async effect({daoId, employee}, formData: UpdateEmployeeFormFields) {
     // черновой вариант, много несостыковок между формой и моделью в апи
     const {
       // TODO  в api это number, в ui пока нет инпута под числа, приходится кастить перед отправкой
@@ -258,9 +247,7 @@ export const updateEmployeeFx = attach({
       payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
-    return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data, {
-      headers: {...authenticationHeaders},
-    });
+    return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data);
   },
 });
 
@@ -289,17 +276,9 @@ sample({
 
 // -------------------------------------- general page loading logic -----------------------------
 
-// TBD: тут гонка, pageLoaded случился, а $authenticationHeaders еще не засетились.
-// Приходится ждать пока они засетятся и щелкнут в clock
 sample({
   source: pageLoaded,
-  clock: [
-    pageLoaded,
-    $authenticationHeaders,
-    changeEmployeeStatusFx.doneData,
-    updateEmployeeFx.doneData,
-  ],
-  filter: () => Boolean($authenticationHeaders.getState()?.['x-authentication-api']),
+  clock: [pageLoaded, changeEmployeeStatusFx.doneData, updateEmployeeFx.doneData],
   target: loadEmployeeFx,
 });
 sample({

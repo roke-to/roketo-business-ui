@@ -19,8 +19,8 @@
     "format": "yarn pretty --write",
     "format:check": "yarn pretty --check",
     "generate:api": "run-p generate:api:*",
-    "generate:api:astro": "swagger-typescript-api --path $(./get-dotenv.js VITE_ASTRO_API)/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses",
-    "generate:api:rb": "swagger-typescript-api --path $(./get-dotenv.js VITE_RB_API)/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses",
+    "generate:api:astro": "swagger-typescript-api --path $(./get-dotenv.js VITE_ASTRO_API)/docs-json --output src/shared/api/astro/generated --name astro-api.ts --responses --unwrap-response-data",
+    "generate:api:rb": "swagger-typescript-api --path $(./get-dotenv.js VITE_RB_API)/docs-json --output src/shared/api/rb/generated --name rb-api.ts --responses --unwrap-response-data",
     "test:e2e": "playwright test",
     "test:e2e-report": "playwright show-report"
   },

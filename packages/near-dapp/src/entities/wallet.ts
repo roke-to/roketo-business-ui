@@ -1,8 +1,7 @@
 import {attach, createEffect, createEvent, createStore, sample} from 'effector';
-import {Account, ConnectedWalletAccount} from 'near-api-js';
+import {Account, ConnectedWalletAccount, keyStores} from 'near-api-js';
 import {Get} from 'type-fest';
 
-import {$keyStore, authenticationRbApiFx} from '~/entities/authentication-rb-api';
 import {filterRichTokensByBalance} from '~/entities/treasury/lib/filter-rich-tokens-by-balance';
 import {
   createNearInstance,
@@ -43,6 +42,7 @@ export const $walletSelectorState = createStore<WalletSelectorState>({
   selectedWalletId: null,
 });
 export const $near = createStore<NearInstance | null>(null);
+export const $keyStore = createStore(new keyStores.BrowserLocalStorageKeyStore());
 
 // Init empty walletSelector instance on app loaded
 export const initWallet = createEvent();
@@ -139,12 +139,6 @@ sample({
 sample({
   clock: initNearInstanceFx.doneData,
   target: $near,
-});
-
-sample({
-  clock: initNearInstanceFx.doneData,
-  filter: (near) => Boolean(near.accountId),
-  target: authenticationRbApiFx,
 });
 
 // Logout logic

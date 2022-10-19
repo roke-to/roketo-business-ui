@@ -122,6 +122,10 @@ export interface UpdateEmployeeDto {
   isTest?: boolean;
 }
 
+export interface AuthenticationTokenDto {
+  'x-authentication-api': string;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
 
@@ -288,7 +292,7 @@ export class HttpClient<SecurityDataType = unknown> {
     baseUrl,
     cancelToken,
     ...params
-  }: FullRequestParams): Promise<HttpResponse<T, E>> => {
+  }: FullRequestParams): Promise<T> => {
     const secureParams =
       ((typeof secure === 'boolean' ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
@@ -336,7 +340,7 @@ export class HttpClient<SecurityDataType = unknown> {
       }
 
       if (!response.ok) throw data;
-      return data;
+      return data.data;
     });
   };
 }
@@ -637,12 +641,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags Authentication
      * @name AuthenticationControllerLogIn
      * @request POST:/authentication/login
-     * @response `200` `void`
+     * @response `200` `AuthenticationTokenDto` Authentication token
      */
     authenticationControllerLogIn: (params: RequestParams = {}) =>
-      this.request<void, any>({
+      this.request<AuthenticationTokenDto, any>({
         path: `/authentication/login`,
         method: 'POST',
+        format: 'json',
         ...params,
       }),
 

@@ -1,36 +1,52 @@
-import {attach, createStore, sample} from 'effector';
 import {keyStores} from 'near-api-js';
 
-import {NearInstance} from '~/shared/api/near';
-import {rbApi} from '~/shared/api/rb';
+import {$keyStore, $near} from '~/entities/wallet';
+import type {AuthenticationTokenDto, Api as RbApi} from '~/shared/api/rb';
 import {getSignature} from '~/shared/lib/get-signature';
 
-export const $keyStore = createStore(new keyStores.BrowserLocalStorageKeyStore());
-export const $authenticationHeaders = createStore<Record<string, string> | null>(null);
+export class TokenProvider {
+  private token: null | Promise<AuthenticationTokenDto> = null;
 
-export const authenticationRbApiFx = attach({
-  source: {
-    keyStore: $keyStore,
-  },
-  async effect({keyStore}: {keyStore: keyStores.BrowserLocalStorageKeyStore}, near: NearInstance) {
+  private rbApiInstance: RbApi<unknown>;
+
+  constructor(rbApiInstance: RbApi<unknown>) {
+    this.rbApiInstance = rbApiInstance;
+  }
+
+  getToken() {
+    if (!this.token) {
+      this.token = this.getRefreshedToken();
+    }
+
+    return this.token;
+  }
+
+  refreshToken() {
+    this.token = this.getRefreshedToken();
+  }
+
+  async getRefreshedToken() {
+    const near = $near.getState();
     if (!near) {
       throw Error('WHERE NEAR ?');
     }
     const {accountId} = near;
+    const keyStore = $keyStore.getState();
     const publicKey = await getPublicKey(accountId, keyStore, near?.near.config);
     const signature = await getSignatureFromKeyStores(accountId, keyStore, near?.near.config);
 
     const buff = Buffer.from(`${accountId}|${publicKey}|${signature}`);
-
     const headers = {
       'X-Authorization': `Bearer ${buff.toString('base64')}`,
     };
 
-    return rbApi.authentication
-      .authenticationControllerLogIn({headers})
-      .then((response) => response.json());
-  },
-});
+    const token = await this.rbApiInstance.authentication.authenticationControllerLogIn({
+      headers,
+    });
+
+    return token;
+  }
+}
 
 async function getPublicKey(
   accountId: string,
@@ -71,8 +87,3 @@ async function getSignatureFromKeyStores(
     return null;
   }
 }
-
-sample({
-  source: authenticationRbApiFx.doneData,
-  target: $authenticationHeaders,
-});
