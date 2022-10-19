@@ -23,6 +23,7 @@ export const rbApi = new RbApi({
       await tokenProvider.refreshToken();
 
       const headers = {
+        ...init?.headers,
         ...(await tokenProvider.getToken()),
       };
 
