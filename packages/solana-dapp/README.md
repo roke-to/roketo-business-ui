@@ -40,5 +40,5 @@ How ViteJS handle environment variables and configs [read here](https://vitejs.d
 - run docker build
 
 ```
-docker build -f ./packages/near-dapp/Dockerfile -t hoba:boba --build-arg BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet .
+docker build -f ./packages/solana-dapp/Dockerfile -t hoba:boba --build-arg BUILD_ARG_VITE_SOLANA_NETWORK_ID=testnet .
 ```

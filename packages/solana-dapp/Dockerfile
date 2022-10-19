@@ -16,11 +16,11 @@ COPY . .
 # STAGE 2
 # Build the RoketoBiz app
 FROM generate AS build
-ARG BUILD_ARG_VITE_NEAR_NETWORK_ID
+ARG BUILD_ARG_VITE_SOLANA_NETWORK_ID
 WORKDIR /build
 COPY --from=generate /generate ./
 WORKDIR /build/packages/solana-dapp
-RUN yarn build --mode $BUILD_ARG_VITE_NEAR_NETWORK_ID
+RUN yarn build --mode $BUILD_ARG_VITE_SOLANA_NETWORK_ID
 
 # STAGE 4 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
