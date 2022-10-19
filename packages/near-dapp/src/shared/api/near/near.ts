@@ -22,8 +22,8 @@ import {
 } from '@near-wallet-selector/core';
 import {setupMyNearWallet} from '@near-wallet-selector/my-near-wallet';
 import {setupNearWallet} from '@near-wallet-selector/near-wallet';
-import {setupSender} from '@near-wallet-selector/sender';
 
+// import {setupSender} from '@near-wallet-selector/sender';
 import {getNetworkPreset, WalletIconType} from './options';
 
 // Same as @near-wallet-selector/{module} id and installed wallets
@@ -184,9 +184,9 @@ export const createWalletSelectorInstance = async () =>
       setupMyNearWallet({
         iconUrl: WalletIconType.MyNearWallet,
       }),
-      setupSender({
-        iconUrl: WalletIconType.Sender,
-      }),
+      // setupSender({
+      //   iconUrl: WalletIconType.Sender,
+      // }),
     ],
   });
 
