@@ -1,4 +1,4 @@
-name: Playwright reusable workflow with matrix strategy
+name: Quality reusable workflow with matrix strategy
 
 on:
   push:
@@ -15,10 +15,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  PlaywrightReuseableMatrixJob:
+  QualityReuseableMatrixJob:
     strategy:
       matrix:
         target: ['near-dapp']
-    uses: ./.github/workflows/playwright.yaml
+    uses: ./.github/workflows/quality.yaml
     with:
       package-name: ${{ matrix.target }}

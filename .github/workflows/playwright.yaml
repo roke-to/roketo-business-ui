@@ -44,20 +44,20 @@ jobs:
             ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
       - name: Transfer Near for test account
-        if: ${{ inputs.package-path }} == 'packages/near-dapp'
+        if: ${{ inputs.package-name }} == 'near-dapp'
         working-directory: ./packages/near-dapp/
         run: node .scripts/transferNearForTestAccount.js
 
       - name: Install Playwright Browsers
-        working-directory: ./${{ inputs.package-path }}/
+        working-directory: ./packages/${{ inputs.package-name }}/
         run: npx playwright install --with-deps
 
       - name: Build 🔧
-        working-directory: ./${{ inputs.package-path }}/
+        working-directory: ./packages/${{ inputs.package-name }}/
         run: yarn build
 
       - name: Run Playwright tests
-        working-directory: ./${{ inputs.package-path }}/
+        working-directory: ./packages/${{ inputs.package-name }}/
         run: yarn playwright test
 
       - name: Upload artifacts
@@ -65,5 +65,5 @@ jobs:
         if: always()
         with:
           name: playwright-report
-          path: ./${{ inputs.package-path }}/playwright-report/
+          path: ./packages/${{ inputs.package-name }}/playwright-report/
           retention-days: 30

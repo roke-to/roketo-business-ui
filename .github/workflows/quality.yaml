@@ -1,13 +1,10 @@
 name: Quality
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'packages/**'
-  pull_request:
-    paths:
-      - 'packages/**'
+  workflow_call:
+    inputs:
+      package-name:
+        required: true
+        type: string
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -48,8 +45,8 @@ jobs:
 
       - name: Run ESLint 🌸
         working-directory: .
-        run: yarn workspaces foreach -tv --include '@roketo/*' --since=origin/master --recursive run lint
+        run: yarn workspace ${{inputs.package-name}} lint
 
       - name: Run check unused-exports 👽
         working-directory: .
-        run: yarn workspaces foreach -tv --include '@roketo/*' --since=origin/master --recursive run check:unused:exports
+        run: yarn workspace ${{inputs.package-name}} check:unused:exports
