@@ -21,7 +21,7 @@ test('addContractor', async ({page}) => {
   await employeesPage.typeSalary('1');
   await employeesPage.typeName(employeeName);
   await employeesPage.typeRole('test role');
-  await employeesPage.typeEmail('test@test.test');
+  await employeesPage.typeEmail('testNewRole@test.test');
   await employeesPage.typeStartDate(today);
   await employeesPage.chooseInvoiceFrequentlyOnePerMonth();
   await employeesPage.typeComment('test');
