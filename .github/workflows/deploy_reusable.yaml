@@ -1,23 +1,32 @@
-name: Deploy prod [mainnet]
+name: Deploy reusable workflow
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      package-name:
+        required: true
+        type: string
+      app:
+        required: true
+        type: string
+      network-variable-name:
+        required: true
+        type: string
+      network-value:
+        required: true
+        type: string
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
-  
+
 jobs:
   build:
     runs-on:
       - self-hosted
       - Linux
 
-    strategy:
-      matrix:
-        app:
-          - rocketo-bis-ui-prod
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to GCR
@@ -39,7 +48,7 @@ jobs:
       - name: Set docker tags
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
-          APP: ${{ matrix.app }}
+          APP: ${{ inputs.app }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
@@ -56,18 +65,18 @@ jobs:
           fi >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=mainnet' >> $GITHUB_ENV
+            echo 'BUILD_ARG_NETWORK_ID=${{ inputs.network-value }}' >> $GITHUB_ENV
           else
-            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet' >> $GITHUB_ENV
+            echo 'BUILD_ARG_NETWORK_ID=testnet' >> $GITHUB_ENV
           fi
       - name: Build and push image
         uses: docker/build-push-action@v2
         with:
           context: .
-          build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=${{ env.BUILD_ARG_VITE_NEAR_NETWORK_ID }}
+          build-args: ${{ inputs.network-variable-name }}=${{ env.BUILD_ARG_NETWORK_ID }}
           push: true
           tags: ${{ env.DOCKER_TAGS }}
-          file: ./packages/near-dapp/Dockerfile
+          file: ./packages/${{ inputs.package-name }}/Dockerfile
 
   publish:
     needs:
@@ -76,13 +85,8 @@ jobs:
       - self-hosted
       - Linux
 
-    strategy:
-      matrix:
-        app:
-          - rocketo-bis-ui-prod
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Login to GCR
         uses: docker/login-action@v2
         with:
@@ -103,7 +107,7 @@ jobs:
         shell: bash
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
-          APP: ${{ matrix.app }}
+          APP: ${{ inputs.app }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
@@ -114,7 +118,7 @@ jobs:
           export GIT_BRANCH=${{env.GIT_BRANCH}}
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "##[set-output name=app_name;]$(echo $APP)"
-            echo "##[set-output name=app_hostname;]$(echo app.roke.biz)"
+            echo "##[set-output name=app_hostname;]$(echo testnet.app.roke.biz)"
             echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
           elif [ "$TAG_NAME" != "" ]; then
             echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
@@ -131,12 +135,12 @@ jobs:
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
-          source: "./packages/near-dapp/docker-compose.yaml"
+          source: packages/${{ inputs.package-name }}/docker-compose.yaml
           target: "~/tmp/"
       - name: deploy
         uses: fifsky/ssh-action@master
         env:
-          APP: ${{ matrix.app }}
+          APP: ${{ inputs.app }}
           APP_HOSTNAME: ${{ steps.set_env.outputs.app_hostname }}
           APP_NAME: ${{ steps.set_env.outputs.app_name }}
           APP_TAG: ${{ steps.set_env.outputs.app_tag }}
@@ -148,9 +152,15 @@ jobs:
             export APP_TAG=${{env.APP_TAG}}
             mkdir -p ~/services/$APP_HOSTNAME/
             mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
+            rm -rf ~/tmp/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
+            if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
+              docker-compose down
+            fi
             docker-compose up -d
-            docker-compose start frontbizui
+            if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
+              docker-compose start frontbizui
+            fi
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
             . ~/services/sucess.sh
           host: ares.roke.to

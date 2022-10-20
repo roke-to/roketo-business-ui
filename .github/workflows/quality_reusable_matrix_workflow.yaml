@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'packages/**'
   pull_request:
+    paths:
+      - 'packages/**'
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -14,7 +18,7 @@ jobs:
   QualityReuseableMatrixJob:
     strategy:
       matrix:
-        target: ['near-dapp']
+        target: ['near-dapp', 'solana-dapp']
     uses: ./.github/workflows/quality.yaml
     with:
       package-name: ${{ matrix.target }}
