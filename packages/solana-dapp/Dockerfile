@@ -18,7 +18,7 @@ COPY . .
 FROM generate AS build
 ARG BUILD_ARG_VITE_SOLANA_NETWORK_ID
 WORKDIR /build
-COPY --from=generate /generate ./
+COPY --from=base /base ./
 WORKDIR /build/packages/solana-dapp
 RUN yarn build --mode $BUILD_ARG_VITE_SOLANA_NETWORK_ID
 
