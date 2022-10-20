@@ -14,6 +14,12 @@ on:
       network-value:
         required: true
         type: string
+      app-hostname:
+        required: true
+        type: string
+      host:
+        required: true
+        type: string
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
@@ -118,20 +124,20 @@ jobs:
           export GIT_BRANCH=${{env.GIT_BRANCH}}
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "##[set-output name=app_name;]$(echo $APP)"
-            echo "##[set-output name=app_hostname;]$(echo testnet.app.roke.biz)"
+            echo "##[set-output name=app_hostname;]$(echo ${{ inputs.app-hostname }})"
             echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
           elif [ "$TAG_NAME" != "" ]; then
             echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
           else
             echo "##[set-output name=app_name;]$(echo $APP-branch-$GIT_BRANCH)"
-            echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.ares.roke.to)"
+            echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.${{ inputs.host }})"
             echo "##[set-output name=app_tag;]$(echo branch-$GIT_BRANCH-$SHORT_SHA)"
           fi
         id: set_env
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ares.roke.to
+          host: ${{ inputs.host }}
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
@@ -163,7 +169,7 @@ jobs:
             fi
             export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
             . ~/services/sucess.sh
-          host: ares.roke.to
+          host: ${{ inputs.host }}
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           args: "-tt"

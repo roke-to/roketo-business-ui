@@ -14,4 +14,6 @@ jobs:
       app: rocketo-bis-ui-prod
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: mainnet
+      app-hostname: app.roke.biz
+      host: ares.roke.to
     secrets: inherit

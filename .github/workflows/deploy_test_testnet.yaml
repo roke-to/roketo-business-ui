@@ -18,4 +18,6 @@ jobs:
       app: rocketo-bis-ui
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: testnet
+      app-hostname: germes.roke.to
+      host: germes.roke.to
     secrets: inherit
