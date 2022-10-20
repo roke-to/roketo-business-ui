@@ -6,6 +6,10 @@ on:
       - master
   pull_request:
 
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
 jobs:
   QualityReuseableMatrixJob:
     strategy:
