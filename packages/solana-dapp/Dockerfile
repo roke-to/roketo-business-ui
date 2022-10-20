@@ -15,7 +15,7 @@ COPY . .
 
 # STAGE 2
 # Build the RoketoBiz app
-FROM generate AS build
+FROM base AS build
 ARG BUILD_ARG_VITE_SOLANA_NETWORK_ID
 WORKDIR /build
 COPY --from=base /base ./
