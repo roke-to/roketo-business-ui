@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn workspace near-dapp lint-staged
+yarn workspace @roketo/near-dapp lint-staged
+yarn workspace @roketo/solana-dapp lint-staged

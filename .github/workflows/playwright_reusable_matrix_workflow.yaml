@@ -1,0 +1,20 @@
+name: Playwright reusable workflow with matrix strategy
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'packages/**'
+  pull_request:
+    paths:
+      - 'packages/**'
+
+jobs:
+  PlaywrightReuseableMatrixJobForDeployment:
+    strategy:
+      matrix:
+        target: ['packages/near-dapp']
+    uses: ./.github/workflows/playwright.yml
+    with:
+      target: ${{ matrix.target }}
