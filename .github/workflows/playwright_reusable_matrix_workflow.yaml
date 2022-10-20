@@ -1,4 +1,4 @@
-name: Playwright reusable workflow with matrix strategy
+name: Playwright matrix
 
 on:
   push:
@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  PlaywrightReuseableMatrixJob:
+  playwright:
     strategy:
       matrix:
         target: ['near-dapp']
