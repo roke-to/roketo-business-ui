@@ -21,3 +21,13 @@ jobs:
       app-hostname: germes.roke.to
       host: germes.roke.to
     secrets: inherit
+  solana-dapp:
+    uses: ./.github/workflows/deploy_reusable.yaml
+    with:
+      package-name: solana-dapp
+      app: solana-rocketo-bis-ui
+      network-variable-name: BUILD_ARG_VITE_SOLANA_NETWORK_ID
+      network-value: testnet
+      app-hostname: germes.roke.to
+      host: germes.roke.to
+    secrets: inherit
