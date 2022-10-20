@@ -137,7 +137,7 @@ jobs:
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
-          source: packages/${{ inputs.package-name }}/docker-compose.yaml
+          source: ./packages/${{ inputs.package-name }}/docker-compose.yaml
           target: "~/tmp/"
       - name: deploy
         uses: fifsky/ssh-action@master
@@ -153,10 +153,10 @@ jobs:
             export APP_NAME=${{env.APP_NAME}}
             export APP_TAG=${{env.APP_TAG}}
             mkdir -p ~/services/$APP_HOSTNAME/
-            mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
-            rm -rf ~/tmp/docker-compose.yaml
+            mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
+            rm -rf ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml
             cd ~/services/$APP_HOSTNAME
-            if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
+            if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
               docker-compose down
             fi
             docker-compose up -d
