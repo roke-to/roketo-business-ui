@@ -87,6 +87,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       >
         <Input
           name='salary'
+          mask='number'
           value={fields.amount.value}
           disabled={pending}
           placeholder={t('createEmployee.form.labels.salary.placeholder')}
@@ -151,6 +152,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       >
         <Input
           name='salary'
+          mask='number'
           value={fields.amount.value}
           disabled={pending}
           placeholder={t('createEmployee.form.labels.salary.placeholder')}
