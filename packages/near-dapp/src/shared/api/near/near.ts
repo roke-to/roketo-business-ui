@@ -78,6 +78,7 @@ export const createNearInstance = async (
 
   switch (walletId) {
     case 'sender':
+      // @ts-expect-error Property 'near' does not exist on type 'Window & typeof globalThis'
       near = window.near as unknown as Near;
       break;
     case 'near-wallet':
