@@ -18,7 +18,7 @@ jobs:
       app: rocketo-bis-ui
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: testnet
-      app-hostname: germes.roke.to
+      app-hostname: rocketo-bis-ui.germes.roke.to
       host: germes.roke.to
     secrets: inherit
   solana-dapp:
@@ -28,6 +28,6 @@ jobs:
       app: solana-rocketo-bis-ui
       network-variable-name: BUILD_ARG_VITE_SOLANA_NETWORK_ID
       network-value: testnet
-      app-hostname: germes.roke.to
+      app-hostname: solana-rocketo-bis-ui.germes.roke.to
       host: germes.roke.to
     secrets: inherit
