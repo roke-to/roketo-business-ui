@@ -1,4 +1,4 @@
-name: Quality
+name: Playwright
 on:
   workflow_call:
     inputs:
@@ -7,7 +7,8 @@ on:
         type: string
 
 jobs:
-  lint-check:
+  e2e:
+    timeout-minutes: 60
     runs-on:
       - self-hosted
       - Linux
@@ -15,8 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # Fetch all git history so that yarn workspaces --since can compare with the correct commits
-          # @link https://github.com/actions/checkout#fetch-all-history-for-all-tags-and-branches
           fetch-depth: 0
 
       - name: Set up Node.js ⚙️
@@ -39,10 +38,27 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-packages-cache-${{ hashFiles('**/yarn.lock') }}-
 
-      - name: Run ESLint 🌸
-        working-directory: .
-        run: yarn workspace ${{inputs.package-name}} lint
+      - name: Transfer Near for test account
+        if: ${{ inputs.package-name }} == 'near-dapp'
+        working-directory: ./packages/near-dapp/
+        run: node .scripts/transferNearForTestAccount.js
 
-      - name: Run check unused-exports 👽
-        working-directory: .
-        run: yarn workspace ${{inputs.package-name}} check:unused:exports
+      - name: Install Playwright Browsers
+        working-directory: ./packages/${{ inputs.package-name }}/
+        run: npx playwright install --with-deps
+
+      - name: Build 🔧
+        working-directory: ./packages/${{ inputs.package-name }}/
+        run: yarn build
+
+      - name: Run Playwright tests
+        working-directory: ./packages/${{ inputs.package-name }}/
+        run: yarn playwright test
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: ./packages/${{ inputs.package-name }}/playwright-report/
+          retention-days: 30

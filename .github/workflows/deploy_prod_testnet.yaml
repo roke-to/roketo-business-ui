@@ -10,167 +10,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on:
-      - self-hosted
-      - Linux
-
-    strategy:
-      matrix:
-        app:
-          - rocketo-bis-ui-testnet
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Login to GCR
-        uses: docker/login-action@v2
-        with:
-          registry: gcr.io
-          username: _json_key
-          password: ${{ secrets.REGISTRY_JSON }}
-      - name: Get tag name
-        uses: little-core-labs/get-git-tag@v3.0.1
-        id: tag-name
-      - name: Get short sha
-        uses: benjlevesque/short-sha@v1.2
-        id: short-sha
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
-        id: extract_branch
-      - name: Set docker tags
-        env:
-          TAG_NAME: ${{ steps.tag-name.outputs.tag }}
-          APP: ${{ matrix.app }}
-          SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-        run: |
-          export GIT_BRANCH=${{env.GIT_BRANCH}}
-          echo 'DOCKER_TAGS<<EOF' >> $GITHUB_ENV
-          if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo "registry.roket.itgage.ru/$APP:latest"
-            echo "registry.roket.itgage.ru/$APP:main-$SHORT_SHA"
-          elif [ "$TAG_NAME" != "" ]; then
-            echo "registry.roket.itgage.ru/$APP:$TAG_NAME"
-          else
-            echo "registry.roket.itgage.ru/$APP:$GIT_BRANCH"
-            echo "registry.roket.itgage.ru/$APP:branch-$GIT_BRANCH-$SHORT_SHA"
-          fi >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-          if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=test' >> $GITHUB_ENV
-          else
-            echo 'BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet' >> $GITHUB_ENV
-          fi
-      - name: Build and push image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          build-args: BUILD_ARG_VITE_NEAR_NETWORK_ID=${{ env.BUILD_ARG_VITE_NEAR_NETWORK_ID }}
-          push: true
-          tags: ${{ env.DOCKER_TAGS }}
-          file: ./packages/near-dapp/Dockerfile
-
-  publish:
-    needs:
-      - build
-    runs-on:
-      - self-hosted
-      - Linux
-
-    strategy:
-      matrix:
-        app:
-          - rocketo-bis-ui-testnet
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Login to GCR
-        uses: docker/login-action@v2
-        with:
-          registry: gcr.io
-          username: _json_key
-          password: ${{ secrets.REGISTRY_JSON }}
-      - name: Get tag name
-        uses: little-core-labs/get-git-tag@v3.0.1
-        id: tag-name
-      - name: Get short sha
-        uses: benjlevesque/short-sha@v1.2
-        id: short-sha
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
-        id: extract_branch
-      - name: Set envs
-        shell: bash
-        env:
-          TAG_NAME: ${{ steps.tag-name.outputs.tag }}
-          APP: ${{ matrix.app }}
-          SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
-          export TAG_NAME=${{env.TAG_NAME}}
-          export APP=${{env.APP}}
-          export SHORT_SHA=${{env.SHORT_SHA}}
-          export GIT_BRANCH=${{env.GIT_BRANCH}}
-          if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo "##[set-output name=app_name;]$(echo $APP)"
-            echo "##[set-output name=app_hostname;]$(echo testnet.app.roke.biz)"
-            echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
-          elif [ "$TAG_NAME" != "" ]; then
-            echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
-          else
-            echo "##[set-output name=app_name;]$(echo $APP-branch-$GIT_BRANCH)"
-            echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.ares.roke.to)"
-            echo "##[set-output name=app_tag;]$(echo branch-$GIT_BRANCH-$SHORT_SHA)"
-          fi
-        id: set_env
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ares.roke.to
-          username: ${{ secrets.ROKETO_DEPLOYER_USER }}
-          key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
-          port: 22
-          source: "packages/near-dapp/docker-compose.yaml"
-          target: "~/tmp/"
-      - name: deploy
-        uses: fifsky/ssh-action@master
-        env:
-          APP: ${{ matrix.app }}
-          APP_HOSTNAME: ${{ steps.set_env.outputs.app_hostname }}
-          APP_NAME: ${{ steps.set_env.outputs.app_name }}
-          APP_TAG: ${{ steps.set_env.outputs.app_tag }}
-        with:
-          command: |
-            export APP=${{env.APP}}
-            export APP_HOSTNAME=${{env.APP_HOSTNAME}}
-            export APP_NAME=${{env.APP_NAME}}
-            export APP_TAG=${{env.APP_TAG}}
-            mkdir -p ~/services/$APP_HOSTNAME/
-            mv ~/tmp/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
-            rm -rf ~/tmp/docker-compose.yaml
-            cd ~/services/$APP_HOSTNAME
-            docker-compose down
-            docker-compose up -d
-            docker-compose start frontbizui
-            export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
-            . ~/services/sucess.sh
-          host: ares.roke.to
-          user: ${{ secrets.ROKETO_DEPLOYER_USER }}
-          key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
-          args: "-tt"
-
-  success:
-    needs:
-      - build
-      - publish
-
-    runs-on:
-      - self-hosted
-      - Linux
-
-    steps:
-      - run: echo "Done"
+  near-dapp:
+    uses: ./.github/workflows/deploy_reusable.yaml
+    with:
+      package-name: near-dapp
+      app: rocketo-bis-ui-testnet
+      network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
+      network-value: testnet
+      app-hostname: testnet.near.app.roke.biz
+      host: ares.roke.to
+    secrets: inherit
+  solana-dapp:
+    uses: ./.github/workflows/deploy_reusable.yaml
+    with:
+      package-name: solana-dapp
+      app: solana-rocketo-bis-ui-testnet
+      network-variable-name: BUILD_ARG_VITE_SOLANA_NETWORK_ID
+      network-value: testnet
+      app-hostname: testnet.solana.app.roke.biz
+      host: ares.roke.to
+    secrets: inherit

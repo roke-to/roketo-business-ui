@@ -2,3 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn workspace near-dapp lint-staged
+yarn workspace solana-dapp lint-staged

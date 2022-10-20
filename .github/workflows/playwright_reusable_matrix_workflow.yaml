@@ -1,0 +1,24 @@
+name: Playwright matrix
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'packages/**'
+  pull_request:
+    paths:
+      - 'packages/**'
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
+
+jobs:
+  playwright:
+    strategy:
+      matrix:
+        target: ['near-dapp']
+    uses: ./.github/workflows/playwright.yaml
+    with:
+      package-name: ${{ matrix.target }}
