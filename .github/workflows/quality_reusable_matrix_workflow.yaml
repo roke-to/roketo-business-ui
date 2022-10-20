@@ -4,11 +4,7 @@ on:
   push:
     branches:
       - master
-    paths:
-      - 'packages/**'
   pull_request:
-    paths:
-      - 'packages/**'
 
 jobs:
   QualityReuseableMatrixJob:
