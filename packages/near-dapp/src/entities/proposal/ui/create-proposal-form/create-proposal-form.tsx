@@ -1,14 +1,14 @@
 import {Form} from 'effector-forms';
 import React, {FormEventHandler} from 'react';
 
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Input} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
-import {ShowMore} from '~/shared/ui/components/show-more';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {Input} from 'ui/components/input';
+import {InputDropdown} from 'ui/components/input-dropdown';
+import {Label} from 'ui/components/label';
+import {Row} from 'ui/components/row';
+import {ShowMore} from 'ui/components/show-more';
+import {Typography} from 'ui/components/typography';
 
 import styles from './create-proposal-form.module.css';
 import {AddCouncil} from './type/add-council';

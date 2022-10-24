@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {changePolicyProposalForm} from '~/entities/governance/model';
-import {Input} from '~/shared/ui/components/input';
-import {Label} from '~/shared/ui/components/label';
-import {Range} from '~/shared/ui/components/range';
-import {Row} from '~/shared/ui/components/row';
+import {Input} from 'ui/components/input';
+import {Label} from 'ui/components/label';
+import {Range} from 'ui/components/range';
+import {Row} from 'ui/components/row';
 
 import {IFormPartProps} from './base';
 import styles from './change-policy.module.css';

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
-import {Input, Textarea} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
+import {Input, Textarea} from 'ui/components/input';
+import {InputDropdown} from 'ui/components/input-dropdown';
+import {Label} from 'ui/components/label';
+import {Row} from 'ui/components/row';
 
 import {IFormPartProps} from './base';
 

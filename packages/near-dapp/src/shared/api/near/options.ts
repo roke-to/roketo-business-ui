@@ -1,6 +1,6 @@
-import {ReactComponent as MyNearWalletLogo} from '~/shared/ui/icons/wallet/my-near-wallet.svg';
-import {ReactComponent as NearWalletLogo} from '~/shared/ui/icons/wallet/near-wallet.svg';
-import {ReactComponent as SenderLogo} from '~/shared/ui/icons/wallet/sender.svg';
+import {ReactComponent as MyNearWalletLogo} from 'ui/icons/wallet/my-near-wallet.svg';
+import {ReactComponent as NearWalletLogo} from 'ui/icons/wallet/near-wallet.svg';
+import {ReactComponent as SenderLogo} from 'ui/icons/wallet/sender.svg';
 
 export type NetworkId = 'mainnet' | 'testnet';
 

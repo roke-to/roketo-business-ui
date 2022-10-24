@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+import {DropdownMenu} from 'ui/components/dropdown-menu';
+import {DropdownContent} from 'ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from 'ui/components/dropdown-menu/dropdown-item';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
 
 interface Props {
   title: string;

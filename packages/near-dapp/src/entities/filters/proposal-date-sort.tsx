@@ -3,14 +3,14 @@ import {useTranslation} from 'react-i18next';
 
 import {ProposalSort} from '~/entities/treasury/model/types/proposal-date-sort.types';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
-import {Button} from '~/shared/ui/components/button';
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {Modal, useModal} from '~/shared/ui/components/modal';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as SortIcon} from '~/shared/ui/icons/sort.svg';
+import {Button} from 'ui/components/button';
+import {DropdownMenu} from 'ui/components/dropdown-menu';
+import {DropdownContent} from 'ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from 'ui/components/dropdown-menu/dropdown-item';
+import {Modal, useModal} from 'ui/components/modal';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
+import {ReactComponent as SortIcon} from 'ui/icons/sort.svg';
 
 import styles from './filter.module.css';
 import {ProposalsDateSortModal} from './modal/proposals-date-sort-modal';

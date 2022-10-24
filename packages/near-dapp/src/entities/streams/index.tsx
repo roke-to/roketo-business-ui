@@ -6,7 +6,7 @@ import {WithdrawAllButton} from '~/entities/stream-control/WithdrawAllButton';
 import {STREAM_DIRECTION, StreamDirection} from '~/shared/api/roketo/constants';
 import {testIds} from '~/shared/constants';
 import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
-import {Row} from '~/shared/ui/components/row';
+import {Row} from 'ui/components/row';
 
 import {CreateStreamProposalButton} from './create-stream-proposal-button';
 import {$financialStatus, handleCreateStreamFx} from './model';

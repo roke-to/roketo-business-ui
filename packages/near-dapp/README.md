@@ -41,4 +41,8 @@ How ViteJS handle environment variables and configs [read here](https://vitejs.d
 
 ```
 docker build -f ./packages/near-dapp/Dockerfile -t hoba:boba --build-arg BUILD_ARG_VITE_NEAR_NETWORK_ID=testnet .
+docker run -p 8080:80 [image_hash]
 ```
+
+look into docker container
+```docker exec -it <container-name-or-id> sh```

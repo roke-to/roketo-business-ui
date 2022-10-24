@@ -8,15 +8,15 @@ import {$isCouncilExists, $isNewDaoExists, createDaoForm, createDaoFx} from '~/e
 import {sendTransactionsFx} from '~/entities/transactions';
 import {$accountId} from '~/entities/wallet';
 import {useQuery} from '~/shared/hooks/use-query';
-import {Alert} from '~/shared/ui/components/alert';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Input} from '~/shared/ui/components/input';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
+import {Alert} from 'ui/components/alert';
+import {Button} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {IconButton} from 'ui/components/icon-button';
+import {Input} from 'ui/components/input';
+import {Label} from 'ui/components/label';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
+import {ReactComponent as Plus} from 'ui/icons/plus.svg';
 
 enum FormView {
   DAO_SETUP = 'daoSetup',

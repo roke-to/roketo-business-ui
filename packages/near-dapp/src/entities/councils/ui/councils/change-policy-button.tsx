@@ -3,9 +3,9 @@ import {useTranslation} from 'react-i18next';
 
 import {CreateProposalChangePolicyForm} from '~/entities/councils/ui/councils/create-proposal-change-policy-form';
 import {openChangePolicyProposalForm} from '~/entities/governance/model';
-import {Button, ButtonProps} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {useModal} from '~/shared/ui/components/modal';
+import {Button, ButtonProps} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {useModal} from 'ui/components/modal';
 
 import styles from './councils.module.css';
 

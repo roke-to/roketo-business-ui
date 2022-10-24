@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Typography} from '~/shared/ui/components/typography';
+import {Typography} from 'ui/components/typography';
 
 import styles from './empty-proposal-list.module.css';
 

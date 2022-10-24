@@ -1,0 +1,25 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": "16.x || 18.x"
+  },
+  "peerDependencies": {
+    "clsx": "^1.1.1",
+    "date-fns": "^2.29.1",
+    "i18next": "^21.8.12",
+    "react": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "type-fest": "^2.14.0",
+    "vite-plugin-svgr": "^2.1.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.3",
+    "autosize": "^5.0.1",
+    "react-day-picker": "^8.3.5",
+    "react-imask": "^6.4.3",
+    "react-popper": "^2.3.0"
+  }
+}

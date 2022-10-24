@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 
 import {DaoNew} from '~/features/dao/ui/dao-new';
 import {ROUTES} from '~/shared/config/routes';
-import {Portlet} from '~/shared/ui/components/portlet';
+import {Portlet} from 'ui/components/portlet';
 
 export const DaoNewPortlet = () => {
   const history = useHistory();

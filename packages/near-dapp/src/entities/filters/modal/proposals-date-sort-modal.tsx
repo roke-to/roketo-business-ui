@@ -3,10 +3,10 @@ import {useTranslation} from 'react-i18next';
 
 import {ProposalSort} from '~/entities/treasury/model/types/proposal-date-sort.types';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
-import {Loading} from '~/shared/ui/components/loading';
-import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+import {Loading} from 'ui/components/loading';
+import {RadioGroup, RadioGroupItem} from 'ui/components/radio-group';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
 
 import styles from './proposals-date-sort-modal.module.css';
 

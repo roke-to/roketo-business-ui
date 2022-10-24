@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "ui/components/*": ["./components/*"],
+      "ui/icons/*": ["./icons/*"],
+      "ui/styles/*": ["./styles/*"],
+      "ui/lib/*": ["./lib/*"],
+    }
+  },
+  "include": ["components", "icons", "styles", "global.d.ts"]
+}

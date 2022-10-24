@@ -3,12 +3,12 @@ import React, {useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import type {EmployeeResponseDto} from '~/shared/api/rb';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Label} from '~/shared/ui/components/label';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {Label} from 'ui/components/label';
+import {Portlet} from 'ui/components/portlet';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
 
 import styles from './employee-card.module.css';
 import {EmployeeStatus} from './employee-status';

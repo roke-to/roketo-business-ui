@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
+import {IconButton} from 'ui/components/icon-button';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
+import {ReactComponent as Plus} from 'ui/icons/plus.svg';
 
 import styles from './council-control.module.css';
 

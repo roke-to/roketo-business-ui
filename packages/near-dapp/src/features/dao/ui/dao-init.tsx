@@ -6,12 +6,12 @@ import {useHistory} from 'react-router-dom';
 import {$daoIds, $daosLoading} from '~/entities/dao';
 import {$accountId, logoutClicked, setCurrentDaoId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
-import {Button} from '~/shared/ui/components/button';
-import {ButtonLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {RadioSelect} from '~/shared/ui/components/radio-select';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from 'ui/components/button';
+import {ButtonLink} from 'ui/components/button-link';
+import {Col} from 'ui/components/col';
+import {Portlet} from 'ui/components/portlet';
+import {RadioSelect} from 'ui/components/radio-select';
+import {Typography} from 'ui/components/typography';
 
 enum View {
   EMPTY = 'empty',

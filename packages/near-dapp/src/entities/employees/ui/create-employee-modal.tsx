@@ -5,15 +5,15 @@ import {TFunction, useTranslation} from 'react-i18next';
 
 import {employeeModel} from '~/entities/employee';
 import {$accountId} from '~/entities/wallet';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Datepicker} from '~/shared/ui/components/datepicker';
-import {Input} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Modal, ModalProps} from '~/shared/ui/components/modal';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {Datepicker} from 'ui/components/datepicker';
+import {Input} from 'ui/components/input';
+import {InputDropdown} from 'ui/components/input-dropdown';
+import {Label} from 'ui/components/label';
+import {Modal, ModalProps} from 'ui/components/modal';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
 
 const Nothing = () => null;
 

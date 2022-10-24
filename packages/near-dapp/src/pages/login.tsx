@@ -1,5 +1,5 @@
 import {LoginPortlet} from '~/features/auth';
-import {Layout} from '~/shared/ui/components/layout';
+import {Layout} from 'ui/components/layout';
 
 export const LoginPage = () => (
   <Layout type='intro'>

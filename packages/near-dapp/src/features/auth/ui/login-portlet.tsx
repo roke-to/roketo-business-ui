@@ -4,12 +4,12 @@ import {useTranslation} from 'react-i18next';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
-import {Button} from '~/shared/ui/components/button';
-import {ButtonNativeLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Icon} from '~/shared/ui/components/icon';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from 'ui/components/button';
+import {ButtonNativeLink} from 'ui/components/button-link';
+import {Col} from 'ui/components/col';
+import {Icon} from 'ui/components/icon';
+import {Portlet} from 'ui/components/portlet';
+import {Typography} from 'ui/components/typography';
 
 import type {ModuleState} from '@near-wallet-selector/core';
 

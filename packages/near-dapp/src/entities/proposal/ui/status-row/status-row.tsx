@@ -5,9 +5,9 @@ import {Controls} from '~/entities/proposal/controls';
 import {useCountdown} from '~/entities/proposal/hooks/useCountDown';
 import {Proposal} from '~/shared/api/astro';
 import {formatISODate, toMilliseconds} from '~/shared/lib/dateFormat';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Clock} from '~/shared/ui/icons/clock.svg';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
+import {ReactComponent as Clock} from 'ui/icons/clock.svg';
 
 import styles from '../proposal.module.css';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Button, ButtonProps} from '~/shared/ui/components/button';
-import {useModal} from '~/shared/ui/components/modal';
+import {Button, ButtonProps} from 'ui/components/button';
+import {useModal} from 'ui/components/modal';
 
 import {CreateEmployeeModal} from './create-employee-modal';
 

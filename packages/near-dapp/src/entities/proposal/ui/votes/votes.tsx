@@ -9,10 +9,10 @@ import {Dao, Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
 import {formatISODate} from '~/shared/lib/dateFormat';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
-import {Col} from '~/shared/ui/components/col';
-import {Thumb, Track} from '~/shared/ui/components/range';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+import {Col} from 'ui/components/col';
+import {Thumb, Track} from 'ui/components/range';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
 
 import styles from './votes.module.css';
 

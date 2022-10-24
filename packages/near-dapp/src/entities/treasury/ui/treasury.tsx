@@ -15,7 +15,7 @@ import {
   loadTokenBalances,
 } from '~/entities/treasury/model/treasury';
 import {ProposalsList} from '~/entities/treasury/ui/proposals-list';
-import {Col} from '~/shared/ui/components/col';
+import {Col} from 'ui/components/col';
 
 import {TreasuryInfo} from './treasury-info';
 

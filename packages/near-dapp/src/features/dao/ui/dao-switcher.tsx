@@ -6,12 +6,12 @@ import ReactModal from 'react-modal';
 import {$daoIds} from '~/entities/dao';
 import {$currentDaoId, setCurrentDaoId} from '~/entities/wallet';
 import {DaoNewModal} from '~/features/dao/ui/dao-new-modal';
-import {Button} from '~/shared/ui/components/button';
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {useModal} from '~/shared/ui/components/modal';
-import {RadioGroupItem} from '~/shared/ui/components/radio-group';
+import {Button} from 'ui/components/button';
+import {DropdownMenu} from 'ui/components/dropdown-menu';
+import {DropdownContent} from 'ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from 'ui/components/dropdown-menu/dropdown-item';
+import {useModal} from 'ui/components/modal';
+import {RadioGroupItem} from 'ui/components/radio-group';
 
 import styles from './dao-switcher.module.css';
 

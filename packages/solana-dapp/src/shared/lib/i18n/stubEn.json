@@ -1,0 +1,12 @@
+{
+  "earlyAccess": {
+    "primaryText": "Early acces to new features",
+    "nftSecondaryText": "Manage your NFT on paras and mintbase marketplaces whatever you want",
+    "buttonText": "Get early access"
+  },
+  "nearCrashed": {
+    "primaryText": "Near not available now",
+    "secondaryText": "Please, try another network",
+    "goTo": "Go to {{networkId}}"
+  }
+}

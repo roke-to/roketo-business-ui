@@ -9,14 +9,14 @@ import {DraftInvoice} from '~/entities/employees/ui/draft-invoice';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
 // TODO fix FSD <--
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Label} from '~/shared/ui/components/label';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as ThreeDotsIcon} from '~/shared/ui/icons/dots.svg';
+import {Button} from 'ui/components/button';
+import {Col} from 'ui/components/col';
+import {IconButton} from 'ui/components/icon-button';
+import {Label} from 'ui/components/label';
+import {Portlet} from 'ui/components/portlet';
+import {Row} from 'ui/components/row';
+import {Typography} from 'ui/components/typography';
+import {ReactComponent as ThreeDotsIcon} from 'ui/icons/dots.svg';
 
 import {Popover, Transition} from '@headlessui/react';
 

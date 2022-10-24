@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {AddFundsModal} from '~/entities/treasury/ui/funds/add-funds-modal';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {useModal} from '~/shared/ui/components/modal';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
+import {IconButton} from 'ui/components/icon-button';
+import {useModal} from 'ui/components/modal';
+import {ReactComponent as Plus} from 'ui/icons/plus.svg';
 
 export const AddFundsButton = () => {
   const addFundsModal = useModal();

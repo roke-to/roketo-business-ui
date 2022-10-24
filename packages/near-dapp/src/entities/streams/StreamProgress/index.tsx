@@ -5,7 +5,7 @@ import React from 'react';
 
 import {testIds} from '~/shared/constants';
 import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
-import clockIcon from '~/shared/ui/icons/clock.svg';
+import clockIcon from 'ui/icons/clock.svg';
 
 import {streamProgressDataDefaults} from '../constants';
 import {$streamsProgress, selectStream} from '../model';

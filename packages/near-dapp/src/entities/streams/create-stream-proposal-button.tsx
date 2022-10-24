@@ -3,7 +3,7 @@ import React from 'react';
 import {CreateStream} from '~/entities/create-stream/CreateStream';
 import {loadTokenBalances} from '~/entities/treasury/model/treasury';
 import {Modal} from '~/shared/roketo-ui/Modal';
-import {Button, ButtonSize} from '~/shared/ui/components/button';
+import {Button, ButtonSize} from 'ui/components/button';
 
 import {handleCreateStreamFx} from './model';
 
