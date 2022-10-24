@@ -87,7 +87,7 @@ jobs:
       - self-hosted
       - Linux
     environment:
-      name: production_environment
+      name: "${{ inputs.app }}.test"
       url: "https://${{ inputs.app }}-branch-${{ steps.extract_branch.outputs.branch }}.${{ inputs.host }}"
     steps:
       - uses: actions/checkout@v3
