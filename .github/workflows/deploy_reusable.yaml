@@ -88,7 +88,7 @@ jobs:
       - Linux
     environment:
       name: production_environment
-      url: "${{ env.APP }}-branch-${{ steps.extract_branch.outputs.branch }}.${{ inputs.host }}"
+      url: "https://${{ inputs.app }}-branch-${{ steps.extract_branch.outputs.branch }}.${{ inputs.host }}"
     steps:
       - uses: actions/checkout@v3
       - name: Login to GCR
