@@ -6,5 +6,5 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src", "env.d.ts", "playwright.config.ts", "tests"]
+  "include": ["src", "env.d.ts", "playwright.config.ts", "tests", "near-seed-phrase.d.ts"]
 }
