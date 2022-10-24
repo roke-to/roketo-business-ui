@@ -86,7 +86,9 @@ jobs:
     runs-on:
       - self-hosted
       - Linux
-
+    environment:
+      name: production_environment
+      url: https://app.roke.biz
     steps:
       - uses: actions/checkout@v3
       - name: Login to GCR
