@@ -45,7 +45,7 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
         id: extract_branch
       - name: Set docker tags
         env:
@@ -103,7 +103,7 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
         id: extract_branch
       - name: Set envs
         shell: bash
@@ -113,7 +113,7 @@ jobs:
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF_NAME##*/})"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
           export TAG_NAME=${{env.TAG_NAME}}
           export APP=${{env.APP}}
           export SHORT_SHA=${{env.SHORT_SHA}}
