@@ -12,6 +12,10 @@ import postcss from './postcss.config';
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
+  // TODO: сделать так, чтобы vite собирался без mode под переменной окружения NODE_ENV
+  // NODE_ENV строго равна production или development
+  // а выбранная сеть часть рантайм конфига приложения. Т.е. на момент запуска, мы понимаем для
+  // какой сети эта аппка. (Динамические переменные окружения)
   const isProd = env.mode === 'production';
   return {
     base: process.env.VITE_BASE_PUBLIC_PATH,

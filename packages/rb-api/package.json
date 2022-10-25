@@ -1,0 +1,12 @@
+{
+  "name": "rb-api",
+  "version": "0.0.1",
+  "module": "index.ts",
+  "bin": {
+    "rb-api-generate": "./generate.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "swagger-typescript-api": "^11.1.1"
+  }
+}

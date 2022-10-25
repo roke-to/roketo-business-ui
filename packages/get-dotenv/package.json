@@ -1,0 +1,11 @@
+{
+  "name": "get-dotenv",
+  "version": "0.0.1",
+  "bin": {
+    "get-dotenv": "./get-dotenv.js"
+  },
+  "peerDependencies": {
+    "vite": "^2.9.15"
+  },
+  "license": "MIT"
+}

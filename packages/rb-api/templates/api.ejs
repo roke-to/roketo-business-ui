@@ -1,0 +1,44 @@
+<% const { config } = it; %>
+<% /* https://github.com/acacode/swagger-typescript-api/blob/e8ffa/templates/default/api.ejs */ %>
+<%~ includeFile(`@default/api`, it) %>
+
+
+interface TokenProviderInstance<Token> {
+  getToken(): Token;
+  refreshToken(): void;
+}
+
+// TODO: https://roketo.atlassian.net/browse/RB-294
+interface TokenProviderClass<ApiType> extends Function {
+  new (api: ApiType): TokenProviderInstance<any>;
+}
+
+export class RbApi<SecurityDataType extends unknown, TokenProviderType extends TokenProviderClass<<%~ config.apiClassName %><SecurityDataType>>> extends <%~ config.apiClassName %><SecurityDataType> {
+  constructor({TokenProvider, ...apiConfig}: {TokenProvider: TokenProviderType} & ApiConfig<SecurityDataType>) {
+    const tokenProvider = new TokenProvider(new <%~ config.apiClassName %>(apiConfig));
+
+    super({
+      ...apiConfig,
+      securityWorker: async () => ({
+        headers: {
+          ...(await tokenProvider.getToken()),
+        },
+      }),
+      customFetch: async (input: RequestInfo | URL, init?: RequestInit) => {
+        const fetchResult = await fetch(input, init);
+
+        if (fetchResult.status === 401) {
+          await tokenProvider.refreshToken();
+
+          const headers = {
+            ...init?.headers,
+            ...(await tokenProvider.getToken()),
+          };
+
+          return fetch(input, {...init, headers});
+        }
+        return fetchResult;
+      },
+    });
+  }
+}
