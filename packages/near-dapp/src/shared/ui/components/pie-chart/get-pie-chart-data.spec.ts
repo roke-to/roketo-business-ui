@@ -1,4 +1,4 @@
-import {getPieChartData} from '~/shared/ui/components/pie-chart/get-pie-chart-data';
+import {getPieChartData} from './get-pie-chart-data';
 
 describe('Get pie chart data', () => {
   test('return right set options', () => {

@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {getPieChartData} from '~/shared/ui/components/pie-chart/get-pie-chart-data';
-
+import {getPieChartData} from './get-pie-chart-data';
 import styles from './pie-chart.module.css';
 
 const DEFAULT_SVG_OPTIONS = {

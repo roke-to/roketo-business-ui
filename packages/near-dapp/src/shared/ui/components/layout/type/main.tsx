@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {IconButton} from '~/shared/ui/components/icon-button';
 import {ReactComponent as LogoIcon} from '~/shared/ui/icons/logo.svg';
 import {ReactComponent as MenuIcon} from '~/shared/ui/icons/menu.svg';
 
+import {IconButton} from '../../icon-button';
 import {ILayoutTypeProps} from './base';
 import styles from './main.module.css';
 

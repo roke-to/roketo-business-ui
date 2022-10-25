@@ -3,11 +3,10 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useLocation} from 'react-router-dom';
 
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {LayoutContext} from '~/shared/ui/components/layout';
-import {Typography} from '~/shared/ui/components/typography';
-
+import {Button} from '../button';
+import {Col} from '../col';
+import {LayoutContext} from '../layout';
+import {Typography} from '../typography';
 import styles from './navigate.module.css';
 
 export interface NavItem {

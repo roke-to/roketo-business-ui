@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {Button, ButtonSize, ButtonVariant} from '~/shared/ui/components/button';
-import {IgnoreItems} from '~/shared/ui/components/dropdown/overlay';
 import {ReactComponent as ArrowDown} from '~/shared/ui/icons/arrow-down.svg';
 
+import {Button, ButtonSize, ButtonVariant} from '../button';
 import {Dropdown} from '../dropdown/dropdown';
+import {IgnoreItems} from '../dropdown/overlay';
 import styles from './dropdown-menu.module.css';
 
 export type DropdownMenuRootElementSize = ButtonSize;

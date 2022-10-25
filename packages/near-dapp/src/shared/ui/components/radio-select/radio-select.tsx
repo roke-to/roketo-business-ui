@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {PartVisibleList} from '~/shared/ui/components/part-visible-list';
-import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
-
+import {PartVisibleList} from '../part-visible-list';
+import {RadioGroup, RadioGroupItem} from '../radio-group';
 import styles from './radio-select.module.css';
 
 export interface RadioSelectProps {

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Merge} from 'type-fest';
 
-import {Dropdown} from '~/shared/ui/components/dropdown';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {Input} from '~/shared/ui/components/input';
+import {Dropdown} from '../dropdown';
+import {DropdownContent} from '../dropdown-menu/dropdown-content';
+import {DropdownItem} from '../dropdown-menu/dropdown-item';
+import {Input} from '../input';
 
 export type InputVariant = 'outlined';
 

@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {DropdownMenuRootElementSize} from '~/shared/ui/components/dropdown-menu';
-import {DropdownItem, IDropdownItemProps} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-
+import {DropdownItem, IDropdownItemProps} from '../dropdown-item';
+import {DropdownMenuRootElementSize} from '../dropdown-menu';
 import styles from './dropdown-content.module.css';
 
 const isDropdownItemOrSubMenu = (

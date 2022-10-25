@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {Arrow} from '~/shared/ui/components/arrow';
-import {Button} from '~/shared/ui/components/button';
-
+import {Arrow} from '../arrow';
+import {Button} from '../button';
 import styles from './show-more.module.css';
 
 export interface ShowMoreProps {
