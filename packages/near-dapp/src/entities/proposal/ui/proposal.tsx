@@ -12,10 +12,11 @@ import {$isMobileScreen} from '~/entities/screens';
 import {$tokenBalances} from '~/entities/treasury/model/treasury';
 import {decodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
-import {ButtonNativeLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Line} from '~/shared/ui/components/line';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {ButtonNativeLink} from '@roketo/core/ui/components/button-link';
+import {Col} from '@roketo/core/ui/components/col';
+import {Line} from '@roketo/core/ui/components/line';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './proposal.module.css';
 

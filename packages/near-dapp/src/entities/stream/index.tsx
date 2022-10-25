@@ -6,12 +6,13 @@ import {useParams} from 'react-router-dom';
 import {AddFunds} from '~/entities/steam-add-funds';
 import {StreamControls} from '~/entities/stream-control/StreamControls';
 import {WithdrawButton} from '~/entities/stream-control/WithdrawButton';
-import {useMediaQuery} from '~/shared/hooks/useMatchQuery';
-import {ColorDot} from '~/shared/kit/ColorDot';
-import {Badge} from '~/shared/roketo-ui/Badge';
-import {CopyLinkButton} from '~/shared/roketo-ui/components/CopyLinkButton';
-import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
-import {PageError} from '~/shared/roketo-ui/PageError';
+import {ProgressBar} from '~/shared/roketo-ui/ProgressBar';
+
+import {useMediaQuery} from '@roketo/core/hooks/useMatchQuery';
+import {ColorDot} from '@roketo/core/kit/ColorDot';
+import {Badge} from '@roketo/core/roketo-ui/Badge';
+import {CopyLinkButton} from '@roketo/core/roketo-ui/components/CopyLinkButton';
+import {PageError} from '@roketo/core/roketo-ui/PageError';
 
 import {$loading, $pageError, $stream, $streamInfo, pageGate} from './model';
 import styles from './styles.module.scss';

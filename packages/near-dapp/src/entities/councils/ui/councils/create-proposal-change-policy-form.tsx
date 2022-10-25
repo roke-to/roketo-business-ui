@@ -7,7 +7,8 @@ import {changePolicyProposalForm, changePolicyProposalFx} from '~/entities/gover
 import {CreateProposalForm} from '~/entities/proposal/ui/create-proposal-form';
 import {$tokensNonZeroBalance} from '~/entities/treasury/model/treasury';
 import {$accountId} from '~/entities/wallet';
-import {Modal, ModalProps} from '~/shared/ui/components/modal';
+
+import {Modal, ModalProps} from '@roketo/core/ui/components/modal';
 
 export const CreateProposalChangePolicyForm = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');

@@ -7,7 +7,8 @@ import {isAccountExistFx} from '~/entities/account-exist-effect';
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
-import {validators} from '~/shared/lib/form/validators';
+
+import {validators} from '@roketo/core/lib/form/validators';
 
 export const pageLoaded = createEvent<string>();
 export const $employee = createStore<EmployeeResponseDto | null>(null);

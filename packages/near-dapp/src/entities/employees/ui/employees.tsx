@@ -4,12 +4,12 @@ import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {Link, useRouteMatch} from 'react-router-dom';
 
-import {Col} from '~/shared/ui/components/col';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as CardViewIcon} from '~/shared/ui/icons/employees/cards.svg';
-import {ReactComponent as ListViewIcon} from '~/shared/ui/icons/employees/list.svg';
+import {Col} from '@roketo/core/ui/components/col';
+import {IconButton} from '@roketo/core/ui/components/icon-button';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
+import {ReactComponent as CardViewIcon} from '@roketo/core/ui/icons/employees/cards.svg';
+import {ReactComponent as ListViewIcon} from '@roketo/core/ui/icons/employees/list.svg';
 
 import * as employeesModel from '../model/employees-model';
 import {CreateEmployeeButton} from './create-employee-button';

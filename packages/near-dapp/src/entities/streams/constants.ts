@@ -1,7 +1,6 @@
 import {BigNumber} from 'bignumber.js';
 
-import {OrderType} from '~/shared/roketo-ui/icons/Sort';
-
+import {OrderType} from '@roketo/core/roketo-ui/icons/Sort';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import type {

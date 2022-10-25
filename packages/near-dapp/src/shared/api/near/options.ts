@@ -1,6 +1,6 @@
-import {ReactComponent as MyNearWalletLogo} from '~/shared/ui/icons/wallet/my-near-wallet.svg';
-import {ReactComponent as NearWalletLogo} from '~/shared/ui/icons/wallet/near-wallet.svg';
-import {ReactComponent as SenderLogo} from '~/shared/ui/icons/wallet/sender.svg';
+import {ReactComponent as MyNearWalletLogo} from '@roketo/core/ui/icons/wallet/my-near-wallet.svg';
+import {ReactComponent as NearWalletLogo} from '@roketo/core/ui/icons/wallet/near-wallet.svg';
+import {ReactComponent as SenderLogo} from '@roketo/core/ui/icons/wallet/sender.svg';
 
 export type NetworkId = 'mainnet' | 'testnet';
 

@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+  },
+  "include": ["config", "hooks", "lib", "ui", "tailwindcss.d.ts", "global.d.ts"]
+}

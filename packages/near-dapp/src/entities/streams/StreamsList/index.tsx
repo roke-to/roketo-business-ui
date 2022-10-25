@@ -8,13 +8,13 @@ import {StreamListControls} from '~/entities/stream-control/StreamControls';
 import type {STREAM_STATUS} from '~/shared/api/roketo/constants';
 import {getStreamLink} from '~/shared/config/routes';
 import {testIds} from '~/shared/constants';
-import {ColorDot} from '~/shared/kit/ColorDot';
-import {Badge} from '~/shared/roketo-ui/Badge';
-import {CopyLinkButton} from '~/shared/roketo-ui/components/CopyLinkButton';
-import {ProgressBar} from '~/shared/roketo-ui/components/ProgressBar';
-import {Spinner} from '~/shared/roketo-ui/components/Spinner';
-import clockIcon from '~/shared/roketo-ui/icons/clock.svg';
+import {ProgressBar} from '~/shared/roketo-ui/ProgressBar';
 
+import {ColorDot} from '@roketo/core/kit/ColorDot';
+import {Badge} from '@roketo/core/roketo-ui/Badge';
+import {CopyLinkButton} from '@roketo/core/roketo-ui/components/CopyLinkButton';
+import {Spinner} from '@roketo/core/roketo-ui/components/Spinner';
+import clockIcon from '@roketo/core/roketo-ui/icons/clock.svg';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 import {streamCardDataDefaults, streamProgressDataDefaults} from '../constants';

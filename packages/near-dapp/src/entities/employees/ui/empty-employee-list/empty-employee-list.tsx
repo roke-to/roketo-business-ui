@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Typography} from '~/shared/ui/components/typography';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './empty-employee-list.module.css';
 

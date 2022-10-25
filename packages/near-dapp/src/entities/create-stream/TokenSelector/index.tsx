@@ -4,11 +4,11 @@ import {FieldInputProps, FormikState} from 'formik';
 import React, {useState} from 'react';
 
 import {$tokens} from '~/entities/wallet';
-import {DropdownMenu} from '~/shared/kit/DropdownMenu';
-import {DropdownOpener} from '~/shared/kit/DropdownOpener';
-import {TokenImage} from '~/shared/kit/TokenImage';
-import {FormField} from '~/shared/roketo-ui/components/FormField';
 
+import {DropdownMenu} from '@roketo/core/kit/DropdownMenu';
+import {DropdownOpener} from '@roketo/core/kit/DropdownOpener';
+import {TokenImage} from '@roketo/core/kit/TokenImage';
+import {FormField} from '@roketo/core/roketo-ui/components/FormField';
 import type {RichToken} from '@roketo/sdk/dist/types';
 
 import styles from './styles.module.scss';

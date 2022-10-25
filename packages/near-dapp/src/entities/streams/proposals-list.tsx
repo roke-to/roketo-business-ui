@@ -5,10 +5,11 @@ import {Proposal} from '~/entities/proposal';
 import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
 import {$streamProposals} from '~/entities/streams/model';
 import {ROUTES} from '~/shared/config/routes';
-import {ButtonLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {ButtonLink} from '@roketo/core/ui/components/button-link';
+import {Col} from '@roketo/core/ui/components/col';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import {CreateStreamProposalButton} from './create-stream-proposal-button';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {Layout} from '~/shared/ui/components/layout';
-import {PageStub} from '~/shared/ui/components/page-stub';
+import {Layout} from '@roketo/core/ui/components/layout';
+import {PageStub} from '@roketo/core/ui/components/page-stub';
 
 export const NftPage = () => {
   const {t} = useTranslation('stub');

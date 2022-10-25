@@ -1,6 +1,6 @@
 import {BigNumber} from 'bignumber.js';
 
-import {jsonToBase64} from '~/shared/lib/base64';
+import {jsonToBase64} from '@roketo/core/lib/base64';
 
 import {mapCreateRoketoStreamOptions} from './map-create-roketo-stream-options';
 

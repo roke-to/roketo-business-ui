@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {Treasury} from '~/entities/treasury';
-import {Layout} from '~/shared/ui/components/layout';
+
+import {Layout} from '@roketo/core/ui/components/layout';
 
 export const TreasuryPage = () => (
   <Layout>

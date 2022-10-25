@@ -29,18 +29,18 @@ import {
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
-import {
-  areArraysDifferent,
-  areObjectsDifferent,
-  recordUpdater,
-} from '~/shared/lib/roketo/changeDetection';
-import {isWNearTokenId} from '~/shared/lib/roketo/isWNearTokenId';
-import {getRoundedPercentageRatio} from '~/shared/lib/roketo/math';
-import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
+import {
+  areArraysDifferent,
+  areObjectsDifferent,
+  recordUpdater,
+} from '@roketo/core/roketo/changeDetection';
+import {isWNearTokenId} from '@roketo/core/roketo/isWNearTokenId';
+import {getRoundedPercentageRatio} from '@roketo/core/roketo/math';
+import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 import {
   ableToAddFunds,
   ableToPauseStream,
@@ -289,7 +289,7 @@ sample({
       const token = tokens[tokenId];
       if (!token) return undefined;
       const {decimals} = token.meta;
-      const symbol = isWNearTokenId(tokenId) ? 'NEAR' : token.meta.symbol;
+      const symbol = isWNearTokenId(tokenId, env.WNEAR_ID) ? 'NEAR' : token.meta.symbol;
       const cliffEndTimestamp = calculateCliffEndTimestamp(stream);
       const progress = getStreamProgress({stream});
       const timeLeft = calculateTimeLeft(stream);

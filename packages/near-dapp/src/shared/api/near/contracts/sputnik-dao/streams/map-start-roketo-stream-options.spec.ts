@@ -1,4 +1,4 @@
-import {jsonToBase64} from '~/shared/lib/base64';
+import {jsonToBase64} from '@roketo/core/lib/base64';
 
 import {mapStartRoketoStreamOptions} from './map-start-roketo-stream-options';
 

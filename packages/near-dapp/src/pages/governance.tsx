@@ -1,7 +1,8 @@
 import React from 'react';
 
 import {Governance} from '~/entities/governance';
-import {Layout} from '~/shared/ui/components/layout';
+
+import {Layout} from '@roketo/core/ui/components/layout';
 
 export const GovernancePage = () => (
   <Layout>

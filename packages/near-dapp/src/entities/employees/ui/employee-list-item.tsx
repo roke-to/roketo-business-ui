@@ -2,9 +2,10 @@ import clsx from 'clsx';
 import React from 'react';
 
 import type {EmployeeResponseDto} from '~/shared/api/rb';
-import {Button} from '~/shared/ui/components/button';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Button} from '@roketo/core/ui/components/button';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './employee-list-item.module.css';
 import {EmployeeStatus} from './employee-status';

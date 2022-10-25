@@ -13,8 +13,6 @@ import {
 } from '~/shared/api/near/contracts/contract.constants';
 import {mapFunctionCallOptions} from '~/shared/api/near/contracts/sputnik-dao/map-function-call-options';
 import {mapTransferOptions} from '~/shared/api/near/contracts/sputnik-dao/map-transfer-options';
-import {ValuesOfForm} from '~/shared/lib/form';
-import {validators} from '~/shared/lib/form/validators';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
@@ -22,6 +20,8 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
+import {ValuesOfForm} from '@roketo/core/lib/form';
+import {validators} from '@roketo/core/lib/form/validators';
 
 import {
   $accountId,

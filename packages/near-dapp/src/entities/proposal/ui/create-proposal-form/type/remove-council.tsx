@@ -4,11 +4,12 @@ import React from 'react';
 import {changePolicyProposalForm} from '~/entities/governance/model';
 import {CouncilControl} from '~/entities/proposal/ui/council-control';
 import {$accountId} from '~/entities/wallet';
-import {Col} from '~/shared/ui/components/col';
-import {Input} from '~/shared/ui/components/input';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Col} from '@roketo/core/ui/components/col';
+import {Input} from '@roketo/core/ui/components/input';
+import {Label} from '@roketo/core/ui/components/label';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import {IFormPartProps} from './base';
 import styles from './change-policy.module.css';

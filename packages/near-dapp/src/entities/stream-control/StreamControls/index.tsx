@@ -8,11 +8,11 @@ import {blurGate} from '~/entities/blur';
 import {AddFunds} from '~/entities/steam-add-funds';
 import {$accountId, $currentDaoId} from '~/entities/wallet';
 import {testIds} from '~/shared/constants';
-import {BooleanControl, useBool} from '~/shared/hooks/useBool';
-import {AdaptiveModal} from '~/shared/kit/AdaptiveModal';
-import {DropdownMenuDivider, DropdownMenuItem} from '~/shared/kit/DropdownMenu';
-import {DropdownOpener} from '~/shared/kit/DropdownOpener';
 
+import {BooleanControl, useBool} from '@roketo/core/hooks/useBool';
+import {AdaptiveModal} from '@roketo/core/kit/AdaptiveModal';
+import {DropdownMenuDivider, DropdownMenuItem} from '@roketo/core/kit/DropdownMenu';
+import {DropdownOpener} from '@roketo/core/kit/DropdownOpener';
 import {isActiveStream, isDead, isPausedStream, wasStartedAndLocked} from '@roketo/sdk';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 

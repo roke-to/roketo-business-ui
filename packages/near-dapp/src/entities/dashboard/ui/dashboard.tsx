@@ -13,11 +13,12 @@ import {
   TreasuryInfo,
 } from '~/entities/treasury';
 import {ROUTES} from '~/shared/config/routes';
-import {ButtonLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Line} from '~/shared/ui/components/line';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {ButtonLink} from '@roketo/core/ui/components/button-link';
+import {Col} from '@roketo/core/ui/components/col';
+import {Line} from '@roketo/core/ui/components/line';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 export const Dashboard = () => {
   const isMobile = useStore($isMobileScreen);

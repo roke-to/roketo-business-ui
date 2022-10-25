@@ -6,12 +6,13 @@ import {useHistory} from 'react-router-dom';
 import {$daoIds, $daosLoading} from '~/entities/dao';
 import {$accountId, logoutClicked, setCurrentDaoId} from '~/entities/wallet';
 import {ROUTES} from '~/shared/config/routes';
-import {Button} from '~/shared/ui/components/button';
-import {ButtonLink} from '~/shared/ui/components/button-link';
-import {Col} from '~/shared/ui/components/col';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {RadioSelect} from '~/shared/ui/components/radio-select';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Button} from '@roketo/core/ui/components/button';
+import {ButtonLink} from '@roketo/core/ui/components/button-link';
+import {Col} from '@roketo/core/ui/components/col';
+import {Portlet} from '@roketo/core/ui/components/portlet';
+import {RadioSelect} from '@roketo/core/ui/components/radio-select';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 enum View {
   EMPTY = 'empty',

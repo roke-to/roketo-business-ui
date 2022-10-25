@@ -4,9 +4,10 @@ import React from 'react';
 
 import {$accountStreams} from '~/entities/wallet';
 import {testIds} from '~/shared/constants';
-import {TokenImage} from '~/shared/kit/TokenImage';
-import {Tooltip} from '~/shared/kit/Tooltip';
-import {Button, DisplayMode} from '~/shared/roketo-ui/components/Button';
+
+import {TokenImage} from '@roketo/core/kit/TokenImage';
+import {Tooltip} from '@roketo/core/kit/Tooltip';
+import {Button, DisplayMode} from '@roketo/core/roketo-ui/components/Button';
 
 import {$tokenData, triggerWithdrawAll} from './model';
 import styles from './styles.module.scss';

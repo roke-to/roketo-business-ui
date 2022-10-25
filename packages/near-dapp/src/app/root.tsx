@@ -12,16 +12,17 @@ import {Routing} from '~/pages';
 import {NetworkId} from '~/shared/api/near/options';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
-import {Layout, LayoutProvider} from '~/shared/ui/components/layout';
-import {Navigate} from '~/shared/ui/components/navigate';
-import {PageStub} from '~/shared/ui/components/page-stub';
-import {ReactComponent as DashboardIcon} from '~/shared/ui/icons/nav/dashboard.svg';
-import {ReactComponent as EmployeeIcon} from '~/shared/ui/icons/nav/employee.svg';
-import {ReactComponent as NftIcon} from '~/shared/ui/icons/nav/nft.svg';
-import {ReactComponent as SettingsIcon} from '~/shared/ui/icons/nav/settings.svg';
-import {ReactComponent as StreamIcon} from '~/shared/ui/icons/nav/stream.svg';
-import {ReactComponent as TreasuryIcon} from '~/shared/ui/icons/nav/treasury.svg';
-import '~/shared/ui/styles';
+
+import {Layout, LayoutProvider} from '@roketo/core/ui/components/layout';
+import {Navigate} from '@roketo/core/ui/components/navigate';
+import {PageStub} from '@roketo/core/ui/components/page-stub';
+import {ReactComponent as DashboardIcon} from '@roketo/core/ui/icons/nav/dashboard.svg';
+import {ReactComponent as EmployeeIcon} from '@roketo/core/ui/icons/nav/employee.svg';
+import {ReactComponent as NftIcon} from '@roketo/core/ui/icons/nav/nft.svg';
+import {ReactComponent as SettingsIcon} from '@roketo/core/ui/icons/nav/settings.svg';
+import {ReactComponent as StreamIcon} from '@roketo/core/ui/icons/nav/stream.svg';
+import {ReactComponent as TreasuryIcon} from '@roketo/core/ui/icons/nav/treasury.svg';
+import '@roketo/core/ui/styles';
 
 const navItems = [
   {

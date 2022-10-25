@@ -4,14 +4,15 @@ import {useTranslation} from 'react-i18next';
 
 import {CouncilsList} from '~/entities/councils/ui/councils-list';
 import {$currentDaoQuorumValue, loadDao, loadDaos} from '~/entities/dao';
-import {theme} from '~/shared/config/theme';
-import {Col} from '~/shared/ui/components/col';
-import {Line} from '~/shared/ui/components/line';
-import {PieChart} from '~/shared/ui/components/pie-chart/pie-chart';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Track} from '~/shared/ui/components/range';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {theme} from '@roketo/core/config/theme';
+import {Col} from '@roketo/core/ui/components/col';
+import {Line} from '@roketo/core/ui/components/line';
+import {PieChart} from '@roketo/core/ui/components/pie-chart/pie-chart';
+import {Portlet} from '@roketo/core/ui/components/portlet';
+import {Track} from '@roketo/core/ui/components/range';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import {ChangePolicyButton} from './change-policy-button';
 import styles from './councils.module.css';

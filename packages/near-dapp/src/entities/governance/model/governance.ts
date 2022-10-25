@@ -14,7 +14,6 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS,
 } from '~/shared/api/near/contracts/contract.constants';
-import {validators, ValuesOfForm} from '~/shared/lib/form';
 import {getQuorumValueFromDao} from '~/shared/lib/get-quorum-value';
 import {addKindProposalQuery} from '~/shared/lib/requestQueryBuilder/add-kind-proposal-query';
 import {addStatusProposalQuery} from '~/shared/lib/requestQueryBuilder/add-status-proposal-query';
@@ -24,6 +23,7 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
+import {validators, ValuesOfForm} from '@roketo/core/lib/form';
 
 import {$currentDao} from '../../dao';
 import {$accountId, $currentDaoId, $walletSelector} from '../../wallet';

@@ -3,10 +3,11 @@ import {FieldInputProps, FormikState} from 'formik';
 import React, {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {testIds} from '~/shared/constants';
-import {usePrev} from '~/shared/hooks/usePrev';
-import {isLikeNumber} from '~/shared/lib/roketo/validation';
-import {FormField} from '~/shared/roketo-ui/components/FormField';
-import {Input} from '~/shared/roketo-ui/components/Input';
+
+import {usePrev} from '@roketo/core/hooks/usePrev';
+import {FormField} from '@roketo/core/roketo-ui/components/FormField';
+import {Input} from '@roketo/core/roketo-ui/components/Input';
+import {isLikeNumber} from '@roketo/core/roketo/validation';
 
 import {getDurationInSeconds} from '../lib';
 import styles from './styles.module.scss';

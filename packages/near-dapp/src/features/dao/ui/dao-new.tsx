@@ -7,16 +7,17 @@ import {useTranslation} from 'react-i18next';
 import {$isCouncilExists, $isNewDaoExists, createDaoForm, createDaoFx} from '~/entities/dao';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {$accountId} from '~/entities/wallet';
-import {useQuery} from '~/shared/hooks/use-query';
-import {Alert} from '~/shared/ui/components/alert';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Input} from '~/shared/ui/components/input';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
+
+import {useQuery} from '@roketo/core/hooks/use-query';
+import {Alert} from '@roketo/core/ui/components/alert';
+import {Button} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+import {IconButton} from '@roketo/core/ui/components/icon-button';
+import {Input} from '@roketo/core/ui/components/input';
+import {Label} from '@roketo/core/ui/components/label';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
+import {ReactComponent as Plus} from '@roketo/core/ui/icons/plus.svg';
 
 enum FormView {
   DAO_SETUP = 'daoSetup',

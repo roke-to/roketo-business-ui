@@ -7,10 +7,11 @@ import styles from '~/entities/proposal/ui/votes/votes.module.css';
 import {$accountId} from '~/entities/wallet';
 import {Proposal} from '~/shared/api/astro';
 import {VoteAction} from '~/shared/api/near';
-import {Control} from '~/shared/ui/components/control';
-import {Row} from '~/shared/ui/components/row';
-import {ReactComponent as Minus} from '~/shared/ui/icons/minus.svg';
-import {ReactComponent as Plus} from '~/shared/ui/icons/plus.svg';
+
+import {Control} from '@roketo/core/ui/components/control';
+import {Row} from '@roketo/core/ui/components/row';
+import {ReactComponent as Minus} from '@roketo/core/ui/icons/minus.svg';
+import {ReactComponent as Plus} from '@roketo/core/ui/icons/plus.svg';
 
 export const Controls = ({
   isVotable,
