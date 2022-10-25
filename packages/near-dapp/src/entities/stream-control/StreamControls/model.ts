@@ -8,7 +8,8 @@ import {
 import {$currentDaoId, $near, $walletSelector} from '~/entities/wallet';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
-import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
+
+import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 
 const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
 

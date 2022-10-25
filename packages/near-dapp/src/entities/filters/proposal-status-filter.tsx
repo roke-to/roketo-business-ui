@@ -6,12 +6,13 @@ import {$isMobileScreen} from '~/entities/screens';
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {Modal, useModal} from '~/shared/ui/components/modal';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {DropdownMenu} from '@roketo/core/ui/components/dropdown-menu';
+import {DropdownContent} from '@roketo/core/ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from '@roketo/core/ui/components/dropdown-menu/dropdown-item';
+import {Modal, useModal} from '@roketo/core/ui/components/modal';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './filter.module.css';
 import {ProposalFilterModal} from './modal/proposal-filter-modal';

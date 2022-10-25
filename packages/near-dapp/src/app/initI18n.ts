@@ -1,6 +1,9 @@
 import i18n, {ResourceLanguage} from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
+import stubEn from '@roketo/core/lib/i18n/stubEn.json';
+import validatorsEn from '@roketo/core/lib/i18n/validatorsEn.json';
+
 import councilsEn from '../entities/councils/lib/i18n/councilsEn.json';
 import dashboardEn from '../entities/dashboard/lib/i18n/dashboardEn.json';
 import employeeEn from '../entities/employee/i18n/employeeEn.json';
@@ -10,8 +13,6 @@ import proposalEn from '../entities/proposal/lib/i18n/proposalEn.json';
 import treasuryEn from '../entities/treasury/lib/i18n/treasuryEn.json';
 import authEn from '../features/auth/lib/i18n/authEn.json';
 import daoEn from '../features/dao/lib/i18n/daoEn.json';
-import stubEn from '../shared/lib/i18n/stubEn.json';
-import validatorsEn from '../shared/lib/i18n/validatorsEn.json';
 
 export type Locale = 'en';
 

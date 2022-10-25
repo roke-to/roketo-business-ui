@@ -1,10 +1,10 @@
 import type {FormikState} from 'formik';
 import React, {ReactNode, useState} from 'react';
 
-import {ColorDot} from '~/shared/kit/ColorDot';
-import {DropdownMenu} from '~/shared/kit/DropdownMenu';
-import {DropdownOpener} from '~/shared/kit/DropdownOpener';
-import {FormField} from '~/shared/roketo-ui/components/FormField';
+import {ColorDot} from '@roketo/core/kit/ColorDot';
+import {DropdownMenu} from '@roketo/core/kit/DropdownMenu';
+import {DropdownOpener} from '@roketo/core/kit/DropdownOpener';
+import {FormField} from '@roketo/core/roketo-ui/components/FormField';
 
 import {colorDescriptions, StreamColor, streamColors} from '../constants';
 import styles from './styles.module.scss';

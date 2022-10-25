@@ -4,7 +4,8 @@ import {addFunds} from '~/entities/streams/lib';
 import {$currentDaoId, $listedTokens, $walletSelector} from '~/entities/wallet';
 import {toYocto} from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
-import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
+
+import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 
 export const addFundsFx = createProtectedEffect({
   source: combine(

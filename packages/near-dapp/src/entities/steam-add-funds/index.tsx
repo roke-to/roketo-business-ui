@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import {format} from 'date-fns';
 import {useStore} from 'effector-react';
 import React, {useState} from 'react';
@@ -7,12 +7,12 @@ import Modal from 'react-modal';
 
 import {toYocto} from '~/shared/api/token-formatter';
 import {testIds} from '~/shared/constants';
-import {useBool} from '~/shared/hooks/useBool';
 import {useToken} from '~/shared/hooks/useToken';
 import {Balance, useBalanceForToken} from '~/shared/roketo-ui/Balance';
-import {Button, ButtonType} from '~/shared/roketo-ui/components/Button';
-import {Input} from '~/shared/roketo-ui/components/Input';
 
+import {useBool} from '@roketo/core/hooks/useBool';
+import {Button, ButtonType} from '@roketo/core/roketo-ui/components/Button';
+import {Input} from '@roketo/core/roketo-ui/components/Input';
 import {calculateEndTimestamp, getStreamProgress} from '@roketo/sdk';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 
@@ -76,17 +76,15 @@ export function AddFunds({stream, className}: {stream: RoketoStream; className?:
                 value={deposit ?? ''}
                 onChange={(e) => setDeposit(e.target.value)}
               />
-              <div
-                className={classNames(styles.caption, (dueDate || isStreamEnded) && styles.visible)}
-              >
+              <div className={clsx(styles.caption, (dueDate || isStreamEnded) && styles.visible)}>
                 {isStreamEnded ? (
-                  <span className={classNames(styles.label, styles.red)}>
+                  <span className={clsx(styles.label, styles.red)}>
                     Stream has expired, funds can't be added to it anymore.
                   </span>
                 ) : (
                   <>
                     <span className={styles.label}>New due date:</span>
-                    <span className={classNames(styles.label, styles.bold)}>{dueDate ?? ''}</span>
+                    <span className={clsx(styles.label, styles.bold)}>{dueDate ?? ''}</span>
                   </>
                 )}
               </div>
@@ -95,7 +93,7 @@ export function AddFunds({stream, className}: {stream: RoketoStream; className?:
               <button
                 type='button'
                 onClick={addFundsModal.turnOff}
-                className={classNames(styles.modalButton, styles.modalSecondary)}
+                className={clsx(styles.modalButton, styles.modalSecondary)}
                 disabled={submitting}
               >
                 Cancel

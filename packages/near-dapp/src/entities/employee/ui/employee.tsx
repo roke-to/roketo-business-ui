@@ -1,24 +1,23 @@
 import {useStore} from 'effector-react';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {usePopper} from 'react-popper';
 
 // TODO fix FSD -->
 import * as employeesModel from '~/entities/employees/model/employees-model';
 import {DraftInvoice} from '~/entities/employees/ui/draft-invoice';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
-// TODO fix FSD <--
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Label} from '~/shared/ui/components/label';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as ThreeDotsIcon} from '~/shared/ui/icons/dots.svg';
 
-import {Popover, Transition} from '@headlessui/react';
+import {Button} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+// TODO fix FSD <--
+import {Popover, Transition, usePopper} from '@roketo/core/ui/components/datepicker';
+import {IconButton} from '@roketo/core/ui/components/icon-button';
+import {Label} from '@roketo/core/ui/components/label';
+import {Portlet} from '@roketo/core/ui/components/portlet';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
+import {ReactComponent as ThreeDotsIcon} from '@roketo/core/ui/icons/dots.svg';
 
 import * as employeeModel from '../model/employee-model';
 import {EmployeeStatusActions} from './employee-status-actions';

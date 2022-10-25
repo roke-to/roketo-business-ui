@@ -8,15 +8,16 @@ import {formatAmount} from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
 import {testIds} from '~/shared/constants';
 import {Balance, DisplayMode} from '~/shared/roketo-ui/Balance';
+
 import {
   Button,
   DisplayMode as ButtonDisplayMode,
   ButtonType,
-} from '~/shared/roketo-ui/components/Button';
-import {FormikCheckbox} from '~/shared/roketo-ui/FormikCheckbox';
-import {FormikInput} from '~/shared/roketo-ui/FormikInput';
-import {FormikTextArea} from '~/shared/roketo-ui/FormikTextArea';
-import {ErrorSign} from '~/shared/roketo-ui/icons/ErrorSign';
+} from '@roketo/core/roketo-ui/components/Button';
+import {FormikCheckbox} from '@roketo/core/roketo-ui/FormikCheckbox';
+import {FormikInput} from '@roketo/core/roketo-ui/FormikInput';
+import {FormikTextArea} from '@roketo/core/roketo-ui/FormikTextArea';
+import {ErrorSign} from '@roketo/core/roketo-ui/icons/ErrorSign';
 
 import {CliffPeriodPicker} from '../CliffPeriodPicker';
 import {ColorPicker} from '../ColorPicker';

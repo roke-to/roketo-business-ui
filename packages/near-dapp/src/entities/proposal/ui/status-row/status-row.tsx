@@ -4,10 +4,11 @@ import {useTranslation} from 'react-i18next';
 import {Controls} from '~/entities/proposal/controls';
 import {useCountdown} from '~/entities/proposal/hooks/useCountDown';
 import {Proposal} from '~/shared/api/astro';
-import {formatISODate, toMilliseconds} from '~/shared/lib/dateFormat';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-import {ReactComponent as Clock} from '~/shared/ui/icons/clock.svg';
+
+import {formatISODate, toMilliseconds} from '@roketo/core/lib/dateFormat';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
+import {ReactComponent as Clock} from '@roketo/core/ui/icons/clock.svg';
 
 import styles from '../proposal.module.css';
 

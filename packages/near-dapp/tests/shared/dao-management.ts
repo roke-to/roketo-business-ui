@@ -16,7 +16,8 @@ import {
 import {mapMultiVoteOptions} from '~/shared/api/near/contracts/sputnik-dao/map-multi-vote-options';
 import {getNetworkPreset, NetworkId} from '~/shared/api/near/options';
 import {env} from '~/shared/config/env';
-import {decodeBase64} from '~/shared/lib/base64';
+
+import {decodeBase64} from '@roketo/core/lib/base64';
 
 const ACCOUNT_ID = 'rocketobiztestuser';
 

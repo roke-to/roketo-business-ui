@@ -1,8 +1,8 @@
 import type {BigNumber} from 'bignumber.js';
 
 import type {STREAM_STATUS, StreamDirection} from '~/shared/api/roketo/constants';
-import type {OrderType} from '~/shared/roketo-ui/icons/Sort';
 
+import type {OrderType} from '@roketo/core/roketo-ui/icons/Sort';
 import type {RoketoStream} from '@roketo/sdk/dist/types';
 
 export type DirectionFilter = 'All' | 'Incoming' | 'Outgoing';

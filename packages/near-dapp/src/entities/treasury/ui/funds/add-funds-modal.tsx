@@ -5,11 +5,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {$currentDaoId} from '~/entities/wallet';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Modal, ModalProps} from '~/shared/ui/components/modal';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Button} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+import {Modal, ModalProps} from '@roketo/core/ui/components/modal';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 const SIZE_QR_CODE = 256;
 

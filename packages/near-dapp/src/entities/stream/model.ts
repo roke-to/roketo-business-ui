@@ -13,8 +13,8 @@ import {
 import {STREAM_STATUS, StreamDirection} from '~/shared/api/roketo/constants';
 import {formatAmount, formatSmartly, toHumanReadableValue} from '~/shared/api/token-formatter';
 import {getStreamLink} from '~/shared/config/routes';
-import {createProtectedEffect} from '~/shared/lib/roketo/protectedEffect';
 
+import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 import {
   ableToAddFunds,
   ableToPauseStream,

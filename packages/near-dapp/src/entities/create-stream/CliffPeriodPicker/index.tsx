@@ -2,7 +2,7 @@ import {FieldInputProps, FormikState} from 'formik';
 import React from 'react';
 import DateTimePicker from 'react-datetime-picker';
 
-import {FormField} from '~/shared/roketo-ui/components/FormField';
+import {FormField} from '@roketo/core/roketo-ui/components/FormField';
 
 import styles from './styles.module.scss';
 

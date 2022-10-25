@@ -2,8 +2,9 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
-import {Button, ButtonProps} from '~/shared/ui/components/button';
-import {useModal} from '~/shared/ui/components/modal';
+
+import {Button, ButtonProps} from '@roketo/core/ui/components/button';
+import {useModal} from '@roketo/core/ui/components/modal';
 
 export const CreateTreasuryProposalButton: React.FC<
   Omit<ButtonProps, 'variant' | 'onClick'> & {onClick?: () => void}

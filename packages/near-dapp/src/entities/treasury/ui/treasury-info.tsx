@@ -7,10 +7,11 @@ import {$tokenBalances, loadTokenBalances} from '~/entities/treasury/model/treas
 import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
 import {AddFundsButton} from '~/entities/treasury/ui/funds/add-funds-button';
 import {formatCurrency, formatYoktoValue} from '~/shared/lib/currency';
-import {Chip} from '~/shared/ui/components/chip/Chip';
-import {Line} from '~/shared/ui/components/line';
-import {Portlet} from '~/shared/ui/components/portlet';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Chip} from '@roketo/core/ui/components/chip/Chip';
+import {Line} from '@roketo/core/ui/components/line';
+import {Portlet} from '@roketo/core/ui/components/portlet';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 interface TreasuryInfoProps {
   variant?: 'default' | 'dashboard';

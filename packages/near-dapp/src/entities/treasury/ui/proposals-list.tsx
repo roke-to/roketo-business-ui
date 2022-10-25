@@ -9,7 +9,8 @@ import {
   $treasurySelectedProposalStatus,
 } from '~/entities/treasury/model/treasury';
 import {CreateTreasuryProposalButton} from '~/entities/treasury/ui/create-treasury-proposal-button';
-import {Col} from '~/shared/ui/components/col';
+
+import {Col} from '@roketo/core/ui/components/col';
 
 export const ProposalsList = () => {
   const treasuryProposals = useStore($treasuryProposals);

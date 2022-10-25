@@ -1,0 +1,45 @@
+{
+  "name": "@roketo/core",
+  "version": "0.0.1",
+  "description": "Shared component and utils",
+  "main": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "true"
+  },
+  "devDependencies": {
+    "@types/autosize": "^4.0.1",
+    "@types/jest": "^28.1.6",
+    "@types/json-bigint": "^1.0.1",
+    "@types/lodash": "^4.14.185",
+    "@types/node": "^17.0.21",
+    "@types/rc-tooltip": "^3.7.6",
+    "@types/react": "^17.0.43",
+    "@types/react-datetime-picker": "^3.4.1",
+    "@types/react-dom": "^17.0.13",
+    "@types/react-modal": "^3.13.1",
+    "@types/react-router-dom": "^5.3.3",
+    "vite": "^2.9.15",
+    "vite-plugin-svgr": "^2.2.2"
+  },
+  "peerDependencies": {
+    "clsx": "^1.1.1",
+    "date-fns": "^2.29.1",
+    "effector-forms": "^0.0.24",
+    "formik": "^2.2.9",
+    "i18next": "^21.8.12",
+    "rc-tooltip": "^5.1.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-modal": "^3.14.4",
+    "react-router-dom": "^5.2.0"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.6.5",
+    "history": "^4.9.0",
+    "react-day-picker": "^8.1.0",
+    "react-imask": "^6.4.2",
+    "react-popper": "^2.3.0"
+  }
+}

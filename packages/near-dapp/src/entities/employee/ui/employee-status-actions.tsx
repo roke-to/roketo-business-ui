@@ -2,7 +2,8 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {EmployeeResponseDto} from '~/shared/api/rb/generated/rb-api';
-import {Button} from '~/shared/ui/components/button';
+
+import {Button} from '@roketo/core/ui/components/button';
 
 import * as employeeModel from '../model/employee-model';
 import styles from './employee-status-actions.module.css';

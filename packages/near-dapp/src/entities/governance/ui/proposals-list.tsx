@@ -9,7 +9,8 @@ import {
 } from '~/entities/governance/model';
 import {Proposal} from '~/entities/proposal';
 import {EmptyProposalList} from '~/entities/proposal/ui/empty-proposal-list';
-import {Col} from '~/shared/ui/components/col';
+
+import {Col} from '@roketo/core/ui/components/col';
 
 export const ProposalsList = () => {
   const governanceProposals = useStore($governanceProposals);

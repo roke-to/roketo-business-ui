@@ -10,7 +10,8 @@ import {
   createTreasuryProposalFx,
 } from '~/entities/treasury/model/treasury';
 import {$accountId} from '~/entities/wallet';
-import {Modal, ModalProps} from '~/shared/ui/components/modal';
+
+import {Modal, ModalProps} from '@roketo/core/ui/components/modal';
 
 export const CreateTreasuryProposalModal = (modalProps: ModalProps) => {
   const {t} = useTranslation('proposal');

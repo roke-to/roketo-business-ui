@@ -4,11 +4,12 @@ import {useTranslation} from 'react-i18next';
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
-import {Divider} from '~/shared/ui/components/divider';
-import {Loading} from '~/shared/ui/components/loading';
-import {RadioGroup, RadioGroupItem} from '~/shared/ui/components/radio-group';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Divider} from '@roketo/core/ui/components/divider';
+import {Loading} from '@roketo/core/ui/components/loading';
+import {RadioGroup, RadioGroupItem} from '@roketo/core/ui/components/radio-group';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './proposals-date-sort-modal.module.css';
 

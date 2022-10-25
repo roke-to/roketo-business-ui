@@ -13,8 +13,9 @@ import {
 } from '~/entities/streams/model';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {ProposalVariantForStream} from '~/entities/treasury/model/constants';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import {ProposalsList} from './proposals-list';
 

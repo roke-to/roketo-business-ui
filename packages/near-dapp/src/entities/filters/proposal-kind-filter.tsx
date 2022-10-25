@@ -2,11 +2,12 @@ import React from 'react';
 import {useTranslation} from 'react-i18next';
 
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
-import {DropdownMenu} from '~/shared/ui/components/dropdown-menu';
-import {DropdownContent} from '~/shared/ui/components/dropdown-menu/dropdown-content';
-import {DropdownItem} from '~/shared/ui/components/dropdown-menu/dropdown-item';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {DropdownMenu} from '@roketo/core/ui/components/dropdown-menu';
+import {DropdownContent} from '@roketo/core/ui/components/dropdown-menu/dropdown-content';
+import {DropdownItem} from '@roketo/core/ui/components/dropdown-menu/dropdown-item';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './filter.module.css';
 

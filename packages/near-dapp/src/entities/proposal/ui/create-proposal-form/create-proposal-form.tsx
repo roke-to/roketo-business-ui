@@ -1,14 +1,14 @@
 import {Form} from 'effector-forms';
 import React, {FormEventHandler} from 'react';
 
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Input} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
-import {ShowMore} from '~/shared/ui/components/show-more';
-import {Typography} from '~/shared/ui/components/typography';
+import {Button} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+import {Input} from '@roketo/core/ui/components/input';
+import {InputDropdown} from '@roketo/core/ui/components/input-dropdown';
+import {Label} from '@roketo/core/ui/components/label';
+import {Row} from '@roketo/core/ui/components/row';
+import {ShowMore} from '@roketo/core/ui/components/show-more';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './create-proposal-form.module.css';
 import {AddCouncil} from './type/add-council';

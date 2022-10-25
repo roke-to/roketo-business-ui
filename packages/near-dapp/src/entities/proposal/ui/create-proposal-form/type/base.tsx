@@ -2,7 +2,7 @@ import {Form, Result} from 'effector-forms';
 import {TFunction} from 'react-i18next';
 import {Get} from 'type-fest';
 
-import {ValuesOfForm} from '~/shared/lib/form';
+import {ValuesOfForm} from '@roketo/core/lib/form';
 
 export interface IFormBaseProps<F extends Form<any> = Form<any>> {
   fields: Get<Result<ValuesOfForm<F>>, 'fields'>;

@@ -5,9 +5,9 @@ import {
   ATTACHED_DEPOSIT,
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
-import {encodeBase64} from '~/shared/lib/base64';
 
 import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
+import {encodeBase64} from '@roketo/core/lib/base64';
 
 import {encodeDescription} from './proposal-format';
 

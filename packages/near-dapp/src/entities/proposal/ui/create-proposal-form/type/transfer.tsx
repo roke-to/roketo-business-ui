@@ -1,10 +1,11 @@
 import React from 'react';
 
 import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
-import {Input} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Row} from '~/shared/ui/components/row';
+
+import {Input} from '@roketo/core/ui/components/input';
+import {InputDropdown} from '@roketo/core/ui/components/input-dropdown';
+import {Label} from '@roketo/core/ui/components/label';
+import {Row} from '@roketo/core/ui/components/row';
 
 import {IFormPartProps} from './base';
 

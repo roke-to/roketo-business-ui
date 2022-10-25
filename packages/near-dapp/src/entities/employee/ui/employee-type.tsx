@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import React from 'react';
 
 import {EmployeeResponseDto} from '~/shared/api/rb/generated/rb-api';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Typography} from '@roketo/core/ui/components/typography';
 
 import styles from './employee-type.module.css';
 

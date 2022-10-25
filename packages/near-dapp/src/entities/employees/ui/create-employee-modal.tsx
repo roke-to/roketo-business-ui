@@ -5,15 +5,16 @@ import {TFunction, useTranslation} from 'react-i18next';
 
 import {employeeModel} from '~/entities/employee';
 import {$accountId} from '~/entities/wallet';
-import {Button} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {Datepicker} from '~/shared/ui/components/datepicker';
-import {Input} from '~/shared/ui/components/input';
-import {InputDropdown} from '~/shared/ui/components/input-dropdown';
-import {Label} from '~/shared/ui/components/label';
-import {Modal, ModalProps} from '~/shared/ui/components/modal';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
+
+import {Button} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+import {Datepicker} from '@roketo/core/ui/components/datepicker';
+import {Input} from '@roketo/core/ui/components/input';
+import {InputDropdown} from '@roketo/core/ui/components/input-dropdown';
+import {Label} from '@roketo/core/ui/components/label';
+import {Modal, ModalProps} from '@roketo/core/ui/components/modal';
+import {Row} from '@roketo/core/ui/components/row';
+import {Typography} from '@roketo/core/ui/components/typography';
 
 const Nothing = () => null;
 

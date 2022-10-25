@@ -6,7 +6,8 @@ import {
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
 import {encodeDescription} from '~/shared/api/near/contracts/sputnik-dao/proposal-format';
-import {jsonToBase64} from '~/shared/lib/base64';
+
+import {jsonToBase64} from '@roketo/core/lib/base64';
 
 export const mapWithdrawRoketoStreamOptions = (formData: {
   description: string;

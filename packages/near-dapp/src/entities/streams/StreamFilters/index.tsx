@@ -5,10 +5,11 @@ import Modal from 'react-modal';
 
 import {blurGate} from '~/entities/blur';
 import {$isMobileScreen} from '~/entities/screens';
-import {Filter, FilterOptionWithCounter} from '~/shared/kit/Filter';
-import {RadioButton} from '~/shared/kit/RadioButton';
-import {Button} from '~/shared/roketo-ui/components/Button';
-import {OrderType, SortIcon} from '~/shared/roketo-ui/icons/Sort';
+
+import {Filter, FilterOptionWithCounter} from '@roketo/core/kit/Filter';
+import {RadioButton} from '@roketo/core/kit/RadioButton';
+import {Button} from '@roketo/core/roketo-ui/components/Button';
+import {OrderType, SortIcon} from '@roketo/core/roketo-ui/icons/Sort';
 
 import {directionOptions, sortOptions, statusOptions} from '../constants';
 import {

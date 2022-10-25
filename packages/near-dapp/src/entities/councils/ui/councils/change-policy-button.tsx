@@ -3,9 +3,10 @@ import {useTranslation} from 'react-i18next';
 
 import {CreateProposalChangePolicyForm} from '~/entities/councils/ui/councils/create-proposal-change-policy-form';
 import {openChangePolicyProposalForm} from '~/entities/governance/model';
-import {Button, ButtonProps} from '~/shared/ui/components/button';
-import {Col} from '~/shared/ui/components/col';
-import {useModal} from '~/shared/ui/components/modal';
+
+import {Button, ButtonProps} from '@roketo/core/ui/components/button';
+import {Col} from '@roketo/core/ui/components/col';
+import {useModal} from '@roketo/core/ui/components/modal';
 
 import styles from './councils.module.css';
 
