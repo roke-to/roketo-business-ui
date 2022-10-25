@@ -6,8 +6,10 @@ FROM node:16.13.2-alpine3.15 AS base
 # Set working directory
 WORKDIR /base
 RUN mkdir -p "packages/near-dapp"
+RUN mkdir -p "packages/core"
 # Copy root level package files and install any root dependency
 COPY ["package.json", "yarn.lock", "./"]
+COPY ./packages/core ./packages/core
 COPY ./packages/near-dapp/package.json ./packages/near-dapp/package.json
 RUN yarn --pure-lockfile
 # Copy required packages
