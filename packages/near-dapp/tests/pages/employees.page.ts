@@ -77,7 +77,6 @@ export class EmployeesPage {
   }
 
   async clickSubmitButton() {
-    // await this.page.locator(this.elements.submitButton).nth(3).click()
     await this.page.locator(this.elements.submitButton).click();
   }
 }

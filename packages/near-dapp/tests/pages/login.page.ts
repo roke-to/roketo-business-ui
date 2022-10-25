@@ -31,7 +31,8 @@ export class LoginPage {
   }
 
   async chooseDao(daoId: string) {
-    await this.page.locator('button', {hasText: daoId}).click();
+    // TODO with 'button' changePolicy.e2e.ts don't work
+    await this.page.locator('span', {hasText: daoId}).click();
     await this.page.locator(this.elements.buttonSelectDao).click();
   }
 

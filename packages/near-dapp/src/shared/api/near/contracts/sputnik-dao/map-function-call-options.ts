@@ -6,7 +6,6 @@ import {
   DEFAULT_FUNCTION_CALL_GAS_BN,
 } from '~/shared/api/near/contracts/contract.constants';
 
-import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
 import {encodeBase64} from '@roketo/core/lib/base64';
 
 import {encodeDescription} from './proposal-format';
@@ -18,7 +17,7 @@ export const mapFunctionCallOptions = (formData: {
   json: string;
   deposit: string;
   link: string;
-}): FunctionCallAction['params'] => ({
+}) => ({
   methodName: 'add_proposal',
   args: {
     proposal: {
