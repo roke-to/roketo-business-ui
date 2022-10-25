@@ -5,7 +5,6 @@ import {generatePath} from 'react-router-dom';
 import {colorDescriptions} from '~/entities/create-stream/constants';
 import type {FormValues} from '~/entities/create-stream/constants';
 import {getTokensPerSecondCount} from '~/entities/create-stream/lib';
-import {$isMobileScreen} from '~/entities/screens';
 import {sendTransactionsFx} from '~/entities/transactions';
 import {
   $accountId,
@@ -33,6 +32,7 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {
   areArraysDifferent,
   areObjectsDifferent,

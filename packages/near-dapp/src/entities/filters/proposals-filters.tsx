@@ -1,12 +1,13 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 
-import {$isMobileScreen} from '~/entities/screens';
 import {ProposalKind} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
+
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 
 import styles from './filter.module.css';
 import {ProposalDateSort} from './proposal-date-sort';
