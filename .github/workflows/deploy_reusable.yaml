@@ -88,7 +88,7 @@ jobs:
       - Linux
     environment:
       name: "${{ inputs.app }}.test"
-      url: "https://${{ inputs.app }}-branch-${{ steps.extract_branch.outputs.branch }}.${{ inputs.host }}"
+      url: "https://${{ steps.deploy-host.outputs.result }}"
     steps:
       - uses: actions/checkout@v3
       - name: Login to GCR
@@ -107,6 +107,17 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
         id: extract_branch
+      - name: Get deploy url
+        uses: actions/github-script@v6
+        id: deploy-host
+        with:
+          script: |
+            const branch = process.env.GITHUB_HEAD_REF;
+            const match = branch.match(/\w+-\d+/);
+            const result = match ? `${match[0].toLowerCase()}-${{inputs.app}}.${{inputs.host}}` : null;
+            console.log(result);
+            return result;
+          result-encoding: string
       - name: Set envs
         shell: bash
         env:
@@ -115,7 +126,6 @@ jobs:
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
           export TAG_NAME=${{env.TAG_NAME}}
           export APP=${{env.APP}}
           export SHORT_SHA=${{env.SHORT_SHA}}
@@ -128,7 +138,7 @@ jobs:
             echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"
           else
             echo "##[set-output name=app_name;]$(echo $APP-branch-$GIT_BRANCH)"
-            echo "##[set-output name=app_hostname;]$(echo $APP-branch-$GIT_BRANCH.${{ inputs.host }})"
+            echo "##[set-output name=app_hostname;]$(echo ${{ steps.deploy-host.outputs.result }})"
             echo "##[set-output name=app_tag;]$(echo branch-$GIT_BRANCH-$SHORT_SHA)"
           fi
         id: set_env
@@ -148,11 +158,13 @@ jobs:
           APP_HOSTNAME: ${{ steps.set_env.outputs.app_hostname }}
           APP_NAME: ${{ steps.set_env.outputs.app_name }}
           APP_TAG: ${{ steps.set_env.outputs.app_tag }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
             export APP=${{env.APP}}
             export APP_HOSTNAME=${{env.APP_HOSTNAME}}
             export APP_NAME=${{env.APP_NAME}}
+            export GIT_BRANCH=${{env.GIT_BRANCH}}
             export APP_TAG=${{env.APP_TAG}}
             mkdir -p ~/services/$APP_HOSTNAME/
             mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
@@ -165,7 +177,7 @@ jobs:
             if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
               docker-compose start frontbizui
             fi
-            export text='service '$APP_NAME' updated with url: '$APP_HOSTNAME
+            export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
             . ~/services/sucess.sh
           host: ${{ inputs.host }}
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
