@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {KeyCode} from '~/shared/lib/keyboard/keyBoardMapping';
+import {KeyCode} from './keyBoardMapping';
 
 export type IgnoreItems = HTMLElement | null;
 

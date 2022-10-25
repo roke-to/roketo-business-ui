@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Button} from '~/shared/ui/components/button';
+import {Button} from '../button';
 
 export interface PartVisibleListProps<T> {
   options: T[];

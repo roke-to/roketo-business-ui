@@ -5,12 +5,11 @@ import {DayPicker} from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import {usePopper} from 'react-popper';
 
-import {IconButton} from '~/shared/ui/components/icon-button';
-import {Input, InputProps} from '~/shared/ui/components/input';
-import {ReactComponent as CalendarIcon} from '~/shared/ui/icons/calendar.svg';
-
 import {Popover, Transition} from '@headlessui/react';
 
+import {ReactComponent as CalendarIcon} from '../../icons/calendar.svg';
+import {IconButton} from '../icon-button';
+import {Input, InputProps} from '../input';
 import styles from './datepicker.module.css';
 
 // @ts-expect-err temp

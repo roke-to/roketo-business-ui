@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 
-import {CheckableLabel, CheckableLabelPosition} from '~/shared/ui/components/checkable-label';
-
+import {CheckableLabel, CheckableLabelPosition} from '../checkable-label';
 import {ICheckableRootProps} from '../checkable-root';
 import {Radio} from '../radio';
 import {IRadioGroupContext, RadioGroupContext} from './radio-group-context';

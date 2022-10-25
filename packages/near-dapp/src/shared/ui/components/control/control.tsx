@@ -1,10 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {Button} from '~/shared/ui/components/button';
-import {Row} from '~/shared/ui/components/row';
-import {Typography} from '~/shared/ui/components/typography';
-
+import {Button} from '../button';
+import {Row} from '../row';
+import {Typography} from '../typography';
 import styles from './control.module.css';
 
 export const Control = ({
