@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import {ReactComponent as ArrowDown} from '~/shared/ui/icons/arrow-down.svg';
-
+import {ReactComponent as ArrowDown} from '../../icons/arrow-down.svg';
 import {Button, ButtonSize, ButtonVariant} from '../button';
 import {Dropdown} from '../dropdown/dropdown';
 import {IgnoreItems} from '../dropdown/overlay';
