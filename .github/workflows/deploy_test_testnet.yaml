@@ -9,16 +9,16 @@ on:
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
   cancel-in-progress: true
-  
+
 jobs:
   near-dapp:
     uses: ./.github/workflows/deploy_reusable.yaml
     with:
       package-name: near-dapp
-      app: rocketo-bis-ui
+      app: near-rocketo-bis-ui
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: testnet
-      app-hostname: rocketo-bis-ui.germes.roke.to
+      app-hostname: near-rocketo-bis-ui.germes.roke.to
       host: germes.roke.to
     secrets: inherit
   solana-dapp:
