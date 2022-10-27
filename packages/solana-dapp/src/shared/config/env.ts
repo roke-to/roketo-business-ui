@@ -32,4 +32,4 @@ export const env: EnvType = {
   NETWORK_ID: import.meta.env.VITE_NETWORK_ID,
   RB_UI_MAINNET: import.meta.env.VITE_RB_UI_MAINNET,
   RB_UI_TESTNET: import.meta.env.VITE_RB_UI_TESTNET,
-}
+};
