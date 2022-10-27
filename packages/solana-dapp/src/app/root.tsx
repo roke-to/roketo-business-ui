@@ -1,21 +1,16 @@
 import {useStore} from 'effector-react';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
 
 import '~/app/initI18n';
-import {$appLoading, $appState} from '~/entities/app';
 import {$accountId, logoutClicked} from '~/entities/wallet';
 import {DaoSwitcher} from '~/features/dao/ui/dao-switcher';
 import {Notifications} from '~/features/notifications/ui';
 import {Routing} from '~/pages';
-import {NetworkId} from '~/shared/api/solana/options';
-import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 
 import {$isMobileScreen} from '@roketo/core/effects/screens';
-import {Layout, LayoutProvider} from '@roketo/core/ui/components/layout';
+import {LayoutProvider} from '@roketo/core/ui/components/layout';
 import {Navigate} from '@roketo/core/ui/components/navigate';
-import {PageStub} from '@roketo/core/ui/components/page-stub';
 import {ReactComponent as DashboardIcon} from '@roketo/core/ui/icons/nav/dashboard.svg';
 import {ReactComponent as EmployeeIcon} from '@roketo/core/ui/icons/nav/employee.svg';
 import {ReactComponent as NftIcon} from '@roketo/core/ui/icons/nav/nft.svg';
@@ -57,16 +52,9 @@ const navItems = [
   },
 ];
 
-const dAppHref: Record<NetworkId, string> = {
-  mainnet: env.RB_UI_MAINNET,
-  testnet: env.RB_UI_TESTNET,
-};
-
 export function Root() {
-  const {t} = useTranslation('stub');
   const [isSidebarOpen, setSidebarOpen] = React.useState(false);
-  const isLoading = useStore($appLoading);
-  const appState = useStore($appState);
+
   const accountId = useStore($accountId);
   const isMobile = useStore($isMobileScreen);
   const showSideBar = !isMobile || isSidebarOpen;
@@ -75,30 +63,6 @@ export function Root() {
     () => setSidebarOpen((prevSidebarOpen) => !prevSidebarOpen),
     [],
   );
-
-  console.log('appState', appState);
-
-  if (appState === 'crashed') {
-    const networkId = env.NETWORK_ID === 'testnet' ? 'mainnet' : 'testnet';
-    return (
-      <Layout type='intro'>
-        <PageStub
-          primaryText={t('nearCrashed.primaryText')}
-          secondaryText={t('nearCrashed.secondaryText')}
-          href={dAppHref[networkId]}
-          buttonText={t('nearCrashed.goTo', {networkId})}
-          className='w-[600px] tablet:w-full bg-white'
-        />
-      </Layout>
-    );
-  }
-
-  console.log('isLoading', isLoading);
-
-  // TODO: TBD кажется тут нужен спиннер ибо при ините есть белый экран заметный глазом
-  if (isLoading) {
-    return <Layout type='intro'>Loading...</Layout>;
-  }
 
   return (
     <LayoutProvider
