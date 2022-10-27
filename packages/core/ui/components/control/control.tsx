@@ -43,6 +43,7 @@ export const Control = ({
         className={styles.mobileButton}
         onClick={onClick}
         disabled={disabled}
+        data-enabled={!disabled}
       >
         <Typography as='span' color={variant} className={styles.text}>
           {text}

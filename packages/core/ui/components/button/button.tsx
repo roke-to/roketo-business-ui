@@ -16,6 +16,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: ButtonSize;
   gap?: 'sm' | number;
   width?: 'full';
+  'data-enabled'?: boolean;
 }
 
 const DEFAULT_TAG = 'button';
