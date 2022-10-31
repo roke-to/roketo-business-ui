@@ -70,6 +70,7 @@ jobs:
             echo "branch=$OUTPUT" >> $GITHUB_OUTPUT
         id: extract_branch
       - name: Set docker tags
+        id: docker-tags
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ inputs.app }}
@@ -82,10 +83,12 @@ jobs:
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "$REGISTRY/$APP:latest"
             echo "$REGISTRY/$APP:main-$SHORT_SHA"
+            echo "cache_image=registry.roket.itgage.ru/$APP:cache-latest" >> $GITHUB_OUTPUT
           elif [ "$TAG_NAME" != "" ]; then
             echo "$REGISTRY/$APP:$TAG_NAME"
           else
             echo "$REGISTRY/$APP:$GIT_BRANCH"
+            echo "cache_image=registry.roket.itgage.ru/$APP:cache-$GIT_BRANCH" >> $GITHUB_OUTPUT
             echo "$REGISTRY/$APP:branch-$GIT_BRANCH-$SHORT_SHA"
           fi >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
@@ -95,13 +98,15 @@ jobs:
             echo 'BUILD_ARG_NETWORK_ID=testnet' >> $GITHUB_ENV
           fi
       - name: Build and push image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           build-args: ${{ inputs.network-variable-name }}=${{ env.BUILD_ARG_NETWORK_ID }}
           push: true
           tags: ${{ env.DOCKER_TAGS }}
           file: ./packages/${{ inputs.package-name }}/Dockerfile
+          cache-from: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }}
+          cache-to: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }},mode=max
 
   publish:
     needs:
