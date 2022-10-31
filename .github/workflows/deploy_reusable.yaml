@@ -142,7 +142,7 @@ jobs:
                 if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
                     echo 'for default branch pipeline'
                     USE=false
-                    OUTPUT=''
+                    OUTPUT='main'
                 else
                     echo 'for feature branch pipeline'
                     USE=true
