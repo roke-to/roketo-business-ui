@@ -17,7 +17,7 @@ jobs:
     with:
       package-name: near-dapp
       app: rocketo-bis-ui-testnet
-      registry: 'gcr.io/main-project-354317/'
+      registry: 'gcr.io/main-project-354317'
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: testnet
       app-hostname: testnet.near.app.roke.biz
@@ -28,7 +28,7 @@ jobs:
     with:
       package-name: solana-dapp
       app: solana-rocketo-bis-ui-testnet
-      registry: 'gcr.io/main-project-354317/'
+      registry: 'gcr.io/main-project-354317'
       network-variable-name: BUILD_ARG_VITE_SOLANA_NETWORK_ID
       network-value: testnet
       app-hostname: testnet.solana.app.roke.biz

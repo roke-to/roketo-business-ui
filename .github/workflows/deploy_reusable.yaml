@@ -48,7 +48,26 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
+        run: |
+            if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+                echo 'for pull request pipeline'
+                USE=true
+                OUTPUT=${GITHUB_HEAD_REF##*/}
+            else
+                if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+                    echo 'for default branch pipeline'
+                    USE=false
+                    OUTPUT=''
+                else
+                    echo 'for feature branch pipeline'
+                    USE=true
+                    OUTPUT=${GITHUB_REF##*/}
+                fi
+            fi
+            echo 'version_suffix' $USE
+            echo 'branch:' $OUTPUT
+            echo "version_suffix=$USE" >> $GITHUB_OUTPUT
+            echo "branch=$OUTPUT" >> $GITHUB_OUTPUT
         id: extract_branch
       - name: Set docker tags
         env:
@@ -109,7 +128,26 @@ jobs:
         id: short-sha
       - name: Extract branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_HEAD_REF##*/})"
+        run: |
+            if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+                echo 'for pull request pipeline'
+                USE=true
+                OUTPUT=${GITHUB_HEAD_REF##*/}
+            else
+                if [[ ${{ github.ref }} == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+                    echo 'for default branch pipeline'
+                    USE=false
+                    OUTPUT=''
+                else
+                    echo 'for feature branch pipeline'
+                    USE=true
+                    OUTPUT=${GITHUB_REF##*/}
+                fi
+            fi
+            echo 'version_suffix' $USE
+            echo 'branch:' $OUTPUT
+            echo "version_suffix=$USE" >> $GITHUB_OUTPUT
+            echo "branch=$OUTPUT" >> $GITHUB_OUTPUT
         id: extract_branch
       - name: Get deploy url
         uses: actions/github-script@v6
@@ -201,3 +239,4 @@ jobs:
 
     steps:
       - run: echo "Done"
+      
