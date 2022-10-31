@@ -1,5 +1,7 @@
 import {attach, createEvent, createStore, sample} from 'effector';
 
+import {Adapter} from '@solana/wallet-adapter-base';
+import {PhantomWalletAdapter, SolflareWalletAdapter} from '@solana/wallet-adapter-wallets';
 import {
   isWalletAdapterCompatibleWallet,
   StandardWalletAdapter,
@@ -54,7 +56,7 @@ const changeListenersFx = attach({
   },
 });
 
-export const setCustomAdapters = createEvent<StandardWalletAdapter[]>();
+export const setCustomAdapters = createEvent<Adapter[]>();
 
 sample({
   clock: [$on, setupConnectionFx.doneData],
@@ -81,7 +83,9 @@ sample({
         }
         return true;
       }),
-    ];
+    ] as unknown as ReadonlyArray<StandardWalletAdapter>;
   },
   target: setStandardAdapters,
 });
+
+setCustomAdapters([new PhantomWalletAdapter(), new SolflareWalletAdapter()]);

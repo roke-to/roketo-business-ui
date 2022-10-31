@@ -12,7 +12,6 @@ import {
   WalletNotReadyError,
   WalletReadyState,
 } from '@solana/wallet-adapter-base';
-import {PublicKey} from '@solana/web3.js';
 
 import {
   $adapter,
@@ -24,7 +23,7 @@ import {
   handleAutoConnectRequest as onAutoConnectRequest,
   handleAutoConnectRequestFx as onAutoConnectRequestFx,
   handleConnectError as onConnectError,
-  type Wallet,
+  type WalletLocal,
 } from './wallet';
 
 const $isConnectingRef = createStore<boolean>(false);
@@ -60,20 +59,8 @@ sample({
 });
 
 const $publicKey = $adapter.map((adapter) => adapter?.publicKey ?? null);
-const setPublicKey = createEvent<PublicKey | null>();
-
-sample({
-  clock: setPublicKey,
-  target: $publicKey,
-});
 
 const $connected = $adapter.map((adapter) => adapter?.connected ?? false);
-const setConnected = createEvent<boolean>();
-
-sample({
-  clock: setConnected,
-  target: $connected,
-});
 
 const handleErrorRef = createEvent<{
   error: WalletError;
@@ -102,7 +89,7 @@ sample({
   target: handleErrorRefFx,
 });
 
-const $wallet = createStore<Wallet | null>(null);
+const $wallet = createStore<WalletLocal | null>(null);
 
 sample({
   source: $wallets,
@@ -114,10 +101,6 @@ sample({
 // Setup and teardown event listeners when the adapter changes
 sample({
   clock: handleConnectAdapterEvent,
-  target: setPublicKey,
-});
-sample({
-  clock: handleConnectAdapterEvent,
   fn: () => false,
   target: $isConnectingRef,
 });
@@ -125,11 +108,6 @@ sample({
   clock: handleConnectAdapterEvent,
   fn: () => false,
   target: $connecting,
-});
-sample({
-  clock: handleConnectAdapterEvent,
-  fn: () => true,
-  target: $connected,
 });
 sample({
   clock: handleConnectAdapterEvent,
@@ -144,12 +122,6 @@ sample({
 
 sample({
   clock: handleDisconnectAdapterEvent,
-  fn: () => null,
-  target: setPublicKey,
-});
-
-sample({
-  clock: handleDisconnectAdapterEvent,
   fn: () => false,
   target: $isConnectingRef,
 });
@@ -157,11 +129,6 @@ sample({
   clock: handleDisconnectAdapterEvent,
   fn: () => false,
   target: $connecting,
-});
-sample({
-  clock: handleDisconnectAdapterEvent,
-  fn: () => false,
-  target: $connected,
 });
 sample({
   clock: handleDisconnectAdapterEvent,
@@ -321,22 +288,24 @@ sample({
 
 export const handleConnect = createEvent();
 
-const handleConnectFx = createEffect(async ({wallet}: {wallet: Wallet | null}): Promise<void> => {
-  if (!wallet) {
-    const walletNotSelectedError = new WalletNotSelectedError();
-    handleErrorRef({error: walletNotSelectedError, adapter: null});
-    throw walletNotSelectedError;
-  }
+const handleConnectFx = createEffect(
+  async ({wallet}: {wallet: WalletLocal | null}): Promise<void> => {
+    if (!wallet) {
+      const walletNotSelectedError = new WalletNotSelectedError();
+      handleErrorRef({error: walletNotSelectedError, adapter: null});
+      throw walletNotSelectedError;
+    }
 
-  const {adapter, readyState} = wallet;
+    const {adapter, readyState} = wallet;
 
-  if (!(readyState === WalletReadyState.Installed || readyState === WalletReadyState.Loadable)) {
-    const walletNotReadyError = new WalletNotReadyError();
-    handleErrorRef({error: walletNotReadyError, adapter});
-    throw walletNotReadyError;
-  }
-  return adapter.connect();
-});
+    if (!(readyState === WalletReadyState.Installed || readyState === WalletReadyState.Loadable)) {
+      const walletNotReadyError = new WalletNotReadyError();
+      handleErrorRef({error: walletNotReadyError, adapter});
+      throw walletNotReadyError;
+    }
+    return adapter.connect();
+  },
+);
 
 sample({
   source: {

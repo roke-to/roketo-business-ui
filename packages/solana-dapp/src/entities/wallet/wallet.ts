@@ -82,7 +82,7 @@ export const $adaptersWithMobileWalletAdapter = createStore<
   ReadonlyArray<WalletAdapter<string> | SolanaMobileWalletAdapter | StandardWalletAdapter>
 >([]);
 
-export interface Wallet {
+export interface WalletLocal {
   adapter: WalletAdapter<string> | SolanaMobileWalletAdapter;
   readyState: WalletReadyState;
 }
@@ -97,12 +97,12 @@ export const $wallets = $adaptersWithMobileWalletAdapter.map((adapters) =>
     .filter(({readyState}) => readyState !== WalletReadyState.Unsupported),
 );
 
-export const setWallets = createEvent<Wallet[]>();
-
-sample({
-  clock: setWallets,
-  target: $wallets,
-});
+// export const setWallets = createEvent<Wallet[]>();
+//
+// sample({
+//   clock: setWallets,
+//   target: $wallets,
+// });
 // When the adapters change, start to listen for changes to their `readyState`
 export const handleReadyStateChangeFx = createEffect(
   ({
@@ -116,7 +116,7 @@ export const handleReadyStateChangeFx = createEffect(
     adapters: ReadonlyArray<
       WalletAdapter<string> | SolanaMobileWalletAdapter | StandardWalletAdapter
     >;
-    wallets: Wallet[];
+    wallets: WalletLocal[];
   }) => {
     function handleReadyStateChange(this: Adapter, readyState: WalletReadyState) {
       const index = wallets.findIndex(({adapter: adapterInWallet}) => adapterInWallet === this);
@@ -125,16 +125,19 @@ export const handleReadyStateChangeFx = createEffect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const {adapter: currentAdapter} = wallets[index]!;
 
-      setWallets(
-        [
-          ...wallets.slice(0, index),
-          {adapter: currentAdapter, readyState},
-          ...wallets.slice(index + 1),
-        ].filter(
-          ({readyState: currentWalletReadyState}) =>
-            currentWalletReadyState !== WalletReadyState.Unsupported,
-        ),
-      );
+      console.log('handleReadyStateChange readyState', readyState);
+      console.log('handleReadyStateChange currentAdapter', currentAdapter);
+
+      // setWallets(
+      //   [
+      //     ...wallets.slice(0, index),
+      //     {adapter: currentAdapter, readyState},
+      //     ...wallets.slice(index + 1),
+      //   ].filter(
+      //     ({readyState: currentWalletReadyState}) =>
+      //       currentWalletReadyState !== WalletReadyState.Unsupported,
+      //   ),
+      // );
     }
 
     prevAdapters.forEach((prevAdapter) =>
@@ -169,7 +172,7 @@ sample({
     adapters: ReadonlyArray<
       WalletAdapter<string> | SolanaMobileWalletAdapter | StandardWalletAdapter
     >;
-    wallets: Wallet[];
+    wallets: WalletLocal[];
   } {
     if (
       mobileWalletAdapter == null ||
