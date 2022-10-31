@@ -83,7 +83,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       </Label>
       <Label
         required
-        content={t('createEmployee.form.labels.salary.label')}
+        content={t('createEmployee.form.labels.salary.label.freelancer')}
         error={fields.amount.errorText()}
         className='basis-1/3'
       >
@@ -148,7 +148,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       </Label>
       <Label
         required
-        content={t('createEmployee.form.labels.salary.label')}
+        content={t('createEmployee.form.labels.salary.label.contractor')}
         error={fields.amount.errorText()}
         className='basis-1/3'
       >
