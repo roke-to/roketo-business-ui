@@ -6,11 +6,7 @@ on:
       - master
     paths:
       - 'packages/**'
-    paths-ignore:
-      - '.github/**'
   pull_request:
-    paths-ignore:
-      - '.github/**'
     paths:
       - 'packages/**'
 
