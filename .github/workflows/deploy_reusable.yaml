@@ -51,19 +51,20 @@ jobs:
         env:
           TAG_NAME: ${{ steps.tag-name.outputs.tag }}
           APP: ${{ inputs.app }}
+          REGISTRY: ${{ inputs.registry }}
           SHORT_SHA: ${{ steps.short-sha.outputs.sha }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
           export GIT_BRANCH=${{env.GIT_BRANCH}}
           echo 'DOCKER_TAGS<<EOF' >> $GITHUB_ENV
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
-            echo "registry.roket.itgage.ru/$APP:latest"
-            echo "registry.roket.itgage.ru/$APP:main-$SHORT_SHA"
+            echo "$REGISTRY/$APP:latest"
+            echo "$REGISTRY/$APP:main-$SHORT_SHA"
           elif [ "$TAG_NAME" != "" ]; then
-            echo "registry.roket.itgage.ru/$APP:$TAG_NAME"
+            echo "$REGISTRY/$APP:$TAG_NAME"
           else
-            echo "registry.roket.itgage.ru/$APP:$GIT_BRANCH"
-            echo "registry.roket.itgage.ru/$APP:branch-$GIT_BRANCH-$SHORT_SHA"
+            echo "$REGISTRY/$APP:$GIT_BRANCH"
+            echo "$REGISTRY/$APP:branch-$GIT_BRANCH-$SHORT_SHA"
           fi >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
@@ -156,12 +157,14 @@ jobs:
         env:
           APP: ${{ inputs.app }}
           APP_HOSTNAME: ${{ steps.set_env.outputs.app_hostname }}
+          REGISTRY: ${{ inputs.registry }}
           APP_NAME: ${{ steps.set_env.outputs.app_name }}
           APP_TAG: ${{ steps.set_env.outputs.app_tag }}
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
             export APP=${{env.APP}}
+            export REGISTRY=${{env.REGISTRY}}
             export APP_HOSTNAME=${{env.APP_HOSTNAME}}
             export APP_NAME=${{env.APP_NAME}}
             export GIT_BRANCH=${{env.GIT_BRANCH}}

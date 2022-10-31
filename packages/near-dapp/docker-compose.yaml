@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   frontbizui:
-    image: registry.roket.itgage.ru/${APP?Variable not set}:${APP_TAG}
+    image: ${REGISTRY}/${APP?Variable not set}:${APP_TAG}
     container_name: ${APP_NAME}
     restart: always
     networks:

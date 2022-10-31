@@ -1,7 +1,11 @@
 name: Deploy test [testnet]
 on:
   pull_request:
+    paths-ignore:
+      - '.github/**'
   push:
+    paths-ignore:
+      - '.github/**'
     branches:
       - master
   workflow_dispatch:
@@ -16,6 +20,7 @@ jobs:
     with:
       package-name: near-dapp
       app: near-rocketo-bis-ui
+      registry: 'gcr.io/main-project-354317/'
       network-variable-name: BUILD_ARG_VITE_NEAR_NETWORK_ID
       network-value: testnet
       app-hostname: near-rocketo-bis-ui.germes.roke.to
@@ -26,6 +31,7 @@ jobs:
     with:
       package-name: solana-dapp
       app: solana-rocketo-bis-ui
+      registry: 'gcr.io/main-project-354317/'
       network-variable-name: BUILD_ARG_VITE_SOLANA_NETWORK_ID
       network-value: testnet
       app-hostname: solana-rocketo-bis-ui.germes.roke.to
