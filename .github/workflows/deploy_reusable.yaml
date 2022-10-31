@@ -162,8 +162,13 @@ jobs:
         with:
           script: |
             const branch = process.env.GIT_BRANCH;
+
+            if (branch === 'master' || branch === 'main')
+              return `${{inputs.app}}.${{inputs.host}}`
+
             const match = branch.match(/\w+-\d+/);
-            const result = match ? `${match[0].toLowerCase()}-${{inputs.app}}.${{inputs.host}}` : null;
+            const name = match ? match[0].toLowerCase() : branch;
+            const result = `${name}-${{inputs.app}}.${{inputs.host}}`
             console.log(result);
             return result;
           result-encoding: string
