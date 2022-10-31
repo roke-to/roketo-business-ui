@@ -152,9 +152,11 @@ jobs:
       - name: Get deploy url
         uses: actions/github-script@v6
         id: deploy-host
+        env:
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           script: |
-            const branch = process.env.GITHUB_HEAD_REF;
+            const branch = process.env.GIT_BRANCH;
             const match = branch.match(/\w+-\d+/);
             const result = match ? `${match[0].toLowerCase()}-${{inputs.app}}.${{inputs.host}}` : null;
             console.log(result);
