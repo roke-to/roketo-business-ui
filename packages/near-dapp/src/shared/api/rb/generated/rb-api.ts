@@ -89,7 +89,6 @@ export interface UpdateDraftInvoiceDto {
 }
 
 export interface CreateEmployeeDto {
-  daoId: string;
   name: string;
   nearLogin: string;
   email: string;
@@ -106,7 +105,6 @@ export interface CreateEmployeeDto {
 }
 
 export interface UpdateEmployeeDto {
-  daoId: string;
   name: string;
   nearLogin: string;
   email: string;
@@ -124,6 +122,69 @@ export interface UpdateEmployeeDto {
 
 export interface AuthenticationTokenDto {
   'x-authentication-api': string;
+}
+
+export interface CreatePlanDto {
+  id: string;
+  period: 'Day' | 'Week' | 'Month';
+  amount: number;
+  isEditable: boolean;
+  isPausable: boolean;
+  hasEmails: boolean;
+  subscriptionId: number;
+}
+
+export interface SubscriptionResponseDto {
+  id: number;
+  daoId: string;
+  title?: string;
+  description?: string;
+  webHookLink?: string;
+  plans: CreatePlanDto[];
+}
+
+export interface CreateSubscriptionDto {
+  title?: string;
+  description?: string;
+  webHookLink?: string;
+  daoId: string;
+}
+
+export interface CreateSubscriptionWithPlanDto {
+  title?: string;
+  description?: string;
+  webHookLink?: string;
+  daoId: string;
+  plans: CreatePlanDto[];
+}
+
+export interface UpdatePlanDto {
+  id: string;
+  period: 'Day' | 'Week' | 'Month';
+  amount: number;
+  isEditable: boolean;
+  isPausable: boolean;
+  hasEmails: boolean;
+  subscriptionId: number;
+}
+
+export interface ApplicationResponseDto {
+  id: number;
+  planId: string;
+  accountId: string;
+  redirectUrl: string;
+  payload: string;
+}
+
+export interface CreateApplicationDto {
+  redirectUrl: string;
+  payload: string;
+  planId: string;
+  accountId: string;
+}
+
+export interface UpdateApplicationDto {
+  status: 'Active' | 'Stopped' | 'Paused' | 'Finished';
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -540,7 +601,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     daoControllerUpdateEmployee: (
       daoId: string,
-      employeeId: string,
+      employeeId: number,
       data: UpdateEmployeeDto,
       params: RequestParams = {},
     ) =>
@@ -565,7 +626,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     daoControllerFindOneEmployeeByDao: (
       daoId: string,
-      employeeId: string,
+      employeeId: number,
       params: RequestParams = {},
     ) =>
       this.request<EmployeeResponseDto[], any>({
@@ -585,7 +646,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      * @response `200` `void`
      */
-    daoControllerRemoveEmployee: (daoId: string, employeeId: string, params: RequestParams = {}) =>
+    daoControllerRemoveEmployee: (daoId: string, employeeId: number, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/dao/${daoId}/employees/${employeeId}`,
         method: 'DELETE',
@@ -604,7 +665,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     daoControllerChangeEmployeeStatus: (
       daoId: string,
-      employeeId: string,
+      employeeId: number,
       action: 'Suspend' | 'Reinstate' | 'Fire' | 'Rehire',
       params: RequestParams = {},
     ) =>
@@ -663,6 +724,255 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, any>({
         path: `/authentication/logout`,
         method: 'POST',
+        ...params,
+      }),
+  };
+  subscriptions = {
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerFindAllSubscriptions
+     * @request GET:/subscriptions/{daoId}/subscriptions
+     * @secure
+     * @response `200` `void` List of Subscriptions
+     */
+    subscriptionsControllerFindAllSubscriptions: (
+      daoId: string,
+      query?: {sort?: 'id'; direction?: 'ASC' | 'DESC'},
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/subscriptions/${daoId}/subscriptions`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerFindOneSubscription
+     * @request GET:/subscriptions/{subscriptionId}
+     * @secure
+     * @response `200` `SubscriptionResponseDto` One Subscription
+     */
+    subscriptionsControllerFindOneSubscription: (
+      subscriptionId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<SubscriptionResponseDto, any>({
+        path: `/subscriptions/${subscriptionId}`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerRemoveSubscription
+     * @request DELETE:/subscriptions/{subscriptionId}
+     * @secure
+     * @response `200` `object`
+     */
+    subscriptionsControllerRemoveSubscription: (
+      subscriptionId: number,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/subscriptions/${subscriptionId}`,
+        method: 'DELETE',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerCreateSubscription
+     * @request POST:/subscriptions/{daoId}
+     * @secure
+     * @response `201` `object`
+     */
+    subscriptionsControllerCreateSubscription: (
+      daoId: string,
+      data: CreateSubscriptionDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/subscriptions/${daoId}`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerCreateSubscriptionWithPlan
+     * @request POST:/subscriptions/{daoId}/plans/{subscriptionId}
+     * @secure
+     * @response `201` `object`
+     */
+    subscriptionsControllerCreateSubscriptionWithPlan: (
+      daoId: string,
+      subscriptionId: number,
+      data: CreateSubscriptionWithPlanDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/subscriptions/${daoId}/plans/${subscriptionId}`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerUpdatePlan
+     * @request PATCH:/subscriptions/{subscriptionId}/plans/{planId}
+     * @secure
+     * @response `200` `object`
+     */
+    subscriptionsControllerUpdatePlan: (
+      subscriptionId: number,
+      planId: string,
+      data: UpdatePlanDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/subscriptions/${subscriptionId}/plans/${planId}`,
+        method: 'PATCH',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Subscriptions
+     * @name SubscriptionsControllerRemovePlan
+     * @request DELETE:/subscriptions/{planId}/plans
+     * @secure
+     * @response `200` `void`
+     */
+    subscriptionsControllerRemovePlan: (planId: string, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/subscriptions/${planId}/plans`,
+        method: 'DELETE',
+        secure: true,
+        ...params,
+      }),
+  };
+  applications = {
+    /**
+     * No description
+     *
+     * @tags Applications
+     * @name ApplicationsControllerFindAllApplicationsBySubscription
+     * @request GET:/applications/{subscriptionId}
+     * @secure
+     * @response `200` `(ApplicationResponseDto)[]` List of Applications by subscription
+     */
+    applicationsControllerFindAllApplicationsBySubscription: (
+      subscriptionId: number,
+      query?: {sort?: 'id'; direction?: 'ASC' | 'DESC'},
+      params: RequestParams = {},
+    ) =>
+      this.request<ApplicationResponseDto[], any>({
+        path: `/applications/${subscriptionId}`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Applications
+     * @name ApplicationsControllerFindAllApplicationsByAccount
+     * @request GET:/applications/{accountId}/account
+     * @secure
+     * @response `200` `(ApplicationResponseDto)[]` List of Applications by subscription
+     */
+    applicationsControllerFindAllApplicationsByAccount: (
+      accountId: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<ApplicationResponseDto[], any>({
+        path: `/applications/${accountId}/account`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Applications
+     * @name ApplicationsControllerCreateSubscription
+     * @request POST:/applications/{planId}
+     * @secure
+     * @response `201` `object`
+     */
+    applicationsControllerCreateSubscription: (
+      planId: string,
+      data: CreateApplicationDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/applications/${planId}`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Applications
+     * @name ApplicationsControllerUpdatePlan
+     * @request PATCH:/applications/{applicationId}
+     * @secure
+     * @response `200` `object`
+     */
+    applicationsControllerUpdatePlan: (
+      applicationId: number,
+      data: UpdateApplicationDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<object, any>({
+        path: `/applications/${applicationId}`,
+        method: 'PATCH',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
         ...params,
       }),
   };
