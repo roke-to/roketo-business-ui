@@ -233,9 +233,16 @@ jobs:
             if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
               docker-compose start frontbizui
             fi
-            exit $(docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]') 
-            export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
-            . ~/services/sucess.sh
+            if (docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]') > 0
+              then
+                export text='@there Branch '$GIT_BRANCH' was stuck the deploy to '$APP_HOSTNAME
+                . ~/services/sucess.sh
+                exit 5
+              else
+                export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
+                . ~/services/sucess.sh
+              fi
+
           host: ${{ inputs.host }}
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
