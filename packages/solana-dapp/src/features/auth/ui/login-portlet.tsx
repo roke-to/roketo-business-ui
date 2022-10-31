@@ -2,13 +2,12 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$wallets, changeSelectedWalletName} from '~/entities/wallet';
+import {$wallets, setWalletName} from '~/entities/wallet';
 
 import {Button} from '@roketo/core/ui/components/button';
 import {Col} from '@roketo/core/ui/components/col';
 import {Portlet} from '@roketo/core/ui/components/portlet';
 import {Typography} from '@roketo/core/ui/components/typography';
-// import {useWallet} from "@solana/wallet-adapter-react";
 import {WalletName, WalletReadyState} from '@solana/wallet-adapter-base';
 
 export const LoginPortlet = () => {
@@ -18,7 +17,7 @@ export const LoginPortlet = () => {
   const wallets = useStore($wallets);
 
   const handleWalletClick = (walletName: WalletName) => {
-    changeSelectedWalletName(walletName);
+    setWalletName(walletName);
   };
 
   return (

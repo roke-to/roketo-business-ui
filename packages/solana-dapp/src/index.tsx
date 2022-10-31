@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import ReactModal from 'react-modal';
 
 import {Root} from '~/app/root';
-import {initWallet} from '~/entities/wallet';
+import {initApp} from '~/entities/app';
 
-initWallet();
+initApp();
 
 const rootEl = document.getElementById('root')!;
 ReactModal.setAppElement(rootEl);

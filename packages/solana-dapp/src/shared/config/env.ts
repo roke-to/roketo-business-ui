@@ -1,3 +1,5 @@
+import {WalletAdapterNetwork} from '@solana/wallet-adapter-base';
+
 type EnvType = {
   DEV: boolean;
   PROD: boolean;
@@ -14,7 +16,7 @@ type EnvType = {
   ACCOUNT_SUFFIX: string;
   RB_UI_MAINNET: string;
   RB_UI_TESTNET: string;
-  NETWORK_ID: 'mainnet' | 'testnet';
+  NETWORK_ID: WalletAdapterNetwork;
 };
 
 export const env: EnvType = {
