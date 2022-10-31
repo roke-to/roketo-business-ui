@@ -121,7 +121,9 @@ export default {
       desktop: {min: '1280px'}, // => @media (min-width: 1280px) { ... }
       laptop: {max: '1279px'}, // => @media (max-width: 1279px) { ... }
       tablet: {max: '1023px'}, // => @media (max-width: 1023px) { ... }
-      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... }
+      mobile: {max: '767px'}, // => @media (max-width: 767px) { ... },
+      ...defaultTheme.screens,
+      // TODO TBD max-width брейкпоинты не всегда удобны
     },
     sidebarWidth: '240px',
   },

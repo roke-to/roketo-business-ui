@@ -22,7 +22,7 @@ interface FormTypesProps {
 
 const Freelancer = ({fields, t, pending}: FormTypesProps) => (
   <>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createEmployee.form.labels.name.label')}
@@ -66,7 +66,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
         />
       </Label>
     </Row>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createEmployee.form.labels.email.label')}
@@ -83,7 +83,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
       </Label>
       <Label
         required
-        content={t('createEmployee.form.labels.salary.label')}
+        content={t('createEmployee.form.labels.salary.label.freelancer')}
         error={fields.amount.errorText()}
         className='basis-1/3'
       >
@@ -131,7 +131,7 @@ const Freelancer = ({fields, t, pending}: FormTypesProps) => (
 );
 const Contractor = ({fields, t, pending}: FormTypesProps) => (
   <>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createEmployee.form.labels.nearLogin.label')}
@@ -148,7 +148,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
       </Label>
       <Label
         required
-        content={t('createEmployee.form.labels.salary.label')}
+        content={t('createEmployee.form.labels.salary.label.contractor')}
         error={fields.amount.errorText()}
         className='basis-1/3'
       >
@@ -177,7 +177,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         />
       </Label>
     </Row>
-    <Row gap='md' className='justify-between'>
+    <Row gap='md' className='justify-between mobile:flex-col'>
       <Label
         required
         content={t('createEmployee.form.labels.name.label')}
@@ -221,7 +221,7 @@ const Contractor = ({fields, t, pending}: FormTypesProps) => (
         />
       </Label>
     </Row>
-    <Row gap='md'>
+    <Row gap='md' className='mobile:flex-col'>
       <Label
         required
         content={t('createEmployee.form.labels.startDate.label')}

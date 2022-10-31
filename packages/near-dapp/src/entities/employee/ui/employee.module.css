@@ -1,0 +1,9 @@
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: theme('gap.DEFAULT');
+
+  @media screen(lg) {
+    grid-template-columns: 3fr 1fr;
+  }
+}
