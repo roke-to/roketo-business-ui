@@ -228,6 +228,7 @@ jobs:
             if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
               docker-compose start frontbizui
             fi
+            docker-compose ps -q | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v '^0' | wc -l | tr -d ' '
             export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
             . ~/services/sucess.sh
           host: ${{ inputs.host }}
