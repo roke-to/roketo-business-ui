@@ -9,6 +9,7 @@
   "scripts": {
     "start": "vite",
     "start:prod": "serve -l 3000 dist/",
+    "prebuild": "yarn generate:api",
     "build": "tsc && vite build",
     "test": "cypress run",
     "lint": "eslint -c .eslintrc src --ext .js,.jsx,.ts,.tsx",

@@ -11,9 +11,6 @@ on:
       registry:
         required: true
         type: string
-      network-variable-name:
-        required: true
-        type: string
       network-value:
         required: true
         type: string
@@ -101,10 +98,12 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          build-args: ${{ inputs.network-variable-name }}=${{ env.BUILD_ARG_NETWORK_ID }}
+          build-args: |
+            BUILD_ARG_NETWORK_ID=${{ env.BUILD_ARG_NETWORK_ID }}
+            BUILD_ARG_DAPP=${{ inputs.package-name }}
           push: true
           tags: ${{ env.DOCKER_TAGS }}
-          file: ./packages/${{ inputs.package-name }}/Dockerfile
+          file: ./Dockerfile
           cache-from: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }}
           cache-to: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }},mode=max
 
@@ -259,4 +258,3 @@ jobs:
 
     steps:
       - run: echo "Done"
-      
