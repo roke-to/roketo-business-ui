@@ -233,7 +233,8 @@ jobs:
             if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
               docker-compose start frontbizui
             fi
-            if (docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]') > 0
+            export state=$(docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]')
+            if [ $state -eq "0" ]
               then
                 export text='@there Branch '$GIT_BRANCH' was stuck the deploy to '$APP_HOSTNAME
                 . ~/services/sucess.sh
