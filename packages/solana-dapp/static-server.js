@@ -24,8 +24,6 @@ const server = http.createServer((req, res) => {
 
 const port = process.env.PORT ? Number(process.env.PORT) : 80;
 
-process.exit(1);
-
 server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
