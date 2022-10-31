@@ -8,6 +8,9 @@ on:
       app:
         required: true
         type: string
+      registry:
+        required: true
+        type: string
       network-variable-name:
         required: true
         type: string
