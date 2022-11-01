@@ -48,3 +48,6 @@ playwright/.cache/
 yup
 
 node_modules
+
+# packages/*-dapp/shared/api/*/generated
+generated

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {EmployeeResponseDto} from '~/shared/api/rb/generated/rb-api';
+import {EmployeeResponseDto} from '~/shared/api/rb';
 
 import {Button} from '@roketo/core/ui/components/button';
 

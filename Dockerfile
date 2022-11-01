@@ -16,6 +16,9 @@ COPY ["package.json", "yarn.lock", ""]
 # If <src> is a directory, the entire contents of the directory are copied,
 # including filesystem metadata.
 COPY packages/core packages/core
+COPY packages/get-dotenv packages/get-dotenv
+COPY packages/rb-api packages/rb-api
+COPY packages/astro-api packages/astro-api
 # env needs to be copied before yarn install, because after api will be generated
 COPY packages/$BUILD_ARG_DAPP/package.json packages/$BUILD_ARG_DAPP/.env packages/$BUILD_ARG_DAPP/.env.testnet packages/$BUILD_ARG_DAPP/.env.mainnet packages/$BUILD_ARG_DAPP
 RUN yarn --pure-lockfile
