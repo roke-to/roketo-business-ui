@@ -2,7 +2,7 @@
   "daoInit": {
     "loading": "Loading DAO list...",
     "hasDaoTitle": "Select DAO",
-    "hasDaoSubtitle": "You have multiple DAO on «$accountId», please select one of them, or create a new one",
+    "hasDaoSubtitle": "Select the existing DAO or create a new one",
     "emptyDaoTitle": "You don’t have any DAO",
     "emptyDaoSubtitle": "Check if the wallet address is correct or create a new DAO:",
     "logout": "Logout",

@@ -43,8 +43,6 @@ export const DaoInit = () => {
   // view state mashine
   const view = hasDao ? View.LIST : View.EMPTY;
 
-  const [hasDaoTitleLeft, hasDaoTitleRight] = t('daoInit.hasDaoSubtitle').split('$accountId');
-
   if (daosLoading) {
     return null;
   }
@@ -55,13 +53,7 @@ export const DaoInit = () => {
         <Col gap='lg'>
           <Col gap='xs'>
             <Typography font='heading'>{t('daoInit.hasDaoTitle')}</Typography>
-            <Typography as='span'>
-              {hasDaoTitleLeft}
-              <Typography as='span' data-qa='account' className='break-words'>
-                {accountId}
-              </Typography>
-              {hasDaoTitleRight}
-            </Typography>
+            <Typography as='span'>{t('daoInit.hasDaoSubtitle')}</Typography>
           </Col>
           <Col gap='xl'>
             <RadioSelect
