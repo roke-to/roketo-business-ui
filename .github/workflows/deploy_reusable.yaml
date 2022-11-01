@@ -236,12 +236,12 @@ jobs:
             export state=$(docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]')
             if [ $state -eq "0" ]
               then
-                export text='@here Branch '$GIT_BRANCH' was stuck the deploy to '$APP_HOSTNAME
-                . ~/services/sucess.sh
-                exit 5
-              else
                 export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
                 . ~/services/sucess.sh
+              else
+                export text='@here Branch '$GIT_BRANCH' was stuck the deploy to '$APP_HOSTNAME' with error-code: '$state
+                . ~/services/sucess.sh
+                exit 5
               fi
 
           host: ${{ inputs.host }}
