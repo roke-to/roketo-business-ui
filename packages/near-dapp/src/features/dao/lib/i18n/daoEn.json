@@ -16,7 +16,7 @@
     "setupSubTitle": "Enter Safe name and address",
     "addCouncilsTitle": "Add Keys",
     "councilAddressLabel": "Key address",
-    "councilAddressPlaceholder": "Addcouncilname.near",
+    "councilAddressPlaceholder": "Addkeyname.near",
     "councilListLabel": "Keys list",
     "addCouncilsSubTitle": "Keys can voit for proposals",
     "submitCouncils": "Add Keys",

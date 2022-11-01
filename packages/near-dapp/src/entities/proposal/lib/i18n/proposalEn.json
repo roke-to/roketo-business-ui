@@ -55,7 +55,7 @@
     "charge": "You will be charged",
     "councilAddressLabel": "Key.address",
     "accountNotExists": "Account not exists",
-    "councilAddressPlaceholder": "newcouncilname.near",
+    "councilAddressPlaceholder": "newkeyname.near",
     "requiredRemoveCouncilAddress": "You should choose one of keys for action",
     "councilListLabel": "Key list",
     "quorum": "Quorum"
