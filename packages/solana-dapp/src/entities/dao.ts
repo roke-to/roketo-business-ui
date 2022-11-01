@@ -1,6 +1,13 @@
 import {attach, createStore, sample} from 'effector';
 
-import {$accountId} from '~/entities/wallet';
+import {
+  $accountId, // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  $connection, // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  sendTransaction, // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  signAllTransactions, // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  signMessage, // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  signTransaction,
+} from '~/entities/wallet';
 
 interface AccountDaoResponse {
   id: string;

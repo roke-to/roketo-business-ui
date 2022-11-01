@@ -12,11 +12,13 @@ import {
   WalletNotReadyError,
   WalletReadyState,
 } from '@solana/wallet-adapter-base';
+import {PublicKey} from '@solana/web3.js';
 
 import {
   $adapter,
   $isUnloadingRef,
   $wallets,
+  handleConnect,
   handleConnectAdapterEvent,
   handleDisconnectAdapterEvent,
   handleErrorAdapterEvent,
@@ -27,7 +29,7 @@ import {
 } from './wallet';
 
 const $isConnectingRef = createStore<boolean>(false);
-export const changeIsConnectingRef = createEvent<boolean>();
+const changeIsConnectingRef = createEvent<boolean>();
 
 sample({
   clock: changeIsConnectingRef,
@@ -35,7 +37,7 @@ sample({
 });
 
 const $connecting = createStore<boolean>(false);
-export const changeConnecting = createEvent<boolean>();
+const changeConnecting = createEvent<boolean>();
 
 sample({
   clock: changeConnecting,
@@ -43,7 +45,7 @@ sample({
 });
 
 const $isDisconnectingRef = createStore<boolean>(false);
-export const changeIsDisconnectingRef = createEvent<boolean>();
+const changeIsDisconnectingRef = createEvent<boolean>();
 
 sample({
   clock: changeIsDisconnectingRef,
@@ -51,14 +53,19 @@ sample({
 });
 
 const $disconnecting = createStore<boolean>(false);
-export const changeDisconnecting = createEvent<boolean>();
+const changeDisconnecting = createEvent<boolean>();
 
 sample({
   clock: changeDisconnecting,
   target: $disconnecting,
 });
 
-const $publicKey = $adapter.map((adapter) => adapter?.publicKey ?? null);
+const $publicKey = createStore<PublicKey | null>(null);
+sample({
+  source: $adapter,
+  fn: (adapter) => adapter?.publicKey ?? null,
+  target: $publicKey,
+});
 
 const $connected = $adapter.map((adapter) => adapter?.connected ?? false);
 
@@ -101,6 +108,10 @@ sample({
 // Setup and teardown event listeners when the adapter changes
 sample({
   clock: handleConnectAdapterEvent,
+  target: $publicKey,
+});
+sample({
+  clock: handleConnectAdapterEvent,
   fn: () => false,
   target: $isConnectingRef,
 });
@@ -120,6 +131,11 @@ sample({
   target: $disconnecting,
 });
 
+sample({
+  clock: handleDisconnectAdapterEvent,
+  fn: () => null,
+  target: $publicKey,
+});
 sample({
   clock: handleDisconnectAdapterEvent,
   fn: () => false,
@@ -286,8 +302,6 @@ sample({
   target: signMessageFx,
 });
 
-export const handleConnect = createEvent();
-
 const handleConnectFx = createEffect(
   async ({wallet}: {wallet: WalletLocal | null}): Promise<void> => {
     if (!wallet) {
@@ -334,8 +348,8 @@ sample({
   target: [$isConnectingRef, $connecting],
 });
 
-export const handleDisconnect = createEvent();
-export const handleDisconnectFx = createEffect(
+const handleDisconnect = createEvent();
+const handleDisconnectFx = createEffect(
   async ({adapter}: {adapter: WalletAdapter<string> | SolanaMobileWalletAdapter | null}) =>
     adapter!.disconnect(),
 );
@@ -374,6 +388,10 @@ $accountId.watch((account) => {
 
 // Logout logic
 export const logoutClicked = createEvent();
+sample({
+  clock: logoutClicked,
+  target: handleDisconnect,
+});
 
 export const $currentDaoId = createStore('');
 export const setCurrentDaoId = createEvent<string>();

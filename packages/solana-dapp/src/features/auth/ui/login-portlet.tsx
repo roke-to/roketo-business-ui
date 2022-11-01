@@ -13,7 +13,6 @@ import {WalletName, WalletReadyState} from '@solana/wallet-adapter-base';
 export const LoginPortlet = () => {
   const {t} = useTranslation('auth');
 
-  // const {wallets, select} = useWallet();
   const wallets = useStore($wallets);
 
   const handleWalletClick = (walletName: WalletName) => {

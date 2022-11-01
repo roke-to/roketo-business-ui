@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite';
+import {defineConfig, loadEnv} from 'vite';
 import checker from 'vite-plugin-checker';
 import htmlEnv from 'vite-plugin-html-env';
 import svgr from 'vite-plugin-svgr';
@@ -11,21 +11,26 @@ import react from '@vitejs/plugin-react';
 import postcss from './postcss.config';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  server: {
-    port: 3001,
-  },
-  base: process.env.VITE_BASE_PUBLIC_PATH,
-  css: {
-    postcss,
-  },
-  plugins: [
-    viteCommonjs(),
-    react(),
-    svgr(),
-    babel({extensions: ['.ts', '.tsx'], babelHelpers: 'bundled'}),
-    checker({typescript: true}),
-    tsconfigPaths(),
-    htmlEnv(),
-  ],
+export default defineConfig((env) => {
+  const envVariables = loadEnv(env.mode, process.cwd());
+  return {
+    ...(envVariables.VITE_LOCAL_PORT && {
+      server: {
+        port: envVariables.VITE_LOCAL_PORT,
+      },
+    }),
+    base: envVariables.VITE_BASE_PUBLIC_PATH,
+    css: {
+      postcss,
+    },
+    plugins: [
+      viteCommonjs(),
+      react(),
+      svgr(),
+      babel({extensions: ['.ts', '.tsx'], babelHelpers: 'bundled'}),
+      checker({typescript: true}),
+      tsconfigPaths(),
+      htmlEnv(),
+    ],
+  };
 });

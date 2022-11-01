@@ -56,10 +56,10 @@ const changeListenersFx = attach({
   },
 });
 
-export const setCustomAdapters = createEvent<Adapter[]>();
+const setCustomAdapters = createEvent<Adapter[]>();
 
 sample({
-  clock: [$on, setupConnectionFx.doneData],
+  clock: [$on, setupConnectionFx.doneData, $standardAdapters],
   target: changeListenersFx,
 });
 

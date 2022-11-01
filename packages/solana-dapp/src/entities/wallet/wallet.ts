@@ -18,36 +18,17 @@ import {StandardWalletAdapter} from '@solana/wallet-standard-wallet-adapter-base
 import {PublicKey} from '@solana/web3.js';
 
 import {$rpcEndpoint} from './connection';
-import getEnvironment, {Environment} from './getEnvironment';
 import getInferredClusterFromEndpoint from './getInferredClusterFromEndpoint';
 import {$standardAdapters as $adaptersWithStandardAdapters} from './standard-wallet-adapters';
+import {getIsMobile, getUriForAppIdentity} from './utils';
 
 const $mobileWalletAdapter = createStore<SolanaMobileWalletAdapter | StandardWalletAdapter | null>(
   null,
 );
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-let _userAgent: string | null;
-
-function getUserAgent() {
-  if (_userAgent === undefined) {
-    _userAgent = globalThis.navigator?.userAgent ?? null;
-  }
-  return _userAgent;
-}
-
-function getIsMobile(adapters: Adapter[]) {
-  const userAgentString = getUserAgent();
-  return getEnvironment({adapters, userAgentString}) === Environment.MOBILE_WEB;
-}
-
-function getUriForAppIdentity() {
-  const {location} = globalThis;
-  if (location == null) {
-    return;
-  }
-  return `${location.protocol}//${location.host}`;
-}
+// We use this event, because on start application $adaptersWithStandardAdapters could exist,
+// and $mobileWalletAdapter might not have changed its value from default
+const wasChangeStandardAdapters = createEvent();
 
 sample({
   source: {standardAdapters: $adaptersWithStandardAdapters, rpcEndpoint: $rpcEndpoint},
@@ -75,10 +56,10 @@ sample({
       onWalletNotFound: createDefaultWalletNotFoundHandler(),
     });
   },
-  target: $mobileWalletAdapter,
+  target: [$mobileWalletAdapter, wasChangeStandardAdapters],
 });
 
-export const $adaptersWithMobileWalletAdapter = createStore<
+const $adaptersWithMobileWalletAdapter = createStore<
   ReadonlyArray<WalletAdapter<string> | SolanaMobileWalletAdapter | StandardWalletAdapter>
 >([]);
 
@@ -88,23 +69,32 @@ export interface WalletLocal {
 }
 
 // Wrap adapters to conform to the `Wallet` interface
-export const $wallets = $adaptersWithMobileWalletAdapter.map((adapters) =>
-  adapters
-    .map((adapter) => ({
-      adapter,
-      readyState: adapter.readyState,
-    }))
-    .filter(({readyState}) => readyState !== WalletReadyState.Unsupported),
-);
+export const $wallets = createStore<WalletLocal[]>([]);
+const setWallets = createEvent<WalletLocal[]>();
+const setAdaptersToWallets =
+  createEvent<
+    ReadonlyArray<WalletAdapter<string> | SolanaMobileWalletAdapter | StandardWalletAdapter>
+  >();
 
-// export const setWallets = createEvent<Wallet[]>();
-//
-// sample({
-//   clock: setWallets,
-//   target: $wallets,
-// });
+sample({
+  clock: setAdaptersToWallets,
+  fn: (adapters) =>
+    adapters
+      .map((adapter) => ({
+        adapter,
+        readyState: adapter.readyState,
+      }))
+      .filter(({readyState}) => readyState !== WalletReadyState.Unsupported),
+  target: setWallets,
+});
+
+sample({
+  clock: setWallets,
+  target: $wallets,
+});
+
 // When the adapters change, start to listen for changes to their `readyState`
-export const handleReadyStateChangeFx = createEffect(
+const handleReadyStateChangeFx = createEffect(
   ({
     prevAdapters,
     adapters,
@@ -125,19 +115,16 @@ export const handleReadyStateChangeFx = createEffect(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const {adapter: currentAdapter} = wallets[index]!;
 
-      console.log('handleReadyStateChange readyState', readyState);
-      console.log('handleReadyStateChange currentAdapter', currentAdapter);
-
-      // setWallets(
-      //   [
-      //     ...wallets.slice(0, index),
-      //     {adapter: currentAdapter, readyState},
-      //     ...wallets.slice(index + 1),
-      //   ].filter(
-      //     ({readyState: currentWalletReadyState}) =>
-      //       currentWalletReadyState !== WalletReadyState.Unsupported,
-      //   ),
-      // );
+      setWallets(
+        [
+          ...wallets.slice(0, index),
+          {adapter: currentAdapter, readyState},
+          ...wallets.slice(index + 1),
+        ].filter(
+          ({readyState: currentWalletReadyState}) =>
+            currentWalletReadyState !== WalletReadyState.Unsupported,
+        ),
+      );
     }
 
     prevAdapters.forEach((prevAdapter) =>
@@ -159,7 +146,7 @@ sample({
     adaptersWithMobileWalletAdapter: $adaptersWithMobileWalletAdapter,
     wallets: $wallets,
   },
-  clock: [$mobileWalletAdapter, $adaptersWithStandardAdapters],
+  clock: [wasChangeStandardAdapters, $mobileWalletAdapter, $adaptersWithStandardAdapters],
   fn({
     mobileWalletAdapter,
     adaptersWithStandardAdapters,
@@ -195,7 +182,7 @@ sample({
 
 sample({
   source: handleReadyStateChangeFx.doneData,
-  target: $adaptersWithMobileWalletAdapter,
+  target: [$adaptersWithMobileWalletAdapter, setAdaptersToWallets],
 });
 
 const SOLANA_WALLET_NAME_LOCAL_STORAGE_KEY = `app:solana:walletName`;
@@ -217,7 +204,7 @@ const getWalletNameFromLocalStorage = (): WalletName | null => {
   return getIsMobile(adaptersWithStandardAdapters) ? SolanaMobileWalletAdapterWalletName : null;
 };
 
-export const $walletName = createStore<WalletName | null>(getWalletNameFromLocalStorage());
+const $walletName = createStore<WalletName | null>(getWalletNameFromLocalStorage());
 
 export const setWalletName = createEvent<WalletName | null>();
 
@@ -355,7 +342,7 @@ sample({
   target: [handleDisconnectFx, setupEventListenersFx],
 });
 
-export const changeIsUnloadingRef = createEvent<boolean>();
+const changeIsUnloadingRef = createEvent<boolean>();
 
 sample({
   clock: changeIsUnloadingRef,
@@ -363,7 +350,7 @@ sample({
 });
 
 const $autoConnect = createStore(true);
-export const changeAutoConnect = createEvent<boolean>();
+const changeAutoConnect = createEvent<boolean>();
 sample({
   clock: changeAutoConnect,
   target: $autoConnect,
@@ -404,6 +391,13 @@ sample({
   clock: handleAutoConnectRequest,
   filter: ({adapter, autoConnect}) => autoConnect && Boolean(adapter),
   target: handleAutoConnectRequestFx,
+});
+
+export const handleConnect = createEvent();
+
+sample({
+  clock: handleAutoConnectRequestFx.doneData,
+  target: handleConnect,
 });
 
 function handleBeforeUnload() {
