@@ -19,7 +19,7 @@ export const loadEmployeeFx = attach({
   },
   async effect({daoId}, employeeId: string) {
     return rbApi.dao
-      .daoControllerFindOneEmployeeByDao(daoId, employeeId)
+      .daoControllerFindOneEmployeeByDao(daoId, +employeeId)
       .then((response) => response[0]);
   },
 });
@@ -32,7 +32,7 @@ const changeEmployeeStatusFx = attach({
     employee: $employee,
   },
   async effect({daoId, employee}, action: EmployeeStatusChangeAction) {
-    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, String(employee!.id), action);
+    return rbApi.dao.daoControllerChangeEmployeeStatus(daoId, employee!.id, action);
   },
 });
 
@@ -108,7 +108,6 @@ export const addEmployeeFx = attach({
     } = formData;
 
     const data: CreateEmployeeDto = {
-      daoId,
       status: 'Active',
       amount: Number(amount) || 0,
       payPeriod: Number(payPeriod) || 2,
@@ -242,13 +241,12 @@ export const updateEmployeeFx = attach({
     } = formData;
 
     const data: UpdateEmployeeDto = {
-      daoId,
       type: employee!.type,
       amount: Number(amount) || 0,
       payPeriod: Number(payPeriod) || 2,
       ...restForm,
     };
-    return rbApi.dao.daoControllerUpdateEmployee(daoId, String(employee!.id), data);
+    return rbApi.dao.daoControllerUpdateEmployee(daoId, employee!.id, data);
   },
 });
 

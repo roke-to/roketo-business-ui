@@ -6,9 +6,9 @@ on:
       - master
     paths:
       - 'packages/**'
-  pull_request:
-    paths:
-      - 'packages/**'
+  workflow_run:
+    workflows: [Deploy test [testnet]]
+    types: [completed]
 
 concurrency:
   group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
