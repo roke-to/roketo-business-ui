@@ -1,11 +1,6 @@
 name: Playwright matrix
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'packages/**'
   workflow_run:
     workflows: [Deploy test |testnet|]
     types: [completed]
