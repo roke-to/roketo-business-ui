@@ -7133,6 +7133,11 @@ react-time-picker@^4.5.0:
     react-fit "^1.4.0"
     update-input-width "^1.2.2"
 
+react-use-intercom@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-use-intercom/-/react-use-intercom-2.0.0.tgz#d90a1c63d2fee0b3e66ba95ab27b226b1ee5efa0"
+  integrity sha512-DSm79RtGHAQyZ4WfBFuNMWtmpyLjWt6jhrhFwfMmy/eIvvCeJ+5wMdPMGXBn2+qzLDyhV0fqo3vNsqR4EvFqHw==
+
 react@^16.13.1:
   version "16.14.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"

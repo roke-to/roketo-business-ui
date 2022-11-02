@@ -73,6 +73,7 @@
     "react-popper": "^2.3.0",
     "react-range": "^1.8.14",
     "react-router-dom": "^5.2.0",
+    "react-use-intercom": "^2.0.0",
     "serve": "^13.0.2",
     "type-fest": "^2.14.0",
     "yup": "^0.32.9"

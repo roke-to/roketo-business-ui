@@ -14,7 +14,6 @@ export const Analytics = ({ trackingId }: AnalyticsProps) => {
 	}, [trackingId])
 
 	React.useEffect(() => {
-		console.log('location', location)
 		ReactGA.pageview(window.location.pathname + window.location.search);
 	}, [location]);
 
