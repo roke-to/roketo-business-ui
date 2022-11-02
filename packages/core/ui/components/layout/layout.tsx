@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {LayoutContext} from './provider';
-import {IntroLayout, MainLayout} from './type';
+import { LayoutContext } from './provider';
+import { IntroLayout, MainLayout } from './type';
+import { Analytics } from '../analytics';
 
 const layoutTypes = {
   intro: IntroLayout,
@@ -14,11 +15,16 @@ export interface ILayoutProps {
   type?: LayoutType;
 }
 
-export const Layout: React.FC<ILayoutProps> = ({children, type = 'main'}) => {
-  const layoutProps = React.useContext(LayoutContext);
+export const Layout: React.FC<ILayoutProps> = ({ children, type = 'main' }) => {
+  const { trackingId, ...layoutProps } = React.useContext(LayoutContext);
   const LayoutComponent = layoutTypes[type];
 
-  return <LayoutComponent {...layoutProps}>{children}</LayoutComponent>;
+  return (
+    <>
+      <LayoutComponent {...layoutProps}>{children}</LayoutComponent>
+      <Analytics trackingId={trackingId} />
+    </>
+  );
 };
 
 Layout.displayName = 'Layout';

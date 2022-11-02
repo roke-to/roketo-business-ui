@@ -76,9 +76,11 @@ export function Root() {
     [],
   );
 
+  let mainContent;
+
   if (appState === 'crashed') {
     const networkId = env.NEAR_NETWORK_ID === 'testnet' ? 'mainnet' : 'testnet';
-    return (
+    mainContent = (
       <Layout type='intro'>
         <PageStub
           primaryText={t('nearCrashed.primaryText')}
@@ -90,14 +92,16 @@ export function Root() {
       </Layout>
     );
   }
-
   // TODO: TBD кажется тут нужен спиннер ибо при ините есть белый экран заметный глазом
-  if (isLoading) {
-    return <Layout type='intro'>Loading...</Layout>;
+  else if (isLoading) {
+    mainContent = <Layout type='intro'>Loading...</Layout>;
+  } else {
+    mainContent = <Routing />;
   }
 
   return (
     <LayoutProvider
+      trackingId={env.TRACKING_ID}
       isSidebarOpen={showSideBar}
       onSidebarToggle={handleSidebarToggle}
       sidebarContent={
@@ -115,7 +119,7 @@ export function Root() {
         </>
       }
     >
-      <Routing />
+      {mainContent}
     </LayoutProvider>
   );
 }
