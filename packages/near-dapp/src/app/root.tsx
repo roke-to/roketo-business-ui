@@ -1,6 +1,7 @@
 import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import {Router} from 'react-router-dom';
 
 import '~/app/initI18n';
 import {$appLoading, $appState} from '~/entities/app';
@@ -12,6 +13,7 @@ import {Routing} from '~/pages';
 import {NetworkId} from '~/shared/api/near/options';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
+import {history} from '~/shared/lib/router';
 
 import {Layout, LayoutProvider} from '@roketo/core/ui/components/layout';
 import {Navigate} from '@roketo/core/ui/components/navigate';
@@ -102,6 +104,7 @@ export function Root() {
   return (
     <LayoutProvider
       trackingId={env.TRACKING_ID}
+      intercomId={env.INTERCOM_ID}
       isSidebarOpen={showSideBar}
       onSidebarToggle={handleSidebarToggle}
       sidebarContent={
@@ -119,7 +122,7 @@ export function Root() {
         </>
       }
     >
-      {mainContent}
+      <Router history={history}>{mainContent}</Router>
     </LayoutProvider>
   );
 }

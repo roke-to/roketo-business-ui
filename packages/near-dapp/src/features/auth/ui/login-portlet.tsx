@@ -2,6 +2,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
+// import {useIntercom} from 'react-use-intercom';
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
 
@@ -18,6 +19,13 @@ export const LoginPortlet = () => {
   const {modules, selectedWalletId} = useStore($walletSelectorState);
 
   const handleWalletClick = (module: ModuleState) => () => walletClicked(module);
+
+  // TODO@extg: Setup intetcom RB-312
+  // const {boot, show} = useIntercom();
+  // const handleShowHelp = () => {
+  //   boot();
+  //   show();
+  // };
 
   return (
     <Portlet gap='xl' className='pb-12 mobile:pb-8'>
@@ -64,6 +72,16 @@ export const LoginPortlet = () => {
         })}
         <Typography as='p' color='muted' className='text-center'>
           {t('footer')}
+          {/* TODO@extg: Setup intetcom RB-312 */}
+          {/* <button
+            type='button'
+            className='text-blue-textDefault cursor-pointer'
+            onClick={handleShowHelp}
+          >
+            Leave contact info
+          </button>
+          , personal manager will reach out and assist in optimizing your Web3 financials with
+          Roketo Business */}
         </Typography>
       </Col>
     </Portlet>
