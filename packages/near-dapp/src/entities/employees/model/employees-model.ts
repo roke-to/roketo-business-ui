@@ -15,20 +15,20 @@ export const $employees = createStore<EmployeeResponseDto[]>([]);
 type StatusFilter = 'all' | EmployeeResponseDto['status'];
 export const $statusFilter = createStore<StatusFilter>('all');
 export const statusFilterOptions: StatusFilter[] = ['all', 'Active', 'Suspended', 'Fired'];
-export const statusFilterChanged = createEvent<number>();
-$statusFilter.on(statusFilterChanged, (_, index) => statusFilterOptions[index]);
+export const statusFilterChanged = createEvent<string>();
+$statusFilter.on(statusFilterChanged, (_, status) => status as StatusFilter);
 
 type TypeFilter = 'all' | EmployeeResponseDto['type'];
 export const $typeFilter = createStore<TypeFilter>('all');
 export const typeFilterOptions: TypeFilter[] = ['all', 'Freelancer', 'Contractor'];
-export const typeFilterChanged = createEvent<number>();
-$typeFilter.on(typeFilterChanged, (_, index) => typeFilterOptions[index]);
+export const typeFilterChanged = createEvent<string>();
+$typeFilter.on(typeFilterChanged, (_, type) => type as TypeFilter);
 
 type Sort = 'name' | 'id';
 export const $sort = createStore<Sort>('name');
 export const sortOptions: Sort[] = ['name', 'id'];
-export const sortChanged = createEvent<number>();
-$sort.on(sortChanged, (_, index) => sortOptions[index]);
+export const sortChanged = createEvent<string>();
+$sort.on(sortChanged, (_, sort) => sort as Sort);
 
 const loadEmployeesFx = attach({
   source: {
