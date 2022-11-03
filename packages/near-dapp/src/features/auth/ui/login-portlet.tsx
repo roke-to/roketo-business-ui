@@ -1,8 +1,8 @@
 import {useStore} from 'effector-react';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
+import {Trans, useTranslation} from 'react-i18next';
+import {useIntercom} from 'react-use-intercom';
 
-// import {useIntercom} from 'react-use-intercom';
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
 import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
 
@@ -11,21 +11,21 @@ import {Button} from '@roketo/core/ui/components/button';
 import {ButtonNativeLink} from '@roketo/core/ui/components/button-link';
 import {Col} from '@roketo/core/ui/components/col';
 import {Icon} from '@roketo/core/ui/components/icon';
+import {Line} from '@roketo/core/ui/components/line';
 import {Portlet} from '@roketo/core/ui/components/portlet';
 import {Typography} from '@roketo/core/ui/components/typography';
 
 export const LoginPortlet = () => {
   const {t} = useTranslation('auth');
   const {modules, selectedWalletId} = useStore($walletSelectorState);
+  const {boot, showNewMessages} = useIntercom();
 
   const handleWalletClick = (module: ModuleState) => () => walletClicked(module);
 
-  // TODO@extg: Setup intetcom RB-312
-  // const {boot, show} = useIntercom();
-  // const handleShowHelp = () => {
-  //   boot();
-  //   show();
-  // };
+  const handleShowHelp = () => {
+    boot();
+    showNewMessages('Hello! I have a question your product. Can you help me?');
+  };
 
   return (
     <Portlet gap='xl' className='pb-12 mobile:pb-8'>
@@ -70,18 +70,22 @@ export const LoginPortlet = () => {
             </Button>
           );
         })}
-        <Typography as='p' color='muted' className='text-center'>
-          {t('footer')}
-          {/* TODO@extg: Setup intetcom RB-312 */}
-          {/* <button
-            type='button'
-            className='text-blue-textDefault cursor-pointer'
-            onClick={handleShowHelp}
-          >
-            Leave contact info
-          </button>
-          , personal manager will reach out and assist in optimizing your Web3 financials with
-          Roketo Business */}
+        <Line className='my-4' />
+        <Typography as='p' color='muted' className='text-left'>
+          <Trans
+            ns='auth'
+            i18nKey='leaveContactInfo'
+            components={{
+              button: (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <button
+                  type='button'
+                  className='text-blue-textDefault cursor-pointer'
+                  onClick={handleShowHelp}
+                />
+              ),
+            }}
+          />
         </Typography>
       </Col>
     </Portlet>
