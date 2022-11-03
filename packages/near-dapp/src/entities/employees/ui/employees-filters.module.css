@@ -1,0 +1,12 @@
+.modal {
+  width: calc(100vw - 2rem);
+}
+
+.viewTypeIcon {
+  fill: theme('colors.blue.light');
+
+  &.active,
+  &:hover {
+    fill: theme('colors.blue.dark');
+  }
+}
