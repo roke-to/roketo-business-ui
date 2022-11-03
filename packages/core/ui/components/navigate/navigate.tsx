@@ -27,13 +27,6 @@ export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigatePro
   const location = useLocation();
   const layoutProps = React.useContext(LayoutContext);
 
-  React.useEffect(() => {
-    if (isMobile) {
-      layoutProps.onSidebarToggle();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile]);
-
   const gapInBottom = isMobile ? 4 : 1;
   const buttonVariant = isMobile ? 'outlined' : 'clean';
 
@@ -44,7 +37,7 @@ export const Navigate = ({isMobile, accountId, navItems, onLogout}: INavigatePro
           const isSelected = location.pathname === path;
           return (
             <li key={path} className={clsx(styles.listItem, {[styles.selected]: isSelected})}>
-              <Link to={path} className={styles.listLink}>
+              <Link to={path} className={styles.listLink} onClick={layoutProps.onSidebarToggle}>
                 <Icon className={styles.icon} />
                 <Typography as='span' font='sm'>
                   {title}

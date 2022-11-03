@@ -34,6 +34,7 @@
     "rc-tooltip": "^5.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-i18next": "^11.17.4",
     "react-modal": "^3.14.4",
     "react-router-dom": "^5.2.0"
   },
