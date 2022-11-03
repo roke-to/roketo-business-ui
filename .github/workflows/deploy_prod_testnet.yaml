@@ -1,10 +1,5 @@
 name: Deploy prod |testnet|
 on:
-  push:
-    paths-ignore:
-      - '.github/**'
-    branches:
-      - master
   workflow_dispatch:
 
 concurrency:
