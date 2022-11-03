@@ -5,6 +5,7 @@
   "main": "index.ts",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "true"
   },
@@ -26,6 +27,7 @@
   "peerDependencies": {
     "clsx": "^1.1.1",
     "date-fns": "^2.29.1",
+    "effector": "^22.3.0",
     "effector-forms": "^0.0.24",
     "formik": "^2.2.9",
     "i18next": "^21.8.12",
@@ -42,6 +44,7 @@
     "history": "^4.9.0",
     "react-day-picker": "^8.1.0",
     "react-imask": "^6.4.2",
-    "react-popper": "^2.3.0"
+    "react-popper": "^2.3.0",
+    "tailwindcss": "^3.1.6"
   }
 }

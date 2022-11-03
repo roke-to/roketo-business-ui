@@ -1,4 +1,4 @@
-name: Deploy test [testnet]
+name: Deploy test |testnet|
 on:
   pull_request:
     paths-ignore:

@@ -1,0 +1,34 @@
+{
+  "daoInit": {
+    "loading": "Loading DAO list...",
+    "hasDaoTitle": "Select DAO",
+    "hasDaoSubtitle": "You have multiple DAO on «$accountId», please select one of them, or create a new one",
+    "emptyDaoTitle": "You don’t have any DAO",
+    "emptyDaoSubtitle": "Check if the wallet address is correct or create a new DAO:",
+    "logout": "Logout",
+    "createDao": "Create DAO",
+    "selectDao": "Select DAO",
+    "showAll": "show all",
+    "showLess": "show less"
+  },
+  "daoNew": {
+    "setupTitle": "New DAO setup",
+    "setupSubTitle": "Enter DAO name and address",
+    "addCouncilsTitle": "Add Councils",
+    "councilAddressLabel": "Council address",
+    "councilAddressPlaceholder": "Addcouncilname.near",
+    "councilListLabel": "Council list",
+    "addCouncilsSubTitle": "Councils can voit for proposals",
+    "submitCouncils": "Add Councils",
+    "accountExists": "Account exists",
+    "accountNotExists": "Account not exists",
+    "councilAdded": "Council already added",
+    "skipCouncils": "Add later",
+    "submitDaoName": "Create DAO",
+    "cancel": "Cancel",
+    "addressLabel": "Address",
+    "addressPlaceholder": "newdaoname.sputnikv2.testnet",
+    "nameLabel": "Name",
+    "namePlaceholder": "New DAO Name"
+  }
+}

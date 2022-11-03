@@ -4,8 +4,8 @@ import React, {useState} from 'react';
 import Modal from 'react-modal';
 
 import {blurGate} from '~/entities/blur';
-import {$isMobileScreen} from '~/entities/screens';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {Filter, FilterOptionWithCounter} from '@roketo/core/kit/Filter';
 import {RadioButton} from '@roketo/core/kit/RadioButton';
 import {Button} from '@roketo/core/roketo-ui/components/Button';

@@ -5,10 +5,10 @@ import {useTranslation} from 'react-i18next';
 
 import * as employeesModel from '~/entities/employees/model/employees-model';
 import {DraftInvoice} from '~/entities/employees/ui/draft-invoice';
-import {$isMobileScreen} from '~/entities/screens';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {CreateTreasuryProposalModal} from '~/entities/treasury/ui/create-treasury-proposal-modal';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {Button} from '@roketo/core/ui/components/button';
 import {Col} from '@roketo/core/ui/components/col';
 import {Popover, Transition, usePopper} from '@roketo/core/ui/components/datepicker';

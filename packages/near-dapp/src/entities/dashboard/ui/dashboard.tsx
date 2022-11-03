@@ -4,7 +4,6 @@ import {useTranslation} from 'react-i18next';
 
 import {ChangePolicyButton, Councils} from '~/entities/councils';
 import {LastGovernanceProposal} from '~/entities/governance';
-import {$isMobileScreen} from '~/entities/screens';
 import {CreateStreamProposalButton} from '~/entities/streams/create-stream-proposal-button';
 import {StreamsList} from '~/entities/streams/StreamsList';
 import {
@@ -14,6 +13,7 @@ import {
 } from '~/entities/treasury';
 import {ROUTES} from '~/shared/config/routes';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {ButtonLink} from '@roketo/core/ui/components/button-link';
 import {Col} from '@roketo/core/ui/components/col';
 import {Line} from '@roketo/core/ui/components/line';
