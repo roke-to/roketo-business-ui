@@ -28,7 +28,7 @@ const loadDaosFx = attach({
   },
 });
 
-export const $daosLoading = createStore(true);
+export const $daosLoading = createStore(false);
 
 sample({
   clock: loadDaosFx.doneData,

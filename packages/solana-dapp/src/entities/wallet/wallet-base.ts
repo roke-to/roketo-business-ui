@@ -360,7 +360,7 @@ sample({
     adapter: $adapter,
   },
   clock: handleDisconnect,
-  filter: ({isDisconnectingRef, adapter}) => isDisconnectingRef || !adapter,
+  filter: ({isDisconnectingRef, adapter}) => !isDisconnectingRef || !adapter,
   target: handleDisconnectFx,
 });
 
