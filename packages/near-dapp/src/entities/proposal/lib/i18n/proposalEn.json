@@ -12,11 +12,13 @@
     "RemoveMemberFromRole": "{{proposer}} proposes to remove {{member}}",
     "ChangePolicy": "{{proposer}} proposes to change quorum to {{quorum}}",
     "Unknown": "Unknown proposal type",
-    "ProposeCreateRoketoStream": "{{proposer}} proposes create stream",
+    "ProposeCreateRoketoStream": "{{proposer}} proposes create stream {{balance}} {{token}} to {{receiver}}",
     "ProposePauseRoketoStream": "{{proposer}} proposes pause stream",
     "ProposeStartRoketoStream": "{{proposer}} proposes start stream",
     "ProposeStopRoketoStream": "{{proposer}} proposes stop stream",
-    "ProposeRoketoStreamWithdraw": "{{proposer}} proposes withdraw stream"
+    "ProposeAddFundsToRoketoStream": "{{proposer}} proposes add funds {{balance}} {{token}} to stream",
+    "ProposeRoketoStreamWithdraw": "{{proposer}} proposes withdraw stream",
+    "ProposeRoketoStreamCliffPeriod": " within {{cliffPeriodSec}} sec"
   },
   "createForm": {
     "proposalTypeLabel": "Proposal type",
