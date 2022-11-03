@@ -163,11 +163,11 @@ jobs:
             const branch = process.env.GIT_BRANCH;
 
             if (branch === 'master' || branch === 'main')
-              return `${{inputs.app}}.${{inputs.host}}`
+              return `${{inputs.app-hostname}}`
 
             const match = branch.match(/\w+-\d+/);
             const name = match ? match[0].toLowerCase() : branch;
-            const result = `${name}-${{inputs.app}}.${{inputs.host}}`
+            const result = `${name}-${{inputs.app-hostname}}`
             console.log(result);
             return result;
           result-encoding: string
@@ -185,7 +185,7 @@ jobs:
           export GIT_BRANCH=${{env.GIT_BRANCH}}
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "##[set-output name=app_name;]$(echo $APP)"
-            echo "##[set-output name=app_hostname;]$(echo ${{ inputs.app-hostname }})"
+            echo "##[set-output name=app_hostname;]$(echo ${{ steps.deploy-host.outputs.result }})"
             echo "##[set-output name=app_tag;]$(echo main-$SHORT_SHA)"
           elif [ "$TAG_NAME" != "" ]; then
             echo "##[set-output name=app_tag;]$(echo main-$TAG_NAME)"

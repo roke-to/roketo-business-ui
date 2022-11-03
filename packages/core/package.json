@@ -34,15 +34,14 @@
     "rc-tooltip": "^5.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-ga": "^3.3.1",
     "react-modal": "^3.14.4",
-    "react-router-dom": "^5.2.0",
-    "react-use-intercom": "^2.0.0"
+    "react-router-dom": "^5.2.0"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.5",
     "history": "^4.9.0",
     "react-day-picker": "^8.1.0",
+    "react-ga": "^3.3.1",
     "react-imask": "^6.4.2",
     "react-popper": "^2.3.0",
     "react-use-intercom": "^2.0.0",
