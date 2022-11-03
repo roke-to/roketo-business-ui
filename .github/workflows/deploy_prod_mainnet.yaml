@@ -15,6 +15,8 @@ jobs:
       registry: 'gcr.io/main-project-354317'
       network-value: mainnet
       app-hostname: app.roke.biz
+      # TODO: When it will be ready remove comment
+      # app-hostname: near.app.roke.biz
       host: ares.roke.to
     secrets: inherit
   solana-dapp:
@@ -25,5 +27,17 @@ jobs:
       registry: 'gcr.io/main-project-354317'
       network-value: mainnet
       app-hostname: solana.app.roke.biz
+      host: ares.roke.to
+    secrets: inherit
+  main-dapp:
+    uses: ./.github/workflows/deploy_reusable.yaml
+    with:
+      package-name: main-dapp
+      app: main-rocketo-bis-ui
+      registry: 'gcr.io/main-project-354317'
+      network-value: mainnet
+      app-hostname: main.app.roke.biz
+      # TODO: When it will be ready remove comment
+      # app-hostname: main.app.roke.biz
       host: ares.roke.to
     secrets: inherit
