@@ -82,6 +82,8 @@ export function Root() {
           <Notifications />
         </>
       }
+      intercomId=''
+      trackingId=''
     >
       <Routing />
     </LayoutProvider>

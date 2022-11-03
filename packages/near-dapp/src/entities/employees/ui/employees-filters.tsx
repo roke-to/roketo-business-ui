@@ -3,8 +3,7 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$isMobileScreen} from '~/entities/screens';
-
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {Button} from '@roketo/core/ui/components/button';
 import {Divider} from '@roketo/core/ui/components/divider';
 import {DropdownMenu} from '@roketo/core/ui/components/dropdown-menu';
