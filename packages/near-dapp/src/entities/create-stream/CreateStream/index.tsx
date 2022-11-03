@@ -65,6 +65,9 @@ export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStr
   const handleFormSubmit = (formValues: FormValues) => {
     onFormSubmit(formValues).catch((error) => setError(error));
   };
+
+  console.log('tokens', tokens);
+
   return (
     <div className={styles.root}>
       <h2 className={styles.title}>Propose to create a stream</h2>
@@ -80,6 +83,8 @@ export const CreateStream = ({onFormCancel, onFormSubmit, submitting}: CreateStr
         {({values, handleSubmit, setFieldValue, setFieldTouched, validateField}) => {
           const activeTokenAccountId = values.token;
           const token = tokens[activeTokenAccountId];
+          console.log('values', values);
+          console.log('activeTokenAccountId', activeTokenAccountId);
           if (!token) return null;
           const {meta: tokenMeta, roketoMeta} = token;
 
