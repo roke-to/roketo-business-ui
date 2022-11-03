@@ -104,8 +104,8 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_TAGS }}
           file: ./Dockerfile
-          cache-from: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }}
-          cache-to: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }},mode=max
+#           cache-from: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }}
+#           cache-to: type=registry,ref=${{ steps.docker-tags.outputs.cache_image }},mode=max
 
   publish:
     needs:
