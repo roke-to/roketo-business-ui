@@ -35,3 +35,13 @@ jobs:
       app-hostname: solana-rocketo-bis-ui.germes.roke.to
       host: germes.roke.to
     secrets: inherit
+  main-dapp:
+    uses: ./.github/workflows/deploy_reusable.yaml
+    with:
+      package-name: main-dapp
+      app: main-rocketo-bis-ui
+      registry: 'gcr.io/main-project-354317'
+      network-value: testnet
+      app-hostname: rocketo-bis-ui.germes.roke.to
+      host: germes.roke.to
+    secrets: inherit
