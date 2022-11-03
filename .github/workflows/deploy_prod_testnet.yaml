@@ -19,7 +19,7 @@ jobs:
       app: rocketo-bis-ui-testnet
       registry: 'gcr.io/main-project-354317'
       network-value: testnet
-      app-hostname: testnet.near.app.roke.biz
+      app-hostname: testnet.app.roke.biz
       host: ares.roke.to
     secrets: inherit
   solana-dapp:
