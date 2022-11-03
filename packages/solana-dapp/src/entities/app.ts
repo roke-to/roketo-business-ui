@@ -1,15 +1,12 @@
 import {createEvent, sample} from 'effector';
 
+import {changeConnectionEndpoint} from '~/entities/wallet';
 import {env} from '~/shared/config/env';
-
-import {initWallet} from './wallet';
 
 export const initApp = createEvent();
 
 sample({
   clock: initApp,
-  fn: () => {
-    console.log('env', env);
-  },
-  target: initWallet,
+  fn: () => env.NETWORK_ID,
+  target: changeConnectionEndpoint,
 });

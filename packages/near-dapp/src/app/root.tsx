@@ -5,7 +5,6 @@ import {Router} from 'react-router-dom';
 
 import '~/app/initI18n';
 import {$appLoading, $appState} from '~/entities/app';
-import {$isMobileScreen} from '~/entities/screens';
 import {$accountId, logoutClicked} from '~/entities/wallet';
 import {DaoSwitcher} from '~/features/dao/ui/dao-switcher';
 import {Notifications} from '~/features/notifications/ui';
@@ -15,6 +14,7 @@ import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 import {history} from '~/shared/lib/router';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {Layout, LayoutProvider} from '@roketo/core/ui/components/layout';
 import {Navigate} from '@roketo/core/ui/components/navigate';
 import {PageStub} from '@roketo/core/ui/components/page-stub';

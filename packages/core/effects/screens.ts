@@ -1,6 +1,6 @@
 import {createEvent, createStore, sample} from 'effector';
 
-import {theme} from '@roketo/core/config/theme';
+import {theme} from '../config/theme';
 
 const mobileScreenMatcher = window.matchMedia(`(max-width: ${theme.screens.tablet.max})`);
 

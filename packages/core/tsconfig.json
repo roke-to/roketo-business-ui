@@ -1,7 +1,18 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./"
   },
-  "include": ["config", "hooks", "lib", "ui", "tailwindcss.d.ts", "global.d.ts"]
+  "include": [
+    "config",
+    "effects",
+    "hooks",
+    "kit",
+    "lib",
+    "roketo",
+    "roketo-ui",
+    "ui",
+    "tailwindcss.d.ts",
+    "global.d.ts"
+  ]
 }

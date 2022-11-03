@@ -2,11 +2,11 @@ import {useStore} from 'effector-react';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {$isMobileScreen} from '~/entities/screens';
 import {ProposalStatuses} from '~/entities/treasury/model/constants';
 import {ProposalKindFilterType} from '~/shared/types/proposal-kind-filter-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
+import {$isMobileScreen} from '@roketo/core/effects/screens';
 import {DropdownMenu} from '@roketo/core/ui/components/dropdown-menu';
 import {DropdownContent} from '@roketo/core/ui/components/dropdown-menu/dropdown-content';
 import {DropdownItem} from '@roketo/core/ui/components/dropdown-menu/dropdown-item';
