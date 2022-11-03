@@ -22,6 +22,7 @@ type EnvType = {
   RB_UI_MAINNET: string;
   RB_UI_TESTNET: string;
   NEAR_NETWORK_WAITING: number;
+  EXPLORER_URL: string;
   TRACKING_ID: string;
   INTERCOM_ID: string;
 };
@@ -50,6 +51,7 @@ export const env: EnvType = {
   RB_UI_MAINNET: process.env.VITE_RB_UI_MAINNET,
   RB_UI_TESTNET: process.env.VITE_RB_UI_TESTNET,
   NEAR_NETWORK_WAITING: Number(process.env.VITE_NEAR_NETWORK_WAITING),
+  EXPLORER_URL: process.env.VITE_EXPLORER_URL,
   TRACKING_ID: process.env.VITE_TRACKING_ID,
   INTERCOM_ID: process.env.VITE_INTERCOM_ID,
 };
