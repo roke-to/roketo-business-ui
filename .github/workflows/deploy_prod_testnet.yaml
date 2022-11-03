@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/deploy_reusable.yaml
     with:
       package-name: near-dapp
-      app: rocketo-bis-ui-testnet
+      app: rocketo-bis-ui-near-testnet
       registry: 'gcr.io/main-project-354317'
       network-value: testnet
       app-hostname: testnet.app.roke.biz
