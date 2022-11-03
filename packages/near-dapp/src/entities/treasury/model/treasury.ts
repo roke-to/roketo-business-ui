@@ -1,6 +1,6 @@
 import * as nearApi from 'near-api-js';
-import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
+import {attach, createEvent, createStore, forward, sample} from 'effector-logger';
 import {t} from 'i18next';
 import {Get} from 'type-fest';
 

@@ -1,4 +1,4 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
+import {attach, createEffect, createEvent, createStore, sample} from 'effector-logger';
 import {Account, ConnectedWalletAccount, keyStores} from 'near-api-js';
 import {Get} from 'type-fest';
 
