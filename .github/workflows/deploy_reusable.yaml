@@ -80,12 +80,12 @@ jobs:
           if [ "$GIT_BRANCH" == "master" ] || [ "$GIT_BRANCH" == "main" ]; then
             echo "$REGISTRY/$APP:latest"
             echo "$REGISTRY/$APP:main-$SHORT_SHA"
-            echo "cache_image=registry.roket.itgage.ru/$APP:cache-latest" >> $GITHUB_OUTPUT
+            echo "cache_image=$REGISTRY/$APP:cache-latest" >> $GITHUB_OUTPUT
           elif [ "$TAG_NAME" != "" ]; then
             echo "$REGISTRY/$APP:$TAG_NAME"
           else
             echo "$REGISTRY/$APP:$GIT_BRANCH"
-            echo "cache_image=registry.roket.itgage.ru/$APP:cache-$GIT_BRANCH" >> $GITHUB_OUTPUT
+            echo "cache_image=$REGISTRY/$APP:cache-$GIT_BRANCH" >> $GITHUB_OUTPUT
             echo "$REGISTRY/$APP:branch-$GIT_BRANCH-$SHORT_SHA"
           fi >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
