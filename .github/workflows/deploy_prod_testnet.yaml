@@ -1,4 +1,4 @@
-name: Deploy prod [testnet]
+name: Deploy prod |testnet|
 on:
   push:
     paths-ignore:

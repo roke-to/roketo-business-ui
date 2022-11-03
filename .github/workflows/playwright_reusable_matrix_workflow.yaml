@@ -7,7 +7,7 @@ on:
     paths:
       - 'packages/**'
   workflow_run:
-    workflows: [Deploy test [testnet]]
+    workflows: [Deploy test |testnet|]
     types: [completed]
 
 concurrency:
