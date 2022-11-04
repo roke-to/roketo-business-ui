@@ -215,24 +215,21 @@ jobs:
           GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         with:
           command: |
-            export APP=${{env.APP}}
-            export REGISTRY=${{env.REGISTRY}}
-            export APP_HOSTNAME=${{env.APP_HOSTNAME}}
-            export APP_NAME=${{env.APP_NAME}}
-            export GIT_BRANCH=${{env.GIT_BRANCH}}
-            export APP_TAG=${{env.APP_TAG}}
-            mkdir -p ~/services/$APP_HOSTNAME/
-            mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/$APP_HOSTNAME/docker-compose.yaml
+            mkdir -p ~/services/${{env.APP_HOSTNAME}}/
+            mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/${{env.APP_HOSTNAME}}/docker-compose.yaml
             rm -rf ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml
-            cd ~/services/$APP_HOSTNAME
-            if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
-              docker-compose down
-            fi
-            docker-compose up -d
-            if [ "${{ inputs.app }}" == "rocketo-bis-ui-testnet" ] || [ "${{ inputs.app }}" == "rocketo-bis-ui-prod" ]; then
-              docker-compose start frontbizui
-            fi
-            export state=$(docker-compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]')
+            cd ~/services/${{env.APP_HOSTNAME}}
+            echo APP=${{env.APP}} >> .env
+            echo REGISTRY=${{env.REGISTRY}} >> .env
+            echo APP_HOSTNAME=${{env.APP_HOSTNAME}} >> .env
+            echo APP_NAME=${{env.APP_NAME}} >> .env
+            echo GIT_BRANCH=${{env.GIT_BRANCH}} >> .env
+            echo APP_TAG=${{env.APP_TAG}} >> .env
+            cat .env
+            docker compose convert
+            docker compose pull
+            docker compose up -d
+            export state=$(docker compose ps -q | tr -d '[:space:]' | xargs docker inspect -f '{{ .State.ExitCode }}' | grep -v 0 | wc -l | tr -d '[:space:]')
             if [ $state -eq "0" ]
               then
                 export text='Branch '$GIT_BRANCH' was successfully deployed to '$APP_HOSTNAME
