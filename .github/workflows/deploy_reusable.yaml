@@ -216,16 +216,17 @@ jobs:
         with:
           command: |
             mkdir -p ~/services/${{env.APP_HOSTNAME}}/
+            cd ~/services/${{env.APP_HOSTNAME}}
+            rm -rf docker-compose.yaml
+            rm -rf .env
             mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/${{env.APP_HOSTNAME}}/docker-compose.yaml
             rm -rf ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml
-            cd ~/services/${{env.APP_HOSTNAME}}
             echo APP=${{env.APP}} >> .env
             echo REGISTRY=${{env.REGISTRY}} >> .env
             echo APP_HOSTNAME=${{env.APP_HOSTNAME}} >> .env
             echo APP_NAME=${{env.APP_NAME}} >> .env
             echo GIT_BRANCH=${{env.GIT_BRANCH}} >> .env
             echo APP_TAG=${{env.APP_TAG}} >> .env
-            cat .env
             docker compose convert
             docker compose pull
             docker compose up -d
@@ -238,7 +239,9 @@ jobs:
               export text='@here Branch '${{env.GIT_BRANCH}}' was stuck the deploy to '${{env.APP_HOSTNAME}}' with error-code: '$state
                 . ~/services/sucess.sh
                 exit 5
-              fi
+            fi
+            tar -zcvf "$(date '+%Y-%m-%d').tar.gz" .env
+            rm -rf .env
 
           host: ${{ inputs.host }}
           user: ${{ secrets.ROKETO_DEPLOYER_USER }}
