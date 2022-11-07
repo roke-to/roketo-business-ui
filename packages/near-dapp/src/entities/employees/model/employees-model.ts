@@ -139,7 +139,7 @@ export const setInvoiceStatusAfterRedirectFx = attach({
       if (invoiceId && !errorCode) {
         queryKeysToRemove.push('invoiceId');
 
-        await rbApi.dao.daoControllerUpdateDaoDraftInvoiceStatus(String(invoiceId), currentDaoId, {
+        await rbApi.dao.daoControllerUpdateDaoDraftInvoiceStatus(currentDaoId, Number(invoiceId), {
           status: 'Confirmed',
         });
       }
