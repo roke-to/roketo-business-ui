@@ -1,6 +1,7 @@
 import React from 'react';
 import {TFunction} from 'react-i18next';
 
+import {getDurationInSecondsFromTokensPerSecondCount} from '~/entities/create-stream/lib';
 import {StreamLink} from '~/entities/stream-link';
 import {getStreamId} from '~/entities/stream-link/get-stream-id';
 import {Token} from '~/shared/api/astro';
@@ -10,6 +11,7 @@ import {getQuorumValueFromPolicy} from '~/shared/lib/get-quorum-value';
 import {ImprovedProposalType} from '~/shared/types/proposal.types';
 
 import {base64ToJson} from '@roketo/core/lib/base64';
+import {formatTimeLeft} from '@roketo/sdk';
 
 const getAmountAndSymbolTokenForProposeCreateRoketoStream = (
   proposal: ImprovedProposalType,
@@ -26,6 +28,10 @@ const getAmountAndSymbolTokenForProposeCreateRoketoStream = (
   return {
     balance: formatYoktoValue(args?.Create.request.balance, steamedToken?.decimals),
     token: steamedToken?.symbol || recId,
+    duration: getDurationInSecondsFromTokensPerSecondCount(
+      args?.Create.request.balance,
+      args?.Create.request.tokens_per_sec,
+    ),
   };
 };
 
@@ -80,13 +86,16 @@ export const getReadableProposalTitle = (
           return `${t('readableTitle.ProposeCreateRoketoStream', {
             proposer,
             receiver: msg.Create.request.receiver_id,
+            from: msg.Create.request.is_auto_start_enabled ? 'immediately' : 'start proposal',
             ...getAmountAndSymbolTokenForProposeCreateRoketoStream(proposal, tokenBalances, msg),
-          })}${
+          })}, ${
             msg.Create.request.cliff_period_sec
               ? t('readableTitle.ProposeRoketoStreamCliffPeriod', {
-                  cliffPeriodSec: msg.Create.request.cliff_period_sec,
+                  cliffPeriodSec: formatTimeLeft(Number(msg.Create.request.cliff_period_sec)),
                 })
               : ''
+          } ${
+            msg.Create.request.is_locked ? t('readableTitle.ProposeRoketoStreamUneditable') : ''
           }`;
         case 'ProposePauseRoketoStream':
           return (

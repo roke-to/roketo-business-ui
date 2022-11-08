@@ -4,6 +4,7 @@ import {addMonths, differenceInDays} from 'date-fns';
 import {tokensPerMeaningfulPeriod, toYocto} from '~/shared/api/token-formatter';
 import {SECONDS_IN_DAY, SECONDS_IN_HOUR, SECONDS_IN_MINUTE} from '~/shared/constants';
 
+import {formatTimeLeft} from '@roketo/sdk';
 import type {RichToken, TokenMetadata} from '@roketo/sdk/dist/types';
 
 export const getDurationInSeconds = (
@@ -29,6 +30,19 @@ export const getTokensPerSecondCount = (
   const value = new BigNumber(depositInYocto).dividedToIntegerBy(durationInSeconds).toFixed();
 
   return value !== 'Infinity' && value !== 'NaN' ? value : '0';
+};
+
+export const getDurationInSecondsFromTokensPerSecondCount = (
+  deposit: string,
+  tokensPerSec: string,
+) => {
+  const value = new BigNumber(deposit).dividedToIntegerBy(tokensPerSec).toFixed();
+
+  if (value === 'Infinity' || value === 'NaN') {
+    return '0';
+  }
+  console.log(tokensPerSec, value, formatTimeLeft(Number(value)));
+  return formatTimeLeft(Number(value) * 1000);
 };
 
 export const getStreamingSpeed = (speedInSeconds: number | string, token: RichToken): string => {
