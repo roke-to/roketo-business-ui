@@ -274,8 +274,6 @@ export const requestUnknownTokensFx = createEffect(
     roketo: ApiControl | null;
     nearAuth: NearAuth | null;
   }) => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (!roketo || !nearAuth) return {};
     const requestResults = await Promise.all(
       tokenNames.map(async (tokenName) => {
@@ -407,8 +405,6 @@ sample({
   source: $tokens,
   target: $tokens,
   fn(tokens, additionalTokens) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     return filterRichTokensByBalance({
       ...tokens,
       ...additionalTokens,

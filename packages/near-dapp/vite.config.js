@@ -17,13 +17,15 @@ export default defineConfig((env) => {
   // а выбранная сеть часть рантайм конфига приложения. Т.е. на момент запуска, мы понимаем для
   // какой сети эта аппка. (Динамические переменные окружения)
   const isProd = env.mode === 'production';
+  const envVariables = loadEnv(env.mode, process.cwd(), '');
+
   return {
     base: process.env.VITE_BASE_PUBLIC_PATH,
     css: {
       postcss,
     },
     define: defineEnv({
-      ...loadEnv(env.mode, process.cwd()),
+      ...envVariables,
       DEV: !isProd,
       PROD: isProd,
     }),
@@ -40,11 +42,8 @@ export default defineConfig((env) => {
 });
 
 function defineEnv(env) {
-  const isProd = process.env.NODE_ENV === 'production';
-  const envKeys = Object.keys(env).reduce((prev, next) => {
-    // eslint-disable-next-line no-param-reassign
-    prev[`process.env.${next}`] = JSON.stringify(env[next]);
-    return prev;
-  }, {});
-  return envKeys;
+  return Object.keys(env).reduce(
+    (acc, key) => ((acc[`process.env.${key}`] = JSON.stringify(env[key])), acc),
+    {},
+  );
 }
