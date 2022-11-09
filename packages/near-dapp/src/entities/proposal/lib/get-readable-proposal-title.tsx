@@ -83,19 +83,20 @@ export const getReadableProposalTitle = (
     case 'FunctionCall':
       switch (variant) {
         case 'ProposeCreateRoketoStream':
+          // sender.near proposes to create an editable stream of 1000 USDC to receiver.near. Duration: 2 months 5d2h30m, cliff period 14d5d30m
           return `${t('readableTitle.ProposeCreateRoketoStream', {
             proposer,
             receiver: msg.Create.request.receiver_id,
-            from: msg.Create.request.is_auto_start_enabled ? 'immediately' : 'start proposal',
+            type: msg.Create.request.is_locked
+              ? t('readableTitle.ProposeRoketoStreamUneditable')
+              : t('readableTitle.ProposeRoketoStreamEditable'),
             ...getAmountAndSymbolTokenForProposeCreateRoketoStream(proposal, tokenBalances, msg),
-          })}, ${
+          })}${
             msg.Create.request.cliff_period_sec
-              ? t('readableTitle.ProposeRoketoStreamCliffPeriod', {
+              ? `, ${t('readableTitle.ProposeRoketoStreamCliffPeriod', {
                   cliffPeriodSec: formatTimeLeft(Number(msg.Create.request.cliff_period_sec)),
-                })
+                })}`
               : ''
-          } ${
-            msg.Create.request.is_locked ? t('readableTitle.ProposeRoketoStreamUneditable') : ''
           }`;
         case 'ProposePauseRoketoStream':
           return (

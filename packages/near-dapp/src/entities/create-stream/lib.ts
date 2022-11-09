@@ -41,7 +41,6 @@ export const getDurationInSecondsFromTokensPerSecondCount = (
   if (value === 'Infinity' || value === 'NaN') {
     return '0';
   }
-  console.log(tokensPerSec, value, formatTimeLeft(Number(value)));
   return formatTimeLeft(Number(value) * 1000);
 };
 
