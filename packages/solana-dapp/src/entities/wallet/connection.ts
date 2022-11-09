@@ -1,6 +1,4 @@
-// ConnectionProvider
-import {createEffect, createEvent, createStore, sample} from 'effector';
-
+import {createEffect, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import {WalletAdapterNetwork} from '@solana/wallet-adapter-base';
 import {clusterApiUrl, Connection} from '@solana/web3.js';
 

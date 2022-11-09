@@ -1,4 +1,3 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector-logger';
 import {Account, ConnectedWalletAccount, keyStores} from 'near-api-js';
 import {Get} from 'type-fest';
 
@@ -18,6 +17,7 @@ import {
 import {env} from '~/shared/config/env';
 
 import {ModuleState, WalletSelector, WalletSelectorState} from '@near-wallet-selector/core';
+import {attach, createEffect, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import {
   createRichContracts,
   getDao,

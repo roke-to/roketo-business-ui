@@ -1,5 +1,4 @@
-import {createEffect, createEvent, createStore, sample} from 'effector';
-
+import {createEffect, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import {
   createDefaultAddressSelector,
   createDefaultAuthorizationResultCache,

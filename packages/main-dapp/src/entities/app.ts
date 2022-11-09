@@ -1,4 +1,4 @@
-import {createEvent, sample} from 'effector';
+import {createEvent, sample} from '@roketo/core/lib/effector';
 
 import {env} from '~/shared/config/env';
 

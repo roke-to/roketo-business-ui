@@ -1,5 +1,4 @@
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
-
+import {attach, createEffect, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import type {SolanaMobileWalletAdapter} from '@solana-mobile/wallet-adapter-mobile';
 import {
   Adapter,

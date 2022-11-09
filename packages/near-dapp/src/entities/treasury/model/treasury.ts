@@ -1,6 +1,5 @@
 import * as nearApi from 'near-api-js';
 import {createForm} from 'effector-forms';
-import {attach, createEvent, createStore, forward, sample} from 'effector-logger';
 import {t} from 'i18next';
 import {Get} from 'type-fest';
 
@@ -20,6 +19,7 @@ import {ProposalSortOrderType} from '~/shared/types/proposal-sort-order-type';
 import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-type';
 
 import {SignAndSendTransactionsParams} from '@near-wallet-selector/core/lib/wallet';
+import {attach, createEvent, createStore, forward, sample} from '@roketo/core/lib/effector';
 import {ValuesOfForm} from '@roketo/core/lib/form';
 import {validators} from '@roketo/core/lib/form/validators';
 

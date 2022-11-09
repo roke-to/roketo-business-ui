@@ -1,5 +1,4 @@
 import type {BigNumber} from 'bignumber.js';
-import {combine, createEvent, createStore, sample} from 'effector';
 
 import {withdrawStreams} from '~/entities/streams/lib';
 import {$accountStreams, $currentDaoId, $tokens, $walletSelector} from '~/entities/wallet';
@@ -7,6 +6,7 @@ import {formatAmount} from '~/shared/api/token-formatter';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 
+import {combine, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 import {getAvailableToWithdraw, hasPassedCliff, isActiveStream} from '@roketo/sdk';
 

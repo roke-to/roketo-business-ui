@@ -1,7 +1,8 @@
 import * as Yup from 'yup';
-import {attach} from 'effector';
 
 import {$currentDaoId, $near} from '~/entities/wallet';
+
+import {attach} from '@roketo/core/lib/effector';
 
 import {COMMENT_TEXT_LIMIT} from '../constants';
 

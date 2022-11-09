@@ -17,6 +17,7 @@ type EnvType = {
   RB_UI_MAINNET: string;
   RB_UI_TESTNET: string;
   NETWORK_ID: WalletAdapterNetwork;
+  APP_NAME: string;
 };
 
 export const env: EnvType = {
@@ -34,4 +35,5 @@ export const env: EnvType = {
   NETWORK_ID: import.meta.env.VITE_NETWORK_ID,
   RB_UI_MAINNET: import.meta.env.VITE_RB_UI_MAINNET,
   RB_UI_TESTNET: import.meta.env.VITE_RB_UI_TESTNET,
+  APP_NAME: import.meta.env.VITE_APP_NAME,
 };

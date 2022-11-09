@@ -1,5 +1,3 @@
-import {combine} from 'effector';
-
 import {
   pauseStream as pauseStreamFn,
   startStream as startStreamFn,
@@ -9,6 +7,7 @@ import {$currentDaoId, $near, $walletSelector} from '~/entities/wallet';
 import {env} from '~/shared/config/env';
 import {ROUTES} from '~/shared/config/routes';
 
+import {combine} from '@roketo/core/lib/effector';
 import {createProtectedEffect} from '@roketo/core/roketo/protectedEffect';
 
 const returnPath = `${window.location.origin}${ROUTES.streamProposals.path}`;
