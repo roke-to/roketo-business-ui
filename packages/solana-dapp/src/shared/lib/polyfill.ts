@@ -1,1 +1,1 @@
-export * from '@roketo/core/lib/polyfill';
+import '@roketo/core/lib/polyfills';
