@@ -462,6 +462,7 @@ const loadStreamProposalsFx = attach({
           p.description.includes('ProposePauseRoketoStream') ||
           p.description.includes('ProposeStartRoketoStream') ||
           p.description.includes('ProposeStopRoketoStream') ||
+          p.description.includes('ProposeAddFundsToRoketoStream') ||
           p.description.includes('ProposeRoketoStreamWithdraw')
         );
       });
