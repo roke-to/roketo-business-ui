@@ -1,8 +1,8 @@
-import {attach, createEffect, sample} from 'effector';
-
 import {$accountId} from '~/entities/wallet';
 import {astroApi} from '~/shared/api/astro';
 import {history} from '~/shared/lib/router';
+
+import {attach, createEffect, sample} from '@roketo/core/lib/effector';
 
 export const sendTransactionsFx = attach({
   source: {

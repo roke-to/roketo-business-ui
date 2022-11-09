@@ -1,5 +1,4 @@
 import {isPast} from 'date-fns';
-import {attach, combine, createEffect, createEvent, createStore, sample} from 'effector';
 import {generatePath} from 'react-router-dom';
 
 import {colorDescriptions} from '~/entities/create-stream/constants';
@@ -33,6 +32,14 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 import {ProposalVariantFilterType} from '~/shared/types/proposal-variant-filter-type';
 
 import {$isMobileScreen} from '@roketo/core/effects/screens';
+import {
+  attach,
+  combine,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+} from '@roketo/core/lib/effector';
 import {
   areArraysDifferent,
   areObjectsDifferent,

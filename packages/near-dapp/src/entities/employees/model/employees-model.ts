@@ -1,5 +1,4 @@
 import {format, parseISO} from 'date-fns';
-import {attach, createEffect, createEvent, createStore, sample} from 'effector';
 
 import * as employeeModel from '~/entities/employee/model/employee-model';
 import {pageLoaded as employeePageLoaded} from '~/entities/employee/model/employee-model';
@@ -8,6 +7,8 @@ import {$currentDaoId} from '~/entities/wallet';
 import {DraftInvoiceResponseDto, rbApi} from '~/shared/api/rb';
 import type {EmployeeResponseDto} from '~/shared/api/rb';
 import {history} from '~/shared/lib/router';
+
+import {attach, createEffect, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 
 export const pageLoaded = createEvent<void>();
 export const $employees = createStore<EmployeeResponseDto[]>([]);

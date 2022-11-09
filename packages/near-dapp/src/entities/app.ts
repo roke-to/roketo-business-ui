@@ -1,4 +1,4 @@
-import {createEvent, createStore, sample} from 'effector';
+import {createEvent, createStore, sample} from '@roketo/core/lib/effector';
 
 import {initNearInstanceFx, initWallet} from './wallet';
 

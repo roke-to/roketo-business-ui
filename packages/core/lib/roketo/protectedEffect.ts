@@ -1,4 +1,4 @@
-import {attach, Effect, Store} from 'effector';
+import {attach, Effect, Store} from '@roketo/core/lib/effector';
 
 export function createProtectedEffect<Src, Params, Result>({
   source,

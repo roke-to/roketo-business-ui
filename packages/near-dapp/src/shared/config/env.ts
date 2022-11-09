@@ -25,6 +25,7 @@ type EnvType = {
   EXPLORER_URL: string;
   TRACKING_ID: string;
   INTERCOM_ID: string;
+  APP_NAME: string;
 };
 
 export const env: EnvType = {
@@ -54,4 +55,5 @@ export const env: EnvType = {
   EXPLORER_URL: process.env.VITE_EXPLORER_URL,
   TRACKING_ID: process.env.VITE_TRACKING_ID,
   INTERCOM_ID: process.env.VITE_INTERCOM_ID,
+  APP_NAME: process.env.VITE_APP_NAME,
 };

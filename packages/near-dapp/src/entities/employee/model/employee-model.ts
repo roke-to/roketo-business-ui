@@ -1,5 +1,4 @@
 import {format, parseISO} from 'date-fns';
-import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {t} from 'i18next';
 
@@ -8,6 +7,7 @@ import {createTreasuryProposalForm} from '~/entities/treasury/model/treasury';
 import {$currentDaoId} from '~/entities/wallet';
 import {CreateEmployeeDto, EmployeeResponseDto, rbApi, UpdateEmployeeDto} from '~/shared/api/rb';
 
+import {attach, createEvent, createStore, forward, sample} from '@roketo/core/lib/effector';
 import {validators} from '@roketo/core/lib/form/validators';
 
 export const pageLoaded = createEvent<string>();

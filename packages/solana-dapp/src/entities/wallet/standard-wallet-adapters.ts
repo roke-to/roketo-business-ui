@@ -1,5 +1,4 @@
-import {attach, createEvent, createStore, sample} from 'effector';
-
+import {attach, createEvent, createStore, sample} from '@roketo/core/lib/effector';
 import {Adapter} from '@solana/wallet-adapter-base';
 import {PhantomWalletAdapter, SolflareWalletAdapter} from '@solana/wallet-adapter-wallets';
 import {

@@ -1,5 +1,6 @@
-import {createEffect, createStore, Event, sample} from 'effector';
 import {createGate} from 'effector-react';
+
+import {createEffect, createStore, Event, sample} from '@roketo/core/lib/effector';
 
 export const blurGate = createGate({defaultState: {modalId: '', active: false}});
 

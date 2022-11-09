@@ -1,5 +1,3 @@
-import {attach, createStore, sample} from 'effector';
-
 import {
   $accountId, // eslint-disable-next-line @typescript-eslint/no-unused-vars
   $connection, // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -8,6 +6,8 @@ import {
   signMessage, // eslint-disable-next-line @typescript-eslint/no-unused-vars
   signTransaction,
 } from '~/entities/wallet';
+
+import {attach, createStore, sample} from '@roketo/core/lib/effector';
 
 interface AccountDaoResponse {
   id: string;

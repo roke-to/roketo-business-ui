@@ -1,8 +1,8 @@
-import {attach, createEvent, sample} from 'effector';
-
 import {$currentDaoId, $walletSelector} from '~/entities/wallet';
 import {VoteAction} from '~/shared/api/near';
 import {mapMultiVoteOptions} from '~/shared/api/near/contracts/sputnik-dao/map-multi-vote-options';
+
+import {attach, createEvent, sample} from '@roketo/core/lib/effector';
 
 export interface MultiVoteProps {
   proposalId: number;

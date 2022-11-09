@@ -1,4 +1,3 @@
-import {attach, createEvent, createStore, forward, sample} from 'effector';
 import {createForm} from 'effector-forms';
 import {t} from 'i18next';
 
@@ -23,6 +22,7 @@ import {ProposalStatusFilterType} from '~/shared/types/proposal-status-filter-ty
 
 import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
 import {SConditionAND, SFields} from '@nestjsx/crud-request';
+import {attach, createEvent, createStore, forward, sample} from '@roketo/core/lib/effector';
 import {validators, ValuesOfForm} from '@roketo/core/lib/form';
 
 import {$currentDao} from '../../dao';
