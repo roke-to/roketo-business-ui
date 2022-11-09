@@ -16,7 +16,7 @@ export const StreamLink = ({streamId}: {streamId: string | null}) => {
       className='px-1 text-blue-textDefault'
     >
       {streamId.slice(0, 4)}...
-      {streamId.slice(streamId.length - 4)}
+      {streamId.slice(-4)}
     </ButtonNativeLink>
   );
 };
