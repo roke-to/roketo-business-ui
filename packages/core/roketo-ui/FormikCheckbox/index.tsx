@@ -1,8 +1,7 @@
-import {FieldInputProps, FormikState} from 'formik';
-import React from 'react';
-
-import {Checkbox} from '../components/Checkbox';
-import {FormField} from '../components/FormField';
+import { Checkbox } from "../components/Checkbox";
+import { FormField } from "../components/FormField";
+import { FieldInputProps, FormikState } from "formik";
+import React from "react";
 
 type CheckboxProps = {
   field: FieldInputProps<any>;
@@ -15,16 +14,23 @@ type CheckboxProps = {
 };
 
 export const FormikCheckbox = (props: CheckboxProps) => {
-  const {description, isRequired, className, label, field, form, ...rest} = props;
+  const { description, isRequired, className, label, field, form, ...rest } =
+    props;
 
   const error = form.errors[field.name];
 
   return (
-    <FormField isRequired={isRequired} className={className} label={label} error={error}>
+    <FormField
+      isRequired={isRequired}
+      className={className}
+      label={label}
+      error={error}
+    >
       <Checkbox
         description={description}
         required={isRequired}
         hasError={Boolean(error)}
+        checked={field.value}
         {...field}
         {...rest}
       />
