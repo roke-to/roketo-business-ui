@@ -1,8 +1,7 @@
-import React from 'react';
-
-import { LayoutContext } from './provider';
-import { IntroLayout, MainLayout } from './type';
-import { Analytics } from '../analytics';
+import { Analytics } from "../analytics";
+import { LayoutContext } from "./provider";
+import { IntroLayout, MainLayout } from "./type";
+import React from "react";
 
 const layoutTypes = {
   intro: IntroLayout,
@@ -15,7 +14,7 @@ export interface ILayoutProps {
   type?: LayoutType;
 }
 
-export const Layout: React.FC<ILayoutProps> = ({ children, type = 'main' }) => {
+export const Layout: React.FC<ILayoutProps> = ({ children, type = "main" }) => {
   const { trackingId, ...layoutProps } = React.useContext(LayoutContext);
   const LayoutComponent = layoutTypes[type];
 
@@ -27,4 +26,4 @@ export const Layout: React.FC<ILayoutProps> = ({ children, type = 'main' }) => {
   );
 };
 
-Layout.displayName = 'Layout';
+Layout.displayName = "Layout";
