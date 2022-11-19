@@ -28,7 +28,7 @@ WORKDIR /app
 
 ARG BUILD_ARG_DAPP
 ARG BUILD_ARG_NETWORK_ID
-ENV VITE_BUILD_MODE ${BUILD_ARG_NETWORK_ID}
+ENV VITE_BUILD_MODE=$BUILD_ARG_NETWORK_ID
 
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
@@ -36,12 +36,13 @@ COPY --from=turbo_prune /app/out/json/ .
 COPY --from=turbo_prune /app/out/yarn.lock ./yarn.lock
 # We have binary packages and we shoud copy this here
 COPY --from=turbo_prune /app/out/full/packages/ ./packages
+# Also we need .env files for "postinstall" script
+COPY --from=turbo_prune /app/out/full/apps/ ./apps
 RUN yarn install --pure-lockfile
 
 # Build the project
-COPY --from=turbo_prune /app/out/full/apps/ ./apps
 COPY turbo.json turbo.json
-RUN VITE_BUILD_MODE=$BUILD_ARG_NETWORK_ID yarn turbo run build --filter=$BUILD_ARG_DAPP...
+RUN yarn turbo run build --filter=$BUILD_ARG_DAPP...
 
 # STAGE 3 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run

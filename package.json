@@ -11,7 +11,8 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "lint:types": "turbo run lint:types",
-    "check:unused:exports": "turbo run check:unused:exports"
+    "check:unused:exports": "turbo run check:unused:exports",
+    "test:inst": "yarn install --pure-lockfile"
   },
   "workspaces": [
     "apps/*",
