@@ -1,6 +1,7 @@
 import {TokenProvider} from '~/entities/authentication-rb-api';
 import {env} from '~/shared/config/env';
 
+// eslint-disable-next-line import/extensions
 import {RbApi} from './generated';
 
 export const rbApi = new RbApi({
@@ -8,4 +9,5 @@ export const rbApi = new RbApi({
   TokenProvider,
 });
 
+// eslint-disable-next-line import/extensions
 export * from './generated';
