@@ -34,8 +34,7 @@ dist
 ._*
 
 # configuration
-packages/near-dapp/.env.local
-packages/solana-dapp/.env.local
+.env.local
 .env.development.local
 .env.test.local
 .env.production.local
@@ -51,3 +50,6 @@ node_modules
 
 # packages/*-dapp/shared/api/*/generated
 generated
+
+# turbo
+.turbo

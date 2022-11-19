@@ -19,6 +19,7 @@ export default defineConfig((env) => {
         port: envVariables.VITE_LOCAL_PORT,
       },
     }),
+    mode: envVariables.VITE_NETWORK_ID,
     base: envVariables.VITE_BASE_PUBLIC_PATH,
     css: {
       postcss,

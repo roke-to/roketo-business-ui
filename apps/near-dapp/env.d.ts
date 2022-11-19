@@ -15,7 +15,7 @@ declare global {
     interface ProcessEnv {
       PROD: boolean;
       DEV: boolean;
-      VITE_NEAR_NETWORK_ID: 'testnet' | 'mainnet';
+      VITE_NETWORK_ID: 'testnet' | 'mainnet';
       NODE_ENV: 'development' | 'production';
       [key: string]: string;
     }

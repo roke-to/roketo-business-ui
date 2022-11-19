@@ -2,11 +2,11 @@
 
 const {loadEnv} = require('vite');
 
-const NODE_ENV = process.env.NODE_ENV;
+const VITE_BUILD_MODE = process.env.VITE_BUILD_MODE;
 const DOTENV_DIR = process.cwd();
 
 const envName = process.argv[2];
 
-const parsed = loadEnv(NODE_ENV, DOTENV_DIR, '');
+const parsed = loadEnv(VITE_BUILD_MODE, DOTENV_DIR, '');
 
 console.log(parsed[envName]);
