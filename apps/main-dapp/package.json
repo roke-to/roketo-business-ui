@@ -33,6 +33,7 @@
     "@popperjs/core": "^2.11.6",
     "@roketo/api-client": "roke-to/roketo-api-client#v0.0.31",
     "@roketo/sdk": "0.3.0",
+    "@roketo/core": "*",
     "@types/bn.js": "^5.1.0",
     "autosize": "^5.0.1",
     "bignumber.js": "^9.0.2",
