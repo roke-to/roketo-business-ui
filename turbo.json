@@ -6,11 +6,11 @@
     },
     "lint": {
       "outputs": [],
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "lint:types": {
       "outputs": [],
-      "dependsOn": ["^build"]
+      "dependsOn": ["build"]
     },
     "check:unused:exports": {
       "outputs": []
