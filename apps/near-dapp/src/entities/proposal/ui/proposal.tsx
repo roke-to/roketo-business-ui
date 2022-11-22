@@ -63,7 +63,7 @@ export const Proposal = ({proposal}: ProposalProps) => {
             {t('description')}: {description}
           </Typography>
         )}
-        <Row gap='md' className='mobile:flex-col mobile:gap-10'>
+        <Row gap='md' className='mobile:flex-col mobile:gap-0'>
           {link && (
             <ButtonNativeLink
               href={link}
