@@ -11,7 +11,6 @@
     "start": "vite",
     "start:prod": "serve -l 3000 dist/",
     "prebuild": "yarn generate:api",
-    "postinstall": "yarn generate:api",
     "build": "vite build",
     "lint": "eslint -c .eslintrc src --ext .js,.jsx,.ts,.tsx",
     "lint:types": "tsc --noEmit --pretty",

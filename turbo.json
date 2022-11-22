@@ -5,10 +5,12 @@
       "dependsOn": ["^build"]
     },
     "lint": {
-      "outputs": []
+      "outputs": [],
+      "dependsOn": ["^build"]
     },
     "lint:types": {
-      "outputs": []
+      "outputs": [],
+      "dependsOn": ["^build"]
     },
     "check:unused:exports": {
       "outputs": []
