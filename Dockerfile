@@ -20,6 +20,8 @@ RUN yarn global add turbo
 COPY . .
 RUN turbo prune --scope=$BUILD_ARG_DAPP --docker
 
+RUN if [[ -f "./out/json/packages/get-dotenv/" ]] ; then cp ./packages/get-dotenv/get-dotenv.js ./out/json/packages/get-dotenv/ ; cp ./packages/rb-api/generate.js ./out/json/packages/rb-api/ ; cp ./packages/astro-api/generate.js ./out/json/packages/astro-api/ ; fi
+
 
 # STAGE 1-2
 # Add lockfile and package.json's of isolated subworkspace
@@ -45,8 +47,6 @@ ENV VITE_BUILD_MODE=$BUILD_ARG_NETWORK_ID
 # Build the project
 COPY --from=installer /app .
 COPY --from=turbo_prune /app/out/full/ .
-# for creating symlinks for our binaries
-RUN yarn install --pure-lockfile
 COPY turbo.json turbo.json
 RUN yarn turbo run build --filter=$BUILD_ARG_DAPP...
 
