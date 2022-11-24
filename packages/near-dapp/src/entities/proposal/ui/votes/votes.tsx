@@ -67,7 +67,7 @@ export const Votes = ({
             </Typography>
           )}
           {isPositiveStatusProposal && (
-            <Typography as='span' color='positive' isCapitalizeFirstLetter>
+            <Typography as='span' data-qa='proposalStatus' color='positive' isCapitalizeFirstLetter>
               {t(status)}&nbsp;
             </Typography>
           )}

@@ -4,7 +4,8 @@ import {Trans, useTranslation} from 'react-i18next';
 import {useIntercom} from 'react-use-intercom';
 
 import {$walletSelectorState, walletClicked} from '~/entities/wallet';
-import {isModuleTypeInjected, resolveWalletIcon, WalletIconType} from '~/shared/api/near';
+import {isModuleTypeInjected, WalletIconType} from '~/shared/api/near';
+import {resolveWalletIcon} from '~/shared/api/near/resolve-wallet-icon';
 
 import type {ModuleState} from '@near-wallet-selector/core';
 import {Button} from '@roketo/core/ui/components/button';

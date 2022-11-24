@@ -5,7 +5,7 @@ import yn from 'yn';
 import type {PlaywrightTestConfig} from '@playwright/test';
 import {devices} from '@playwright/test';
 
-const dotenvFiles = ['.env.local', '.env'];
+const dotenvFiles = ['.env.local.example', '.env'];
 
 dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {

@@ -9,8 +9,6 @@ import {
 import {dataRoleToContractRole} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/data-role-to-contract-role';
 import {generateVotePolicyForEachProposalType} from '~/shared/api/near/contracts/sputnik-dao/map-change-quorum-options/generate-vote-policy-for-each-proposal-type';
 
-import {FunctionCallAction} from '@near-wallet-selector/core/lib/wallet/transactions.types';
-
 import {encodeDescription} from '../proposal-format';
 
 export const mapChangeQuorumOptions = (
@@ -20,7 +18,7 @@ export const mapChangeQuorumOptions = (
     link: string;
     quorum: number;
   },
-): FunctionCallAction['params'] => {
+) => {
   const {
     bountyBond,
     proposalBond,

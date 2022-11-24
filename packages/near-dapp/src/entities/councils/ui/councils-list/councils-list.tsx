@@ -11,7 +11,13 @@ import {Typography} from '@roketo/core/ui/components/typography';
 import styles from './councils-list.module.css';
 
 const renderOptions = (councilAccountId: string) => (
-  <Typography as='span' font='sm' key={councilAccountId} className='truncate'>
+  <Typography
+    data-qa='councislList'
+    as='span'
+    font='sm'
+    key={councilAccountId}
+    className='truncate'
+  >
     {councilAccountId}
   </Typography>
 );

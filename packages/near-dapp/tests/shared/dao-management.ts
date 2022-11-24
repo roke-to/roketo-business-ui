@@ -1,6 +1,5 @@
 import BN from 'bn.js';
-import decamelize from 'decamelize';
-import {Account, connect, keyStores, Near} from 'near-api-js';
+import {Account, connect, Contract, keyStores, Near} from 'near-api-js';
 import {InMemoryKeyStore} from 'near-api-js/lib/key_stores';
 import {FinalExecutionStatus} from 'near-api-js/lib/providers';
 import {functionCall, stringifyJsonOrBytes} from 'near-api-js/lib/transaction';
@@ -53,8 +52,8 @@ const VOTE_POLICY = {
   vote: {quorum: '0', threshold: [1, 10], weight_kind: 'RoleWeight'},
 };
 
-const createCallbackUrl = (daoAddress: string, daoName: string) => {
-  const url = new URL(window.location.toString());
+const createCallbackUrl = (currentURL: string, daoAddress: string, daoName: string) => {
+  const url = new URL(currentURL);
   url.search = `?newDaoAddress=${daoAddress}&newDaoName=${encodeURIComponent(daoName)}`;
   return url.toString();
 };
@@ -76,11 +75,14 @@ export class DaoManagement {
 
   keyStore: InMemoryKeyStore;
 
+  currentURL: string;
+
   sputnikFactoryDaoContract: SputnikFactoryDaoContract | undefined;
 
-  constructor(nearNetworkId: NetworkId) {
+  constructor(nearNetworkId: NetworkId, currentURL: string) {
     this.keyStore = new keyStores.InMemoryKeyStore();
     this.nearNetworkId = nearNetworkId;
+    this.currentURL = currentURL;
   }
 
   createDaoOptions() {
@@ -88,10 +90,9 @@ export class DaoManagement {
       Math.random() * (99999999999999 - 10000000000000) + 10000000000000,
     );
     const daoName = `dao-roketo-${Date.now()}-${randomNumber}`;
-    const addressFromName = decamelize(daoName, {separator: '-'}).replace(/\s+/g, '-');
     return {
       name: daoName,
-      address: addressFromName,
+      address: daoName,
     };
   }
 
@@ -133,10 +134,30 @@ export class DaoManagement {
       return this.sputnikFactoryDaoContract;
     }
 
-    this.sputnikFactoryDaoContract = new SputnikFactoryDaoContract(
-      account,
-      env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME,
-    );
+    // @ts-ignore
+    this.sputnikFactoryDaoContract = new Contract(account, env.SPUTNIK_FACTORY_DAO_CONTRACT_NAME, {
+      viewMethods: [
+        'get_dao_list',
+        'get_number_daos',
+        'get_daos',
+        'get_owner',
+        'get_default_code_hash',
+        'get_default_version',
+        'get_code',
+        'get_contracts_metadata',
+      ],
+      changeMethods: [
+        'new',
+        'create',
+        'set_owner',
+        'set_default_code_hash',
+        'delete_contract',
+        'update',
+        'store_contract_metadata',
+        'delete_contract_metadata',
+        'store',
+      ],
+    }) as SputnikFactoryDaoContract;
 
     return this.sputnikFactoryDaoContract;
   }
@@ -155,7 +176,7 @@ export class DaoManagement {
         // @ts-expect-error doesn't have enough fields
         votePolicy: VOTE_POLICY,
         councilList: [`${ACCOUNT_ID}.${this.nearNetworkId}`],
-        callbackUrl: createCallbackUrl(address, name),
+        callbackUrl: createCallbackUrl(this.currentURL, address, name),
       }),
     );
 
@@ -175,7 +196,7 @@ export class DaoManagement {
         // @ts-expect-error doesn't have enough fields
         votePolicy: VOTE_POLICY,
         councilList: [`${ACCOUNT_ID}.${this.nearNetworkId}`, ...councilList],
-        callbackUrl: createCallbackUrl(address, name),
+        callbackUrl: createCallbackUrl(this.currentURL, address, name),
       }),
     );
 
@@ -217,6 +238,29 @@ export class DaoManagement {
     );
   }
 
+  async createProposalNotApproved(
+    account: Account,
+    currentDaoId: string,
+    {methodName, args, gas, deposit}: FunctionalCallOptions,
+  ) {
+    return (
+      account
+        // @ts-expect-error signAndSendTransaction is protected
+        .signAndSendTransaction({
+          receiverId: `${currentDaoId}.sputnikv2.testnet`,
+          actions: [functionCall(methodName, args, gas, deposit)],
+        })
+        .then((r) => {
+          const status = r.status as FinalExecutionStatus;
+          if (status.SuccessValue) {
+            const proposeId = decodeBase64(status.SuccessValue);
+            return Number(proposeId);
+          }
+          throw Error("Response doesn't have 'status.SuccessValue'");
+        })
+    );
+  }
+
   async addCouncil(currentDaoId: string, councilAddress: string) {
     const account = await this.getAccount();
 
@@ -228,6 +272,31 @@ export class DaoManagement {
 
     // @ts-expect-error gas and deposit in 'options' should be BN
     await this.createProposalAndApproveThat(account, currentDaoId, options);
+  }
+
+  async createAddCouncilProposal(currentDaoId: string, councilAddress: string) {
+    const account = await this.getAccount();
+
+    const options = mapAddCouncilOptions({
+      description: 'test-call-add-council-in-dao',
+      link: '',
+      councilAddress,
+    });
+
+    // @ts-expect-error gas and deposit in 'options' should be BN
+    await this.createProposalNotApproved(account, currentDaoId, options);
+  }
+
+  async createRemoveCouncilProposal(currentDaoId: string, councilAddress: string) {
+    const account = await this.getAccount();
+    const options = mapRemoveCouncilOptions({
+      description: 'test-call-remove-council-in-dao',
+      link: '',
+      councilAddress,
+    });
+
+    // @ts-expect-error gas and deposit in 'options' should be BN
+    await this.createProposalNotApproved(account, currentDaoId, options);
   }
 
   async removeCouncil(currentDaoId: string, councilAddress: string) {
