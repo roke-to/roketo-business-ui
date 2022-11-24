@@ -20,7 +20,7 @@ RUN yarn global add turbo
 COPY . .
 RUN turbo prune --scope=$BUILD_ARG_DAPP --docker
 
-RUN if [[ -f "./out/json/packages/get-dotenv/" ]] ; then cp ./packages/get-dotenv/get-dotenv.js ./out/json/packages/get-dotenv/ ; cp ./packages/rb-api/generate.js ./out/json/packages/rb-api/ ; cp ./packages/astro-api/generate.js ./out/json/packages/astro-api/ ; fi
+RUN ./.scripts/post_turbo_prune.sh
 
 
 # STAGE 1-2
