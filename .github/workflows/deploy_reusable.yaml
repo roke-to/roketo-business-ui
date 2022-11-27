@@ -202,7 +202,7 @@ jobs:
           username: ${{ secrets.ROKETO_DEPLOYER_USER }}
           key: ${{ secrets.ROKETO_DEPLOYER_KEY }}
           port: 22
-          source: ./packages/${{ inputs.package-name }}/docker-compose.yaml
+          source: ./apps/${{ inputs.package-name }}/docker-compose.yaml
           target: "~/tmp/"
       - name: deploy
         uses: fifsky/ssh-action@master
@@ -219,8 +219,8 @@ jobs:
             cd ~/services/${{env.APP_HOSTNAME}}
             rm -rf docker-compose.yaml
             rm -rf .env
-            mv ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml ~/services/${{env.APP_HOSTNAME}}/docker-compose.yaml
-            rm -rf ~/tmp/packages/${{ inputs.package-name }}/docker-compose.yaml
+            mv ~/tmp/apps/${{ inputs.package-name }}/docker-compose.yaml ~/services/${{env.APP_HOSTNAME}}/docker-compose.yaml
+            rm -rf ~/tmp/apps/${{ inputs.package-name }}/docker-compose.yaml
             echo APP=${{env.APP}} >> .env
             echo REGISTRY=${{env.REGISTRY}} >> .env
             echo APP_HOSTNAME=${{env.APP_HOSTNAME}} >> .env

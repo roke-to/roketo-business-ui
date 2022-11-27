@@ -1,51 +1,65 @@
-# STAGE 1
+ARG NODE_VERSION=16.13.2-alpine3.15
+
+# STAGE 0
 # Get the base node images
 # This version needs to be change as we upgrade the node version
 # In first step we are pulling the base node image which has shell to build the RoketoBiz application
-FROM node:16.13.2-alpine3.15 AS base
+FROM node:${NODE_VERSION} AS base
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+RUN apk update
+
+# STAGE 1-1
+FROM base AS turbo_prune
 
 ARG BUILD_ARG_DAPP
 
 # Set working directory
 WORKDIR /app
-RUN mkdir -p "packages/$BUILD_ARG_DAPP"
-RUN mkdir -p "packages/core"
-# Copy root level package files and install any root dependency
-COPY ["package.json", "yarn.lock", ""]
-# Copy required packages
-# If <src> is a directory, the entire contents of the directory are copied,
-# including filesystem metadata.
-COPY packages/core packages/core
-COPY packages/get-dotenv packages/get-dotenv
-COPY packages/rb-api packages/rb-api
-COPY packages/astro-api packages/astro-api
-# env needs to be copied before yarn install, because after api will be generated
-COPY packages/$BUILD_ARG_DAPP/package.json packages/$BUILD_ARG_DAPP/.env packages/$BUILD_ARG_DAPP/.env.testnet packages/$BUILD_ARG_DAPP/.env.mainnet packages/$BUILD_ARG_DAPP
-RUN yarn --pure-lockfile
+RUN yarn global add turbo
 COPY . .
+RUN turbo prune --scope=$BUILD_ARG_DAPP --docker
+
+RUN ./.scripts/post_turbo_prune.sh
+
+
+# STAGE 1-2
+# Add lockfile and package.json's of isolated subworkspace
+FROM base AS installer
+WORKDIR /app
+
+ARG BUILD_ARG_DAPP
+
+# First install the dependencies (as they change less often)
+COPY .gitignore .gitignore
+COPY --from=turbo_prune /app/out/json/ .
+COPY --from=turbo_prune /app/out/yarn.lock ./yarn.lock
+RUN yarn install --pure-lockfile
 
 # STAGE 2
-# Build the RoketoBiz app
-FROM base AS build
+FROM base AS builder
+WORKDIR /app
 
 ARG BUILD_ARG_DAPP
 ARG BUILD_ARG_NETWORK_ID
+ENV VITE_BUILD_MODE=$BUILD_ARG_NETWORK_ID
 
-WORKDIR /app
-COPY --from=base /app .
-WORKDIR /app/packages/$BUILD_ARG_DAPP
-RUN yarn build --mode $BUILD_ARG_NETWORK_ID
+# Build the project
+COPY --from=installer /app .
+COPY --from=turbo_prune /app/out/full/ .
+COPY turbo.json turbo.json
+RUN yarn turbo run build --filter=$BUILD_ARG_DAPP...
 
 # STAGE 3 — Final image
 # RoketoBiz build will create generated JS and CSS in 'dist' directory. We will need this for our application to run
 # Copy build output
-FROM node:16.13.2-alpine3.15
+FROM node:${NODE_VERSION} AS runner
 
 ARG BUILD_ARG_DAPP
 
 WORKDIR /app
-COPY --from=build /app/node_modules node_modules
-COPY --from=build /app/packages/$BUILD_ARG_DAPP/dist dist
-COPY --from=build /app/packages/$BUILD_ARG_DAPP/static-server.js .
+COPY --from=builder /app/node_modules node_modules
+COPY --from=builder /app/apps/$BUILD_ARG_DAPP/dist dist
+COPY --from=builder /app/apps/$BUILD_ARG_DAPP/static-server.js .
 
 CMD ["node", "static-server.js"]

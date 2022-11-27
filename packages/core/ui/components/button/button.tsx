@@ -54,9 +54,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className,
         )}
       >
-        {startIcon}
         {children}
-        {endIcon}
       </Tag>
     );
   },

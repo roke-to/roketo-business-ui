@@ -1,0 +1,19 @@
+{
+  "pipeline": {
+    "build": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build"]
+    },
+    "lint": {
+      "outputs": [],
+      "dependsOn": ["build"]
+    },
+    "lint:types": {
+      "outputs": [],
+      "dependsOn": ["build"]
+    },
+    "check:unused:exports": {
+      "outputs": []
+    }
+  }
+}

@@ -32,7 +32,7 @@ export const env: EnvType = {
   DEV: process.env.DEV,
   PROD: process.env.PROD,
   APP_TITLE: process.env.VITE_APP_TITLE,
-  NEAR_NETWORK_ID: process.env.VITE_NEAR_NETWORK_ID,
+  NEAR_NETWORK_ID: process.env.VITE_NETWORK_ID,
   NEAR_WALLET_URL: process.env.VITE_NEAR_WALLET_URL,
   MY_NEAR_WALLET_URL: process.env.VITE_MY_NEAR_WALLET_URL,
   COMMIT_HASH: process.env.VITE_COMMIT_HASH,

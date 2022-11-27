@@ -1,10 +1,19 @@
 name: Quality
 on:
-  workflow_call:
-    inputs:
-      package-name:
-        required: true
-        type: string
+  push:
+    branches:
+      - master
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+  pull_request:
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+
+concurrency:
+  group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
+  cancel-in-progress: true
 
 jobs:
   lint-check:
@@ -41,8 +50,12 @@ jobs:
 
       - name: Run ESLint 🌸
         working-directory: .
-        run: yarn workspace ${{inputs.package-name}} lint
+        run: yarn lint
 
       - name: Run check unused-exports 👽
         working-directory: .
-        run: yarn workspace ${{inputs.package-name}} check:unused:exports
+        run: yarn check:unused:exports
+
+      - name: Run check types 🥷
+        working-directory: .
+        run: yarn lint:types

@@ -17,9 +17,10 @@ export default defineConfig((env) => {
   // а выбранная сеть часть рантайм конфига приложения. Т.е. на момент запуска, мы понимаем для
   // какой сети эта аппка. (Динамические переменные окружения)
   const isProd = env.mode === 'production';
-  const envVariables = loadEnv(env.mode, process.cwd(), '');
+  const envVariables = loadEnv(process.env.VITE_BUILD_MODE, process.cwd(), '');
 
   return {
+    mode: process.env.VITE_BUILD_MODE,
     base: process.env.VITE_BASE_PUBLIC_PATH,
     css: {
       postcss,

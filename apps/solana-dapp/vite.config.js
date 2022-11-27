@@ -12,13 +12,14 @@ import postcss from './postcss.config';
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => {
-  const envVariables = loadEnv(env.mode, process.cwd(), '');
+  const envVariables = loadEnv(process.env.VITE_BUILD_MODE, process.cwd(), '');
   return {
     ...(envVariables.VITE_LOCAL_PORT && {
       server: {
         port: envVariables.VITE_LOCAL_PORT,
       },
     }),
+    mode: process.env.VITE_BUILD_MODE,
     base: envVariables.VITE_BASE_PUBLIC_PATH,
     css: {
       postcss,

@@ -12,6 +12,7 @@ import postcss from './postcss.config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  mode: process.env.VITE_BUILD_MODE,
   base: process.env.VITE_BASE_PUBLIC_PATH,
   css: {
     postcss,
